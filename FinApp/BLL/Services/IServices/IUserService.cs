@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLL.Services.IServices
 {
-    interface IUserService: IService<User>
+    public interface IUserService: IService<User>
     {
 
     }

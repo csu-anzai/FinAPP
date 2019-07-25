@@ -6,7 +6,12 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DAL.Context;
+using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using BLL.Services.IServices;
+using DAL.Repositories.ImplementedRepositories;
+using BLL.Services.ImplementedServices;
+using DAL.UnitOfWork;
 
 namespace FinApp
 {
@@ -23,9 +28,13 @@ namespace FinApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FinAppContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration["Data:DefaultConnection"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-          
+            services.AddScoped<DbContext, FinAppContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUserService, UserService>();
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL.Services.IServices;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using Microsoft.AspNetCore.Mvc;
@@ -13,41 +14,55 @@ namespace FinApp.Controllers
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
-       
-        public AuthController()
+        private readonly IUserService _userService;
+
+        public AuthController(IUserService userService)
         {
-     
+            _userService = userService;
         }
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<User>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = await _userService.ReadAsync();
+            return Ok(users);
         }
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<User>> Get(int id)
         {
-            return "value";
+            var user = await _userService.ReadAsync(id);
+            return Ok(user);
         }
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<ActionResult<User>> Create([FromBody]User user)
         {
+            var newUser = await _userService.CreateAsync(user);
+            return Ok(user);
         }
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, [FromBody]User user)
         {
+            // TODO: update realization
         }
 
         // DELETE api/<controller>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<User>> Delete(int id)
         {
+            var user = await _userService.ReadAsync(id);
+
+            if (user == null)
+                return NotFound(user);
+
+            await _userService.DeleteAsync(id);
+
+            return Ok(user);
         }
     }
 }

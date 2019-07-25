@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    interface IService<TResult> where TResult : class
+    public interface IService<TResult> where TResult : class
     {
         Task<IEnumerable<TResult>> ReadAsync();
         Task<TResult> ReadAsync(int id);
