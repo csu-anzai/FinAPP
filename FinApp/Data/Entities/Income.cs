@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Data.Entities
+namespace DAL.Entities
 {
     public class Income
     {
         public int Id { get; set; }
-
 
         public int AccountId { get; set; }
         public Account Account { get; set; }

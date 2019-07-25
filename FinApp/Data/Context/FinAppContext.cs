@@ -1,11 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Data.Entities;
-using Data.Context.Configurations;
+using DAL.Entities;
+using DAL.Context.Configurations;
 
-namespace Data.Context
+namespace DAL.Context
 {
     public class FinAppContext : DbContext
     {

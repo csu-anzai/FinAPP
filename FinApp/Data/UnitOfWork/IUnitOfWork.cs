@@ -1,7 +1,7 @@
-﻿using Data.Repositories.IRepositories;
+﻿using DAL.Repositories.IRepositories;
 using System.Threading.Tasks;
 
-namespace Data.UnitOfWork
+namespace DAL.UnitOfWork
 {
     public interface IUnitOfWork
     {

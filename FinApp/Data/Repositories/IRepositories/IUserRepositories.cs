@@ -1,10 +1,10 @@
-﻿using Data.Entities;
-using Data.IRepositories;
+﻿using DAL.Entities;
+using DAL.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Repositories.IRepositories
+namespace DAL.Repositories.IRepositories
 {
     public interface IUserRepository: IBaseRepository<User>
     {

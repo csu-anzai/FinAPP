@@ -1,5 +1,4 @@
-﻿using Data.Entities.Abstractions;
-using Data.IRepositories;
+﻿using DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,10 +7,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.Repositories
+namespace DAL.Repositories
 {
-    abstract public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, IEntity
-    {
+    abstract public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+    { 
         private readonly DbSet<TEntity> _entity;
         protected DbContext context;
 
@@ -44,7 +43,7 @@ namespace Data.Repositories
 
         public virtual async Task<TEntity> GetAsync(int id)
         {
-             return await _entity.SingleOrDefaultAsync(i => i.Id == id);
+             return await _entity.FindAsync(id);
         }
 
         public virtual void Remove(TEntity entity)
@@ -61,7 +60,7 @@ namespace Data.Repositories
         }
 
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
-        {
+        {  
             var entity = await _entity.SingleOrDefaultAsync(expression);
             return entity;
         }

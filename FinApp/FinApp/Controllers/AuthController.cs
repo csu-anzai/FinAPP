@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Data.Entities;
+using DAL.Entities;
+using DAL.Repositories.IRepositories;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,6 +13,11 @@ namespace FinApp.Controllers
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
+       
+        public AuthController()
+        {
+     
+        }
         // GET: api/<controller>
         [HttpGet]
         public IEnumerable<string> Get()

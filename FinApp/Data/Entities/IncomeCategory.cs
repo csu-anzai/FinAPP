@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
-namespace Data.Entities
+namespace DAL.Entities
 {
     public class IncomeCategory
     {

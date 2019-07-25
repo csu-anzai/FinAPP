@@ -1,12 +1,10 @@
-﻿using Data.Entities.Abstractions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
-namespace Data.Entities
+namespace DAL.Entities
 {
-    public class User: IEntity
+    public class User
     {
         public int Id { get; set; }
         public string Name { get; set; }

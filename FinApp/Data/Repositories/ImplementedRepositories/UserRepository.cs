@@ -1,17 +1,22 @@
-﻿using Data.Entities;
-using Data.Repositories.IRepositories;
+﻿using DAL.Entities;
+using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Data.Repositories.ImplementedRepositories
+namespace DAL.Repositories.ImplementedRepositories
 {
     public class UserRepository: BaseRepository<User>, IUserRepository
     {
         public UserRepository(DbContext context): base(context)
         {
 
+        }
+        public User GetUserWithAccounts(int id)
+        {
+            return new User();
+          
         }
     }
 }

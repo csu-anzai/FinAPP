@@ -1,6 +1,5 @@
-﻿using Data.Entities.Abstractions;
-using Data.IRepositories;
-using Data.UnitOfWork;
+﻿using DAL.IRepositories;
+using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services
 {
-    public class Service<TResult> : IService<TResult> where TResult : class, IEntity
+    public class Service<TResult> : IService<TResult> where TResult : class
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IBaseRepository<TResult> _repository;

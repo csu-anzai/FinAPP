@@ -1,11 +1,11 @@
-﻿using Data.Repositories.IRepositories;
+﻿using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.UnitOfWork
+namespace DAL.UnitOfWork
 {
     public class UnitOfWork: IUnitOfWork
     {

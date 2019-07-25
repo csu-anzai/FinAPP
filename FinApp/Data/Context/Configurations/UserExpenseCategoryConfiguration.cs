@@ -1,11 +1,8 @@
-﻿using Data.Entities;
+﻿using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Data.Context.Configurations
+namespace DAL.Context.Configurations
 {
     public class UserExpenseCategoryConfiguration : IEntityTypeConfiguration<UserExpenseCategory>
     {
