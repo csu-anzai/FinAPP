@@ -1,0 +1,81 @@
+.container{
+    margin: 7% 30%;
+    
+}
+.label-ep{
+    font-size: 150%;
+}
+.form-check-label{
+    font-size: 115%;
+}
+
+input[type=password],select {
+    width: 40%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    min-height: 40px;
+}
+.row{
+  background-position: center;
+}
+    
+
+  input[type=email],select {
+    
+    width: 40%;
+    padding: 12px 20px;
+    display: inline-block;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    min-height: 40px;
+    box-sizing: border-box;
+  }
+  
+  .button {
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #0617a1;
+    border: #0617a1;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 25px;
+    padding: 5px;
+    width: 40%;
+    transition: all 0.5s;
+    cursor: pointer;
+    height: 45%;
+    opacity: 0.8;
+  
+  
+    
+  }
+  .button:hover {opacity: 1}
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+    opacity: 1;
+  }
+  
+  .button span:after {
+    content: '\00bb';
+    position: absolute;
+    opacity: 1;
+    top: 0;
+    right: -20px;
+    transition: 0.5s;
+  }
+  
+  .button:hover span {
+    padding-right: 25px;
+
+  }
+  
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
