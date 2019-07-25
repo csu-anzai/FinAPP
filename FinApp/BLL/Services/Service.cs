@@ -25,18 +25,6 @@ namespace BLL.Services
             return entity;
         }
 
-        public async Task<TResult> DeleteAsync(int id)
-        {
-            var entity = await _repository.GetAsync(id);
-
-            if (entity == null)
-                return null;
-
-            _repository.Remove(entity);
-
-            return entity;
-        }
-
         public async Task<IEnumerable<TResult>> ReadAsync()
         {
             return await _repository.GetAllAsync();
@@ -47,9 +35,23 @@ namespace BLL.Services
             return await _repository.GetAsync(id);
         }
 
+        // TODO: Update realization
         public Task<TResult> UpdateAsync(TResult user)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<TResult> DeleteAsync(int id)
+        {
+            var entity = await _repository.GetAsync(id);
+
+            if (entity == null)
+                return null;
+
+            _repository.Remove(entity);
+            await _unitOfWork.SaveAsync();
+
+            return entity;
         }
     }
 }

@@ -10,59 +10,54 @@ using System.Threading.Tasks;
 namespace DAL.Repositories
 {
     abstract public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
-    { 
-        private readonly DbSet<TEntity> _entity;
-        protected DbContext context;
+    {
+        private readonly DbContext _context;
+        protected readonly DbSet<TEntity> entities;
 
         public BaseRepository(DbContext context)
         {
-            this.context = context;
-            _entity = context.Set<TEntity>();
+            _context = context;
+            entities = context.Set<TEntity>();
         }
 
         public virtual async Task AddAsync(TEntity entity)
         {
-            await _entity.AddAsync(entity);
+            await entities.AddAsync(entity);
         }
 
         public virtual async Task AddRangeAsync(IEnumerable<TEntity> entities)
         {
-            await _entity.AddRangeAsync(entities);
+            await this.entities.AddRangeAsync(entities);
         }
 
         public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> expression)
         {
-            var entities = await _entity.Where(expression).ToListAsync();
-            return entities;
+            return await entities.Where(expression).ToListAsync();
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _entity.ToListAsync();
+            return await entities.ToListAsync();
         }
 
         public virtual async Task<TEntity> GetAsync(int id)
         {
-             return await _entity.FindAsync(id);
+            return await entities.FindAsync(id);
         }
 
         public virtual void Remove(TEntity entity)
         {
-            if (entity == null)
-                return;
-
-             _entity.Remove(entity);
+            entities.Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<TEntity> range)
         {
-            _entity.RemoveRange(range);
+            entities.RemoveRange(range);
         }
 
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
-        {  
-            var entity = await _entity.SingleOrDefaultAsync(expression);
-            return entity;
+        {
+            return await entities.SingleOrDefaultAsync(expression);
         }
     }
 }
