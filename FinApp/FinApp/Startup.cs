@@ -23,9 +23,9 @@ namespace FinApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FinAppContext>(options =>
-            options.UseSqlServer(Configuration["Data:ConnectionString"]));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
+          
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -36,6 +36,7 @@ namespace FinApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
