@@ -4,7 +4,9 @@ using System.Text;
 
 namespace BLL.Security
 {
-    interface IPassHasher
+    public interface IPassHasher
     {
+        string HashPassword(string password);
+        bool CheckPassWithHash(string password, string hash);
     }
 }
