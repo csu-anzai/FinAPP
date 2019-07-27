@@ -12,6 +12,7 @@ using BLL.Services.IServices;
 using DAL.Repositories.ImplementedRepositories;
 using BLL.Services.ImplementedServices;
 using DAL.UnitOfWork;
+using Serilog;
 
 namespace FinApp
 {
@@ -20,6 +21,8 @@ namespace FinApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration)
+                .CreateLogger();
         }
 
         public IConfiguration Configuration { get; }
@@ -40,6 +43,9 @@ namespace FinApp
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddLogging(loggingBuilder =>
+                loggingBuilder.AddSerilog(dispose: true));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
