@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
@@ -15,6 +16,7 @@ import { LoginPageComponent } from './login-page/login-page.component';
   declarations: [
     AppComponent,
     NavMenuComponent,
+    WelcomePageComponent,
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
@@ -25,7 +27,8 @@ import { LoginPageComponent } from './login-page/login-page.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: WelcomePageComponent, pathMatch: 'full' },
+      { path: 'login-page', component: LoginPageComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
     ])
