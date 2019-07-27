@@ -1,68 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BLL.Services.IServices;
+﻿using BLL.Services.IServices;
+using DAL.DTOs;
 using DAL.Entities;
-using DAL.Repositories.IRepositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FinApp.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IAuthService _authService;
 
-        public AuthController(IUserService userService)
+        public AuthController(IAuthService userService)
         {
-            _userService = userService;
-        }
-        // GET: api/<controller>
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
-        {
-            var users = await _userService.ReadAsync();
-            return Ok(users);
+            _authService = userService;
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> Get(int id)
+        [HttpPost("signin")]
+        public async Task<IActionResult> SignIn(UserLoginDTO user)
         {
-            var user = await _userService.ReadAsync(id);
-            return Ok(user);
+            var userData = await _authService.SignInAsync(user);
+
+            if (userData == null)
+                return Unauthorized();
+
+            // TODO: sending an access token to the front-end
+            // A random jwt token below
+            return Ok(new { token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c" });
         }
 
-        // POST api/<controller>
-        [HttpPost]
-        public async Task<ActionResult<User>> Create([FromBody]User user)
+        [HttpPost("signup")]
+        public async Task<IActionResult> SignUp(User user)
         {
-            var newUser = await _userService.CreateAsync(user);
-            return Ok(user);
+            var newData = await _authService.SignUpAsync(user);
+
+            if (newData == null)
+                return Unauthorized();
+
+            return Ok(newData);
         }
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]User user)
-        {
-            // TODO: update realization
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<User>> Delete(int id)
-        {
-            var user = await _userService.ReadAsync(id);
-
-            if (user == null)
-                return NotFound(user);
-
-            await _userService.DeleteAsync(id);
-
-            return Ok(user);
-        }
     }
 }
