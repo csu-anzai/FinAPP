@@ -1,11 +1,11 @@
 ﻿using DAL.Repositories.IRepositories;
+using System;
 using System.Threading.Tasks;
 
 namespace DAL.UnitOfWork
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IDisposable
     {
-        IAuthRepository AuthRepository { get; }
-        Task<int> SaveAsync();
+        Task Complete();
     }
 }

@@ -1,5 +1,7 @@
-﻿using DAL.Repositories.IRepositories;
+﻿using DAL.Context;
+using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace DAL.UnitOfWork
@@ -7,18 +9,34 @@ namespace DAL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
+        private bool _disposed = false;
 
-        public IAuthRepository AuthRepository { get; }
-        public UnitOfWork(DbContext context, IAuthRepository authRepository)
+        public UnitOfWork(FinAppContext context, IAuthRepository authRepository)
         {
             _context = context;
-
-            AuthRepository = authRepository;
         }
 
-        public async Task<int> SaveAsync()
+        public async Task Complete()
         {
-            return await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this._disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+            }
+            this._disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
