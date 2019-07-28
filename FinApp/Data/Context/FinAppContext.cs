@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DAL.Context.Configurations;
 using DAL.Entities;
-using DAL.Context.Configurations;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Context
 {
@@ -26,6 +26,7 @@ namespace DAL.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserExpenseCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new UserIncomeCategoryConfiguration());
             //  modelBuilder.ApplyConfiguration(new category configuration());

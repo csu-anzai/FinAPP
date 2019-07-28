@@ -1,17 +1,17 @@
+using BLL.Security;
+using BLL.Services.ImplementedServices;
+using BLL.Services.IServices;
+using DAL.Context;
+using DAL.Repositories.ImplementedRepositories;
+using DAL.Repositories.IRepositories;
+using DAL.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using DAL.Context;
-using DAL.Repositories.IRepositories;
-using Microsoft.EntityFrameworkCore;
-using BLL.Services.IServices;
-using DAL.Repositories.ImplementedRepositories;
-using BLL.Services.ImplementedServices;
-using DAL.UnitOfWork;
 using Serilog;
 using Microsoft.OpenApi.Models;
 
@@ -32,13 +32,14 @@ namespace FinApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FinAppContext>(options =>
-            options.UseSqlServer(Configuration["Data:DefaultConnection"]));
+                options.UseSqlServer(Configuration["Data:DefaultConnection"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddScoped<DbContext, FinAppContext>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddTransient<IPassHasher, PassHasher>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

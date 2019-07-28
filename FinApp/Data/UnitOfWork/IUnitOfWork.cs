@@ -5,7 +5,7 @@ namespace DAL.UnitOfWork
 {
     public interface IUnitOfWork
     {
-        IUserRepository UserRepository { get; }
+        IAuthRepository AuthRepository { get; }
         Task<int> SaveAsync();
     }
 }

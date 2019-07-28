@@ -1,23 +1,20 @@
 ﻿using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.UnitOfWork
 {
-    public class UnitOfWork: IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly DbContext _context;
 
-        public IUserRepository UserRepository { get; }
-        public UnitOfWork(DbContext context, IUserRepository userRepository)
+        public IAuthRepository AuthRepository { get; }
+        public UnitOfWork(DbContext context, IAuthRepository authRepository)
         {
             _context = context;
 
-            UserRepository = userRepository;
-        }    
+            AuthRepository = authRepository;
+        }
 
         public async Task<int> SaveAsync()
         {

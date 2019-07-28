@@ -6,7 +6,8 @@
               [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>
+
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}' *ngIf="!loggedIn()">
         <ul class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark" [routerLink]='["/login-page"]'>Log in</a>
@@ -15,6 +16,11 @@
             <a class="nav-link text-dark" [routerLink]='["/"]'>Register</a>
           </li>
         </ul>
+      </div>
+      <div class="dropdown" *ngIf="loggedIn()">
+        <span >
+              Welcome {{ authService.decodedToken?.name | titlecase }}
+        </span>
       </div>
     </div>
   </nav>

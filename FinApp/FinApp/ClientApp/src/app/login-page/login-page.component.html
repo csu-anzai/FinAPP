@@ -1,17 +1,16 @@
 <div class="container">
-  <form>
-
+  <form #loginForm="ngForm" novalidate (ngSubmit)="onLogin()">
 
     <div class="form-group">
-      <label for="email" class="label-ep">Email:</label><br>
-      <input type="email" class="form-control form-control-lg" id="email">
+      <label class="label-ep">Email:</label><br>
+      <input type="email" name="login" class="form-control form-control-lg" placeholder="Email" [(ngModel)]="model.email" #login required>
 
 
     </div>
 
     <div class="form-group">
-      <label for="Password" class="label-ep">Password:</label><br>
-      <input type="password" class="form-control form-control-lg" id="pwd">
+      <label class="label-ep">Password:</label><br>
+      <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" [(ngModel)]="model.password" #pwd required>
 
     </div>
 
@@ -23,7 +22,7 @@
     </div>
 
 
-    <button class="button" style="vertical-align:middle"><span>Log In</span></button>
+    <button type="submit" class="button" style="vertical-align:middle"><span>Log In</span></button>
 
     <br>
     <br>
