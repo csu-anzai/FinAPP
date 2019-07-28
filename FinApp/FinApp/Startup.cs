@@ -13,6 +13,7 @@ using DAL.Repositories.ImplementedRepositories;
 using BLL.Services.ImplementedServices;
 using DAL.UnitOfWork;
 using Serilog;
+using Microsoft.OpenApi.Models;
 
 namespace FinApp
 {
@@ -33,6 +34,7 @@ namespace FinApp
             services.AddDbContext<FinAppContext>(options =>
             options.UseSqlServer(Configuration["Data:DefaultConnection"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.AddScoped<DbContext, FinAppContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -46,11 +48,24 @@ namespace FinApp
 
             services.AddLogging(loggingBuilder =>
                 loggingBuilder.AddSerilog(dispose: true));
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fin Web API", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "FinApp");
+            });
+
 
             if (env.IsDevelopment())
             {
