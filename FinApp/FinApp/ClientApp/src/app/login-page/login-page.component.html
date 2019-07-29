@@ -1,5 +1,5 @@
 <div class="container">
-  <form #loginForm="ngForm" novalidate (ngSubmit)="onLogin()">
+  <form #loginForm="ngForm" (ngSubmit)="onLogin()">
 
     <div class="form-group">
       <label class="label-ep">Email:</label><br>
@@ -22,7 +22,7 @@
     </div>
 
 
-    <button type="submit" class="button" style="vertical-align:middle"><span>Log In</span></button>
+    <button type="submit" class="button" style="vertical-align:middle" [disabled]="!loginForm.form.valid"><span>Log In</span></button>
 
     <br>
     <br>

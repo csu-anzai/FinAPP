@@ -14,17 +14,20 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'signin', model)
-      .pipe(
-        map((response: any) => {
-          const user = response;
-
-          if (user) {
-            localStorage.setItem('token', user.token);
-            this.decodedToken = this.jwtHelper.decodeToken(user.token);
-          }
-        })
-      );
+    try {
+      return this.http.post(this.baseUrl + 'signin', model)
+        .pipe(
+          map((response: any) => {
+            const user = response;
+            if (user) {
+              localStorage.setItem('token', user.token);
+              this.decodedToken = this.jwtHelper.decodeToken(user.token);
+            }
+          })
+        );
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   register(model: any) {

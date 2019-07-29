@@ -25,7 +25,7 @@ namespace FinApp.Controllers
             var userData = await _authService.SignInAsync(user);
 
             if (userData == null)
-                return Unauthorized();
+                return NotFound();
 
             // TODO: sending an access token to the front-end
             // A random jwt token below
