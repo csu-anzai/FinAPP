@@ -1,0 +1,65 @@
+<div class="container d-flex justify-content-center">
+<div class=" d-flex justify-content-center flex-column page-size w-50">
+  <h2 class="header">Registration</h2>
+
+  <form (ngSubmit)="onSignUp()" class="flex justify-content-center flex-column">
+
+    <div class="form-group">
+      <label class="" for="firstname">Name:</label><br>
+      <input type="text" class="form-control"
+             [(ngModel)]="user.Name" name="first" #first="ngModel"
+             required minlength="3" pattern="[a-zA-Z]*">
+      <ng-container *ngIf="first.invalid || first.touched">
+        <p class="text-danger" [hidden]="first.valid || first.untouched">Firstname is required</p>
+      </ng-container>
+    </div>
+
+    <div class="form-group">
+      <label for="lastname">Surname:</label><br>
+      <input type="text" class="form-control"
+             [(ngModel)]="user.Surname" name="lastname" #lastName="ngModel"
+             required minlength="3" pattern="[a-zA-Z]*">
+      <p class="text-danger" [hidden]="lastName.valid || lastName.untouched">Lastname is required</p>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label><br>
+      <input type="email" class="form-control" id="email"
+             [(ngModel)]="user.Email" name="Email" #email="ngModel"
+             required email>
+      <p [hidden]="email.valid || email.untouched"
+           class="text-danger">
+        Email is required
+      </p>
+
+    </div>
+
+    <div class="form-group">
+      <label for="Password">Password:</label><br>
+      <input type="password" class="form-control"
+             [(ngModel)]="user.Password" name="password" #password="ngModel"
+             required>
+      <p [hidden]="password.valid || password.untouched"
+         class="text-danger">
+        Password is required
+      </p>
+    </div>
+ 
+  <div class="form-group">
+    <label for="Password">Repeat password:</label><br>
+    <input type="password" class="form-control"
+           [(ngModel)]="user.repeatedPassword" name="repeatedPassword" #repeatedPassword="ngModel"
+           required>
+  </div>
+
+    
+
+    <button class="button w-100"><span>Sign Up</span></button>
+
+  </form>
+    <img src="../../assets/google-icon.png" class="align-self-center icon" alt="Google"  (click)="registrationByGoogle()" />
+  
+  <p>Have already account? <a [routerLink]='["/login-page"]'>Sign In</a> </p>
+
+</div>
+  </div>
