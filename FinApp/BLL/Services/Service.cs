@@ -19,7 +19,7 @@ namespace BLL.Services
         public async Task<TResult> CreateAsync(TResult entity)
         {
             await _repository.AddAsync(entity);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.Complete();
 
             return entity;
         }
@@ -48,7 +48,7 @@ namespace BLL.Services
                 return null;
 
             _repository.Remove(entity);
-            await _unitOfWork.SaveAsync();
+            await _unitOfWork.Complete();
 
             return entity;
         }

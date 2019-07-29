@@ -11,17 +11,19 @@ namespace BLL.Services.ImplementedServices
     public class AuthService : Service<User>, IAuthService
     {
         protected IPassHasher _hasher;
-        IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAuthRepository _authRepository;  
 
-        public AuthService(IUnitOfWork unitOfWork, IAuthRepository userRepository, IPassHasher hasher) : base(unitOfWork, userRepository)
+        public AuthService(IUnitOfWork unitOfWork, IAuthRepository authRepository, IPassHasher hasher) : base(unitOfWork, authRepository)
         {
             _hasher = hasher;
             _unitOfWork = unitOfWork;
+            _authRepository = authRepository;
         }
 
         public async Task<User> SignInAsync(UserLoginDTO user)
         {
-            var existedUser = await _unitOfWork.AuthRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
+            var existedUser = await _authRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
 
             if (existedUser == null)
                 return null;
