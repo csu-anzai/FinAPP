@@ -1,0 +1,5 @@
+@media (max-width: 767px) {
+  .responsive-text {
+    font-size: 90%;
+  }
+}

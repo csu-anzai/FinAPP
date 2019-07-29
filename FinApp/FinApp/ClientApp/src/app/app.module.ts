@@ -6,12 +6,17 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { WelcomePageComponent } from './welcome-components/welcome-page/welcome-page.component';
+import { WelcomeHeaderComponent } from './welcome-components/welcome-header/welcome-header.component';
+import { WelcomeListComponent } from './welcome-components/welcome-list/welcome-list.component';
+import { WelcomeBenefitsComponent } from './welcome-components/welcome-benefits/welcome-benefits.component';
+import { WelcomeCarouselComponent } from './welcome-components/welcome-carousel/welcome-carousel.component';
+
 
 import { AuthService } from './_services/auth.service';
 
@@ -25,6 +30,10 @@ import { AuthService } from './_services/auth.service';
     FetchDataComponent,
     LoginPageComponent,
     SignUpComponent,
+    WelcomeListComponent,
+    WelcomeHeaderComponent,
+    WelcomeBenefitsComponent,
+    WelcomeCarouselComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -1,0 +1,13 @@
+@media (max-width: 767px) {
+  .responsive-text {
+    font-size: 90%;
+  }
+
+  .responsive-image {
+    width: 70%;
+  }
+
+  .responsive-height {
+    height: 25px;
+  }
+}

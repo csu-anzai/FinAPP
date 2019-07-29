@@ -31,7 +31,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\src\app\welcome-page\welcome-page.component.ts" />
+    <None Remove="ClientApp\src\app\welcome-components\welcome-list\welcome-list.component.ts" />
+    <None Remove="ClientApp\src\app\welcome-components\welcome-header\welcome-header.component.ts" />
+    <None Remove="ClientApp\src\app\welcome-components\welcome-benefits\welcome-benefits.component.ts" />
+    <None Remove="ClientApp\src\app\welcome-components\welcome-carousel\welcome-carousel.component.ts" />
+    <None Remove="ClientApp\src\app\welcome-components\welcome-page\welcome-page.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,7 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\welcome-page\welcome-page.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-list\welcome-list.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-header\welcome-header.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-benefits\welcome-benefits.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-carousel\welcome-carousel.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-page\welcome-page.component.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
