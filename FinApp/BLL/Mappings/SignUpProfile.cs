@@ -8,9 +8,7 @@ namespace DAL.Mappings
     {
         public SignUpProfile()
         {
-            CreateMap<UserRegistrationDTO, User>()
-                .ForMember(dest => dest.Name, opts => opts.MapFrom(src => src.FirstName))
-                .ForMember(dest => dest.Surname, opts => opts.MapFrom(src => src.LastName));
+            CreateMap<UserRegistrationDTO, User>();
         }
     }
 }
