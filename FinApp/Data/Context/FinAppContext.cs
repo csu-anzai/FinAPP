@@ -18,6 +18,7 @@ namespace DAL.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserExpenseCategory> UserExpenseCategories { get; set; }
         public DbSet<UserIncomeCategory> UserIncomeCategories { get; set; }
+        public DbSet<Token> Tokens { get; set; }
 
         public FinAppContext(DbContextOptions options) : base(options)
         {

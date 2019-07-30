@@ -9,7 +9,7 @@ using DAL.DTOs;
 
 namespace BLL.Security.Jwt
 {
-    class JwtManager
+    public class JwtManager
     {
         private readonly JwtOptions _jwtOptions;
 

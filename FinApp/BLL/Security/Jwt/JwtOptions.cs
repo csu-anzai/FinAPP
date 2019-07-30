@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BLL.Security.Jwt
 {
-    class JwtOptions
+    public class JwtOptions
     {
         public const string Role = "role";
         public string Issuer { get; set; }

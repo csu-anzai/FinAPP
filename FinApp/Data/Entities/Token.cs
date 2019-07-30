@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DAL.Entities
 {
@@ -10,10 +8,7 @@ namespace DAL.Entities
         public string RefreshToken { get; set; }
         public DateTime? CreateDate { get; set; }
 
-        public int userId { get; set; }
-        public User user { get; set; }
-
-
-
+        public int UserId { get; set; }
+        public User User { get; set; }
     }
 }

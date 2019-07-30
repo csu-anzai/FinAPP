@@ -24,6 +24,8 @@ namespace FinApp.Controllers
 
         [HttpPost("signin")]
         public async Task<IActionResult> SignIn(UserLoginDTO userDto)
+
+
         {
             var user = await _authService.SignInAsync(userDto);
 
