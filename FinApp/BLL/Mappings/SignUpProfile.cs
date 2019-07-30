@@ -2,7 +2,7 @@
 using DAL.DTOs;
 using DAL.Entities;
 
-namespace DAL.Mappings
+namespace BLL.Mappings
 {
     public class SignUpProfile : Profile
     {

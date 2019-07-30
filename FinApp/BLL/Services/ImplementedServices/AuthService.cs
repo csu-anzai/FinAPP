@@ -30,8 +30,8 @@ namespace BLL.Services.ImplementedServices
 
             // Check if password hashes are the same.
             // Now its throw an exeption
-            //if (!_hasher.CheckPassWithHash(existedUser.Password, user.Password))
-            //    return null;
+            if (!_hasher.CheckPassWithHash(user.Password, existedUser.Password))
+                return null;
 
             return existedUser;
         }

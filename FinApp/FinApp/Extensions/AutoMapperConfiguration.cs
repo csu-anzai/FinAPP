@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DAL.Mappings;
+using BLL.Mappings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FinApp.Extensions
@@ -10,6 +10,7 @@ namespace FinApp.Extensions
         {
             services.AddSingleton(new MapperConfiguration(c =>
             {
+                c.AddProfile(new SignInProfile());
                 c.AddProfile(new SignUpProfile());
             }).CreateMapper());
         }
