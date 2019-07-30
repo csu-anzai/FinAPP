@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
@@ -17,15 +16,17 @@ export class LoginPageComponent implements OnInit {
   }
 
   onLogin() {
-    this.authService.login(this.model).subscribe( () => {
-      this.router.navigate(['fetch-data']);
-    });
+    this.authService.login(this.model).subscribe(
+      next => {
+        console.log('Logged in successfuly');
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+        this.router.navigate(['fetch-data']);
+      });
   }
-
-  // onLogout() {
-  //   localStorage.removeItem('token');
-  //   this.router.navigate(['/home']);
-  // }
 
   loggedIn() {
     return this.authService.loggedIn();

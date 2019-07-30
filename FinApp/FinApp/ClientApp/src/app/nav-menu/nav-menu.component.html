@@ -1,27 +1,50 @@
 <header>
   <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>
     <div class="container">
-      <a class="navbar-brand" [routerLink]='["/"]'>FinApp</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation"
-              [attr.aria-expanded]="isExpanded" (click)="toggle()">
+      <a class="navbar-brand"
+         [routerLink]='["/"]'>FinApp</a>
+      <button class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target=".navbar-collapse"
+              aria-label="Toggle navigation"
+              [attr.aria-expanded]="isExpanded"
+              (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}' *ngIf="!loggedIn()">
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+           [ngClass]='{"show": isExpanded}'
+           *ngIf="!loggedIn();else logOut">
         <ul class="navbar-nav flex-grow">
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" [routerLink]='["/login-page"]'>Log in</a>
+          <li class="nav-item"
+              [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark"
+               [routerLink]='["/login-page"]'>Log in</a>
           </li>
-          <li class="nav-item" [routerLinkActive]='["link-active"]'>
-            <a class="nav-link text-dark" [routerLink]='["/sign-up"]'>Register</a>
+          <li class="nav-item"
+              [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark"
+               [routerLink]='["/sign-up"]'>Register</a>
           </li>
         </ul>
       </div>
-      <div class="dropdown" *ngIf="loggedIn()">
-        <span >
-              Welcome {{ authService.decodedToken?.name | titlecase }}
-        </span>
-      </div>
+      <ng-template #logOut>
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
+             [ngClass]='{"show": isExpanded}'>
+          <ul class="navbar-nav flex-grow">
+            <li class="nav-item">
+              <a class="nav-link text-dark"
+                 [routerLink]='["/login-page"]'>Welcome <b>{{ authService.decodedToken?.name | titlecase }}</b></a>
+            </li>
+            <li class="nav-item cursor-on"
+                [routerLinkActive]='["link-active"]'>
+              <a class="nav-link text-dark"
+                 (click)="onLogout()">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
     </div>
   </nav>
 </header>
