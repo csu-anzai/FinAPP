@@ -1,4 +1,5 @@
-﻿using BLL.Services.IServices;
+﻿using AutoMapper;
+using BLL.Services.IServices;
 using DAL.DTOs;
 using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -12,19 +13,21 @@ namespace FinApp.Controllers
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IAuthService _authService;
 
-        public AuthController(IAuthService userService)
+        public AuthController(IAuthService userService, IMapper mapper)
         {
             _authService = userService;
+            _mapper = mapper;
         }
 
         [HttpPost("signin")]
-        public async Task<IActionResult> SignIn(UserLoginDTO user)
+        public async Task<IActionResult> SignIn(UserLoginDTO userDto)
         {
-            var userData = await _authService.SignInAsync(user);
+            var user = await _authService.SignInAsync(userDto);
 
-            if (userData == null)
+            if (user == null)
                 return NotFound();
 
             // TODO: sending an access token to the front-end
@@ -33,14 +36,18 @@ namespace FinApp.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp(User user)
+        public async Task<IActionResult> SignUp(UserRegistrationDTO userDto)
         {
-            var newData = await _authService.SignUpAsync(user);
+            var user = _mapper.Map<User>(userDto);
 
-            if (newData == null)
+            user.RoleId = 1;
+
+            var newUser = await _authService.SignUpAsync(user);
+
+            if (newUser == null)
                 return Unauthorized();
 
-            return Ok(newData);
+            return Ok(newUser);
         }
 
     }
