@@ -7,6 +7,5 @@ namespace BLL.Services.IServices
     public interface IAuthService : IService<User>
     {
         Task<User> SignInAsync(UserLoginDTO user);
-        Task<User> SignUpAsync(User user);
     }
 }

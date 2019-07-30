@@ -5,6 +5,6 @@ namespace DAL.UnitOfWork
 {
     public interface IUnitOfWork : IDisposable
     {
-        Task Complete();
+        Task<int> Complete();
     }
 }

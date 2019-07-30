@@ -1,8 +1,5 @@
 using AutoMapper;
-using BLL.Security.Jwt;
 using DAL.Context;
-using DAL.Repositories.ImplementedRepositories;
-using DAL.Repositories.IRepositories;
 using FinApp.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,10 +30,6 @@ namespace FinApp
             services.AddDbContext<FinAppContext>(options =>
                 options.UseSqlServer(Configuration["Data:DefaultConnection"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddTransient<JwtManager>();
-            services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<ITokenRepository, TokenRepository>();
 
             services.AddAutoMapper();
             services.ConfigureAutoMapper();

@@ -1,5 +1,4 @@
 ﻿using DAL.Context;
-using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -11,14 +10,14 @@ namespace DAL.UnitOfWork
         private readonly DbContext _context;
         private bool _disposed = false;
 
-        public UnitOfWork(FinAppContext context, IAuthRepository authRepository)
+        public UnitOfWork(FinAppContext context)
         {
             _context = context;
         }
 
-        public async Task Complete()
+        public async Task<int> Complete()
         {
-             await _context.SaveChangesAsync();
+            return await _context.SaveChangesAsync();
         }
 
         protected virtual void Dispose(bool disposing)

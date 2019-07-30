@@ -8,7 +8,10 @@ import { throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = 'https://localhost:44397/api/auth/';
+  baseUrl = 'https://localhost:44397/api/';
+  signInParameter = 'auth/';
+  signUpParameter = 'user/';
+
   jwtHelper = new JwtHelperService();
   decodedToken: any;
 
@@ -16,7 +19,7 @@ export class AuthService {
 
   login(model: any) {
     try {
-      return this.http.post(this.baseUrl + 'signin', model)
+      return this.http.post(this.baseUrl + this.signInParameter + 'signin', model)
         .pipe(
           map((response: any) => {
             const user = response;
@@ -32,10 +35,10 @@ export class AuthService {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + 'signup', model)
+    return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model)
       .pipe(
         catchError(this.handleError)
-      );;
+      );
   }
 
   handleError(error) {

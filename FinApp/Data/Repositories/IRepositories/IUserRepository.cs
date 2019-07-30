@@ -3,7 +3,7 @@ using DAL.IRepositories;
 
 namespace DAL.Repositories.IRepositories
 {
-    public interface IAuthRepository : IBaseRepository<User>
+    public interface IUserRepository : IBaseRepository<User>
     {
     }
 }

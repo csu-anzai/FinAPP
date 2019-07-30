@@ -9,7 +9,7 @@ namespace BLL.Services
     public class Service<TResult> : IService<TResult> where TResult : class
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IBaseRepository<TResult> _repository;
+        protected readonly IBaseRepository<TResult> _repository;
 
         public Service(IUnitOfWork unitOfWork, IBaseRepository<TResult> baseRepository)
         {
@@ -19,7 +19,7 @@ namespace BLL.Services
         public async Task<TResult> CreateAsync(TResult entity)
         {
             await _repository.AddAsync(entity);
-            await _unitOfWork.Complete();
+            var smth = await _unitOfWork.Complete();
 
             return entity;
         }
