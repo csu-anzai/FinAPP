@@ -5,5 +5,7 @@ namespace DAL.Repositories.IRepositories
 {
     public interface IAuthRepository : IBaseRepository<User>
     {
+
+
     }
 }

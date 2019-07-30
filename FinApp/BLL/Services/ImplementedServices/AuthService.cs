@@ -12,24 +12,25 @@ namespace BLL.Services.ImplementedServices
     {
         protected IPassHasher _hasher;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAuthRepository _authRepository;  
+        private readonly IAuthRepository _authRepository;
+        private readonly IRoleRepository _roleRepository;
 
-        public AuthService(IUnitOfWork unitOfWork, IAuthRepository authRepository, IPassHasher hasher) : base(unitOfWork, authRepository)
+        public AuthService(IUnitOfWork unitOfWork, IAuthRepository authRepository, IPassHasher hasher, IRoleRepository roleRepository) : base(unitOfWork, authRepository)
         {
             _hasher = hasher;
             _unitOfWork = unitOfWork;
             _authRepository = authRepository;
+            _roleRepository = roleRepository;
         }
 
         public async Task<User> SignInAsync(UserLoginDTO user)
         {
             var existedUser = await _authRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
-
+            var role = await _roleRepository.GetAsync(existedUser.RoleId);
             if (existedUser == null)
                 return null;
 
-            // Check if password hashes are the same.
-            // Now its throw an exeption
+            
             if (!_hasher.CheckPassWithHash(user.Password, existedUser.Password))
                 return null;
 
