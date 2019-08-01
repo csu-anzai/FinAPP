@@ -4,7 +4,6 @@ using BLL.Services.IServices;
 using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
-using DAL.UnitOfWork;
 using System.Threading.Tasks;
 
 namespace BLL.Services.ImplementedServices
@@ -18,7 +17,7 @@ namespace BLL.Services.ImplementedServices
 
         private IAuthRepository _authRepository;
 
-        public AuthService(IAuthRepository authRepository, IPassHasher hasher, IRoleRepository roleRepository, ITokenRepository tokenRepository, JwtManager jwtManager) 
+        public AuthService(IAuthRepository authRepository, IPassHasher hasher, IRoleRepository roleRepository, ITokenRepository tokenRepository, JwtManager jwtManager)
         {
             _authRepository = authRepository;
             _hasher = hasher;
@@ -39,6 +38,7 @@ namespace BLL.Services.ImplementedServices
             Token refreshToken = new Token();
 
             refreshToken.RefreshToken = token.RefreshToken;
+            refreshToken.User = existedUser;
             refreshToken.User.Id = existedUser.Id;
 
             //await _tokenRepository.AddAsync(refreshToken);

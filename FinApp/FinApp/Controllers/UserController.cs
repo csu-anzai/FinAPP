@@ -25,6 +25,11 @@ namespace FinApp.Controllers
         {
             var user = _mapper.Map<User>(userDto);
 
+            var isExist = await _userService.IsExist(user.Email);
+
+            if (isExist)
+                return BadRequest();
+
             user.RoleId = 1;
 
             var newUser = await _userService.CreateUserAsync(user);

@@ -3,7 +3,6 @@ using BLL.Security;
 using BLL.Services.IServices;
 using DAL.DTOs;
 using DAL.Entities;
-using DAL.IRepositories;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
 using System.Threading.Tasks;
@@ -56,6 +55,16 @@ namespace BLL.Services.ImplementedServices
             await _unitOfWork.Complete();
 
             return upToDateUser;
+        }
+
+        public async Task<bool> IsExist(string email)
+        {
+            var existedUser = await _userRepository.SingleOrDefaultAsync(u => u.Email == email);
+
+            if (existedUser == null)
+                return false;
+
+            return true;
         }
     }
 }
