@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.IServices
 {
-    public interface IAuthService : IService<User>
+    public interface IAuthService
     {
         Task<User> SignInAsync(UserLoginDTO user);
     }

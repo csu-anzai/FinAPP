@@ -9,15 +9,18 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.ImplementedServices
 {
-    public class AuthService : Service<User>, IAuthService
+    public class AuthService : IAuthService
     {
         protected IPassHasher _hasher;
         private readonly ITokenRepository _tokenRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly JwtManager _jwtManager;
 
-        public AuthService(IUnitOfWork unitOfWork, IAuthRepository authRepository, IPassHasher hasher, IRoleRepository roleRepository, ITokenRepository tokenRepository, JwtManager jwtManager) : base(unitOfWork, authRepository)
+        private IAuthRepository _authRepository;
+
+        public AuthService(IAuthRepository authRepository, IPassHasher hasher, IRoleRepository roleRepository, ITokenRepository tokenRepository, JwtManager jwtManager) 
         {
+            _authRepository = authRepository;
             _hasher = hasher;
             _roleRepository = roleRepository;
             _tokenRepository = tokenRepository;
@@ -26,7 +29,7 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<User> SignInAsync(UserLoginDTO user)
         {
-            var existedUser = await _repository.SingleOrDefaultAsync(u => u.Email == user.Email);
+            var existedUser = await _authRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
 
             if (existedUser == null)
                 return null;
@@ -36,7 +39,7 @@ namespace BLL.Services.ImplementedServices
             Token refreshToken = new Token();
 
             refreshToken.RefreshToken = token.RefreshToken;
-            refreshToken.UserId = existedUser.Id;
+            refreshToken.User.Id = existedUser.Id;
 
             //await _tokenRepository.AddAsync(refreshToken);
 

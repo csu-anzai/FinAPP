@@ -8,7 +8,6 @@ namespace DAL.Entities
         public string RefreshToken { get; set; }
         public DateTime? CreateDate { get; set; }
 
-        public int UserId { get; set; }
         public User User { get; set; }
     }
 }
