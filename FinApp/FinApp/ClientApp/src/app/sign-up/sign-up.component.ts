@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
-import { SignUpUser } from './signUpUser';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
@@ -9,29 +8,48 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
-export class  SignUpComponent implements OnInit {
+export class SignUpComponent implements OnInit {
 
   signUpForm: FormGroup;
+  user;
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    fb: FormBuilder
   ) {
-    // redirect to home if already logged in
-    //if (this.authService.currentUserValue) {
-    //  this.router.navigate(['/']);
-    //}
+    this.signUpForm = fb.group({
+      'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z]*')])),
+      'BirthDate': new FormControl('', Validators.required),
+      'Surname': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z]*')])),
+      'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
+      'Password': new FormControl('', Validators.required),
+      'RepeatedPassword': new FormControl(''),
+    });
+    
   }
-
-  user = new SignUpUser('', '', '', '');
 
   ngOnInit() {
   }
 
   onSignUp() {
-    this.authService.register(this.user).subscribe(() => {
-      this.router.navigate(['login-page']);
-    });
+    if (this.signUpForm.valid && this.signUpForm.controls['Password'].value == this.signUpForm.controls['RepeatedPassword'].value) {
+      this.user = {
+        Name: this.signUpForm.controls['Name'].value,
+        Surname: this.signUpForm.controls['Surname'].value,
+        BirthDate: this.signUpForm.controls['BirthDate'].value,
+        Email: this.signUpForm.controls['Email'].value,
+        Password: this.signUpForm.controls['Password'].value,
+      };
+      this.authService.register(this.user).subscribe(() => {
+       //if email is not available -> show message
+        this.router.navigate(['login-page']);
+      });
+    }
+    else {
+      for (let i in this.signUpForm.controls)
+        this.signUpForm.controls[i].markAsTouched();
+    }
   }
 
 

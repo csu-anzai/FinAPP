@@ -14,7 +14,6 @@ input[type=password], select {
   display: inline-block;
   border: 2px solid #ccc;
   border-radius: 8px;
-  box-sizing: border-box;
   min-height: 40px;
 }
 
@@ -30,7 +29,6 @@ input[type=email], select {
   border: 2px solid #ccc;
   border-radius: 8px;
   min-height: 40px;
-  box-sizing: border-box;
 }
 
 .button {
