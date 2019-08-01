@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private cookieService: CookieService, private router: Router) { }
 
   ngOnInit() {
     this.loggedIn();
@@ -29,7 +30,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   onLogout() {
-    localStorage.removeItem('token');
+    this.cookieService.delete('token');
     this.router.navigate(['']);
   }
 }

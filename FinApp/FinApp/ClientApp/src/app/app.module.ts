@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -49,7 +50,8 @@ import { AuthService } from './_services/auth.service';
     ])
   ],
   providers: [
-    AuthService
+    AuthService,
+    CookieService
   ],
   bootstrap: [AppComponent]
 })
