@@ -5,29 +5,39 @@ using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
+using Serilog;
 using System.Threading.Tasks;
+
 
 namespace BLL.Services.ImplementedServices
 {
     public class UserService : IUserService
     {
-        protected IPassHasher _hasher;
+        private readonly ILogger _logger;
+        private readonly ITokenRepository _tokenRepository;
+        private readonly IPassHasher _hasher;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        protected readonly IUserRepository _userRepository;
-        private readonly ITokenRepository _tokenRepository;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, ITokenRepository tokenRepository, IPassHasher hasher, IMapper mapper)
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, ITokenRepository tokenRepository, IPassHasher hasher, IMapper mapper, ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             _tokenRepository = tokenRepository;
             _hasher = hasher;
             _mapper = mapper;
+            _logger = logger;
         }
 
         public async Task<User> CreateUserAsync(User user)
         {
+            var existedUser = await _userRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
+            if (existedUser != null)
+            {
+                _logger.Fatal("Email already existed, do not create User");
+                return null;
+            }
             user.Password = _hasher.HashPassword(user.Password);
 
             var token = new Token();
@@ -37,6 +47,7 @@ namespace BLL.Services.ImplementedServices
 
             user.Token = token;
             user.TokenId = token.Id;
+
             await _userRepository.AddAsync(user);
 
             await _unitOfWork.Complete();

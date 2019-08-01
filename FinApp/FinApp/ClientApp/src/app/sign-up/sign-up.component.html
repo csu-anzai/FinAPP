@@ -1,65 +1,74 @@
-<div class="container d-flex justify-content-center">
-<div class=" d-flex justify-content-center flex-column page-size w-50">
-  <h2 class="header">Registration</h2>
-
-  <form (ngSubmit)="onSignUp()" class="flex justify-content-center flex-column">
-
-    <div class="form-group">
-      <label class="" for="firstname">Name:</label><br>
-      <input type="text" class="form-control"
-             [(ngModel)]="user.Name" name="first" #first="ngModel"
-             required minlength="3" pattern="[a-zA-Z]*">
-      <ng-container *ngIf="first.invalid || first.touched">
-        <p class="text-danger" [hidden]="first.valid || first.untouched">Firstname is required</p>
+<div class="form">
+  <form method="post" (ngSubmit)="onSignUp()" [formGroup]="signUpForm">
+    <h2>Registration</h2>
+    <p>
+      <label class="floatLabel" for="firstname">Name:</label>
+      <input type="text"
+             formControlName="Name"
+             #name>
+      <ng-container *ngIf="signUpForm.controls['Name'].touched">
+        <small class="text-danger" *ngIf="signUpForm.controls['Name'].hasError('required')">Name is required</small>
+        <small class="text-danger" *ngIf="signUpForm.controls['Name'].hasError('pattern')">Name must has onle letters and spaces</small>
       </ng-container>
+    </p>
+    <p>
+      <label class="floatLabel" for="lastname">Surname:</label>
+      <input type="text"
+             formControlName="Surname"
+             #surname>
+      <ng-container *ngIf="signUpForm.controls['Surname'].touched">
+        <small class="text-danger" *ngIf="signUpForm.controls['Surname'].hasError('required')">Surname is required</small>
+        <small class="text-danger" *ngIf="signUpForm.controls['Surname'].hasError('pattern')">Surname must has onle letters and spaces</small>
+      </ng-container>
+    </p>
+    <p>
+      <label class="floatLabel" for="lastname">BirthDate:</label>
+      <input type="datetime"
+             ngbDatepicker
+             formControlName="BirthDate"
+             #brthdate>
+      <ng-container *ngIf="signUpForm.controls['BirthDate'].touched">
+        <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].hasError('required')">Surname is required</small>
+        <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].hasError('pattern')">Surname must has onle letters and spaces</small>
+      </ng-container>
+    </p>
+    <p>
+      <label class="floatLabel" for="lastname">Email:</label>
+      <input type="text"
+             formControlName="Email"
+             #email>
+      <ng-container *ngIf="signUpForm.controls['Email'].touched">
+        <small class="text-danger" *ngIf="signUpForm.controls['Email'].hasError('required')">Email is required</small>
+        <small class="text-danger" *ngIf="signUpForm.controls['Email'].hasError('email')">Email </small>
+      </ng-container>
+    </p>
+    <p>
+      <label class="floatLabel" for="lastname">Password:</label>
+      <input type="password"
+             formControlName="Password"
+             #password>
+      <ng-container *ngIf="signUpForm.controls['Password'].touched">
+        <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('required')">Password is required</small>
+        <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('pattern')">Password  </small>
+      </ng-container>
+    </p>
+    <p>
+      <label class="floatLabel" for="lastname">Repeat password:</label>
+      <input type="password"
+             formControlName="RepeatedPassword"
+             #repeated>
+      <ng-container *ngIf="signUpForm.controls['RepeatedPassword'].touched">
+        <small class="text-danger" *ngIf="repeated.value != password.value">Passwords don`t match</small>
+      </ng-container>
+    </p>
+    <div class="row justify-content-center text-center">
+      <button type="submit" [disabled]=" loading" value="Create My Account" id="submit" class="button col-3" style="vertical-align:middle"><span>Sign Up</span></button>
+      <span class=" col-2">Or </span>
+      <div class="col-3 ">
+        <img src="../../assets/google-icon.png" alt="Google" class=" google-icon float-left">
+      </div>
     </div>
-
-    <div class="form-group">
-      <label for="lastname">Surname:</label><br>
-      <input type="text" class="form-control"
-             [(ngModel)]="user.Surname" name="lastname" #lastName="ngModel"
-             required minlength="3" pattern="[a-zA-Z]*">
-      <p class="text-danger" [hidden]="lastName.valid || lastName.untouched">Lastname is required</p>
-    </div>
-
-    <div class="form-group">
-      <label for="email">Email:</label><br>
-      <input type="email" class="form-control" id="email"
-             [(ngModel)]="user.Email" name="Email" #email="ngModel"
-             required email>
-      <p [hidden]="email.valid || email.untouched"
-           class="text-danger">
-        Email is required
-      </p>
-
-    </div>
-
-    <div class="form-group">
-      <label for="Password">Password:</label><br>
-      <input type="password" class="form-control"
-             [(ngModel)]="user.Password" name="password" #password="ngModel"
-             required>
-      <p [hidden]="password.valid || password.untouched"
-         class="text-danger">
-        Password is required
-      </p>
-    </div>
- 
-  <div class="form-group">
-    <label for="Password">Repeat password:</label><br>
-    <input type="password" class="form-control"
-           [(ngModel)]="user.repeatedPassword" name="repeatedPassword" #repeatedPassword="ngModel"
-           required>
-  </div>
-
-    
-
-    <button class="button w-100"><span>Sign Up</span></button>
-
   </form>
-    <img src="../../assets/google-icon.png" class="align-self-center icon" alt="Google"  (click)="registrationByGoogle()" />
   
-  <p>Have already account? <a [routerLink]='["/login-page"]'>Sign In</a> </p>
-
+  <h5 class="mt-4">Have already account? <a [routerLink]='["/login-page"]'>Log In</a> </h5>
 </div>
-  </div>
