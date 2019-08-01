@@ -12,8 +12,8 @@ namespace BLL.Services.ImplementedServices
     public class UserService : Service<User>, IUserService
     {
         protected IPassHasher _hasher;
-        private readonly ILogger logger;
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IPassHasher hasher) : base(unitOfWork, userRepository)
+        private readonly ILogger _logger;
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, IPassHasher hasher, ILogger logger) : base(unitOfWork, userRepository)
         {
             _hasher = hasher;
         }
@@ -23,7 +23,7 @@ namespace BLL.Services.ImplementedServices
             var existedUser = await _repository.SingleOrDefaultAsync(u => u.Email == user.Email);
             if (existedUser != null)
             {
-                logger.Fatal("Email already existed, do not create User");
+                _logger.Fatal("Email already existed, do not create User");
                 return null;
             }
             user.Password = _hasher.HashPassword(user.Password);
