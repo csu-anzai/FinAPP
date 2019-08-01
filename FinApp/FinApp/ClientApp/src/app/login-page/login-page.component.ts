@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page',
@@ -9,8 +10,18 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
   model: any = {};
+  signInForm: FormGroup;
 
-  constructor(private authService: AuthService, private router: Router) { }
+
+  constructor(private authService: AuthService, private router: Router, fb: FormBuilder)
+  {
+    this.signInForm = fb.group({
+     'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
+     'Password': new FormControl('', Validators.required),
+    });
+
+
+  }
 
   ngOnInit() {
   }
@@ -27,6 +38,7 @@ export class LoginPageComponent implements OnInit {
         this.router.navigate(['fetch-data']);
       });
   }
+  get f() { return this.signInForm.controls; }
 
   loggedIn() {
     return this.authService.loggedIn();

@@ -28,7 +28,7 @@ h2 {
   padding: 10px;
   text-align: center;
   font-size: 30px;
-  color: grey;
+  color: #5e5c55;
   border-bottom: solid 1px #e5e5e5;
 }
 
@@ -59,7 +59,7 @@ label {
   position: absolute;
   left: 8px;
   top: 12px;
-  color: #999;
+  color: #5e5c55;
   font-size: 16px;
   display: inline-block;
   padding: 4px 10px;
