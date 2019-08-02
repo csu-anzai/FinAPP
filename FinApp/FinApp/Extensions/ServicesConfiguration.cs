@@ -23,7 +23,6 @@ namespace FinApp.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<ITokenService, TokenService>();
 
             services.AddTransient<JwtManager>();
             services.AddTransient<IPassHasher, PassHasher>();

@@ -6,19 +6,50 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using DAL.DTOs;
+using System.Threading.Tasks;
+using DAL.Entities;
+using DAL.Repositories.IRepositories;
+using DAL.UnitOfWork;
 
 namespace BLL.Security.Jwt
 {
     public class JwtManager
     {
         private readonly JwtOptions _jwtOptions;
+        private readonly ITokenRepository _tokenRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public JwtManager(IOptions<JwtOptions> jwtOptions)
+        public JwtManager(IOptions<JwtOptions> jwtOptions, ITokenRepository tokenRepository, IUnitOfWork unitOfWork)
         {
             _jwtOptions = jwtOptions.Value;
+            _tokenRepository = tokenRepository;
+            _unitOfWork = unitOfWork;
   //          ThrowIfInvalidOptions(_jwtOptions);
         }
+        public bool IsExpired(string accesToken)
+        {
+            var validationParameters = new TokenValidationParameters()
+            {
+                ValidateAudience = false,
+                ValidateIssuer = false,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _jwtOptions.SigningCredentials.Key,
+                ValidateLifetime = true
+            };
 
+            var tokenHandler = new JwtSecurityTokenHandler();
+            SecurityToken validatedToken = null;
+
+            try
+            {
+                tokenHandler.ValidateToken(accesToken, validationParameters, out validatedToken);
+            }
+            catch (SecurityTokenExpiredException)
+            {
+                return false;
+            }
+            return true;
+        }
         public (ClaimsPrincipal principal, JwtSecurityToken jwt) GetPrincipalFromExpiredToken(string token)
         {
             var principal = new JwtSecurityTokenHandler()
@@ -91,6 +122,16 @@ namespace BLL.Security.Jwt
                 (date.ToUniversalTime() - new DateTimeOffset(
                      1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
                 .TotalSeconds);
+
+        public async Task<Token> UpdateAsync(User user, string refreshToken)
+        {
+            var token = await _tokenRepository.GetTokenByUserId(user.Id);
+
+            token.RefreshToken = refreshToken;
+            await _unitOfWork.Complete();
+
+            return token;
+        }
 
         private static void ThrowIfInvalidOptions(JwtOptions options)
         {
