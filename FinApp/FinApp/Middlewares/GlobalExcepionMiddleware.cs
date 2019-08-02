@@ -45,7 +45,7 @@ namespace FinApp.Middlewares
                 logger.LogError(e, "Unhandled exception");
                 httpContext.Response.StatusCode = 500;
       
-                var body = JsonConvert.SerializeObject(new { Error = "Something went wrong" });
+                var body = JsonConvert.SerializeObject(new { e.Message });
                 var bytes = Encoding.UTF8.GetBytes(body);
                 await httpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
             }
