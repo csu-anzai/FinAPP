@@ -37,23 +37,12 @@ export class AuthService {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
 
-  handleError(error) {
-    let errorMessage = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      errorMessage = `${error.error.message}`;
-    } else {
-      // server-side error
-      errorMessage = `${error.message}`;
+    try {
+      return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model);
+    } catch (error) {
+      this.alertService.errorMsg(error.message);
     }
-    this.alertService.errorMsg(errorMessage);
-    return throwError(errorMessage);
   }
 
   // Check if access token expires

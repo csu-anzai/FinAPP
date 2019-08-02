@@ -32,7 +32,7 @@ namespace FinApp.Controllers
             if (newUser == null)
                 return BadRequest(new { message = "User already exists" });
 
-            return Ok(newUser);
+            return Ok();
         }
     }
 }
