@@ -26,27 +26,27 @@ namespace BLL.Services.ImplementedServices
             _jwtManager = jwtManager;
         }
 
-        public async Task<User> SignInAsync(UserLoginDTO user)
+        public async Task<TokenDTO> SignInAsync(UserLoginDTO user)
         {
             var existedUser = await _authRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
 
             if (existedUser == null)
                 return null;
 
+            if (!_hasher.CheckPassWithHash(user.Password, existedUser.Password))
+                return null;
+
             var role = await _roleRepository.GetAsync(existedUser.RoleId);
             var token = _jwtManager.GenerateToken(existedUser.Id, user.Email, role?.Name);
-            Token refreshToken = new Token();
 
+            var refreshToken = new Token();
             refreshToken.RefreshToken = token.RefreshToken;
             refreshToken.User = existedUser;
             refreshToken.User.Id = existedUser.Id;
 
             //await _tokenRepository.AddAsync(refreshToken);
 
-            if (!_hasher.CheckPassWithHash(user.Password, existedUser.Password))
-                return null;
-
-            return existedUser;
+            return token;
         }
     }
 }

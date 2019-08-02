@@ -5,7 +5,6 @@ using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
-using Serilog;
 using System.Threading.Tasks;
 
 
@@ -13,21 +12,21 @@ namespace BLL.Services.ImplementedServices
 {
     public class UserService : IUserService
     {
-        private readonly ILogger _logger;
+        //private readonly ILogger _logger;
         private readonly ITokenRepository _tokenRepository;
         private readonly IPassHasher _hasher;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, ITokenRepository tokenRepository, IPassHasher hasher, IMapper mapper, ILogger logger)
+        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, ITokenRepository tokenRepository, IPassHasher hasher, IMapper mapper/*, ILogger logger*/)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
             _tokenRepository = tokenRepository;
             _hasher = hasher;
             _mapper = mapper;
-            _logger = logger;
+            //_logger = logger;
         }
 
         public async Task<User> CreateUserAsync(User user)
@@ -35,19 +34,17 @@ namespace BLL.Services.ImplementedServices
             var existedUser = await _userRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
             if (existedUser != null)
             {
-                _logger.Fatal("Email already existed, do not create User");
+                //_logger.Fatal("Email already existed, do not create User");
                 return null;
             }
             user.Password = _hasher.HashPassword(user.Password);
 
             var token = new Token();
             token.User = user;
-
-            await _tokenRepository.AddAsync(token);
-
             user.Token = token;
             user.TokenId = token.Id;
 
+            await _tokenRepository.AddAsync(token);
             await _userRepository.AddAsync(user);
 
             await _unitOfWork.Complete();
@@ -66,16 +63,6 @@ namespace BLL.Services.ImplementedServices
             await _unitOfWork.Complete();
 
             return upToDateUser;
-        }
-
-        public async Task<bool> IsExist(string email)
-        {
-            var existedUser = await _userRepository.SingleOrDefaultAsync(u => u.Email == email);
-
-            if (existedUser == null)
-                return false;
-
-            return true;
         }
     }
 }
