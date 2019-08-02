@@ -5,6 +5,6 @@ namespace BLL.Services.IServices
 {
     public interface ITokenService
     {
-        Task<Token> UpdateAsync(User user);
+        Task<Token> UpdateAsync(User user, string refreshToken);
     }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { NotificationService } from '../_services/notification.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -11,7 +12,10 @@ import { CookieService } from 'ngx-cookie-service';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
 
-  constructor(private authService: AuthService, private cookieService: CookieService, private router: Router) { }
+  constructor(private authService: AuthService,
+    private cookieService: CookieService,
+    private router: Router,
+    private alertService: NotificationService) { }
 
   ngOnInit() {
     this.loggedIn();
@@ -32,5 +36,6 @@ export class NavMenuComponent implements OnInit {
   onLogout() {
     this.cookieService.delete('token');
     this.router.navigate(['']);
+    this.alertService.infoMsg('Logged Out');
   }
 }

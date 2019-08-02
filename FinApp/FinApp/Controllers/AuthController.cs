@@ -25,7 +25,7 @@ namespace FinApp.Controllers
             var token = await _authService.SignInAsync(userDto);
 
             if (token == null)
-                return NotFound();
+                return BadRequest(new { message = "Credentials are invalid" });
 
             // TODO: sending an access token to the front-end
             // A random jwt token below

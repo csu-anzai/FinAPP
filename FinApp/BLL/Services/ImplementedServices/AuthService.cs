@@ -14,16 +14,17 @@ namespace BLL.Services.ImplementedServices
         private readonly ITokenRepository _tokenRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly JwtManager _jwtManager;
-
+        private readonly ITokenService _tokenService;
         private IAuthRepository _authRepository;
 
-        public AuthService(IAuthRepository authRepository, IPassHasher hasher, IRoleRepository roleRepository, ITokenRepository tokenRepository, JwtManager jwtManager)
+        public AuthService(IAuthRepository authRepository, IPassHasher hasher, IRoleRepository roleRepository, ITokenRepository tokenRepository, JwtManager jwtManager, ITokenService tokenService)
         {
             _authRepository = authRepository;
             _hasher = hasher;
             _roleRepository = roleRepository;
             _tokenRepository = tokenRepository;
             _jwtManager = jwtManager;
+            _tokenService = tokenService;
         }
 
         public async Task<TokenDTO> SignInAsync(UserLoginDTO user)
@@ -44,6 +45,7 @@ namespace BLL.Services.ImplementedServices
             refreshToken.User = existedUser;
             refreshToken.User.Id = existedUser.Id;
 
+            await _tokenService.UpdateAsync(existedUser, refreshToken.RefreshToken);
             //await _tokenRepository.AddAsync(refreshToken);
 
             return token;

@@ -4,6 +4,7 @@ import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService, private alertService: NotificationService) { }
 
   login(model: any) {
     try {
@@ -31,7 +32,7 @@ export class AuthService {
           })
         );
     } catch (error) {
-      console.log(error);
+      this.alertService.errorMsg(error.message);
     }
   }
 
@@ -46,12 +47,12 @@ export class AuthService {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       // client-side error
-      errorMessage = `Error: ${error.error.message}`;
+      errorMessage = `${error.error.message}`;
     } else {
       // server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      errorMessage = `${error.message}`;
     }
-    window.alert(errorMessage);
+    this.alertService.errorMsg(errorMessage);
     return throwError(errorMessage);
   }
 

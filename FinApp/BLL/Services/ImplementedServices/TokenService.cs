@@ -14,24 +14,21 @@ namespace BLL.Services.ImplementedServices
         private readonly IRoleRepository _roleRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly JwtManager _jwtManager;
-        private readonly ILogger _logger;
 
-        public TokenService(IUnitOfWork unitOfWork, ITokenRepository tokenRepository, IRoleRepository roleRepository, JwtManager jwtManager, ILogger logger)
+        public TokenService(IUnitOfWork unitOfWork, ITokenRepository tokenRepository, IRoleRepository roleRepository, JwtManager jwtManager)
         {
             _unitOfWork = unitOfWork;
             _tokenRepository = tokenRepository;
             _roleRepository = roleRepository;
             _jwtManager = jwtManager;
-            _logger = logger;
         }
 
-        public async Task<Token> UpdateAsync(User user)
+        public async Task<Token> UpdateAsync(User user, string refreshToken)
         {
             var token = await _tokenRepository.GetTokenByUserId(user.Id);
 
             //updating
-            //token.RefreshToken = 
-            //token.DateTime = DateTime.Now;
+            token.RefreshToken = refreshToken;
 
             await _unitOfWork.Complete();
 

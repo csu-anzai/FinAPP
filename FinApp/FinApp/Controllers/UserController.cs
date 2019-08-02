@@ -30,7 +30,7 @@ namespace FinApp.Controllers
             var newUser = await _userService.CreateUserAsync(user);
 
             if (newUser == null)
-                return Unauthorized();
+                return BadRequest(new { message = "User already exists" });
 
             return Ok(newUser);
         }
