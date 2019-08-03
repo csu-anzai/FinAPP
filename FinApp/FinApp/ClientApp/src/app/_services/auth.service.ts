@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { NotificationService } from './notification.service';
 
@@ -19,22 +19,18 @@ export class AuthService {
 
   constructor(private http: HttpClient, private cookieService: CookieService, private alertService: NotificationService) { }
 
-  login(model: any) {
+  login(model: any): Observable<any> {
     return this.http.post(this.baseUrl + this.signInParameter + 'signin', model)
       .pipe(
         map((response: any) => {
-          console.log(response);
-
-          console.log('opa');
-
-          const user = response;
-          if (user) {
-            this.cookieService.set('token', user.token, null, null, null, true);
-            this.decodedToken = this.jwtHelper.decodeToken(user.token);
-            return user;
+          if (response && response.token) {
+            this.cookieService.set('token', response.token, null, null, null, true);
+            this.decodedToken = this.jwtHelper.decodeToken(response.token);
+            return response.token;
           }
-        })
-      );
+        }),
+        catchError(error => throwError(error))
+        );
   }
 
   register(model: any) {

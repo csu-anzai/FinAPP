@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Models.Exceptions;
 using BLL.Services.IServices;
 using DAL.DTOs;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace FinApp.Controllers
             var token = await _authService.SignInAsync(userDto);
 
             if (token == null)
-                return BadRequest(new { message = "Credentials are invalid", StatusCode = 400 });
+                return BadRequest(new ApiException(System.Net.HttpStatusCode.BadRequest, "Credentials are invalid"));
 
             return Ok(new { token = token.AccessToken });
         }

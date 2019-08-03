@@ -10,7 +10,6 @@ export class GlobalErrorHandler implements ErrorHandler {
     constructor(private injector: Injector) { }
 
     handleError(error: Error | HttpErrorResponse) {
-
         const errorService = this.injector.get(ErrorService);
         const notifier = this.injector.get(NotificationService);
 
@@ -23,7 +22,6 @@ export class GlobalErrorHandler implements ErrorHandler {
             const message = errorService.getClientMessage(error);
             notifier.errorMsg(message);
         }
-
         // Logger should be here
     }
 }

@@ -19,16 +19,13 @@ export class LoginPageComponent implements OnInit {
   }
 
   onLogin() {
-    this.authService.login(this.model).pipe(
-      catchError(err => throwError(err))
-    ).subscribe(
-      next => {},
-      error => throwError(error),
-      () => {
-        this.alertService.successMsg('Logged In');
-        this.router.navigate(['fetch-data']);
-      }
-    );
+    this.authService.login(this.model)
+      .subscribe(
+        () => {
+          this.alertService.successMsg('Logged In');
+          this.router.navigate(['fetch-data']);
+        }
+      );
   }
 
   loggedIn() {

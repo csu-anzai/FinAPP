@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Models.Exceptions;
 using BLL.Services.IServices;
 using DAL.DTOs;
 using DAL.Entities;
@@ -30,7 +31,7 @@ namespace FinApp.Controllers
             var newUser = await _userService.CreateUserAsync(user);
 
             if (newUser == null)
-                return BadRequest(new { message = "User already exists" });
+                return BadRequest(new ApiException(System.Net.HttpStatusCode.BadRequest, "User already exists"));
 
             return Ok();
         }

@@ -42,8 +42,6 @@ export class SignUpComponent implements OnInit {
         Password: this.signUpForm.controls['Password'].value,
       };
       this.authService.register(this.user).subscribe(
-        next => {},
-        error => { throw error; },
         () => {
           this.router.navigate(['login-page']);
         });
