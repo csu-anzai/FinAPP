@@ -20,24 +20,24 @@ export class AuthService {
   constructor(private http: HttpClient, private cookieService: CookieService, private alertService: NotificationService) { }
 
   login(model: any) {
-    try {
-      return this.http.post(this.baseUrl + this.signInParameter + 'signin', model)
-        .pipe(
-          map((response: any) => {
-            const user = response;
-            if (user) {
-              this.cookieService.set('token', user.token, null, null, null, true);
-              this.decodedToken = this.jwtHelper.decodeToken(user.token);
-            }
-          })
-        );
-    } catch (error) {
-      this.alertService.errorMsg(error.message);
-    }
+    return this.http.post(this.baseUrl + this.signInParameter + 'signin', model)
+      .pipe(
+        map((response: any) => {
+          console.log(response);
+
+          console.log('opa');
+
+          const user = response;
+          if (user) {
+            this.cookieService.set('token', user.token, null, null, null, true);
+            this.decodedToken = this.jwtHelper.decodeToken(user.token);
+            return user;
+          }
+        })
+      );
   }
 
   register(model: any) {
-
     try {
       return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model);
     } catch (error) {

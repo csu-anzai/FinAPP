@@ -26,14 +26,14 @@ export class SignUpComponent implements OnInit {
       'Password': new FormControl('', Validators.required),
       'RepeatedPassword': new FormControl(''),
     });
-    
+
   }
 
   ngOnInit() {
   }
 
   onSignUp() {
-    if (this.signUpForm.valid && this.signUpForm.controls['Password'].value == this.signUpForm.controls['RepeatedPassword'].value) {
+    if (this.signUpForm.valid && this.signUpForm.controls['Password'].value === this.signUpForm.controls['RepeatedPassword'].value) {
       this.user = {
         Name: this.signUpForm.controls['Name'].value,
         Surname: this.signUpForm.controls['Surname'].value,
@@ -41,14 +41,17 @@ export class SignUpComponent implements OnInit {
         Email: this.signUpForm.controls['Email'].value,
         Password: this.signUpForm.controls['Password'].value,
       };
-      this.authService.register(this.user).subscribe(() => {
-       //if email is not available -> show message
-        this.router.navigate(['login-page']);
-      });
-    }
-    else {
-      for (let i in this.signUpForm.controls)
+      this.authService.register(this.user).subscribe(
+        next => {},
+        error => { throw error; },
+        () => {
+          this.router.navigate(['login-page']);
+        });
+    } else {
+      // tslint:disable-next-line: forin
+      for (const i in this.signUpForm.controls) {
         this.signUpForm.controls[i].markAsTouched();
+      }
     }
   }
 
@@ -57,7 +60,6 @@ export class SignUpComponent implements OnInit {
   get f() { return this.signUpForm.controls; }
 
   registrationByGoogle() {
-    alert("Google");
+    alert('Google');
   }
-
 }

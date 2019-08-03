@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +22,9 @@ import { WelcomeCarouselComponent } from './welcome-components/welcome-carousel/
 
 import { AuthService } from './_services/auth.service';
 import { NotificationService } from './_services/notification.service';
+import { GlobalErrorHandler } from './common/global-error-handler';
+import { ServerErrorInterceptor } from './common/server-error';
+import { ErrorService } from './_services/error.service';
 
 @NgModule({
   declarations: [
@@ -56,14 +59,18 @@ import { NotificationService } from './_services/notification.service';
         positionClass: 'toast-bottom-right',
         closeButton: true,
         timeOut: 3000,
-        easeTime: 1000,
+        easeTime: 200,
+        maxOpened: 5
       }
     )
   ],
   providers: [
     AuthService,
     CookieService,
-    NotificationService
+    NotificationService,
+    ErrorService,
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
