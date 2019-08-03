@@ -32,7 +32,7 @@ h2 {
   border-bottom: solid 1px #e5e5e5;
 }
 
-p {
+.p {
   margin: 0 0 2em 0;
   position: relative;
 }
@@ -48,11 +48,9 @@ input {
   border-radius: 2px;
 }
 
-
   input:focus {
     background: #fff
   }
-
 
 
 label {
@@ -66,7 +64,6 @@ label {
   font-weight: 400;
   background-color: rgba(255,255,255,0);
 }
-
 
 .floatLabel {
   top: -11px;
@@ -124,3 +121,7 @@ label {
       opacity: 1;
       right: 0;
     }
+
+.validation-message {
+  height:10px;
+}
