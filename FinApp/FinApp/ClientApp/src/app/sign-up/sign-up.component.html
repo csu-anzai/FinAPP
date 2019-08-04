@@ -27,13 +27,16 @@
     </div>
     <div class="p">
       <label class="floatLabel" for="lastname">BirthDate:</label>
-      <input type="datetime"
-             ngbDatepicker
+      <input type="text"
+             class="form-control"
+             bsDatepicker
              formControlName="BirthDate"
+             [bsConfig]="{ isAnimated: true }"
              #brthdate>
       <div class="validation-message">
         <ng-container *ngIf="signUpForm.controls['BirthDate'].touched">
           <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].hasError('required')">Please choose your birthdate</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].invalid">Date format should be DD/MM/YYYY</small>
         </ng-container>
       </div>
     </div>
