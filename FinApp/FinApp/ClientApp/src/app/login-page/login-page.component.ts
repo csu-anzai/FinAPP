@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
+import { NotificationService } from '../_services/notification.service';
 
 @Component({
   selector: 'app-login-page',
@@ -10,20 +11,19 @@ import { Router } from '@angular/router';
 export class LoginPageComponent implements OnInit {
   model: any = {};
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router,  private alertService: NotificationService) { }
 
   ngOnInit() {
   }
 
   onLogin() {
     this.authService.login(this.model).subscribe(
-      next => {
-        console.log('Logged in successfuly');
-      },
+      next => {},
       error => {
-        console.log(error);
+        this.alertService.errorMsg(error.message);
       },
       () => {
+        this.alertService.successMsg('Logged in successfuly');
         this.router.navigate(['fetch-data']);
       });
   }

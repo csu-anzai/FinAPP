@@ -1,0 +1,1 @@
+INSERT INTO [FinApp].[dbo].[Roles] VALUES ('Admin'), ('User');

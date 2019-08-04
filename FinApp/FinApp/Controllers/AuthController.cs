@@ -22,14 +22,14 @@ namespace FinApp.Controllers
         [HttpPost("signin")]
         public async Task<IActionResult> SignIn(UserLoginDTO userDto)
         {
-            var user = await _authService.SignInAsync(userDto);
+            var token = await _authService.SignInAsync(userDto);
 
-            if (user == null)
-                return NotFound();
+            if (token == null)
+                return BadRequest(new { message = "Credentials are invalid" });
 
             // TODO: sending an access token to the front-end
             // A random jwt token below
-            return Ok(new { token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c" });
+            return Ok(new { token = token.AccessToken });
         }
     }
 }

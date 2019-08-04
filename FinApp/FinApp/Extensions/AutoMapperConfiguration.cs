@@ -12,6 +12,7 @@ namespace FinApp.Extensions
             {
                 c.AddProfile(new SignInProfile());
                 c.AddProfile(new SignUpProfile());
+                c.AddProfile(new UserProfile());
             }).CreateMapper());
         }
     }
