@@ -28,8 +28,12 @@
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Compile Remove="ClientApp\src\app\landing-page\**" />
     <Content Remove="$(SpaRoot)**" />
+    <Content Remove="ClientApp\src\app\landing-page\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\landing-page\**" />
     <None Remove="$(SpaRoot)**" />
+    <None Remove="ClientApp\src\app\landing-page\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
