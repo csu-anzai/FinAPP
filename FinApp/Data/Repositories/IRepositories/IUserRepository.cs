@@ -6,6 +6,5 @@ namespace DAL.Repositories.IRepositories
 {
     public interface IUserRepository : IBaseRepository<User>
     {
-        Task<User> GetUserWithCodeByUserId(int id);
     }
 }
