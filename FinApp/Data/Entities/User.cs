@@ -20,7 +20,10 @@ namespace DAL.Entities
         [ForeignKey(nameof(TokenId))]
         public Token Token { get; set; }
         public int? TokenId { get; set; }
-        
+
+        [ForeignKey(nameof(ConfirmationCodeId))]
+        public ConfirmationCode ConfirmationCode { get; set; }
+        public int ConfirmationCodeId { get; set; }
 
         public ICollection<Account> Accounts { get; set; }
         public ICollection<UserIncomeCategory> UserIncomeCategories { get; set; }

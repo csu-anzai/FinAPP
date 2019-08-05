@@ -1,5 +1,6 @@
 using AutoMapper;
 using DAL.Context;
+using DAL.DTOs;
 using FinApp.Extensions;
 using FinApp.Middlewares;
 using Microsoft.AspNetCore.Builder;
@@ -35,6 +36,8 @@ namespace FinApp
             services.AddAutoMapper();
             services.ConfigureAutoMapper();
             services.ConfigureDataAccessServices();
+
+            services.Configure<EmailSettingsDTO>(Configuration.GetSection("EmailSettings"));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

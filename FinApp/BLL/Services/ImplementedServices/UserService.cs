@@ -42,6 +42,11 @@ namespace BLL.Services.ImplementedServices
             user.Token = token;
             user.TokenId = token.Id;
 
+            var confirmCode = new ConfirmationCode();
+            confirmCode.User = user;
+            user.ConfirmationCode = confirmCode;
+            user.ConfirmationCodeId = confirmCode.Id;
+
             await _tokenRepository.AddAsync(token);
             await _userRepository.AddAsync(user);
 

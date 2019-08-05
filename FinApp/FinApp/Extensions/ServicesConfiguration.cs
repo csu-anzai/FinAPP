@@ -23,6 +23,10 @@ namespace FinApp.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IConfirmationCodeRepository, ConfirmationCodeRepository>();
+            services.AddScoped<IConfirmationCodeService, ConfirmationCodeService>();
+
+            services.AddSingleton<IEmailSenderService, EmailSenderService>();
 
             services.AddTransient<JwtManager>();
             services.AddTransient<IPassHasher, PassHasher>();
