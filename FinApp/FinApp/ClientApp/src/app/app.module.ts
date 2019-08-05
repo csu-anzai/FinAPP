@@ -23,6 +23,8 @@ import { WelcomeCarouselComponent } from './welcome-components/welcome-carousel/
 import { AuthService } from './_services/auth.service';
 import { NotificationService } from './_services/notification.service';
 
+import { MainPageComponent } from './landing-page/main-page/main-page.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +39,7 @@ import { NotificationService } from './_services/notification.service';
     WelcomeHeaderComponent,
     WelcomeBenefitsComponent,
     WelcomeCarouselComponent,
+    MainPageComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -46,7 +49,7 @@ import { NotificationService } from './_services/notification.service';
     BrowserAnimationsModule,
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
-      { path: '', component: WelcomePageComponent, pathMatch: 'full' },
+      { path: '', component: MainPageComponent, pathMatch: 'full' },
       { path: 'login-page', component: LoginPageComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
