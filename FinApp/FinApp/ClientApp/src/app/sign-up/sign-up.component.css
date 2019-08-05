@@ -29,13 +29,14 @@ h2 {
   padding: 10px;
   text-align: center;
   font-size: 30px;
-  color: #5e5c55;
+  color: black;
   border-bottom: solid 1px #e5e5e5;
 }
 
 .p {
   margin: 0 0 2em 0;
   position: relative;
+  
 }
 
 input {
