@@ -3,6 +3,7 @@ using BLL.Models.Exceptions;
 using BLL.Services.IServices;
 using DAL.DTOs;
 using DAL.Entities;
+using FinApp.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -36,6 +37,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
+        [ServiceFilter(typeof(TokenValidation))]
         [HttpGet("accounts/{userId}")]
         public async Task<IActionResult> GetAccounts(int userId)
         {

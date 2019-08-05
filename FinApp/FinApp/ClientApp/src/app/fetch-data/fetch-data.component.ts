@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-fetch-data',
@@ -15,8 +16,11 @@ export class FetchDataComponent {
   }
 
   onClick() {
-    console.log('dfgdfgdf');
-    this.http.get('https://localhost:44397/api/user/accounts/13').subscribe((data: any) => console.log(data));
+    try{
+      this.http.get('https://localhost:44397/api/user/accounts/13').subscribe((data: any) => console.log(data));
+    } catch (error) {
+      throwError(error);
+    }
   }
 }
 

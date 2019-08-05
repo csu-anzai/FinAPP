@@ -6,6 +6,7 @@ using DAL.Context;
 using DAL.Repositories.ImplementedRepositories;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
+using FinApp.Attributes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +26,7 @@ namespace FinApp.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddTransient<JwtManager>();
+            services.AddScoped<TokenValidation>();
             services.AddTransient<IPassHasher, PassHasher>();
         }
     }

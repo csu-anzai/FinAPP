@@ -76,7 +76,7 @@ namespace BLL.Security.Jwt
             return (principal, jwtSecurityToken);
         }
 
-        private string GenerateAccessToken(int userId, string login, string role) =>
+        public string GenerateAccessToken(int userId, string login, string role) =>
             new JwtSecurityTokenHandler()
                 .WriteToken(new JwtSecurityToken(
                     issuer: _jwtOptions.Issuer,
@@ -87,7 +87,7 @@ namespace BLL.Security.Jwt
                     signingCredentials: _jwtOptions.SigningCredentials
                 ));
 
-        private string GenerateRefreshToken(int userId, string login, string role) =>
+        public string GenerateRefreshToken(int userId, string login, string role) =>
             new JwtSecurityTokenHandler()
                 .WriteToken(new JwtSecurityToken(
                     issuer: _jwtOptions.Issuer,

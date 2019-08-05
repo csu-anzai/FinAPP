@@ -13,7 +13,6 @@ export class NotificationService {
   }
   errorMsg(content: string) {
     this.toastr.error(content, 'Error');
-
   }
   infoMsg(content: string) {
     this.toastr.info(content, 'Information');
