@@ -1,12 +1,12 @@
 <div class="form">
   <div class="container">
-    <form #loginForm="ngForm" (ngSubmit)="onLogin()" method="post" [formGroup]="signInForm" >
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()" [formGroup]="signInForm" >
       <h2>Login</h2>
       <p>
         <label class="floatLabel" for="email">Email:</label>
-        <input type="text"
+        <input type="email"
                formControlName="Email"
-               #email>
+               #email [(ngModel)]="model.email" #login required>
         <ng-container *ngIf="signInForm.controls['Email'].touched">
           <small class="text-danger" *ngIf="signInForm.controls['Email'].hasError('required')">Email is required</small>
           <small class="text-danger" *ngIf="signInForm.controls['Email'].hasError('email')">Email </small>
@@ -16,7 +16,7 @@
         <label class="floatLabel" for="password">Password:</label>
         <input type="password"
                formControlName="Password"
-               #password>
+               #password [(ngModel)]="model.password" #pwd required>
         <ng-container *ngIf="signInForm.controls['Password'].touched">
           <small class="text-danger" *ngIf="signInForm.controls['Password'].hasError('required')">Password is required</small>
           <small class="text-danger" *ngIf="signInForm.controls['Password'].hasError('pattern')">Password  </small>
