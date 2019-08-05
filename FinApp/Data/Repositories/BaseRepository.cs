@@ -61,9 +61,9 @@ namespace DAL.Repositories
             return await _entities.SingleOrDefaultAsync(expression);
         }
 
-        public TEntity WhereFindFor(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
+        public async Task<TEntity> WhereFindForAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
         {
-            return _entities.IncludeMultiple(expression,includes);
+            return await _entities.IncludeMultiple(expression,includes);
         }
     }
 }

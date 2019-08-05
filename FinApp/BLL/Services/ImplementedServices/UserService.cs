@@ -28,9 +28,9 @@ namespace BLL.Services.ImplementedServices
             return await CreateAsync(user);
         }
 
-        public User GetUserWithAccounts(int id)
+        public async Task<User> GetUserWithAccounts(int id)
         {
-            var user = _repository.WhereFindFor(i=>i.Id==id, i => i.Accounts);
+            var user = await _repository.WhereFindForAsync(i=>i.Id==id, i => i.Accounts);
             return user;
         }
     }

@@ -16,6 +16,6 @@ namespace DAL.IRepositories
         void RemoveRange(IEnumerable<TEntity> range);
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression);
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> expression);
-        TEntity WhereFindFor(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes);
+        Task<TEntity> WhereFindForAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes);
     }
 }

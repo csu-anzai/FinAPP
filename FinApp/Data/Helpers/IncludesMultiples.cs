@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace DAL.Helpers
 {
@@ -24,10 +25,10 @@ namespace DAL.Helpers
             return IncludeMultiple(query, includes);
         }
 
-        public static TEntity IncludeMultiple<TEntity>
+        public static async Task<TEntity> IncludeMultiple<TEntity>
             (this IQueryable<TEntity> query, Expression<Func<TEntity, bool>> predicate, params Expression<Func<TEntity, object>>[] includes) where TEntity : class
         {
-            return WhereIncludeMultiple(query, predicate, includes).FirstOrDefault();
+            return await WhereIncludeMultiple(query, predicate, includes).FirstOrDefaultAsync();
         }
     }
 }

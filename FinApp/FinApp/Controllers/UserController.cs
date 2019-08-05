@@ -38,7 +38,7 @@ namespace FinApp.Controllers
         [HttpGet("accounts/{userId}")]
         public async Task<IActionResult> GetAccounts(int userId)
         {
-            return Ok(_userService.GetUserWithAccounts(userId));
+            return Ok(await _userService.GetUserWithAccounts(userId));
         }
     }
 }
