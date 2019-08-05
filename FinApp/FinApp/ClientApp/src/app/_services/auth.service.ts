@@ -17,39 +17,42 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private alertService: NotificationService) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
-  login(model: any): Observable<any> {
-    return this.http.post(this.baseUrl + this.signInParameter + 'signin', model)
-      .pipe(
-        map((response: any) => {
-          if (response && response.token) {
-            this.cookieService.set('token', response.token, null, null, null, true);
-            this.decodedToken = this.jwtHelper.decodeToken(response.token);
-            return response.token;
-          }
-        }),
-        catchError(error => throwError(error))
-        );
-  }
-
-  register(model: any) {
+  login(model: any) {
     try {
-      return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model);
+      return this.http.post(this.baseUrl + this.signInParameter + 'signin', model)
+        .pipe(
+          map((response: any) => {
+            const user = response;
+            if (user) {
+              this.cookieService.set('token', user.token, null, null, null, true);
+              this.decodedToken = this.jwtHelper.decodeToken(user.token);
+            }
+          })
+        );
     } catch (error) {
-      this.alertService.errorMsg(error.message);
+      throwError(error);
     }
   }
 
-  // Check if access token expires
-  loggedIn() {
-    const isAvailable = this.cookieService.check('token');
-
-    if (isAvailable) {
-      const token = this.cookieService.get('token');
-      return !this.jwtHelper.isTokenExpired(token);
+    register(model: any) {
+      try {
+        return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model);
+      } catch (error) {
+        throwError(error);
+      }
     }
 
-    return false;
+    // Check if access token expires
+    loggedIn() {
+      const isAvailable = this.cookieService.check('token');
+
+      if (isAvailable) {
+        const token = this.cookieService.get('token');
+        return !this.jwtHelper.isTokenExpired(token);
+      }
+
+      return false;
+    }
   }
-}

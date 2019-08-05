@@ -23,7 +23,6 @@ import { WelcomeCarouselComponent } from './welcome-components/welcome-carousel/
 import { AuthService } from './_services/auth.service';
 import { NotificationService } from './_services/notification.service';
 import { GlobalErrorHandler } from './common/global-error-handler';
-import { ServerErrorInterceptor } from './common/server-error';
 import { ErrorService } from './_services/error.service';
 
 @NgModule({
@@ -57,10 +56,11 @@ import { ErrorService } from './_services/error.service';
     ToastrModule.forRoot(
       {
         positionClass: 'toast-bottom-right',
-        closeButton: true,
+        autoDismiss: true,
+        maxOpened: 5,
+        tapToDismiss: true,
         timeOut: 3000,
-        easeTime: 200,
-        maxOpened: 5
+        onActivateTick: true
       }
     )
   ],
@@ -70,7 +70,6 @@ import { ErrorService } from './_services/error.service';
     NotificationService,
     ErrorService,
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: ServerErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
