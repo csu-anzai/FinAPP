@@ -28,10 +28,10 @@ namespace FinApp.Middlewares
             {
                 await _next(httpContext);
             }
-            catch (ApiException e)
+            catch (HttpStatusCodeException e)
             {
-                logger.LogDebug(e, "API Exception");
-                httpContext.Response.StatusCode = (int) e.Code;
+                logger.LogDebug(e, "HttpStatusCode Exception");
+                httpContext.Response.StatusCode = (int) e.StatusCode;
                 if (!String.IsNullOrEmpty(e.Message))
                 {
                     var body = JsonConvert.SerializeObject(new {Error = e.Message});

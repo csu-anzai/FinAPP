@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BLL.Security.Jwt;
+using FinApp.Attribute;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinApp.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
@@ -13,8 +16,18 @@ namespace FinApp.Controllers
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
+        private readonly JwtManager _jwtManager;
+        private readonly string _accessToken;
+
+        SampleDataController (JwtManager jwtManager, string accessToken)
+        {
+            _jwtManager = jwtManager;
+            _accessToken = accessToken;
+        }
+
 
         [HttpGet("[action]")]
+        [ServiceFilter(typeof(TokenValidation))]
         public IEnumerable<WeatherForecast> WeatherForecasts()
         {
             var rng = new Random();
