@@ -25,6 +25,7 @@ import { AuthService } from './_services/auth.service';
 import { NotificationService } from './_services/notification.service';
 import { GlobalErrorHandler } from './common/global-error-handler';
 import { ErrorService } from './_services/error.service';
+import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,9 @@ import { ErrorService } from './_services/error.service';
     CookieService,
     NotificationService,
     ErrorService,
+    JwtInterceptor,
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
