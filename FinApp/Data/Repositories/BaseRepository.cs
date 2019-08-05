@@ -1,4 +1,5 @@
-﻿using DAL.IRepositories;
+﻿using DAL.Helpers;
+using DAL.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,11 @@ namespace DAL.Repositories
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
         {
             return await _entities.SingleOrDefaultAsync(expression);
+        }
+
+        public TEntity WhereFindFor(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
+        {
+            return _entities.IncludeMultiple(expression,includes);
         }
     }
 }

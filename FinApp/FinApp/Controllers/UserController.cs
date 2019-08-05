@@ -21,7 +21,7 @@ namespace FinApp.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp(UserRegistrationDTO userDto)
+        public async Task<IActionResult> CreateUser(UserRegistrationDTO userDto)
         {
             var user = _mapper.Map<User>(userDto);
 
@@ -33,6 +33,12 @@ namespace FinApp.Controllers
                 return Unauthorized();
 
             return Ok(newUser);
+        }
+
+        [HttpGet("accounts/{userId}")]
+        public async Task<IActionResult> GetAccounts(int userId)
+        {
+            return Ok(_userService.GetUserWithAccounts(userId));
         }
     }
 }

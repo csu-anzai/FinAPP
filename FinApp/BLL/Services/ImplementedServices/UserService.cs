@@ -22,11 +22,16 @@ namespace BLL.Services.ImplementedServices
             var existedUser = await _repository.SingleOrDefaultAsync(u => u.Email == user.Email);
             if (existedUser != null)
             {
-                //_logger.Fatal("Email already existed, do not create User");
                 return null;
             }
             user.Password = _hasher.HashPassword(user.Password);
             return await CreateAsync(user);
+        }
+
+        public User GetUserWithAccounts(int id)
+        {
+            var user = _repository.WhereFindFor(i=>i.Id==id, i => i.Accounts);
+            return user;
         }
     }
 }
