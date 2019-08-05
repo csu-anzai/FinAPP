@@ -16,5 +16,10 @@ namespace DAL.Repositories.ImplementedRepositories
         {
 
         }
+
+        public Task<ConfirmationCode> GetCodeByUserId(int id)
+        {
+            return _entities.Include(u => u.User).SingleOrDefaultAsync(u => u.User.Id == id);
+        }
     }
 }

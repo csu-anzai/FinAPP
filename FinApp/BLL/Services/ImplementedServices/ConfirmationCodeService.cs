@@ -12,13 +12,15 @@ namespace BLL.Services.ImplementedServices
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserRepository _userRepository;
+        private readonly IConfirmationCodeRepository _codeRepository;
         private readonly IEmailSenderService _emailSenderService;
-        private const int codeTimeoutMinutes = 15;
+        private const int passwCodeTimeoutMinutes = 15;
 
-        public ConfirmationCodeService(IUnitOfWork unitOfWork, IUserRepository userRepository, IEmailSenderService emailService)
+        public ConfirmationCodeService(IUnitOfWork unitOfWork, IUserRepository userRepository, IConfirmationCodeRepository codeRepository, IEmailSenderService emailService)
         {
             _unitOfWork = unitOfWork;
             _userRepository = userRepository;
+            _codeRepository = codeRepository;
             _emailSenderService = emailService;
         }
 
@@ -48,7 +50,7 @@ namespace BLL.Services.ImplementedServices
             }
             int code = await AssignCodeAsync(user);
 
-            string message = $"Here is the code to reset your password: {code}.\nThe code is valid for {codeTimeoutMinutes} minutes";
+            string message = $"Here is the code to reset your password: {code}.\nThe code is valid for {passwCodeTimeoutMinutes} minutes";
 
             await _emailSenderService.SendEmailAsync(forgotPasswordDTO.Email, "Fin App: password reset code", message);
 
@@ -57,16 +59,16 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<bool> ValidateConfirmationCode(ConfirmationCodeDTO confirmationCodeDTO)
         {
-            var user = await _userRepository.GetUserWithCodeByUserId(confirmationCodeDTO.UserId);
+            var code = await _codeRepository.GetCodeByUserId(confirmationCodeDTO.UserId);
 
-            TimeSpan timeAfterCodeCreation = DateTime.Now - user.ConfirmationCode.CreateDate;
-            if (timeAfterCodeCreation.Minutes > codeTimeoutMinutes)
+            TimeSpan timeAfterCodeCreation = DateTime.Now - code.CreateDate;
+            if (timeAfterCodeCreation.Minutes > passwCodeTimeoutMinutes)
             {
                 throw new TimeoutException("Reset code timeout expired");
             }
 
             bool isValidCode = false;
-            if (confirmationCodeDTO.Code == user.ConfirmationCode.Code)
+            if (confirmationCodeDTO.Code == code.Code)
             {
                 isValidCode = true;
             }
