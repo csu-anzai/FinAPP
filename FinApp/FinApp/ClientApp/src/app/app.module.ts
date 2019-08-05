@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { CookieService } from 'ngx-cookie-service';
+import { ToastrModule } from 'ngx-toastr';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
@@ -17,8 +20,8 @@ import { WelcomeListComponent } from './welcome-components/welcome-list/welcome-
 import { WelcomeBenefitsComponent } from './welcome-components/welcome-benefits/welcome-benefits.component';
 import { WelcomeCarouselComponent } from './welcome-components/welcome-carousel/welcome-carousel.component';
 
-
 import { AuthService } from './_services/auth.service';
+import { NotificationService } from './_services/notification.service';
 
 @NgModule({
   declarations: [
@@ -40,16 +43,29 @@ import { AuthService } from './_services/auth.service';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: WelcomePageComponent, pathMatch: 'full' },
       { path: 'login-page', component: LoginPageComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'sign-up', component: SignUpComponent },
-    ])
+    ]),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(
+      {
+        positionClass: 'toast-bottom-right',
+        closeButton: true,
+        timeOut: 3000,
+        easeTime: 1000,
+      }
+    )
   ],
   providers: [
-    AuthService
+    AuthService,
+    CookieService,
+    NotificationService
   ],
   bootstrap: [AppComponent]
 })

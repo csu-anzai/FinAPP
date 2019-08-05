@@ -1,6 +1,8 @@
 using AutoMapper;
 using DAL.Context;
+using DAL.DTOs;
 using FinApp.Extensions;
+using FinApp.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +37,8 @@ namespace FinApp
             services.ConfigureAutoMapper();
             services.ConfigureDataAccessServices();
 
+            services.Configure<EmailSettingsDTO>(Configuration.GetSection("EmailSettings"));
+
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
@@ -53,7 +57,6 @@ namespace FinApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -61,6 +64,7 @@ namespace FinApp
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FinApp");
             });
 
+            
 
             if (env.IsDevelopment())
             {
@@ -72,7 +76,7 @@ namespace FinApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseGlobalExcepionMiddleware();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

@@ -4,14 +4,16 @@ using DAL.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL.Migrations
 {
     [DbContext(typeof(FinAppContext))]
-    partial class FinAppContextModelSnapshot : ModelSnapshot
+    [Migration("20190801114248_ChangedRelationBetweenUserAndToken")]
+    partial class ChangedRelationBetweenUserAndToken
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,21 +46,6 @@ namespace DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Accounts");
-                });
-
-            modelBuilder.Entity("DAL.Entities.ConfirmationCode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code");
-
-                    b.Property<DateTime>("CreateDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ConfirmationCodes");
                 });
 
             modelBuilder.Entity("DAL.Entities.Currency", b =>
@@ -230,8 +217,6 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("BirthDate");
 
-                    b.Property<int?>("ConfirmationCodeId");
-
                     b.Property<string>("Email");
 
                     b.Property<string>("Name");
@@ -242,19 +227,14 @@ namespace DAL.Migrations
 
                     b.Property<string>("Surname");
 
-                    b.Property<int?>("TokenId");
+                    b.Property<int>("TokenId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ConfirmationCodeId")
-                        .IsUnique()
-                        .HasFilter("[ConfirmationCodeId] IS NOT NULL");
 
                     b.HasIndex("RoleId");
 
                     b.HasIndex("TokenId")
-                        .IsUnique()
-                        .HasFilter("[TokenId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
@@ -355,10 +335,6 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.User", b =>
                 {
-                    b.HasOne("DAL.Entities.ConfirmationCode", "ConfirmationCode")
-                        .WithOne("User")
-                        .HasForeignKey("DAL.Entities.User", "ConfirmationCodeId");
-
                     b.HasOne("DAL.Entities.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
@@ -366,7 +342,8 @@ namespace DAL.Migrations
 
                     b.HasOne("DAL.Entities.Token", "Token")
                         .WithOne("User")
-                        .HasForeignKey("DAL.Entities.User", "TokenId");
+                        .HasForeignKey("DAL.Entities.User", "TokenId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DAL.Entities.UserExpenseCategory", b =>
