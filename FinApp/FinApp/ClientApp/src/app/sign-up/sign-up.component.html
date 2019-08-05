@@ -1,66 +1,83 @@
 <div class="form">
   <form method="post" (ngSubmit)="onSignUp()" [formGroup]="signUpForm">
     <h2>Registration</h2>
-    <p>
+    <div class="p">
       <label class="floatLabel" for="firstname">Name:</label>
       <input type="text"
              formControlName="Name"
              #name>
-      <ng-container *ngIf="signUpForm.controls['Name'].touched">
-        <small class="text-danger" *ngIf="signUpForm.controls['Name'].hasError('required')">Name is required</small>
-        <small class="text-danger" *ngIf="signUpForm.controls['Name'].hasError('pattern')">Name must has onle letters and spaces</small>
-      </ng-container>
-    </p>
-    <p>
+      <div class="validation-message">
+        <ng-container *ngIf="signUpForm.controls['Name'].touched">
+          <small class="text-danger" *ngIf="signUpForm.controls['Name'].hasError('required')">Please enter your name</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['Name'].hasError('pattern')">Name should contain only letters and '-'</small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="p">
       <label class="floatLabel" for="lastname">Surname:</label>
       <input type="text"
              formControlName="Surname"
              #surname>
-      <ng-container *ngIf="signUpForm.controls['Surname'].touched">
-        <small class="text-danger" *ngIf="signUpForm.controls['Surname'].hasError('required')">Surname is required</small>
-        <small class="text-danger" *ngIf="signUpForm.controls['Surname'].hasError('pattern')">Surname must has onle letters and spaces</small>
-      </ng-container>
-    </p>
-    <p>
+      <div class="validation-message">
+        <ng-container *ngIf="signUpForm.controls['Surname'].touched">
+          <small class="text-danger" *ngIf="signUpForm.controls['Surname'].hasError('required')">Please enter your surname</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['Surname'].hasError('pattern')">Surname should contain only letters and '-'</small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="p">
       <label class="floatLabel" for="lastname">BirthDate:</label>
-      <input type="datetime"
-             ngbDatepicker
+      <input type="text"
+             class="form-control"
+             bsDatepicker
              formControlName="BirthDate"
+             [bsConfig]="{ isAnimated: true }"
              #brthdate>
-      <ng-container *ngIf="signUpForm.controls['BirthDate'].touched">
-        <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].hasError('required')">Surname is required</small>
-        <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].hasError('pattern')">Surname must has onle letters and spaces</small>
-      </ng-container>
-    </p>
-    <p>
+      <div class="validation-message">
+        <ng-container *ngIf="signUpForm.controls['BirthDate'].touched">
+          <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].hasError('required')">Please choose your birthdate</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].invalid">Date format should be DD/MM/YYYY</small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="p">
       <label class="floatLabel" for="lastname">Email:</label>
       <input type="text"
              formControlName="Email"
              #email>
-      <ng-container *ngIf="signUpForm.controls['Email'].touched">
-        <small class="text-danger" *ngIf="signUpForm.controls['Email'].hasError('required')">Email is required</small>
-        <small class="text-danger" *ngIf="signUpForm.controls['Email'].hasError('email')">Email </small>
-      </ng-container>
-    </p>
-    <p>
+      <div class="validation-message">
+        <ng-container *ngIf="signUpForm.controls['Email'].touched">
+          <small class="text-danger" *ngIf="signUpForm.controls['Email'].hasError('required')">Please enter your email</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['Email'].hasError('pattern')">E-mail example finApp@gmail.com</small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="p">
       <label class="floatLabel" for="lastname">Password:</label>
       <input type="password"
              formControlName="Password"
              #password>
-      <ng-container *ngIf="signUpForm.controls['Password'].touched">
-        <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('required')">Password is required</small>
-        <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('pattern')">Password  </small>
-      </ng-container>
-    </p>
-    <p>
+      <div class="validation-message">
+        <ng-container *ngIf="signUpForm.controls['Password'].touched">
+          <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('required')">Please create a password</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('minlength')">Password should contain at least 6 symbols</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('maxlength')">Password should contain a maximum of 16 symbols</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('pattern')">Password  </small>
+        </ng-container>
+      </div>
+    </div>
+    <div class="p">
       <label class="floatLabel" for="lastname">Repeat password:</label>
       <input type="password"
              formControlName="RepeatedPassword"
              #repeated>
-      <ng-container *ngIf="signUpForm.controls['RepeatedPassword'].touched">
-        <small class="text-danger" *ngIf="repeated.value != password.value">Passwords don`t match</small>
-      </ng-container>
-    </p>
+      <div class="validation-message">
+        <ng-container *ngIf="signUpForm.controls['RepeatedPassword'].touched">
+          <small class="text-danger" *ngIf="signUpForm.controls['RepeatedPassword'].hasError('required')">Please repeate a password</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['RepeatedPassword'].hasError('mismatch')">Passwords don`t match</small>
+        </ng-container>
+      </div>
+    </div>
     <div class="row justify-content-center text-center">
       <button type="submit" value="Create My Account" id="submit" class="button col-3" style="vertical-align:middle"><span>Sign Up</span></button>
       <span class=" col-2">Or </span>
@@ -69,6 +86,6 @@
       </div>
     </div>
   </form>
-  
+
   <h5 class="mt-4">Have already account? <a [routerLink]='["/login-page"]'>Log In</a> </h5>
 </div>

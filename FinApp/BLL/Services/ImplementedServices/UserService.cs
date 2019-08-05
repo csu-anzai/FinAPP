@@ -32,7 +32,6 @@ namespace BLL.Services.ImplementedServices
             var existedUser = await _userRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
             if (existedUser != null)
             {
-                //_logger.Fatal("Email already existed, do not create User");
                 return null;
             }
             user.Password = _hasher.HashPassword(user.Password);
@@ -61,6 +60,12 @@ namespace BLL.Services.ImplementedServices
             await _unitOfWork.Complete();
 
             return upToDateUser;
+        }
+
+        public async Task<User> GetUserWithAccounts(int id)
+        {
+            var user = await _userRepository.WhereFindForAsync(i => i.Id == id, i => i.Accounts);
+            return user;
         }
     }
 }

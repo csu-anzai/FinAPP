@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -45,6 +46,8 @@ import { ErrorService } from './_services/error.service';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: WelcomePageComponent, pathMatch: 'full' },
       { path: 'login-page', component: LoginPageComponent },

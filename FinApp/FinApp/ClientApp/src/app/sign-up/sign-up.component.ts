@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'sign-up-component',
@@ -16,15 +16,22 @@ export class SignUpComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    fb: FormBuilder
-  ) {
+    fb: FormBuilder) {
     this.signUpForm = fb.group({
-      'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z]*')])),
+      'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
       'BirthDate': new FormControl('', Validators.required),
-      'Surname': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z]*')])),
-      'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
-      'Password': new FormControl('', Validators.required),
-      'RepeatedPassword': new FormControl(''),
+      'Surname': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
+      'Email': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')])),
+      'Password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
+      'RepeatedPassword': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
+    });
+
+    this.signUpForm.valueChanges.subscribe(field => {
+      if (this.signUpForm.controls['RepeatedPassword'].value != this.signUpForm.controls['Password'].value) {
+        this.signUpForm.controls['RepeatedPassword'].setErrors({ mismatch: true });
+      } else {
+        this.signUpForm.controls['RepeatedPassword'].setErrors(null);
+      }
     });
 
   }
@@ -33,7 +40,8 @@ export class SignUpComponent implements OnInit {
   }
 
   onSignUp() {
-    if (this.signUpForm.valid && this.signUpForm.controls['Password'].value === this.signUpForm.controls['RepeatedPassword'].value) {
+
+    if (this.signUpForm.valid) {
       this.user = {
         Name: this.signUpForm.controls['Name'].value,
         Surname: this.signUpForm.controls['Surname'].value,
@@ -41,23 +49,16 @@ export class SignUpComponent implements OnInit {
         Email: this.signUpForm.controls['Email'].value,
         Password: this.signUpForm.controls['Password'].value,
       };
-      this.authService.register(this.user).subscribe(
-        () => {
-          this.router.navigate(['login-page']);
-        });
+      this.authService.register(this.user).subscribe(() => {
+        // if email is not available -> show message
+        this.router.navigate(['login-page']);
+      });
     } else {
-      // tslint:disable-next-line: forin
-      for (const i in this.signUpForm.controls) {
+      console.log(
+        this.signUpForm.controls['RepeatedPassword'].errors);
+      for (let i in this.signUpForm.controls) {
         this.signUpForm.controls[i].markAsTouched();
       }
     }
-  }
-
-
-  // convenience getter for easy access to form fields
-  get f() { return this.signUpForm.controls; }
-
-  registrationByGoogle() {
-    alert('Google');
   }
 }
