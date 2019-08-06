@@ -32,6 +32,7 @@ import { NotificationService } from './services/notification.service';
 
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MainPageComponent } from './landing-page/main-page/main-page.component'
     ChartComponent,
     AccountComponent,
     SettingComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -64,20 +66,21 @@ import { MainPageComponent } from './landing-page/main-page/main-page.component'
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: MainPageComponent, pathMatch: 'full' },
-      { path: 'login-page', component: LoginPageComponent, canActivate:[GuestGuard] } ,
+      { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
       { path: 'counter', component: CounterComponent },
-      { path: 'sign-up', component: SignUpComponent, canActivate:[GuestGuard] },
+      { path: 'sign-up', component: SignUpComponent, canActivate: [GuestGuard] },
       {
-         path: 'user', 
-         component: FetchDataComponent,
-         canActivate:[AuthGuard],
-         children: [
-          { path: 'profile', component: ProfileComponent},
-          { path: 'charts', component: ChartComponent},
-          { path: 'accounts', component: AccountComponent},
-          { path: 'settings', component: SettingComponent}
-         ]  
-      } 
+        path: 'user',
+        component: FetchDataComponent,
+        canActivate: [AuthGuard],
+        children: [
+          { path: 'profile', component: ProfileComponent },
+          { path: 'charts', component: ChartComponent },
+          { path: 'accounts', component: AccountComponent },
+          { path: 'settings', component: SettingComponent },
+          { path: 'adminPanel', component: AdminPanelComponent }
+        ]
+      }
     ]),
     BrowserAnimationsModule,
     ToastrModule.forRoot(
