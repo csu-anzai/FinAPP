@@ -37,8 +37,9 @@ namespace FinApp
                 {
                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 });
-
+            
             services.AddAutoMapper();
+            services.ConfigureAuthentication(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureDataAccessServices();
 

@@ -20,12 +20,11 @@ namespace FinApp.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
-            services.AddScoped<ITokenRepository, TokenRepository>();
-            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenRepository, TokenRepository>();            
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
 
-            services.AddTransient<JwtManager>();
+
             services.AddScoped<TokenValidation>();
             services.AddTransient<IPassHasher, PassHasher>();
         }

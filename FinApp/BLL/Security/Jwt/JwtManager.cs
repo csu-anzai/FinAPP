@@ -76,8 +76,9 @@ namespace BLL.Security.Jwt
             return (principal, jwtSecurityToken);
         }
 
-        public string GenerateAccessToken(int userId, string login, string role) =>
-            new JwtSecurityTokenHandler()
+        public string GenerateAccessToken(int userId, string login, string role)
+        { 
+          var token =  new JwtSecurityTokenHandler()
                 .WriteToken(new JwtSecurityToken(
                     issuer: _jwtOptions.Issuer,
                     audience: _jwtOptions.Audience,
@@ -86,9 +87,11 @@ namespace BLL.Security.Jwt
                     expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_jwtOptions.AccessExpirationMins)),
                     signingCredentials: _jwtOptions.SigningCredentials
                 ));
-
-        public string GenerateRefreshToken(int userId, string login, string role) =>
-            new JwtSecurityTokenHandler()
+            return token;
+        }
+        public string GenerateRefreshToken(int userId, string login, string role)
+        { 
+         var token = new JwtSecurityTokenHandler()
                 .WriteToken(new JwtSecurityToken(
                     issuer: _jwtOptions.Issuer,
                     audience: _jwtOptions.Audience,
@@ -97,7 +100,8 @@ namespace BLL.Security.Jwt
                     expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_jwtOptions.RefreshExpirationMins)),
                     signingCredentials: _jwtOptions.SigningCredentials
             ));
-
+            return token;
+        }
         public TokenDTO GenerateToken(int userId, string login, string role) =>
             new TokenDTO
             {
