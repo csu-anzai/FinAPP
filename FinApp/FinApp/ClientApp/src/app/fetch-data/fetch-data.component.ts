@@ -16,7 +16,7 @@ export class FetchDataComponent {
   }
 
   onClick() {
-    try{
+    try {
       this.http.get('https://localhost:44397/api/user/accounts/13').subscribe((data: any) => console.log(data));
     } catch (error) {
       throwError(error);
