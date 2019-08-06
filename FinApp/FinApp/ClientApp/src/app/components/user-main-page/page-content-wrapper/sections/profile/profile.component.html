@@ -1,0 +1,27 @@
+<div class="profile-content">
+  <div class="form">
+    <form>
+      <div class="form-group">
+        <label for="formGroupExampleInput">First Name:</label>
+        <input type="text"  id="formGroupExampleInput" [(ngModel)] = "user.name" [ngModelOptions]="{standalone: true} " >
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput2">Surname </label>
+        <input type="text" id="formGroupExampleInput2" [(ngModel)] = "user.surname" [ngModelOptions]="{standalone: true}">
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput2">BirthDate: </label>
+        <input type="text" id="formGroupExampleInput2" value = "{{user.birthDate | date:'shortDate'}}">
+      </div>
+
+      <div class="form-group">
+        <label for="formGroupExampleInput2">BirthDate: </label>
+        <input type="text" id="formGroupExampleInput2" [(ngModel)] = "user.email" [ngModelOptions]="{standalone: true}">
+      </div>
+
+      <button>Save</button>
+    </form>
+  </div>
+</div>

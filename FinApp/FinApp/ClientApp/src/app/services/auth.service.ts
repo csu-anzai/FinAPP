@@ -1,21 +1,35 @@
+import { NotificationService } from './notification.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { NotificationService } from './notification.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private loggedInStatus = false;
   baseUrl = 'https://localhost:44397/api/';
   signInParameter = 'auth/';
   signUpParameter = 'user/';
 
   jwtHelper = new JwtHelperService();
   decodedToken: any;
+
+  setLoggedIn(value:boolean) {
+    this.loggedInStatus = value;
+  }
+
+  get isLoggedIn() {
+    return this.loggedInStatus;
+  }
+
+  get DecodedToken() {
+    return this.jwtHelper.decodeToken(this.cookieService.get('token'));
+  }
 
   constructor(private http: HttpClient, private cookieService: CookieService, private alertService: NotificationService) { }
 

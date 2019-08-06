@@ -1,6 +1,5 @@
 <header>
-  <nav style="margin-bottom: 0px !important;" class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>
-    <div class="container">
+  <nav style="margin-bottom: 0px !important;" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" >
       <a class="navbar-brand"
          [routerLink]='["/"]'>FinApp</a>
       <button class="navbar-toggler"
@@ -34,7 +33,7 @@
           <ul class="navbar-nav flex-grow">
             <li class="nav-item">
               <a class="nav-link text-dark"
-                 [routerLink]='["/login-page"]'>Welcome <b>{{ authService.decodedToken?.login | titlecase }}</b></a>
+                 [routerLink]='["/login-page"]'>Welcome <b>{{ authService.DecodedToken?.login}}</b></a>
             </li>
             <li class="nav-item cursor-on"
                 [routerLinkActive]='["link-active"]'>
@@ -44,6 +43,5 @@
           </ul>
         </div>
       </ng-template>
-    </div>
   </nav>
 </header>

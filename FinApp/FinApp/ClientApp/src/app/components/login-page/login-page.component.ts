@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { NotificationService } from 'src/app/services/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { NotificationService } from '../_services/notification.service';
+
 
 
 @Component({
@@ -10,6 +11,7 @@ import { NotificationService } from '../_services/notification.service';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
+
 export class LoginPageComponent implements OnInit {
   model: any = {};
   signInForm: FormGroup;
@@ -28,13 +30,16 @@ export class LoginPageComponent implements OnInit {
 
   onLogin() {
     this.authService.login(this.model).subscribe(
-      next => {},
+      next => {
+        console.log(this.model);
+      },
       error => {
         this.alertService.errorMsg(error.message);
       },
       () => {
+        this.authService.setLoggedIn(true);        
         this.alertService.successMsg('Logged in successfuly');
-        this.router.navigate(['fetch-data']);
+        this.router.navigate(['user/profile']);
       });
   }
   get f() { return this.signInForm.controls; }

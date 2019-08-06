@@ -1,6 +1,6 @@
+import { NotificationService } from 'src/app/services/notification.service';
 import { TestBed, inject } from '@angular/core/testing';
 
-import { NotificationService } from './notification.service';
 
 describe('NotificationService', () => {
   beforeEach(() => {

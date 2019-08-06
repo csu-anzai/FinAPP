@@ -1,0 +1,76 @@
+<nav id="sidebar">
+  <ul class="list-unstyled components">
+       <li>
+          <a routerLink="/user/profile">
+              <i class="fa fa-user-circle"></i>
+            Profile
+          </a>
+       </li>
+       <li>
+          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fa fa-briefcase"></i>
+            Acounts
+          </a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+              <li>
+                <a routerLink="/user/accounts">Acount 1</a>
+              </li>
+              <li>
+                <a routerLink="/user/accounts">Acount 2</a>
+              </li>
+              <li>
+                <a routerLink="/user/accounts">Acount 3</a>
+              </li>
+            </ul>
+        </li>
+        <li>
+          <a routerLink="/user/charts">
+              <i class="fa fa-area-chart"></i>
+             Charts
+            </a>
+        </li>
+        <li>
+          <a routerLink="/user/settings">
+            <i class="fa fa-cogs"></i>
+             Settings
+            </a>
+        </li>
+        <li>
+            <a routerLink="/user/profile">
+              <i class="fa fa-question-circle"></i>
+               FAQ
+             </a>
+        </li>
+   </ul>
+</nav>
+
+
+
+<!-- 
+<nav id="sidebar">
+  <ul class="list-unstyled components">
+      <li *ngFor="let link of links">
+        <a routerLink="{{link.path}}">
+          <i class="{{link.icon}}"></i>
+            {{link.text}}
+          </a>
+      </li>  
+       <li>
+          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+              <i class="fa fa-briefcase"></i>
+            Accounts
+          </a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+              <li>
+                <a routerLink="/user/accounts">Account 1</a>
+              </li>
+              <li>
+                <a routerLink="/user/accounts">Account 2</a>
+              </li>
+              <li>
+                <a routerLink="/user/accounts">Acount 3</a>
+              </li>
+            </ul>
+        </li>
+   </ul>
+</nav> -->

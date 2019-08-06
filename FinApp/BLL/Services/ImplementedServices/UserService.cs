@@ -67,5 +67,12 @@ namespace BLL.Services.ImplementedServices
 
             return upToDateUser;
         }
+
+        public async Task<User> Get(int id)
+        {
+            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == id);
+
+            return user ?? null;
+        }
     }
 }

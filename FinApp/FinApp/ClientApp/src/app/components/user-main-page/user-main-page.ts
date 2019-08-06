@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-fetch-data',
-  templateUrl: './fetch-data.component.html'
+  templateUrl: './user-main-page.html',
+  styleUrls: ['./user-main-page.css']
 })
 export class FetchDataComponent {
   public forecasts: WeatherForecast[];

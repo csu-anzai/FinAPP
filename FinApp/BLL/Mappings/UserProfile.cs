@@ -8,7 +8,8 @@ namespace BLL.Mappings
     {
         public UserProfile()
         {
-            CreateMap<UserDTO, User>();
+      //      CreateMap<User, UserDTO>();
+            CreateMap<UserDTO, User>().ReverseMap();
         }
     }
 }
