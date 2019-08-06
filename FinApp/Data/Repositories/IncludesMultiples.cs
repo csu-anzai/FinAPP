@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace DAL.Helpers
+namespace DAL.Repositories
 {
     public static class IncludesMultiples
     {

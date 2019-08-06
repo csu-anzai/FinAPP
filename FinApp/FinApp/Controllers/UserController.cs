@@ -37,7 +37,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(TokenValidation))]
+        //[ServiceFilter(typeof(TokenValidation))]
         [HttpGet("accounts/{userId}")]
         public async Task<IActionResult> GetAccounts(int userId)
         {
