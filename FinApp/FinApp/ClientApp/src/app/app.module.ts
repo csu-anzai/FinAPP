@@ -32,6 +32,7 @@ import { NotificationService } from './services/notification.service';
 
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
 
@@ -58,6 +59,7 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
     SettingComponent,
     AccountHistoryComponent,
     AccountInfoComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -68,20 +70,21 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: MainPageComponent, pathMatch: 'full' },
-      { path: 'login-page', component: LoginPageComponent, canActivate:[GuestGuard] } ,
+      { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
       { path: 'counter', component: CounterComponent },
-      { path: 'sign-up', component: SignUpComponent, canActivate:[GuestGuard] },
+      { path: 'sign-up', component: SignUpComponent, canActivate: [GuestGuard] },
       {
-         path: 'user', 
-         component: FetchDataComponent,
-         canActivate:[AuthGuard],
-         children: [
-          { path: 'profile', component: ProfileComponent},
-          { path: 'charts', component: ChartComponent},
-          { path: 'accounts/:id', component: AccountComponent},
-          { path: 'settings', component: SettingComponent}
-         ]  
-      } 
+        path: 'user',
+        component: FetchDataComponent,
+        canActivate: [AuthGuard],
+        children: [
+          { path: 'profile', component: ProfileComponent },
+          { path: 'charts', component: ChartComponent },
+          { path: 'accounts/:id', component: AccountComponent },
+          { path: 'settings', component: SettingComponent },
+          { path: 'adminPanel', component: AdminPanelComponent }
+        ]
+      }
     ]),
     BrowserAnimationsModule,
     ToastrModule.forRoot(

@@ -1,52 +1,58 @@
 <nav id="sidebar">
   <ul class="list-unstyled components">
-       <li>
-          <a routerLink="/user/profile">
-              <i class="fa fa-user-circle"></i>
-            Profile
-          </a>
-       </li>
-       <li>
-          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-              <i class="fa fa-briefcase"></i>
-            Acounts
-          </a>
-          <ul class="collapse list-unstyled" id="pageSubmenu">
-              <li>
-                <a  [routerLink]="['/user/accounts', 1]">Acount 1</a>
-              </li>
-              <li>
-                <a [routerLink]="['/user/accounts', 2]">Acount 2</a>
-              </li>
-              <li>
-                <a [routerLink]="['/user/accounts', 3]">Acount 3</a>
-              </li>
-            </ul>
+    <li>
+      <a routerLink="/user/profile">
+        <i class="fa fa-user-circle"></i>
+        Profile
+      </a>
+    </li>
+    <li>
+      <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fa fa-briefcase"></i>
+        Acounts
+      </a>
+      <ul class="collapse list-unstyled" id="pageSubmenu">
+        <li>
+          <a [routerLink]="['/user/accounts', 1]>Acount 1</a>
         </li>
         <li>
-          <a routerLink="/user/charts">
-              <i class="fa fa-area-chart"></i>
-             Charts
-            </a>
+          <a [routerLink]="['/user/accounts', 2]>Acount 2</a>
         </li>
         <li>
-          <a routerLink="/user/settings">
-            <i class="fa fa-cogs"></i>
-             Settings
-            </a>
+          <a [routerLink]="['/user/accounts', 3]>Acount 3</a>
         </li>
-        <li>
-            <a routerLink="/user/profile">
-              <i class="fa fa-question-circle"></i>
-               FAQ
-             </a>
-        </li>
-   </ul>
+      </ul>
+    </li>
+    <li>
+      <a routerLink="/user/charts">
+        <i class="fa fa-area-chart"></i>
+        Charts
+      </a>
+    </li>
+    <li>
+      <a routerLink="/user/settings">
+        <i class="fa fa-cogs"></i>
+        Settings
+      </a>
+    </li>
+    <li>
+      <a routerLink="/user/adminPanel">
+        <i class="fa fa-user-circle"></i>
+        Admin Panel
+      </a>
+    </li>
+    <li>
+      <a routerLink="/user/profile">
+        <i class="fa fa-question-circle"></i>
+        FAQ
+      </a>
+    </li>
+  </ul>
 </nav>
 
 
 
-<!-- 
+<!--
 <nav id="sidebar">
   <ul class="list-unstyled components">
       <li *ngFor="let link of links">
@@ -54,7 +60,7 @@
           <i class="{{link.icon}}"></i>
             {{link.text}}
           </a>
-      </li>  
+      </li>
        <li>
           <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
               <i class="fa fa-briefcase"></i>
