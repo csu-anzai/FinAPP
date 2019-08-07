@@ -1,0 +1,21 @@
+<p>
+  admin-panel works!
+</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Birth date</th>
+      <th>Delete User</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{user.name}}</td>
+      <td>{{user.email}}</td>
+      <td>{{user.birthDate | date:'longDate' }}</td>
+      <td><button (click)="deleteUser(user)"></button></td>
+    </tr>
+  </tbody>
+</table>
