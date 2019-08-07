@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DAL.DTOs
 {
-    public class ConfirmationCodeDTO
+    public class PasswordConfirmationCodeDTO
     {
         public int UserId { get; set; }
         public string Code { get; set; }

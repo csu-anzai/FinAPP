@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories.ImplementedRepositories
 {
-    public class ConfirmationCodeRepository : BaseRepository<ConfirmationCode>, IConfirmationCodeRepository
+    public class PasswordConfirmationCodeRepository : BaseRepository<PasswordConfirmationCode>, IPasswordConfirmationCodeRepository
     {
-        public ConfirmationCodeRepository(FinAppContext context) : base(context)
+        public PasswordConfirmationCodeRepository(FinAppContext context) : base(context)
         {
 
         }
 
-        public Task<ConfirmationCode> GetCodeByUserId(int id)
+        public Task<PasswordConfirmationCode> GetPasswordConfirmationCodeByUserId(int id)
         {
             return _entities.Include(u => u.User).SingleOrDefaultAsync(u => u.User.Id == id);
         }

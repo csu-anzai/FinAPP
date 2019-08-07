@@ -19,7 +19,7 @@ namespace DAL.Context
         public DbSet<UserExpenseCategory> UserExpenseCategories { get; set; }
         public DbSet<UserIncomeCategory> UserIncomeCategories { get; set; }
         public DbSet<Token> Tokens { get; set; }
-        public DbSet<ConfirmationCode> ConfirmationCodes { get; set; }
+        public DbSet<PasswordConfirmationCode> PasswordConfirmationCodes { get; set; }
 
         public FinAppContext(DbContextOptions options) : base(options)
         {
