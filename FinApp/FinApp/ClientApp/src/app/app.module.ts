@@ -32,6 +32,7 @@ import { NotificationService } from './services/notification.service';
 
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
+import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { MainPageComponent } from './landing-page/main-page/main-page.component'
     ChartComponent,
     AccountComponent,
     SettingComponent,
+    AccountHistoryComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-around">
+  <div class="col-md-4">
+    <input type="text"
+           placeholder="Daterangepicker"
+           class="form-control"
+           bsDaterangepicker>
+  </div>
+  <div class="d-flex justify-content-center align-items-center col-md-4">
+    <div class="mr-2">  Filter:</div>
+    <input class="form-control" />
+  </div>
+</div>
+<div class="d-flex align-items-center justify-content-start mt-4">
+  <p><span class="Income">↓</span> Incomes: 2000</p>
+  <p class="ml-2"><span class="Expense">↑</span> Expenses: 2000</p>
+</div>
+<table class="table table-sm table-hover table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col" (click)="sort()">Category</th>
+      <th scope="col" (click)="sort()">Description</th>
+      <th scope="col" (click)="sort()">Sum</th>
+      <th scope="col" (click)="sort()">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let trans of transactions; index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{trans.NameCategory}}</td>
+      <td>{{trans.Description}}</td>
+      <td class="{{trans.IncomeOrExpense}}">
+        <span *ngIf="trans.IncomeOrExpense == 'Income'; else expenseBlock">+</span><ng-template #expenseBlock> - </ng-template>
+        {{trans.Sum}}
+      </td>
+      <td>{{trans.Date}}</td>
+    </tr>
+  </tbody>
+</table>
