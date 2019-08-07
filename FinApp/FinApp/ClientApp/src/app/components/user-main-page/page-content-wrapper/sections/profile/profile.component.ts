@@ -21,4 +21,8 @@ export class ProfileComponent implements OnInit {
     // if(this.user instanceof User ){console.log("Yes")}
   }
 
+  updateProfile() {
+    
+  }
+
 }

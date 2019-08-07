@@ -39,28 +39,28 @@ namespace FinApp.Controllers
         public async Task<IActionResult> Get(int id)
         {
 
-            var user = await _userService.Get(id);
+            var user = await _userService.GetAsync(id);
 
             if (user == null)
                 return NotFound();
+
             var userDTO = _mapper.Map<User, UserDTO>(user);
          
             return Ok(userDTO);
         }
 
-          //account/ 
-        ////user/711/accounts/----list of accounts
-        //// user/711/accounts/22  {id}/accounts/{id} -- certain account
-        //[HttpGet("{id}")]//Accounts
-        //public async Task<IActionResult> Get(int id)
-        //{
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
 
-        //    var user = await _userService.Get(id);
+            var user = await _userService.UpdateAsync(userDTO);
 
-        //    if (user == null)
-        //        return NotFound();
-        //    var userDTO = _mapper.Map<User, UserDTO>(user)
-        //    return Ok(userDTO);
-        //}
+            if (user == null)
+                return BadRequest(new { message = "User Id is incorrect" });
+
+            return Ok();
+        }
     }
 }

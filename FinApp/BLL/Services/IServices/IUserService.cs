@@ -7,6 +7,7 @@ namespace BLL.Services.IServices
     public interface IUserService
     {
         Task<User> CreateUserAsync(User user);
-        Task<User> Get(int id);
+        Task<User> GetAsync(int id);
+        Task<User> UpdateAsync(UserDTO userDTO);
     }
 }
