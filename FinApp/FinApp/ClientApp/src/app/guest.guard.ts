@@ -1,4 +1,4 @@
-import { AuthService } from './services/auth.service';
+import { CustomAuthService } from './services/auth.service';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GuestGuard implements CanActivate {
-  constructor(private router: Router, private auth: AuthService) {
+  constructor(private router: Router, private auth: CustomAuthService) {
 
   }
   canActivate(

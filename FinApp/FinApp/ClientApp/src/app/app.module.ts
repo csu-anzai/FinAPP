@@ -20,7 +20,7 @@ import { WelcomeHeaderComponent } from './components/welcome-components/welcome-
 import { WelcomeListComponent } from './components/welcome-components/welcome-list/welcome-list.component';
 import { WelcomeBenefitsComponent } from './components/welcome-components/welcome-benefits/welcome-benefits.component';
 import { WelcomeCarouselComponent } from './components/welcome-components/welcome-carousel/welcome-carousel.component';
-import { AuthService } from './services/auth.service';
+import { CustomAuthService } from './services/auth.service';
 import { LeftSideBarComponent } from './components/user-main-page/left-side-bar/left-side-bar.component';
 import { GuestGuard } from './guest.guard';
 import { ProfileComponent } from './components/user-main-page/page-content-wrapper/sections/profile/profile.component';
@@ -29,9 +29,25 @@ import { AccountComponent } from './components/user-main-page/page-content-wrapp
 import { SettingComponent } from './components/user-main-page/page-content-wrapper/sections/setting/setting.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
 import { NotificationService } from './services/notification.service';
-
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider
+} from 'angular-6-social-login';
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
+
+// Configs
+export function getAuthServiceConfigs() {
+  const config = new AuthServiceConfig(
+    [
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider('112578784048-unbg6n7pt2345q5m7i53u20pu7rj80dt.apps.googleusercontent.com')
+      },
+    ]);
+  return config;
+}
 
 @NgModule({
   declarations: [
@@ -61,23 +77,24 @@ import { MainPageComponent } from './landing-page/main-page/main-page.component'
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    SocialLoginModule,
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: MainPageComponent, pathMatch: 'full' },
-      { path: 'login-page', component: LoginPageComponent, canActivate:[GuestGuard] } ,
+      { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
       { path: 'counter', component: CounterComponent },
-      { path: 'sign-up', component: SignUpComponent, canActivate:[GuestGuard] },
+      { path: 'sign-up', component: SignUpComponent, canActivate: [GuestGuard] },
       {
-         path: 'user', 
-         component: FetchDataComponent,
-         canActivate:[AuthGuard],
-         children: [
-          { path: 'profile', component: ProfileComponent},
-          { path: 'charts', component: ChartComponent},
-          { path: 'accounts', component: AccountComponent},
-          { path: 'settings', component: SettingComponent}
-         ]  
-      } 
+        path: 'user',
+        component: FetchDataComponent,
+        canActivate: [AuthGuard],
+        children: [
+          { path: 'profile', component: ProfileComponent },
+          { path: 'charts', component: ChartComponent },
+          { path: 'accounts', component: AccountComponent },
+          { path: 'settings', component: SettingComponent }
+        ]
+      }
     ]),
     BrowserAnimationsModule,
     ToastrModule.forRoot(
@@ -90,11 +107,15 @@ import { MainPageComponent } from './landing-page/main-page/main-page.component'
     )
   ],
   providers: [
-    AuthService,
+    CustomAuthService,
     CookieService,
     NotificationService,
     GuestGuard,
-    AuthGuard
+    AuthGuard,
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    }
   ],
   bootstrap: [AppComponent]
 })

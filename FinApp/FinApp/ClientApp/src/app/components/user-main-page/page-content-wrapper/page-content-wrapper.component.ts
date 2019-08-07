@@ -1,4 +1,4 @@
-import { AuthService } from 'src/app/services/auth.service';
+import { CustomAuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 

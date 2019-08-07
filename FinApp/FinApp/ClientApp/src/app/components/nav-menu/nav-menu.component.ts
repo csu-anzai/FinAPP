@@ -1,4 +1,4 @@
-import { AuthService } from 'src/app/services/auth.service';
+import { CustomAuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';import { NotificationService } from 'src/app/services/notification.service';
@@ -13,7 +13,7 @@ import { CookieService } from 'ngx-cookie-service';import { NotificationService 
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
   
-  constructor(private authService: AuthService,
+  constructor(private authService: CustomAuthService,
     private cookieService: CookieService,
     private router: Router,
     private alertService: NotificationService) {  }

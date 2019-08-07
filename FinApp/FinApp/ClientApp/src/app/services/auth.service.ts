@@ -5,12 +5,16 @@ import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-
+import {
+  AuthService,
+  GoogleLoginProvider,
+  SocialUser
+} from 'angular-6-social-login';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class CustomAuthService {
   private loggedInStatus = false;
   baseUrl = 'https://localhost:44397/api/';
   signInParameter = 'auth/';
@@ -19,7 +23,7 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
 
-  setLoggedIn(value:boolean) {
+  setLoggedIn(value: boolean) {
     this.loggedInStatus = value;
   }
 
@@ -31,7 +35,10 @@ export class AuthService {
     return this.jwtHelper.decodeToken(this.cookieService.get('token'));
   }
 
-  constructor(private http: HttpClient, private cookieService: CookieService, private alertService: NotificationService) { }
+  constructor(private http: HttpClient,
+    private socialAuthService: AuthService,
+    private cookieService: CookieService,
+    private alertService: NotificationService) { }
 
   login(model: any) {
     try {
@@ -48,6 +55,34 @@ export class AuthService {
     } catch (error) {
       this.alertService.errorMsg(error.message);
     }
+  }
+
+  signInWithGoogle() {
+
+    return this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+      (userData) => {
+        console.log('sign in data : ', JSON.stringify(userData));
+        return userData;
+        // const googleUser = new GoogleClass();
+        // googleUser.id = userData.id;
+        // googleUser.email = userData.email;
+        // googleUser.idToken = userData.idToken;
+        // googleUser.token = userData.token;
+        // googleUser.image = userData.image;
+        // googleUser.name = userData.name;
+        // googleUser.provider = userData.provider;
+      }).then((user) => {
+        try {
+          return  this.http.post('https://localhost:44397/api/auth/google-signin/', user)
+            .pipe(
+              map((response: any) => {
+                console.log(response);
+              })
+            );
+        } catch (error) {
+          this.alertService.errorMsg(error.message);
+        }
+      });
   }
 
   register(model: any) {
@@ -70,4 +105,14 @@ export class AuthService {
 
     return false;
   }
+}
+
+class GoogleClass {
+  provider: string;
+  id: string;
+  email: string;
+  name: string;
+  image: string;
+  token?: string;
+  idToken?: string;
 }

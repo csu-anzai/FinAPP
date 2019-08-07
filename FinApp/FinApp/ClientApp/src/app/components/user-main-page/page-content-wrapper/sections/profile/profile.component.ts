@@ -1,5 +1,5 @@
 import { UserService } from './../../../../../services/user.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { CustomAuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { CookieService } from 'ngx-cookie-service';
@@ -14,9 +14,9 @@ export class ProfileComponent implements OnInit {
   users: User[];
 
 
-  constructor(private _authService: AuthService, private _userService: UserService) { }
+  constructor(private _authService: CustomAuthService, private _userService: UserService) { }
 
-  ngOnInit() {  
+  ngOnInit() {
     this._userService.getById(this._authService.DecodedToken.sub).subscribe(res => { this.user = res; });
     // if(this.user instanceof User ){console.log("Yes")}
   }

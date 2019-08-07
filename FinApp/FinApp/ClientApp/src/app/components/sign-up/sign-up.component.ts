@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import { CustomAuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'sign-up-component',
   templateUrl: './sign-up.component.html',
@@ -15,7 +15,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: AuthService,
+    private authService: CustomAuthService,
     fb: FormBuilder) {
     this.signUpForm = fb.group({
       'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
