@@ -44,7 +44,7 @@ namespace FinApp.Extensions
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
 
-                RequireExpirationTime = false,
+                RequireExpirationTime = true, 
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };

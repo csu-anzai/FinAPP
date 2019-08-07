@@ -28,33 +28,32 @@ namespace FinApp.Attributes
 
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
-            var accessToken = context.HttpContext.Request.Headers["Authorization"].ToString();
+            var accessToken = context.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
 
 
             if (String.IsNullOrEmpty(accessToken))
                 throw new ApiException(HttpStatusCode.Unauthorized);
 
-            User user = await _userRepository.GetAsync(int.Parse(_jwtManager.GetPrincipalFromExpiredToken(accessToken).jwt.Subject));
+            User user = await _userRepository.GetAsync(int.Parse(_jwtManager.GetPrincipalFromExpiredToken(accessToken).jwt.Subject));            
             _refreshToken = await _tokenRepository.GetTokenByUserId(user.Id);
 
             if (_jwtManager.IsExpired(accessToken) && !_jwtManager.IsExpired(_refreshToken.RefreshToken))
-            {      
-                
-                var newAccessToken = _jwtManager.GenerateAccessToken(user.Id, user.Email, user.Role.Name);
-                context.HttpContext.Response.Headers.Add("newAccess_token", newAccessToken);
+            {                
+                var newAccessToken = _jwtManager.GenerateAccessToken(user.Id, user.Email, user.Role?.Name);
 
+                context.HttpContext.Response.Headers.Add("token", newAccessToken);
+                context.HttpContext.Request.Headers["Authorization"] = "Bearer " + newAccessToken;
             }
 
             else if (_jwtManager.IsExpired(accessToken) && _jwtManager.IsExpired(_refreshToken.RefreshToken))
             {
+                var newAccessToken = _jwtManager.GenerateAccessToken(user.Id, user.Email, user.Role?.Name);
+                var newRefreshToken = _jwtManager.GenerateRefreshToken(user.Id, user.Email, user.Role?.Name);
 
-                var newAccessToken = _jwtManager.GenerateAccessToken(user.Id, user.Email, user.Role.Name);
-                var newRefreshToken = _jwtManager.GenerateRefreshToken(user.Id, user.Email, user.Role.Name);
+                context.HttpContext.Response.Headers.Add("token", newAccessToken);
+                context.HttpContext.Request.Headers["Authorization"] = "Bearer " + newAccessToken;
 
-                context.HttpContext.Response.Headers.Add("newAccess_token", newAccessToken);
                 await _jwtManager.UpdateAsync(user, newRefreshToken);
-
-
             }
         }
     }

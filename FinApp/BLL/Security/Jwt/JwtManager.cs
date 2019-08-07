@@ -36,19 +36,24 @@ namespace BLL.Security.Jwt
                 IssuerSigningKey = _jwtOptions.SigningCredentials.Key,
                 ValidateLifetime = true
             };
-
+            var validFor = _jwtOptions.ValidFor;
+            var testVariable =_jwtOptions.IssuedAt;
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken validatedToken = null;
+
 
             try
             {
                 tokenHandler.ValidateToken(accesToken, validationParameters, out validatedToken);
             }
-            catch (SecurityTokenExpiredException)
+            
+            catch (Exception e)
             {
-                return false;
+                var exeption = e.Message;
+                return true;
             }
-            return true;
+            validatedToken.ToString();
+            return false;
         }
         public (ClaimsPrincipal principal, JwtSecurityToken jwt) GetPrincipalFromExpiredToken(string token)
         {
@@ -61,7 +66,7 @@ namespace BLL.Security.Jwt
                         ValidateIssuer = false,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = _jwtOptions.SigningCredentials.Key,
-                        ValidateLifetime = false
+                        ValidateLifetime = false                      
                     },
                     out var securityToken);
 
