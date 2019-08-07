@@ -78,7 +78,7 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
          children: [
           { path: 'profile', component: ProfileComponent},
           { path: 'charts', component: ChartComponent},
-          { path: 'accounts', component: AccountComponent},
+          { path: 'accounts/:id', component: AccountComponent},
           { path: 'settings', component: SettingComponent}
          ]  
       } 
