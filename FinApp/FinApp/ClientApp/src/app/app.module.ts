@@ -33,6 +33,7 @@ import { NotificationService } from './services/notification.service';
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
+import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { AccountHistoryComponent } from './components/user-main-page/page-conten
     AccountComponent,
     SettingComponent,
     AccountHistoryComponent,
+    AccountInfoComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
