@@ -44,7 +44,7 @@ export class SignUpComponent implements OnInit {
       this.user = {
         Name: this.signUpForm.controls['Name'].value,
         Surname: this.signUpForm.controls['Surname'].value,
-        BirthDate: this.signUpForm.controls['BirthDate'].value,
+        BirthDate: this.signUpForm.controls['BirthDate'].value.toDateString(),
         Email: this.signUpForm.controls['Email'].value,
         Password: this.signUpForm.controls['Password'].value,
       };

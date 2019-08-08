@@ -33,6 +33,8 @@ import { NotificationService } from './services/notification.service';
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
+import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,8 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
     ChartComponent,
     AccountComponent,
     SettingComponent,
+    AccountHistoryComponent,
+    AccountInfoComponent,
     AdminPanelComponent,
   ],
   imports: [
@@ -76,7 +80,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
         children: [
           { path: 'profile', component: ProfileComponent },
           { path: 'charts', component: ChartComponent },
-          { path: 'accounts', component: AccountComponent },
+          { path: 'accounts/:id', component: AccountComponent },
           { path: 'settings', component: SettingComponent },
           { path: 'adminPanel', component: AdminPanelComponent }
         ]
