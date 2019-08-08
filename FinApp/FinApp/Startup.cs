@@ -81,9 +81,9 @@ namespace FinApp
 
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                   name: "api",
-                   template: "api/{controller}/{action}");
+                //routes.MapRoute(
+                //   name: "api",
+                //   template: "api/{controller}/{action}");
 
                 routes.MapRoute(
                     name: "default",

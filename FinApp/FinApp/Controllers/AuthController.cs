@@ -19,8 +19,9 @@ namespace FinApp.Controllers
             _authService = userService;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> SignIn(UserLoginDTO userDto)
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> Login(UserLoginDTO userDto)
         {
             var token = await _authService.SignInAsync(userDto);
 
@@ -30,7 +31,8 @@ namespace FinApp.Controllers
             return Ok(new { token = token.AccessToken });
         }
 
-        [HttpPost("signin-google")]
+        [HttpPost]
+        [Route("signingoogle")]
         public async Task<IActionResult> GoogleSignIn(GoogleUserDTO userDto)
         {
             var token = await _authService.GoogleSignInAsync(userDto.Email);

@@ -36,7 +36,8 @@ export class SignUpComponent implements OnInit {
       'RepeatedPassword': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
     });
     this.signUpForm.valueChanges.subscribe(field => {
-      if (this.user.Password != this.signUpForm.controls['RepeatedPassword']) {
+      console.log(this.user.Password + '\t' + this.signUpForm.controls['RepeatedPassword'].value);
+      if (this.user.Password != this.signUpForm.controls['RepeatedPassword'].value) {
         this.signUpForm.controls['RepeatedPassword'].setErrors({ mismatch: true });
       } else {
         this.signUpForm.controls['RepeatedPassword'].setErrors(null);

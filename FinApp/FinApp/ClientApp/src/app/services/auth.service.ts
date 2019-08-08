@@ -10,6 +10,8 @@ import {
   GoogleLoginProvider,
   SocialUser
 } from 'angular-6-social-login';
+import { DataService } from '../common/data.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +40,8 @@ export class CustomAuthService {
   constructor(private http: HttpClient,
     private socialAuthService: AuthService,
     private cookieService: CookieService,
+    private data: DataService,
+    private router: Router,
     private alertService: NotificationService) { }
 
   login(model: any) {
@@ -57,12 +61,33 @@ export class CustomAuthService {
     }
   }
 
-  signInWithGoogle() {
+  signInWithGoogle(): any {
     return this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
-      (userData) => {
-        console.log(userData);
-        return userData;
-      });
+      user => {
+        let temp = 'signingoogle';
+        console.log(user);
+        return this.http.post(`https://localhost:44397/api/auth/${temp}/`, user).toPromise().then(
+          (response: any) => {
+            if (response) {
+              this.cookieService.set('token', response.token, null, null, null, true);
+              this.decodedToken = this.jwtHelper.decodeToken(user.token);
+              return response.token;
+            }
+          }
+        ).catch(error => {
+          const queryParams = {
+            email: user.email,
+            name: user.name
+          };
+
+          this.data.passParameters(queryParams);
+
+          this.router.navigate(['sign-up']);
+
+          return error;
+        });
+      }
+    );
   }
 
   register(model: any) {
@@ -82,7 +107,6 @@ export class CustomAuthService {
       const token = this.cookieService.get('token');
       return !this.jwtHelper.isTokenExpired(token);
     }
-
     return false;
   }
 }

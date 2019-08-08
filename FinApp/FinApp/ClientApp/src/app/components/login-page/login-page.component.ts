@@ -54,33 +54,14 @@ export class LoginPageComponent implements OnInit {
   }
 
   googleSignIn() {
-    this.authService.signInWithGoogle().then(
-      user => {
-        try {
-          return this.http.post('https://localhost:44397/api/auth/signin-google/', user)
-            .pipe(
-              map((response: any) => {
-                if (response && response.token) {
-                  this.cookieService.set('token', user.token, null, null, null, true);
-                } else {
-                  const queryParams = {
-                    email: user.email,
-                    name: user.name
-                  };
-
-                  this.data.passParameters(queryParams);
-
-                  this.router.navigate(['sign-up']);
-                }
-              }), catchError(error => {
-                return throwError(error);
-              })
-            );
-        } catch (error) {
-          this.alertService.errorMsg(error.message);
-        }
-      }
-    );
+    this.authService.signInWithGoogle().subscribe(
+      next => {},
+      error => throwError(error),
+      () => {
+        this.authService.setLoggedIn(true);
+        this.alertService.successMsg('Logged in successfuly');
+        this.router.navigate(['user/profile']);
+      });
   }
 
   get f() { return this.signInForm.controls; }
