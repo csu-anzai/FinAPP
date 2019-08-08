@@ -1,0 +1,32 @@
+.Income {
+  color: lime;
+}
+
+.Expense {
+  color: red;
+}
+
+@media screen and (max-width: 700px) {
+  .table {
+    font-size: smaller;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .table {
+    font-size: xx-small;
+  }
+}
+
+thead {
+  background-color: rgb(19, 91, 168);
+  color: white;
+}
+
+th {
+  font-weight: normal
+}
+
+.table-bordered td, .table-bordered th {
+  border: 1px solid rgb(19, 91, 168);
+}
