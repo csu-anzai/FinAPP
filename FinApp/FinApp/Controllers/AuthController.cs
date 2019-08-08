@@ -19,7 +19,7 @@ namespace FinApp.Controllers
             _authService = userService;
         }
 
-        [HttpPost("signin")]
+        [HttpPost("login")]
         public async Task<IActionResult> SignIn(UserLoginDTO userDto)
         {
             var token = await _authService.SignInAsync(userDto);
@@ -30,15 +30,15 @@ namespace FinApp.Controllers
             return Ok(new { token = token.AccessToken });
         }
 
-        [HttpPost("google-signin")]
-        public IActionResult GoogleSignIn(GoogleUserDTO userDto)
+        [HttpPost("signin-google")]
+        public async Task<IActionResult> GoogleSignIn(GoogleUserDTO userDto)
         {
-            //var token = await _authService.SignInAsync(userDto);
+            var token = await _authService.GoogleSignInAsync(userDto.Email);
 
-            //if (token == null)
-            //    return BadRequest(new { message = "Credentials are invalid" });
+            if (token == null)
+                return StatusCode(404);
 
-            return Ok(new { token = "goog" });
+            return Ok(new { token = token.AccessToken });
         }
     }
 }

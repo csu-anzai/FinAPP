@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { CustomAuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { DataService } from 'src/app/common/data.service';
+import { HttpClient } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
+import { throwError } from 'rxjs';
 
 
 
@@ -17,8 +22,13 @@ export class LoginPageComponent implements OnInit {
   signInForm: FormGroup;
 
 
-  constructor(private authService: CustomAuthService, private router: Router, fb: FormBuilder, private alertService: NotificationService)
-  {
+  constructor(private authService: CustomAuthService,
+    private router: Router,
+    private data: DataService,
+    private http: HttpClient,
+    private cookieService: CookieService,
+    fb: FormBuilder,
+    private alertService: NotificationService) {
     this.signInForm = fb.group({
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
       'Password': new FormControl('', Validators.required),
@@ -44,8 +54,35 @@ export class LoginPageComponent implements OnInit {
   }
 
   googleSignIn() {
-    this.authService.signInWithGoogle();
+    this.authService.signInWithGoogle().then(
+      user => {
+        try {
+          return this.http.post('https://localhost:44397/api/auth/signin-google/', user)
+            .pipe(
+              map((response: any) => {
+                if (response && response.token) {
+                  this.cookieService.set('token', user.token, null, null, null, true);
+                } else {
+                  const queryParams = {
+                    email: user.email,
+                    name: user.name
+                  };
+
+                  this.data.passParameters(queryParams);
+
+                  this.router.navigate(['sign-up']);
+                }
+              }), catchError(error => {
+                return throwError(error);
+              })
+            );
+        } catch (error) {
+          this.alertService.errorMsg(error.message);
+        }
+      }
+    );
   }
+
   get f() { return this.signInForm.controls; }
 
   loggedIn() {

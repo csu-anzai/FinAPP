@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import {
   AuthService,
@@ -58,30 +58,10 @@ export class CustomAuthService {
   }
 
   signInWithGoogle() {
-
     return this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       (userData) => {
-        console.log('sign in data : ', JSON.stringify(userData));
+        console.log(userData);
         return userData;
-        // const googleUser = new GoogleClass();
-        // googleUser.id = userData.id;
-        // googleUser.email = userData.email;
-        // googleUser.idToken = userData.idToken;
-        // googleUser.token = userData.token;
-        // googleUser.image = userData.image;
-        // googleUser.name = userData.name;
-        // googleUser.provider = userData.provider;
-      }).then((user) => {
-        try {
-          return  this.http.post('https://localhost:44397/api/auth/google-signin/', user)
-            .pipe(
-              map((response: any) => {
-                console.log(response);
-              })
-            );
-        } catch (error) {
-          this.alertService.errorMsg(error.message);
-        }
       });
   }
 
@@ -105,14 +85,4 @@ export class CustomAuthService {
 
     return false;
   }
-}
-
-class GoogleClass {
-  provider: string;
-  id: string;
-  email: string;
-  name: string;
-  image: string;
-  token?: string;
-  idToken?: string;
 }

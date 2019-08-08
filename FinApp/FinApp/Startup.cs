@@ -64,8 +64,6 @@ namespace FinApp
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FinApp");
             });
 
-            
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -84,8 +82,12 @@ namespace FinApp
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                   name: "api",
+                   template: "api/{controller}/{action}");
+
+                routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");
+                    template: "{controller}/{action=Index}/{id?}");               
             });
 
             app.UseSpa(spa =>

@@ -5,6 +5,7 @@
       <label class="floatLabel" for="firstname">Name:</label>
       <input type="text"
              formControlName="Name"
+             [(ngModel)]="user.Name"
              #name>
       <div class="validation-message">
         <ng-container *ngIf="signUpForm.controls['Name'].touched">
@@ -17,6 +18,7 @@
       <label class="floatLabel" for="lastname">Surname:</label>
       <input type="text"
              formControlName="Surname"
+             [(ngModel)]="user.Surname"
              #surname>
       <div class="validation-message">
         <ng-container *ngIf="signUpForm.controls['Surname'].touched">
@@ -32,6 +34,7 @@
              bsDatepicker
              formControlName="BirthDate"
              [bsConfig]="{ isAnimated: true }"
+             [(ngModel)]="user.BirthDate"
              #brthdate>
       <div class="validation-message">
         <ng-container *ngIf="signUpForm.controls['BirthDate'].touched">
@@ -44,6 +47,7 @@
       <label class="floatLabel" for="lastname">Email:</label>
       <input type="text"
              formControlName="Email"
+             [(ngModel)]="user.Email"
              #email>
       <div class="validation-message">
         <ng-container *ngIf="signUpForm.controls['Email'].touched">
@@ -56,6 +60,7 @@
       <label class="floatLabel" for="lastname">Password:</label>
       <input type="password"
              formControlName="Password"
+             [(ngModel)]="user.Password"
              #password>
       <div class="validation-message">
         <ng-container *ngIf="signUpForm.controls['Password'].touched">
