@@ -23,7 +23,7 @@ namespace FinApp.Extensions
             services.AddScoped<ITokenRepository, TokenRepository>();            
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
-
+            services.AddScoped<AuthorizeAttribute>();
 
             services.AddScoped<TokenValidation>();
             services.AddTransient<IPassHasher, PassHasher>();

@@ -36,11 +36,9 @@ namespace BLL.Security.Jwt
                 IssuerSigningKey = _jwtOptions.SigningCredentials.Key,
                 ValidateLifetime = true
             };
-            var validFor = _jwtOptions.ValidFor;
-            var testVariable =_jwtOptions.IssuedAt;
+
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken validatedToken = null;
-
 
             try
             {
@@ -55,6 +53,15 @@ namespace BLL.Security.Jwt
             validatedToken.ToString();
             return false;
         }
+
+        public string[] GetClaims (string token)
+        {
+
+            var claims = new JwtSecurityToken(token).Subject.Split();
+
+            return claims;
+        }
+
         public (ClaimsPrincipal principal, JwtSecurityToken jwt) GetPrincipalFromExpiredToken(string token)
         {
             var principal = new JwtSecurityTokenHandler()
@@ -119,7 +126,7 @@ namespace BLL.Security.Jwt
             {
                 new Claim(nameof(login), login),
                 new Claim(nameof(role), role),
-                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString() + " " + login + " " + role),
                 new Claim(JwtRegisteredClaimNames.Jti, _jwtOptions.JtiGenerator),
                 new Claim(JwtRegisteredClaimNames.Iat,
                     ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
@@ -132,9 +139,9 @@ namespace BLL.Security.Jwt
                      1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
                 .TotalSeconds);
 
-        public async Task<Token> UpdateAsync(User user, string refreshToken)
+        public async Task<Token> UpdateAsync(int Id, string refreshToken)
         {
-            var token = await _tokenRepository.GetTokenByUserId(user.Id);
+            var token = await _tokenRepository.GetTokenByUserId(Id);
 
             token.RefreshToken = refreshToken;
             await _unitOfWork.Complete();

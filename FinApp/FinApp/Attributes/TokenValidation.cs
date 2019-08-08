@@ -53,7 +53,7 @@ namespace FinApp.Attributes
                 context.HttpContext.Response.Headers.Add("token", newAccessToken);
                 context.HttpContext.Request.Headers["Authorization"] = "Bearer " + newAccessToken;
 
-                await _jwtManager.UpdateAsync(user, newRefreshToken);
+                await _jwtManager.UpdateAsync(user.Id, newRefreshToken);
             }
         }
     }

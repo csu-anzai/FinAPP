@@ -45,7 +45,7 @@ namespace BLL.Services.ImplementedServices
             refreshToken.User = existedUser;
             refreshToken.User.Id = existedUser.Id;
 
-            await _jwtManager.UpdateAsync(existedUser, refreshToken.RefreshToken);
+            await _jwtManager.UpdateAsync(existedUser.Id, refreshToken.RefreshToken);
             //await _tokenRepository.AddAsync(refreshToken);
 
             return token;
