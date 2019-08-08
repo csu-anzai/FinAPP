@@ -18,43 +18,12 @@ namespace FinApp.Controllers
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
 
-        //-- Updated! --//
-
-        private FinAppContext _context;
-
-        // Take information from db context and return it to client in a list view
-        [HttpGet("getUsers")]
-        public IList<User> GetUsers()
-        {
-            var query = _context.Users.ToList();
-            return query;
-        }
-
-        [HttpPost("deleteUser")]
-        public async Task<IActionResult> DeleteUser([FromBody]User user)
-        {
-            try
-            {
-               // _context.Users.Remove(user);
-               // await _context.SaveChangesAsync();
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        // Uses finapp context class and dependency injection to get 
-        // an instance of context and put this context to local variable
-        public UserController(IUserService userService, IMapper mapper, FinAppContext context)
+        public UserController(IUserService userService, IMapper mapper)
         {
             _userService = userService;
             _mapper = mapper;
-            _context = context;
         }
 
-        //-- Old! --//
 
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(UserRegistrationDTO userDto)
@@ -72,31 +41,54 @@ namespace FinApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetUser(int id)
         {
-
-            var user = await _userService.Get(id);
+            var user = await _userService.GetAsync(id);
 
             if (user == null)
                 return NotFound();
+
             var userDTO = _mapper.Map<User, UserDTO>(user);
-         
+
             return Ok(userDTO);
         }
 
-          //account/ 
-        ////user/711/accounts/----list of accounts
-        //// user/711/accounts/22  {id}/accounts/{id} -- certain account
-        //[HttpGet("{id}")]//Accounts
-        //public async Task<IActionResult> Get(int id)
-        //{
+        [HttpGet]
+        public async Task<IActionResult> GetUsersAsync()
+        {
+            var users = await _userService.GetAllAsync();
 
-        //    var user = await _userService.Get(id);
+            if (users == null)
+                return NoContent();
 
-        //    if (user == null)
-        //        return NotFound();
-        //    var userDTO = _mapper.Map<User, UserDTO>(user)
-        //    return Ok(userDTO);
-        //}
+            return Ok(users);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var user = await _userService.UpdateAsync(userDTO);
+
+            if (user == null)
+                return BadRequest(new { message = "User Id is incorrect" });
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var userInDb = await _userService.GetAsync(id);
+
+            if (userInDb == null)
+                return NotFound();
+
+            await _userService.DeleteAsync(userInDb);
+
+            return Ok();
+        }
     }
 }

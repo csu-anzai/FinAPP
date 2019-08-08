@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using BLL.Security;
 using BLL.Services.IServices;
+using DAL.Context;
 using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -60,17 +63,33 @@ namespace BLL.Services.ImplementedServices
             if (user == null)
                 return null;
 
-            _mapper.Map<UserDTO, User>(user, upToDateUser);
+            _mapper.Map(user, upToDateUser);
+
             await _unitOfWork.Complete();
 
             return upToDateUser;
         }
 
-        public async Task<User> Get(int id)
+        public async Task<User> GetAsync(int id)
         {
             var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == id);
 
             return user ?? null;
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetAllAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+            var usersDTO = users.Select(_mapper.Map<User, UserDTO>);
+            
+            return usersDTO.Count() > 0 ? usersDTO : null;
+        }
+
+        public async Task DeleteAsync(User user)
+        {
+            _userRepository.Remove(user);
+
+            await _unitOfWork.Complete();
         }
     }
 }
