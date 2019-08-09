@@ -72,11 +72,13 @@ namespace BLL.Services.ImplementedServices
             return upToDateUser;
         }
 
-        public async Task<User> GetAsync(int id)
+        public async Task<UserDTO> GetAsync(int id)
         {
             var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == id);
 
-            return user ?? null;
+            var userDTO = _mapper.Map<User, UserDTO>(user);
+
+            return userDTO ?? null;
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
@@ -87,8 +89,10 @@ namespace BLL.Services.ImplementedServices
             return usersDTO.Count() > 0 ? usersDTO : null;
         }
 
-        public async Task DeleteAsync(User user)
+        public async Task DeleteAsync(UserDTO userDTO)
         {
+            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == userDTO.Id);
+
             _userRepository.Remove(user);
 
             await _unitOfWork.Complete();

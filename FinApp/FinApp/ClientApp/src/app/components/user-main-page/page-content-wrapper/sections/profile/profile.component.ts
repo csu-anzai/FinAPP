@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/user';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,7 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   user: User = new User();
 
-  constructor(private _authService: AuthService, private _userService: UserService,  fb: FormBuilder) { 
+  constructor(private _authService: AuthService, private _userService: UserService,  fb: FormBuilder, private alertService: NotificationService) { 
 
     this.profileForm = fb.group({
       'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
@@ -39,14 +40,14 @@ export class ProfileComponent implements OnInit {
 
   updateProfile() {
     if (this.profileForm.valid) {
-     
-        this.user.name = this.profileForm.controls['Name'].value,
-        this.user.surname = this.profileForm.controls['Surname'].value,
-        this.user.birthDate = this.profileForm.controls['BirthDate'].value,
-        this.user.email =  this.profileForm.controls['Email'].value,
-     
+      this.user.name = this.profileForm.controls['Name'].value,
+      this.user.surname = this.profileForm.controls['Surname'].value,
+      this.user.birthDate = this.profileForm.controls['BirthDate'].value,
+      this.user.email =  this.profileForm.controls['Email'].value,
+      
       this._userService.update(this.user).subscribe(() => {
         console.log(this.user);
+        this.alertService.successMsg('Profile updated');
       });
     }
     else {
