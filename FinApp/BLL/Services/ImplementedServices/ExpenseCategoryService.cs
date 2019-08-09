@@ -10,19 +10,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace BLL.Services.ImplementedServices
 {
     public class ExpenseCategoryService: IExpenseCategoryService
     {
         private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
+        private readonly IExpenseCategoryRepository _expenseCategoryRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ExpenseCategoryService(IMapper mapper, IUnitOfWork unitOfWork, IUserRepository userRepository)
+        public ExpenseCategoryService(IMapper mapper, IUnitOfWork unitOfWork, IExpenseCategoryRepository expenseCategoryRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _userRepository = userRepository;
+            _expenseCategoryRepository = expenseCategoryRepository;
+        }
+
+        public async Task DeleteExpenseCategoryAsync(ExpenseCategory expenseCategory)
+        {
+            _expenseCategoryRepository.Remove(expenseCategory);
+            await _unitOfWork.Complete();
         }
     }
 }

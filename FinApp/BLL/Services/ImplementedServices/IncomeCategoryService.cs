@@ -17,13 +17,20 @@ namespace BLL.Services.ImplementedServices
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserRepository _userRepository;
+        private readonly IIncomeCategoryRepository _incomeCategoryRepository;
 
-        public IncomeCategoryService(IMapper mapper, IUnitOfWork unitOfWork, IUserRepository userRepository)
+        public IncomeCategoryService(IMapper mapper, IUnitOfWork unitOfWork, IIncomeCategoryRepository incomeCategoryRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _userRepository = userRepository;
+            _incomeCategoryRepository = incomeCategoryRepository;
+        }
+
+        public async Task DeleteIncomeCategoryAsync(IncomeCategory incomeCategory)
+        {
+            _incomeCategoryRepository.Remove(incomeCategory);
+
+            await _unitOfWork.Complete();
         }
     }
 }
