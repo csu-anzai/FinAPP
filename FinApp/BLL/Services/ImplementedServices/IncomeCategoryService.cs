@@ -32,5 +32,12 @@ namespace BLL.Services.ImplementedServices
 
             await _unitOfWork.Complete();
         }
+
+        public async Task<IEnumerable<IncomeCategoryDTO>> GetAllIncomeCategoryAsync()
+        {
+            var incomeCategories = await _incomeCategoryRepository.GetAllAsync();
+            var incomeCategoriesDTO = incomeCategories.Select(_mapper.Map<IncomeCategory, IncomeCategoryDTO>);
+            return incomeCategoriesDTO.Count() > 0 ? incomeCategoriesDTO : null;
+        }
     }
 }

@@ -31,5 +31,13 @@ namespace BLL.Services.ImplementedServices
             _expenseCategoryRepository.Remove(expenseCategory);
             await _unitOfWork.Complete();
         }
+
+        public async Task<IEnumerable<ExpenseCategoryDTO>> GetAllExpenseCategoryAsync()
+        {
+            var expenseCategories = await _expenseCategoryRepository.GetAllAsync();
+            var expenseCategoriesDTO = expenseCategories.Select(_mapper.Map<ExpenseCategory, ExpenseCategoryDTO>);
+
+            return expenseCategoriesDTO.Count() > 0 ? expenseCategoriesDTO : null;
+        }
     }
 }
