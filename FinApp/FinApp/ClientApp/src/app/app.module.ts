@@ -36,7 +36,7 @@ import {
 } from 'angular-6-social-login';
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
-import { DataService } from './common/data.service';
+// import { DataService } from './common/data.service';
 
 // Configs
 export function getAuthServiceConfigs() {
@@ -113,7 +113,7 @@ export function getAuthServiceConfigs() {
     NotificationService,
     GuestGuard,
     AuthGuard,
-    DataService,
+    // DataService,
     {
       provide: AuthServiceConfig,
       useFactory: getAuthServiceConfigs

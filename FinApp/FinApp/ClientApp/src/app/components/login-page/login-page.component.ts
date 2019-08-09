@@ -3,7 +3,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { CustomAuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { DataService } from 'src/app/common/data.service';
+// import { DataService } from 'src/app/common/data.service';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
@@ -24,7 +24,7 @@ export class LoginPageComponent implements OnInit {
 
   constructor(private authService: CustomAuthService,
     private router: Router,
-    private data: DataService,
+    // private data: DataService,
     private http: HttpClient,
     private cookieService: CookieService,
     fb: FormBuilder,

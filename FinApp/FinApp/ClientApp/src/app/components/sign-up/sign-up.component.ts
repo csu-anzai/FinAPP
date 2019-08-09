@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { CustomAuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from 'src/app/common/data.service';
+import { AuthService } from 'angular-6-social-login';
 @Component({
   selector: 'sign-up-component',
   templateUrl: './sign-up.component.html',
@@ -12,19 +12,13 @@ import { DataService } from 'src/app/common/data.service';
 })
 export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
-  user: any = {
-    Name: '',
-    Surname: '',
-    BirthDate: '',
-    Email: '',
-    Password: '',
-  };
+  user: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private authService: CustomAuthService,
-    private data: DataService,
+    private socialAuthService: AuthService,
 
     fb: FormBuilder) {
     this.signUpForm = fb.group({
@@ -36,8 +30,7 @@ export class SignUpComponent implements OnInit {
       'RepeatedPassword': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
     });
     this.signUpForm.valueChanges.subscribe(field => {
-      console.log(this.user.Password + '\t' + this.signUpForm.controls['RepeatedPassword'].value);
-      if (this.user.Password != this.signUpForm.controls['RepeatedPassword'].value) {
+      if (this.signUpForm.controls['Password'].value !== this.signUpForm.controls['RepeatedPassword'].value) {
         this.signUpForm.controls['RepeatedPassword'].setErrors({ mismatch: true });
       } else {
         this.signUpForm.controls['RepeatedPassword'].setErrors(null);
@@ -46,11 +39,34 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data.currentParams.subscribe((p: any) => { this.user.Email = p.email; this.user.Name = p.name; });
+    // this.signUpForm.controls['Email'].setValue('');
+    // this.signUpForm.controls['Name'].setValue('');
+    // this.signUpForm.controls['Surname'].setValue('');
+
+    this.socialAuthService.authState.subscribe(
+      (user) => {
+        if (user) {
+          const fullName = user.name.split(' '),
+            name = fullName[0],
+            surname = fullName[fullName.length - 1];
+
+          this.signUpForm.controls['Email'].setValue(user.email);
+          this.signUpForm.controls['Name'].setValue(name);
+          this.signUpForm.controls['Surname'].setValue(surname);
+        }
+      }
+    );
   }
 
   onSignUp() {
     if (this.signUpForm.valid) {
+      this.user = {
+        Name: this.signUpForm.controls['Name'].value,
+        Surname: this.signUpForm.controls['Surname'].value,
+        BirthDate: this.signUpForm.controls['BirthDate'].value,
+        Email: this.signUpForm.controls['Email'].value,
+        Password: this.signUpForm.controls['Password'].value,
+      };
       this.authService.register(this.user).subscribe(() => {
         // if email is not available -> show message
         this.router.navigate(['login-page']);

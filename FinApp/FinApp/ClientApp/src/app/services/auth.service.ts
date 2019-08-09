@@ -1,5 +1,5 @@
 import { NotificationService } from './notification.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -10,14 +10,16 @@ import {
   GoogleLoginProvider,
   SocialUser
 } from 'angular-6-social-login';
-import { DataService } from '../common/data.service';
+// import { DataService } from '../common/data.service';
 import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CustomAuthService {
+export class CustomAuthService implements OnInit {
   private loggedInStatus = false;
+  private user: SocialUser;
+
   baseUrl = 'https://localhost:44397/api/';
   signInParameter = 'auth/';
   signUpParameter = 'user/';
@@ -40,9 +42,17 @@ export class CustomAuthService {
   constructor(private http: HttpClient,
     private socialAuthService: AuthService,
     private cookieService: CookieService,
-    private data: DataService,
+    // private data: DataService,
     private router: Router,
     private alertService: NotificationService) { }
+
+  ngOnInit(): void {
+    this.socialAuthService.authState.subscribe(
+      (user) => {
+        this.user = user;
+      }
+    );
+  }
 
   login(model: any) {
     try {
@@ -62,32 +72,42 @@ export class CustomAuthService {
   }
 
   signInWithGoogle(): any {
+    if (this.user) {
+      return this.http.post(`https://localhost:44397/api/auth/signingoogle/`, this.user).toPromise()
+          .then(
+            (response: any) => {
+              if (response) {
+                this.cookieService.set('token', response.token, null, null, null, true);
+                this.decodedToken = this.jwtHelper.decodeToken(response.token);
+                return response.token;
+              }
+            }
+          ).catch(error => {
+            this.router.navigate(['sign-up']);
+            throwError(error);
+          });
+    }
+
     return this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       user => {
-        let temp = 'signingoogle';
         console.log(user);
-        return this.http.post(`https://localhost:44397/api/auth/${temp}/`, user).toPromise().then(
-          (response: any) => {
-            if (response) {
-              this.cookieService.set('token', response.token, null, null, null, true);
-              this.decodedToken = this.jwtHelper.decodeToken(user.token);
-              return response.token;
+        return this.http.post(`https://localhost:44397/api/auth/signingoogle/`, user).toPromise()
+          .then(
+            (response: any) => {
+              if (response) {
+                this.cookieService.set('token', response.token, null, null, null, true);
+                this.decodedToken = this.jwtHelper.decodeToken(user.token);
+                return response.token;
+              }
             }
-          }
-        ).catch(error => {
-          const queryParams = {
-            email: user.email,
-            name: user.name
-          };
-
-          this.data.passParameters(queryParams);
-
-          this.router.navigate(['sign-up']);
-
-          return error;
-        });
+          ).catch(error => {
+            this.router.navigate(['sign-up']);
+            throwError(error);
+          });
       }
-    );
+    ).catch(error => {
+      throwError(error);
+    });
   }
 
   register(model: any) {
