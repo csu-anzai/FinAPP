@@ -34,7 +34,7 @@ namespace BLL.Services.ImplementedServices
             return passwordConfirmCode;
         }
 
-        private async Task<int> AssignCodeAsync(User user)
+        private async Task AssignCodeAsync(User user)
         {
             if (user == null)
             {
@@ -48,8 +48,6 @@ namespace BLL.Services.ImplementedServices
                 CreateDate = DateTime.Now
             };
             await _unitOfWork.Complete();
-
-            return passwordConfirmCode;
         }
 
         public async Task<User> SendConfirmationCode(ForgotPasswordDTO forgotPasswordDto)
@@ -60,7 +58,8 @@ namespace BLL.Services.ImplementedServices
                 throw new ApiException(HttpStatusCode.NotFound, "User with such email was not found.");
             }
 
-            var passwordConfirmCode = await AssignCodeAsync(user);
+            await AssignCodeAsync(user);
+            var passwordConfirmCode = user.PasswordConfirmationCode.Code;
 
             var message = passwordConfirmCode + _message;
 
@@ -71,7 +70,7 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<bool> ValidateConfirmationCode(PasswordConfirmationCodeDTO confirmationCodeDto)
         {
-            var passwordConfirmCode = await _codeRepository.GetPasswordConfirmationCodeByUserId(confirmationCodeDto.UserId);
+            var passwordConfirmCode = await _codeRepository.GetPasswordConfirmationCodeByUserIdAsync(confirmationCodeDto.UserId);
 
             TimeSpan timeAfterCodeCreation = DateTime.Now - passwordConfirmCode.CreateDate;
             if (timeAfterCodeCreation.Minutes > PasswordCodeTimeoutMinutes)

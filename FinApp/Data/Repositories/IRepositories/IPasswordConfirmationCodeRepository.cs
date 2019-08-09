@@ -6,6 +6,6 @@ namespace DAL.Repositories.IRepositories
 {
     public interface IPasswordConfirmationCodeRepository : IBaseRepository<PasswordConfirmationCode>
     {
-        Task<PasswordConfirmationCode> GetPasswordConfirmationCodeByUserId(int id);
+        Task<PasswordConfirmationCode> GetPasswordConfirmationCodeByUserIdAsync(int id);
     }
 }
