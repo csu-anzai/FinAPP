@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import { mergeMap, map, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-fetch-data',
@@ -9,7 +11,8 @@ import { throwError } from 'rxjs';
 export class FetchDataComponent {
   public forecasts: WeatherForecast[];
 
-  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+  constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string,
+    private cookieService: CookieService) {
     http.get<WeatherForecast[]>(baseUrl + 'api/SampleData/WeatherForecasts').subscribe(result => {
       this.forecasts = result;
     }, error => console.error(error));
@@ -17,10 +20,25 @@ export class FetchDataComponent {
 
   onClick() {
     try {
-      this.http.get('https://localhost:44397/api/user/accounts/13').subscribe((data: any) => console.log(data));
+      return this.http.get('https://localhost:44397/api/user/accounts/13').subscribe((data: any) => console.log(data));
     } catch (error) {
       throwError(error);
     }
+  }
+
+  onRefresh() {
+    return this.http.post('https://localhost:44397/api/token', { accessToken: this.cookieService.get('token') })
+    .pipe(
+      catchError(err => throwError(err))
+      )
+      .subscribe(
+        (data: any) => {
+            // Update token
+            console.log('new token: ' + data.token);
+            this.cookieService.set('token', data.token);
+          return data;
+        }
+      );
   }
 }
 

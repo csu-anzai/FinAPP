@@ -37,19 +37,15 @@ namespace FinApp.Attributes
             if (String.IsNullOrEmpty(accessToken))
                 throw new ApiException(HttpStatusCode.Unauthorized);
 
-
-            if (_jwtManager.IsExpired(accessToken) && !_jwtManager.IsExpired(_refreshToken.RefreshToken))
+            if (_jwtManager.IsExpired(accessToken))
             {
-                throw new SecurityTokenInvalidLifetimeException();
-            }
-
-            else if (_jwtManager.IsExpired(accessToken) && _jwtManager.IsExpired(_refreshToken.RefreshToken))
-            {                
-                var newRefreshToken = _jwtManager.GenerateRefreshToken(userId, userEmail, userRole);
-                await _jwtManager.UpdateAsync(userId, newRefreshToken);
-
-                throw new SecurityTokenInvalidLifetimeException();
-            }
+                if (_jwtManager.IsExpired(_refreshToken.RefreshToken))
+                {
+                    var newRefreshToken = _jwtManager.GenerateRefreshToken(userId, userEmail, userRole);
+                    await _jwtManager.UpdateAsync(userId, newRefreshToken);
+                }
+                throw new ApiException(HttpStatusCode.Unauthorized);
+            }         
         }
     }
 
