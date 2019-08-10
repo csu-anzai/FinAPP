@@ -31,12 +31,13 @@
              class="form-control"
              bsDatepicker
              formControlName="BirthDate"
-             [bsConfig]="{ isAnimated: true }"
+             [bsConfig]="{ isAnimated: true,
+             dateInputFormat: 'DD.MM.YYYY'}"
              #brthdate>
       <div class="validation-message">
         <ng-container *ngIf="signUpForm.controls['BirthDate'].touched">
           <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].hasError('required')">Please choose your birthdate</small>
-          <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].invalid">Date format should be DD/MM/YYYY</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].invalid">Date format should be DD.MM.YYYY</small>
         </ng-container>
       </div>
     </div>

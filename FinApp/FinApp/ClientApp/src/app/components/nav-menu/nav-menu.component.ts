@@ -1,4 +1,4 @@
-import { CustomAuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -15,7 +15,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 export class NavMenuComponent implements OnInit {
   isExpanded = false;
 
-  constructor(private authService: CustomAuthService,
+  constructor(private authService: AuthService,
     private cookieService: CookieService,
     private router: Router,
     private oauthService: OAuthService,

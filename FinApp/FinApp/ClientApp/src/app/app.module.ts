@@ -20,7 +20,7 @@ import { WelcomeHeaderComponent } from './components/welcome-components/welcome-
 import { WelcomeListComponent } from './components/welcome-components/welcome-list/welcome-list.component';
 import { WelcomeBenefitsComponent } from './components/welcome-components/welcome-benefits/welcome-benefits.component';
 import { WelcomeCarouselComponent } from './components/welcome-components/welcome-carousel/welcome-carousel.component';
-import { CustomAuthService } from './services/auth.service';
+import { AuthService } from './services/auth.service';
 import { LeftSideBarComponent } from './components/user-main-page/left-side-bar/left-side-bar.component';
 import { GuestGuard } from './guest.guard';
 import { ProfileComponent } from './components/user-main-page/page-content-wrapper/sections/profile/profile.component';
@@ -32,6 +32,9 @@ import { NotificationService } from './services/notification.service';
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
 import { MessagingCenterService } from './services/messaging-center.service';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
+import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +57,9 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     ChartComponent,
     AccountComponent,
     SettingComponent,
+    AccountHistoryComponent,
+    AccountInfoComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -76,7 +82,10 @@ import { OAuthModule } from 'angular-oauth2-oidc';
           { path: 'profile', component: ProfileComponent },
           { path: 'charts', component: ChartComponent },
           { path: 'accounts', component: AccountComponent },
-          { path: 'settings', component: SettingComponent }
+          { path: 'settings', component: SettingComponent },
+          { path: 'accounts/:id', component: AccountComponent },
+          { path: 'settings', component: SettingComponent },
+          { path: 'adminPanel', component: AdminPanelComponent }
         ]
       }
     ]),
@@ -91,7 +100,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     )
   ],
   providers: [
-    CustomAuthService,
+    AuthService,
     CookieService,
     NotificationService,
     GuestGuard,

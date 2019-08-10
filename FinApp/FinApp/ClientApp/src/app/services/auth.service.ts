@@ -11,7 +11,7 @@ import { MessagingCenterService } from './messaging-center.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CustomAuthService implements OnInit {
+export class AuthService implements OnInit {
   private loggedInStatus = false;
 
   baseUrl = 'https://localhost:44397/api/';

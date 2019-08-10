@@ -3,8 +3,7 @@
     min-height: 100vh;
     min-width: 250px;
     max-width: 250px;
-    background: #ccc;
-    color: #fff;
+    background: rgb(17, 74, 138);
     transition: all 0.3s;
 }
 
@@ -26,10 +25,12 @@
 #sidebar ul li a {
     text-align: left;
 }
+#sidebar ul li a i {
+
+}
 
 #sidebar.active ul li a {
     padding: 0px 10px;
-    text-align: center;
     font-size: 0.85em;
 }
 
@@ -59,14 +60,20 @@
 }
 
 #sidebar ul li a {
+    line-height: 55px;
     padding: 10px;
     font-size: 1.1em;
     display: block;
+    color:rgb(255, 255, 255);
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+    text-decoration: none;
+    color:rgb(17, 74, 138);
+    background: rgb(248, 247, 255);
+    box-shadow: inset 2px 2px 5px rgba(154, 147, 140, 0.5);
+    
+  /* //  border: 2px solid  rgb(17, 74, 138); */
 }
 
 #sidebar ul li a i {
@@ -76,7 +83,7 @@
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
     color: #fff;
-     background: #6d7fcc; 
+    background: rgb(2, 46, 95); 
 }
 
 a[data-toggle="collapse"] {
@@ -94,7 +101,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: rgb(2, 46, 95);
 }
 
 ul.CTAs {
@@ -114,18 +121,12 @@ a.download {
     color: #7386D5;
 }
 
-a.article,
-a.article:hover {
-    background: #6d7fcc !important;
-    color: #fff !important;
-}
 @media (max-width: 768px) {
   #sidebar {
       min-height: 100vh ;
       min-width: 80px;
       max-width: 80px;
       text-align: center;
-      /* margin-left: -80px !important; */
   }
   .dropdown-toggle::after {
       top: auto;
@@ -149,6 +150,7 @@ a.article:hover {
   }
   #sidebar ul li a {
       padding: 20px 10px;
+          text-align: center;
   }
 
   #sidebar ul li a span {

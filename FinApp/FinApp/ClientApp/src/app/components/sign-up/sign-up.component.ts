@@ -2,7 +2,7 @@
 import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
-import { CustomAuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { MessagingCenterService } from '../../services/messaging-center.service';
 @Component({
   selector: 'sign-up-component',
@@ -15,7 +15,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private authService: CustomAuthService,
+    private authService: AuthService,
     private message: MessagingCenterService,
     fb: FormBuilder) {
     this.signUpForm = fb.group({
@@ -50,7 +50,7 @@ export class SignUpComponent implements OnInit {
       this.user = {
         Name: this.signUpForm.controls['Name'].value,
         Surname: this.signUpForm.controls['Surname'].value,
-        BirthDate: this.signUpForm.controls['BirthDate'].value,
+        BirthDate: this.signUpForm.controls['BirthDate'].value.toDateString(),
         Email: this.signUpForm.controls['Email'].value,
         Password: this.signUpForm.controls['Password'].value,
       };

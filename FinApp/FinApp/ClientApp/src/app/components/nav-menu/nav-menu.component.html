@@ -1,7 +1,7 @@
 <header>
   <nav style="margin-bottom: 0px !important;" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" >
       <a class="navbar-brand"
-         [routerLink]='["/"]'>FinApp</a>
+         [routerLink]='["/"]'><img src="assets/images/finlogo.jpg" height="50"/></a>
       <button class="navbar-toggler"
               type="button"
               data-toggle="collapse"
@@ -33,7 +33,7 @@
           <ul class="navbar-nav flex-grow">
             <li class="nav-item">
               <a class="nav-link text-dark"
-                 [routerLink]='["/login-page"]'>Welcome <b>{{ authService.DecodedToken?.login}}</b></a>
+                 [routerLink]='["/user/profile"]'>Welcome <b>{{ authService.DecodedToken?.login}}</b></a>
             </li>
             <li class="nav-item cursor-on"
                 [routerLinkActive]='["link-active"]'>

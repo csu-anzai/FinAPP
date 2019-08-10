@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FinApp.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : Controller
@@ -19,6 +20,7 @@ namespace FinApp.Controllers
             _userService = userService;
             _mapper = mapper;
         }
+
 
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(UserRegistrationDTO userDto)
@@ -36,16 +38,52 @@ namespace FinApp.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _userService.Get(id);
+            var user = await _userService.GetAsync(id);
 
             if (user == null)
                 return NotFound();
 
-            var userDTO = _mapper.Map<User, UserDTO>(user);
+            return Ok(user);
+        }
 
-            return Ok(userDTO);
+        [HttpGet]
+        public async Task<IActionResult> GetUsersAsync()
+        {
+            var users = await _userService.GetAllAsync();
+
+            if (users == null)
+                return NoContent();
+
+            return Ok(users);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var user = await _userService.UpdateAsync(userDTO);
+
+            if (user == null)
+                return BadRequest(new { message = "User Id is incorrect" });
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var userInDb = await _userService.GetAsync(id);
+
+            if (userInDb == null)
+                return NotFound();
+
+            await _userService.DeleteAsync(userInDb);
+
+            return Ok();
         }
     }
 }

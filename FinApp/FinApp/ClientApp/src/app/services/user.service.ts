@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user';
-import { tap, catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { tap, catchError, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,46 +11,48 @@ export class UserService {
   constructor(private http: HttpClient) { }
   
   baseUrl = 'https://localhost:44397/api/user';
+  headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
+  httpOptions = {
+    headers: this.headers
+  };
 
-  getAll() {
-      return this.http.get<User[]>(`${this.baseUrl}`);
+  private handleError(error: any) {
+    console.log(error);
+    return throwError(error);
   }
 
-  getById(id: number) : Observable<User> {
-     const url = `${this.baseUrl}/${id}`;
-     //return this.http.get<User>(url);
-     return this.http.get<User>(url).pipe(
-       tap((receivedData: User) => {console.log(receivedData);return receivedData}));
+  getUsers() : Observable<User[]> {
+      return this.http.get<User[]>(`${this.baseUrl}`).pipe(
+        tap(data => console.log(data)),
+        catchError(this.handleError)
+      );
+  }
+
+  getUser(id: number) : Observable<User> {
+     return this.http.get<User>(`${this.baseUrl}/${id}`).pipe (
+       tap((receivedData: User) => {
+         return receivedData; 
+        }),
+        catchError(this.handleError)
+       );
   }
 
   register(user: User) {
-      return this.http.post(`${this.baseUrl}/users/register`, user);
+      return this.http.post(`${this.baseUrl}/register`, user);
   }
 
-  update(user: User) {
-      return this.http.put(`${this.baseUrl}/users/${user.id}`, user);
+  update(user: User) :  Observable<User> {
+    return this.http.put<User>(`${this.baseUrl}/${user.id}`, user).pipe(
+      map(() => user),
+      catchError(this.handleError)
+    );
   }
 
-  delete(id: number) {
-      return this.http.delete(`${this.baseUrl}/users/${id}`);
-  }
-  // private handleError<T> (operation = 'operation', result?: T) {
-  //   return (error: any): Observable<T> => {
-
-  //     // TODO: send the error to remote logging infrastructure
-  //     console.error(error); // log to console instead
-
-  //     // TODO: better job of transforming error for user consumption
-  //     this.log(`${operation} failed: ${error.message}`);
-
-  //     // Let the app keep running by returning an empty result.
-  //     return of(result as T);
-  //   };
-  // }
-
-  /** Log a HeroService message with the MessageService */
-  private log(message: string) {
-    
+  deleteUser(id: number) {
+    const url = `${this.baseUrl}/${id}`;
+    return this.http.delete(url, this.httpOptions).pipe(
+      catchError(this.handleError)
+    );
   }
   
 }

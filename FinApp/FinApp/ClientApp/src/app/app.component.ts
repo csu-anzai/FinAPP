@@ -3,7 +3,7 @@ import { OAuthService, JwksValidationHandler  } from 'angular-oauth2-oidc';
 import { authCodeFlowConfig } from './configs/auth-code-flow.config';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { CustomAuthService } from './services/auth.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ import { CustomAuthService } from './services/auth.service';
 export class AppComponent {
   title = 'app';
 
-  constructor(private oauthService: OAuthService, private authService: CustomAuthService, private router: Router) {
+  constructor(private oauthService: OAuthService, private authService: AuthService, private router: Router) {
     this.configure();
 
     // Receives a response from google oauth2

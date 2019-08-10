@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CustomAuthService } from './auth.service';
+import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CustomAuthService]
+      providers: [AuthService]
     });
   });
 
-  it('should be created', inject([CustomAuthService], (service: CustomAuthService) => {
+  it('should be created', inject([AuthService], (service: AuthService) => {
     expect(service).toBeTruthy();
   }));
 });

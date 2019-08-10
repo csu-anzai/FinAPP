@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CustomAuthService } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -15,7 +15,7 @@ export class LoginPageComponent {
   signInForm: FormGroup;
   googleTokenId?: string;
 
-  constructor(private authService: CustomAuthService,
+  constructor(private authService: AuthService,
     private router: Router,
     private oauthService: OAuthService,
     fb: FormBuilder,
