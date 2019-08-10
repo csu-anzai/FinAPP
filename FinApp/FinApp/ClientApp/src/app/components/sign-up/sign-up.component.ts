@@ -3,8 +3,7 @@ import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/cor
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { CustomAuthService } from 'src/app/services/auth.service';
-import { ActivatedRoute } from '@angular/router';
-import { DataService } from 'src/app/common/data.service';
+import { MessagingCenterService } from '../../services/messaging-center.service';
 @Component({
   selector: 'sign-up-component',
   templateUrl: './sign-up.component.html',
@@ -17,7 +16,7 @@ export class SignUpComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: CustomAuthService,
-    private data: DataService,
+    private message: MessagingCenterService,
     fb: FormBuilder) {
     this.signUpForm = fb.group({
       'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
@@ -37,7 +36,7 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.data.currentParams.subscribe(
+    this.message.currentParams.subscribe(
       (obj: any) => {
         this.signUpForm.controls['Email'].setValue(obj.email);
         this.signUpForm.controls['Name'].setValue(obj.name);

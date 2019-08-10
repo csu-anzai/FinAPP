@@ -6,7 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { throwError, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { DataService } from '../common/data.service';
+import { MessagingCenterService } from './messaging-center.service';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,7 @@ export class CustomAuthService implements OnInit {
 
   constructor(private http: HttpClient,
     private cookieService: CookieService,
-    private data: DataService,
+    private message: MessagingCenterService,
     private router: Router,
     private alertService: NotificationService) { }
 
@@ -79,7 +79,7 @@ export class CustomAuthService implements OnInit {
               name: user.name,
               surname: user.surname
             };
-            this.data.passParameters(queryParams);
+            this.message.passParameters(queryParams);
             this.router.navigate(['sign-up']);
           }
 

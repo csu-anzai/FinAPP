@@ -30,7 +30,7 @@ import { SettingComponent } from './components/user-main-page/page-content-wrapp
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
 import { NotificationService } from './services/notification.service';
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
-import { DataService } from './common/data.service';
+import { MessagingCenterService } from './services/messaging-center.service';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
@@ -96,7 +96,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     NotificationService,
     GuestGuard,
     AuthGuard,
-    DataService
+    MessagingCenterService
   ],
   bootstrap: [AppComponent]
 })
