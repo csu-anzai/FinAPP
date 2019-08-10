@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.Services.IServices;
 using DAL.DTOs;
+using Google.Apis.Auth;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -35,6 +36,11 @@ namespace FinApp.Controllers
         [Route("signingoogle")]
         public async Task<IActionResult> GoogleSignIn(GoogleUserDTO userDto)
         {
+            var validPayload = await GoogleJsonWebSignature.ValidateAsync(userDto.IdToken);
+
+            if(validPayload==null)
+                return StatusCode(401);
+
             var token = await _authService.GoogleSignInAsync(userDto.Email);
 
             if (token == null)
