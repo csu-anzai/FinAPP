@@ -1,16 +1,16 @@
-// import { Injectable } from '@angular/core';
-// import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class DataService {
-//   private data = new BehaviorSubject({});
-//   currentParams = this.data.asObservable();
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  private data = new BehaviorSubject({});
+  currentParams = this.data.asObservable();
 
-//   constructor() { }
+  constructor() { }
 
-//   passParameters(params: any) {
-//     this.data.next(params);
-//   }
-// }
+  passParameters(params: any) {
+    this.data.next(params);
+  }
+}

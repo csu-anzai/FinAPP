@@ -5,13 +5,8 @@ import { map, catchError } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { throwError, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import {
-  AuthService,
-  GoogleLoginProvider,
-  SocialUser
-} from 'angular-6-social-login';
-// import { DataService } from '../common/data.service';
 import { Router } from '@angular/router';
+import { DataService } from '../common/data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +17,7 @@ export class CustomAuthService implements OnInit {
   baseUrl = 'https://localhost:44397/api/';
   signInParameter = 'auth/';
   signUpParameter = 'user/';
+  withGoogle = 'signingoogle/';
 
   jwtHelper = new JwtHelperService();
   decodedToken: any;
@@ -39,9 +35,8 @@ export class CustomAuthService implements OnInit {
   }
 
   constructor(private http: HttpClient,
-    private socialAuthService: AuthService,
     private cookieService: CookieService,
-    // private data: DataService,
+    private data: DataService,
     private router: Router,
     private alertService: NotificationService) { }
 
@@ -65,38 +60,37 @@ export class CustomAuthService implements OnInit {
     }
   }
 
-  signInWithGoogle(): any {
-    return this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
-      user => {
-        console.log(user);
-        return this.getDataFromTokenId(user.idToken);
-      }
-    );
+  getDataFromTokenId(tokenId: string): any {
+    return this.http.post(this.baseUrl + this.signInParameter + this.withGoogle, { 'idToken': tokenId })
+    .toPromise()
+      .then(
+        (response: any) => {
+          // User already exists
+          if (response.token) {
+            this.cookieService.set('token', response.token, null, null, null, true);
+            this.decodedToken = this.jwtHelper.decodeToken(response.token);
+            this.router.navigate(['sign-up']);
+
+          } // Passes data to the sign up page
+          else if (response.googleProfile) {
+            const user = response.googleProfile;
+            const queryParams = {
+              email: user.email,
+              name: user.name,
+              surname: user.surname
+            };
+            this.data.passParameters(queryParams);
+            this.router.navigate(['sign-up']);
+          }
+
+          return response;
+        }
+      ).catch(error => {
+        throwError(error);
+      });
   }
 
-  getDataFromTokenId(tokenId: string): any {
-        return this.http.post(`https://localhost:44397/api/auth/signingoogle/`, {'idToken': tokenId}).toPromise()
-          .then(
-            (response: any) => {
-              if (response.token) {
-                this.cookieService.set('token', response.token, null, null, null, true);
-                this.decodedToken = this.jwtHelper.decodeToken(response.token);
-              // } else if (response.googleProfile) {
-              //   throwError(response.message);
-              //   this.router.navigate(['sign-up']);
-              } else if (response.code = 401) {
-                this.router.navigate(['sign-up']);
-              }
-              return response;
-            }
-          ).catch(error => {
-            console.log(error);
-            // throwError(error);
-          });
-      }
-
   register(model: any) {
-
     try {
       return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model);
     } catch (error) {

@@ -1,34 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { CustomAuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-// import { DataService } from 'src/app/common/data.service';
-import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
-import { CookieService } from 'ngx-cookie-service';
-import { throwError } from 'rxjs';
-import { AuthService, SocialUser } from 'angular-6-social-login';
-
-
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent {
   model: any = {};
   signInForm: FormGroup;
   googleTokenId?: string;
 
   constructor(private authService: CustomAuthService,
     private router: Router,
-    // private data: DataService,
-    private http: HttpClient,
-    private cookieService: CookieService,
-    private socialAuthService: AuthService,
+    private oauthService: OAuthService,
     fb: FormBuilder,
     private alertService: NotificationService) {
     this.signInForm = fb.group({
@@ -37,21 +26,9 @@ export class LoginPageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.socialAuthService.authState.subscribe(
-      (user: SocialUser) => {
-        if (user.idToken) {
-          this.googleTokenId = user.idToken;
-        }
-      }, catchError(err => throwError(err))
-    );
-  }
-
   onLogin() {
     this.authService.login(this.model).subscribe(
-      next => {
-        console.log(this.model);
-      },
+      next => {},
       error => {
         this.alertService.errorMsg(error.message);
       },
@@ -63,11 +40,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   googleSignIn() {
-    if (this.googleTokenId) {
-      this.authService.getDataFromTokenId(this.googleTokenId);
-    } else {
-      this.authService.signInWithGoogle();
-    }
+      this.oauthService.initLoginFlow();
   }
 
   get f() { return this.signInForm.controls; }
@@ -76,4 +49,11 @@ export class LoginPageComponent implements OnInit {
     return this.authService.loggedIn();
   }
 
+  public getClaims() {
+    const claims = this.oauthService.getIdentityClaims();
+    if (!claims) {
+      return null;
+    }
+    console.log(claims);
+  }
 }

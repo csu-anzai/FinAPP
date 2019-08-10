@@ -38,13 +38,13 @@ namespace FinApp.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-
             var user = await _userService.Get(id);
 
             if (user == null)
                 return NotFound();
+
             var userDTO = _mapper.Map<User, UserDTO>(user);
-         
+
             return Ok(userDTO);
         }
     }

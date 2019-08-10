@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { CustomAuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from 'angular-6-social-login';
+import { DataService } from 'src/app/common/data.service';
 @Component({
   selector: 'sign-up-component',
   templateUrl: './sign-up.component.html',
@@ -15,11 +15,9 @@ export class SignUpComponent implements OnInit {
   user: any;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private authService: CustomAuthService,
-    private socialAuthService: AuthService,
-
+    private data: DataService,
     fb: FormBuilder) {
     this.signUpForm = fb.group({
       'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
@@ -39,21 +37,11 @@ export class SignUpComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.signUpForm.controls['Email'].setValue('');
-    // this.signUpForm.controls['Name'].setValue('');
-    // this.signUpForm.controls['Surname'].setValue('');
-
-    this.socialAuthService.authState.subscribe(
-      (user) => {
-        if (user) {
-          const fullName = user.name.split(' '),
-            name = fullName[0],
-            surname = fullName[fullName.length - 1];
-
-          this.signUpForm.controls['Email'].setValue(user.email);
-          this.signUpForm.controls['Name'].setValue(name);
-          this.signUpForm.controls['Surname'].setValue(surname);
-        }
+    this.data.currentParams.subscribe(
+      (obj: any) => {
+        this.signUpForm.controls['Email'].setValue(obj.email);
+        this.signUpForm.controls['Name'].setValue(obj.name);
+        this.signUpForm.controls['Surname'].setValue(obj.surname);
       }
     );
   }

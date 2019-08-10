@@ -13,11 +13,13 @@ namespace FinApp.Controllers
     [Route("api/[controller]")]
     public class AuthController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IAuthService _authService;
 
         public AuthController(IAuthService userService, IMapper mapper)
         {
             _authService = userService;
+            _mapper = mapper;
         }
 
         [HttpPost]
@@ -38,15 +40,16 @@ namespace FinApp.Controllers
         {
             var validPayload = await GoogleJsonWebSignature.ValidateAsync(googleToken.IdToken);
 
-            if(validPayload==null)
+            if (validPayload == null)
                 return Ok(new { code = 401, message = "Non authorized" });
 
             var token = await _authService.GoogleSignInAsync(validPayload.Email);
 
-            if (token == null)
-                return Ok(new { code = 401, message = "Non authorized" });
+            if (token != null)
+                return Ok(new { token = token.AccessToken });
 
-            return Ok(new { token = token.AccessToken, googleProfile = new  { email = validPayload.Email, name = validPayload.GivenName, surname = validPayload.FamilyName } });
+            var googleProfile = _mapper.Map<UserRegistrationDTO>(validPayload);
+            return Ok(new { code = 404, googleProfile });
         }
     }
 }

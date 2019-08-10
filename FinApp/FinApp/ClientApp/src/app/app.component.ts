@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { OAuthService, JwksValidationHandler  } from 'angular-oauth2-oidc';
+import { authCodeFlowConfig } from './configs/auth-code-flow.config';
+import { filter } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { CustomAuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +12,24 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+
+  constructor(private oauthService: OAuthService, private authService: CustomAuthService, private router: Router) {
+    this.configure();
+
+    // Receives a response from google oauth2
+    this.oauthService.events
+    .pipe(filter(e => e.type === 'token_received'))
+    .subscribe(_ => {
+      console.log(this.oauthService.getIdToken());
+      this.authService.getDataFromTokenId(this.oauthService.getIdToken());
+    });
+  }
+
+  configure() {
+    this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.tokenValidationHandler = new JwksValidationHandler();
+    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+
+    this.oauthService.setupAutomaticSilentRefresh();
+  }
 }

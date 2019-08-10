@@ -29,26 +29,9 @@ import { AccountComponent } from './components/user-main-page/page-content-wrapp
 import { SettingComponent } from './components/user-main-page/page-content-wrapper/sections/setting/setting.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
 import { NotificationService } from './services/notification.service';
-import {
-  SocialLoginModule,
-  AuthServiceConfig,
-  GoogleLoginProvider
-} from 'angular-6-social-login';
-
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
-// import { DataService } from './common/data.service';
-
-// Configs
-export function getAuthServiceConfigs() {
-  const config = new AuthServiceConfig(
-    [
-      {
-        id: GoogleLoginProvider.PROVIDER_ID,
-        provider: new GoogleLoginProvider('220655802989-rvidh8rdt3cu9fmb7lf212mfj8632j59.apps.googleusercontent.com')
-      },
-    ]);
-  return config;
-}
+import { DataService } from './common/data.service';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 @NgModule({
   declarations: [
@@ -78,7 +61,7 @@ export function getAuthServiceConfigs() {
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    SocialLoginModule,
+    OAuthModule.forRoot(),
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: MainPageComponent, pathMatch: 'full' },
@@ -113,11 +96,7 @@ export function getAuthServiceConfigs() {
     NotificationService,
     GuestGuard,
     AuthGuard,
-    // DataService,
-    {
-      provide: AuthServiceConfig,
-      useFactory: getAuthServiceConfigs
-    }
+    DataService
   ],
   bootstrap: [AppComponent]
 })
