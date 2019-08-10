@@ -18,7 +18,6 @@ import { Router } from '@angular/router';
 })
 export class CustomAuthService implements OnInit {
   private loggedInStatus = false;
-  private user: SocialUser;
 
   baseUrl = 'https://localhost:44397/api/';
   signInParameter = 'auth/';
@@ -47,11 +46,6 @@ export class CustomAuthService implements OnInit {
     private alertService: NotificationService) { }
 
   ngOnInit(): void {
-    this.socialAuthService.authState.subscribe(
-      (user) => {
-        this.user = user;
-      }
-    );
   }
 
   login(model: any) {
@@ -72,43 +66,34 @@ export class CustomAuthService implements OnInit {
   }
 
   signInWithGoogle(): any {
-    if (this.user) {
-      return this.http.post(`https://localhost:44397/api/auth/signingoogle/`, this.user).toPromise()
-          .then(
-            (response: any) => {
-              if (response) {
-                this.cookieService.set('token', response.token, null, null, null, true);
-                this.decodedToken = this.jwtHelper.decodeToken(response.token);
-                return response.token;
-              }
-            }
-          ).catch(error => {
-            this.router.navigate(['sign-up']);
-            throwError(error);
-          });
-    }
-
     return this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
       user => {
         console.log(user);
-        return this.http.post(`https://localhost:44397/api/auth/signingoogle/`, user).toPromise()
+        return this.getDataFromTokenId(user.idToken);
+      }
+    );
+  }
+
+  getDataFromTokenId(tokenId: string): any {
+        return this.http.post(`https://localhost:44397/api/auth/signingoogle/`, {'idToken': tokenId}).toPromise()
           .then(
             (response: any) => {
-              if (response) {
+              if (response.token) {
                 this.cookieService.set('token', response.token, null, null, null, true);
-                this.decodedToken = this.jwtHelper.decodeToken(user.token);
-                return response.token;
+                this.decodedToken = this.jwtHelper.decodeToken(response.token);
+              // } else if (response.googleProfile) {
+              //   throwError(response.message);
+              //   this.router.navigate(['sign-up']);
+              } else if (response.code = 401) {
+                this.router.navigate(['sign-up']);
               }
+              return response;
             }
           ).catch(error => {
-            this.router.navigate(['sign-up']);
-            throwError(error);
+            console.log(error);
+            // throwError(error);
           });
       }
-    ).catch(error => {
-      throwError(error);
-    });
-  }
 
   register(model: any) {
 

@@ -34,19 +34,19 @@ namespace FinApp.Controllers
 
         [HttpPost]
         [Route("signingoogle")]
-        public async Task<IActionResult> GoogleSignIn(GoogleUserDTO userDto)
+        public async Task<IActionResult> GoogleSignIn(TokenIdDTO googleToken)
         {
-            var validPayload = await GoogleJsonWebSignature.ValidateAsync(userDto.IdToken);
+            var validPayload = await GoogleJsonWebSignature.ValidateAsync(googleToken.IdToken);
 
             if(validPayload==null)
-                return StatusCode(401);
+                return Ok(new { code = 401, message = "Non authorized" });
 
-            var token = await _authService.GoogleSignInAsync(userDto.Email);
+            var token = await _authService.GoogleSignInAsync(validPayload.Email);
 
             if (token == null)
-                return StatusCode(404);
+                return Ok(new { code = 401, message = "Non authorized" });
 
-            return Ok(new { token = token.AccessToken });
+            return Ok(new { token = token.AccessToken, googleProfile = new  { email = validPayload.Email, name = validPayload.GivenName, surname = validPayload.FamilyName } });
         }
     }
 }

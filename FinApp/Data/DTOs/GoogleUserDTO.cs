@@ -1,13 +1,7 @@
 ﻿namespace DAL.DTOs
 {
-    public class GoogleUserDTO
+    public class TokenIdDTO
     {
-        public string Provider { get; set; }
-        public string Id { get; set; }
-        public string Email { get; set; }
-        public string Name { get; set; }
-        public string Image { get; set; }
-        public string Token { get; set; }
         public string IdToken { get; set; }
     }
 }
