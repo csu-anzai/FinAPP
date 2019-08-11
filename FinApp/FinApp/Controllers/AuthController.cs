@@ -23,7 +23,7 @@ namespace FinApp.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("signin")]
         public async Task<IActionResult> Login(UserLoginDTO userDto)
         {
             var token = await _authService.SignInAsync(userDto);

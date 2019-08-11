@@ -69,6 +69,8 @@ export class AuthService implements OnInit {
         this.cookieService.delete('idToken');
       }
       this.getDataFromTokenId(token);
+    } else {
+      this.oauthService.initLoginFlow();
     }
   }
 
@@ -96,7 +98,6 @@ export class AuthService implements OnInit {
             this.router.navigate(['sign-up']);
             return true;
           }
-            this.oauthService.initLoginFlow();
           return false;
         }
       ).catch(error => {
