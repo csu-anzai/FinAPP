@@ -2,7 +2,7 @@
 
 namespace DAL.Entities
 {
-    public class ConfirmationCode
+    public class PasswordConfirmationCode
     {
         public int Id { get; set; }
         public string Code { get; set; }
