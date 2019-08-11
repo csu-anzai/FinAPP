@@ -21,14 +21,14 @@ namespace FinApp.Controllers
         [HttpPost("sendCode")]
         public async Task<IActionResult> SendCode(ForgotPasswordDTO forgotPasswordDto)
         {
-            await _confirmPasswordService.SendConfirmationCode(forgotPasswordDto);
+            await _confirmPasswordService.SendConfirmationCodeAsync(forgotPasswordDto);
             return Ok();
         }
 
         [HttpPost("validateCode")]
         public async Task<IActionResult> ValidateCode(PasswordConfirmationCodeDTO confirmationCodeDto)
         {
-            var isValid = await _confirmPasswordService.ValidateConfirmationCode(confirmationCodeDto);
+            var isValid = await _confirmPasswordService.ValidateConfirmationCodeAsync(confirmationCodeDto);
             return Ok(isValid);
         }
 

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading.Tasks;
+using BLL.Models.Exceptions;
 using BLL.Services.ImplementedServices;
 using BLL.Services.IServices;
 using DAL.DTOs;
@@ -43,22 +45,34 @@ namespace BLL.Tests
 
             //Act
             var forgotPasswordDto = new ForgotPasswordDTO {Email = "email"};
-            var userWithAssignedCode = await _passwordConfirmationCodeService.SendConfirmationCode(forgotPasswordDto);
+            var userWithAssignedCode = await _passwordConfirmationCodeService.SendConfirmationCodeAsync(forgotPasswordDto);
 
             //Assert
             Assert.IsNotNull(userWithAssignedCode.PasswordConfirmationCode);
         }
 
         [Test]
-        public async Task ConfirmCodeValidation()
+        public void ConfirmCodeAssignmentThrowsUserNotFound()
         {
             //Arrange
             _unitOfWorkMock.Setup(s => s.Complete());
 
-            var user = new User();
             _userRepoMock.Setup(s => s.SingleOrDefaultAsync(It.IsAny<Expression<Func<User, bool>>>()))
-                .Returns(Task.FromResult(user));
+                .Returns(Task.FromResult((User) null));
 
+            //Act
+            var forgotPasswordDto = new ForgotPasswordDTO { Email = "notValidEmail" };
+
+            //Assert
+            var exception = Assert.ThrowsAsync<ApiException>(async () =>
+                await _passwordConfirmationCodeService.SendConfirmationCodeAsync(forgotPasswordDto));
+            Assert.AreEqual(HttpStatusCode.NotFound, exception.Code);
+        }
+
+        [Test]
+        public async Task ConfirmCodeValidation()
+        {
+            //Arrange
             const string confirmCode = "12345";
             var passwordConfirmationCode = new PasswordConfirmationCode
             {
@@ -74,10 +88,40 @@ namespace BLL.Tests
                 UserId = 1,
                 Code = confirmCode
             };
-            var isValidCode = await _passwordConfirmationCodeService.ValidateConfirmationCode(passwordConfirmationCodeDto);
+            var isValidCode = await _passwordConfirmationCodeService.ValidateConfirmationCodeAsync(passwordConfirmationCodeDto);
 
             //Assert
             Assert.IsTrue(isValidCode);
+        }
+
+        [Test]
+        public void ConfirmCodeValidationThrowsTimeoutExpired()
+        {
+            //Arrange
+            const string confirmCode = "12345";
+
+            TimeSpan passwordCodeTimeout = PasswordConfirmationCodeService.PasswordCodeTimeout;
+            var createDate = DateTime.Now.Subtract(passwordCodeTimeout);
+            var outdatedPasswordConfirmationCode = new PasswordConfirmationCode
+            {
+                Code = confirmCode,
+                CreateDate = createDate
+            };
+
+            _passwordConfirmCodeRepoMock.Setup(s => s.GetPasswordConfirmationCodeByUserIdAsync(It.IsAny<int>()))
+                .Returns(Task.FromResult(outdatedPasswordConfirmationCode));
+
+            //Act
+            var passwordConfirmationCodeDto = new PasswordConfirmationCodeDTO
+            {
+                UserId = 1,
+                Code = confirmCode
+            };
+
+            //Assert
+            var exception = Assert.ThrowsAsync<ApiException>(async () =>
+                await _passwordConfirmationCodeService.ValidateConfirmationCodeAsync(passwordConfirmationCodeDto));
+            Assert.AreEqual(HttpStatusCode.Gone, exception.Code);
         }
     }
 }

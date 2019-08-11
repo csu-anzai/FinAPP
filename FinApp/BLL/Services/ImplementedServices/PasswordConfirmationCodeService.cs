@@ -16,8 +16,9 @@ namespace BLL.Services.ImplementedServices
         private readonly IUserRepository _userRepository;
         private readonly IPasswordConfirmationCodeRepository _codeRepository;
         private readonly IEmailSenderService _emailSenderService;
-        private const int PasswordCodeTimeoutMinutes = 15;
-        private readonly string _message = $" is the code to reset your password.\n" +
+        public static TimeSpan PasswordCodeTimeout { get; } = new TimeSpan(0,15,0);
+
+        private readonly string _message = " is the code to reset your password.\n" +
                                           $"The code is valid for {{PasswordCodeTimeoutMinutes}} minutes.";
 
         public PasswordConfirmationCodeService(IUnitOfWork unitOfWork, IUserRepository userRepository, IPasswordConfirmationCodeRepository codeRepository, IEmailSenderService emailService)
@@ -50,7 +51,7 @@ namespace BLL.Services.ImplementedServices
             await _unitOfWork.Complete();
         }
 
-        public async Task<User> SendConfirmationCode(ForgotPasswordDTO forgotPasswordDto)
+        public async Task<User> SendConfirmationCodeAsync(ForgotPasswordDTO forgotPasswordDto)
         {
             var user = await _userRepository.SingleOrDefaultAsync(u => u.Email == forgotPasswordDto.Email);
             if (user == null)
@@ -68,12 +69,12 @@ namespace BLL.Services.ImplementedServices
             return user;
         }
 
-        public async Task<bool> ValidateConfirmationCode(PasswordConfirmationCodeDTO confirmationCodeDto)
+        public async Task<bool> ValidateConfirmationCodeAsync(PasswordConfirmationCodeDTO confirmationCodeDto)
         {
             var passwordConfirmCode = await _codeRepository.GetPasswordConfirmationCodeByUserIdAsync(confirmationCodeDto.UserId);
 
             TimeSpan timeAfterCodeCreation = DateTime.Now - passwordConfirmCode.CreateDate;
-            if (timeAfterCodeCreation.Minutes > PasswordCodeTimeoutMinutes)
+            if (timeAfterCodeCreation > PasswordCodeTimeout)
             {
                 throw new ApiException(HttpStatusCode.Gone, "Reset password code timeout expired.");
             }

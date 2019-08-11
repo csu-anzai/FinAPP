@@ -6,7 +6,7 @@ namespace BLL.Services.IServices
 {
     public interface IPasswordConfirmationCodeService
     {
-        Task<User> SendConfirmationCode(ForgotPasswordDTO forgotPasswordDto);
-        Task<bool> ValidateConfirmationCode(PasswordConfirmationCodeDTO confirmationCodeDto);
+        Task<User> SendConfirmationCodeAsync(ForgotPasswordDTO forgotPasswordDto);
+        Task<bool> ValidateConfirmationCodeAsync(PasswordConfirmationCodeDTO confirmationCodeDto);
     }
 }
