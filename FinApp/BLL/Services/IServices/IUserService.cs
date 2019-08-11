@@ -8,9 +8,9 @@ namespace BLL.Services.IServices
     public interface IUserService
     {
         Task<User> CreateUserAsync(User user);
-        Task<User> GetAsync(int id);
+        Task<UserDTO> GetAsync(int id);
         Task<IEnumerable<UserDTO>> GetAllAsync();
         Task<User> UpdateAsync(UserDTO userDTO);
-        Task DeleteAsync(User user);
+        Task DeleteAsync(UserDTO user);
     }
 }
