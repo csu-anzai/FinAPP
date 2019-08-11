@@ -7,6 +7,7 @@ import { throwError, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { MessagingCenterService } from './messaging-center.service';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,7 @@ export class AuthService implements OnInit {
 
   constructor(private http: HttpClient,
     private cookieService: CookieService,
+    private oauthService: OAuthService,
     private message: MessagingCenterService,
     private router: Router,
     private alertService: NotificationService) { }
@@ -60,17 +62,28 @@ export class AuthService implements OnInit {
     }
   }
 
+  isSelectAccount() {
+    if (this.cookieService.check('idToken')) {
+      const token = this.cookieService.get('idToken');
+      if (this.jwtHelper.isTokenExpired(token)) {
+        this.cookieService.delete('idToken');
+      }
+      this.getDataFromTokenId(token);
+    }
+  }
+
   getDataFromTokenId(tokenId: string): any {
     return this.http.post(this.baseUrl + this.signInParameter + this.withGoogle, { 'idToken': tokenId })
-    .toPromise()
+      .toPromise()
       .then(
         (response: any) => {
           // User already exists
           if (response.token) {
             this.cookieService.set('token', response.token, null, null, null, true);
+            this.cookieService.set('idToken', tokenId, null, null, null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
             this.router.navigate(['sign-up']);
-
+            return true;
           } // Passes data to the sign up page
           else if (response.googleProfile) {
             const user = response.googleProfile;
@@ -81,12 +94,13 @@ export class AuthService implements OnInit {
             };
             this.message.passParameters(queryParams);
             this.router.navigate(['sign-up']);
+            return true;
           }
-
-          return response;
+            this.oauthService.initLoginFlow();
+          return false;
         }
       ).catch(error => {
-        throwError(error);
+        this.oauthService.initLoginFlow();
       });
   }
 

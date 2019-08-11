@@ -28,7 +28,7 @@ export class LoginPageComponent {
 
   onLogin() {
     this.authService.login(this.model).subscribe(
-      next => {},
+      next => { },
       error => {
         this.alertService.errorMsg(error.message);
       },
@@ -40,7 +40,7 @@ export class LoginPageComponent {
   }
 
   googleSignIn() {
-      this.oauthService.initLoginFlow();
+    this.authService.isSelectAccount();
   }
 
   get f() { return this.signInForm.controls; }
