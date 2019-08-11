@@ -29,9 +29,9 @@ import { AccountComponent } from './components/user-main-page/page-content-wrapp
 import { SettingComponent } from './components/user-main-page/page-content-wrapper/sections/setting/setting.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
 import { NotificationService } from './services/notification.service';
-
-
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
+import { MessagingCenterService } from './services/messaging-center.service';
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
@@ -67,6 +67,7 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    OAuthModule.forRoot(),
     BsDatepickerModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: MainPageComponent, pathMatch: 'full' },
@@ -80,6 +81,8 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
         children: [
           { path: 'profile', component: ProfileComponent },
           { path: 'charts', component: ChartComponent },
+          { path: 'accounts', component: AccountComponent },
+          { path: 'settings', component: SettingComponent },
           { path: 'accounts/:id', component: AccountComponent },
           { path: 'settings', component: SettingComponent },
           { path: 'adminPanel', component: AdminPanelComponent }
@@ -101,7 +104,8 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
     CookieService,
     NotificationService,
     GuestGuard,
-    AuthGuard
+    AuthGuard,
+    MessagingCenterService
   ],
   bootstrap: [AppComponent]
 })

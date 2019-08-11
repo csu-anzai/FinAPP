@@ -1,13 +1,8 @@
 ﻿using AutoMapper;
 using BLL.Services.IServices;
-using DAL.Context;
 using DAL.DTOs;
 using DAL.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinApp.Controllers
@@ -46,7 +41,7 @@ namespace FinApp.Controllers
         public async Task<IActionResult> GetUser(int id)
         {
             var user = await _userService.GetAsync(id);
-           
+
             if (user == null)
                 return NotFound();
 
