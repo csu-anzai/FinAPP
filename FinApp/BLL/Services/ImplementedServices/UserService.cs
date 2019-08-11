@@ -40,15 +40,13 @@ namespace BLL.Services.ImplementedServices
             }
             user.Password = _hasher.HashPassword(user.Password);
 
-            var token = new Token();
-            token.User = user;
+            var token = new Token {User = user};
             user.Token = token;
             user.TokenId = token.Id;
 
-            var confirmCode = new ConfirmationCode();
-            confirmCode.User = user;
-            user.ConfirmationCode = confirmCode;
-            user.ConfirmationCodeId = confirmCode.Id;
+            var confirmCode = new PasswordConfirmationCode {User = user};
+            user.PasswordConfirmationCode = confirmCode;
+            user.PasswordConfirmationCodeId = confirmCode.Id;
 
             await _tokenRepository.AddAsync(token);
             await _userRepository.AddAsync(user);
