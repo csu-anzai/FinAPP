@@ -39,5 +39,32 @@ namespace BLL.Services.ImplementedServices
 
             return expenseCategoriesDTO.Count() > 0 ? expenseCategoriesDTO : null;
         }
+
+        public async Task<ExpenseCategory> GetExpenseCategoryAsync(int id)
+        {
+            var expenseCategory = await _expenseCategoryRepository.SingleOrDefaultAsync(u => u.Id == id);
+            return expenseCategory ?? null;           
+        }
+
+        public async Task<ExpenseCategory> UpdateExpenseCategoryAsync(ExpenseCategoryDTO expenseCategoryDTO)
+        {
+            var upToDateExpenseCategory = await _expenseCategoryRepository.SingleOrDefaultAsync(u => u.Id == expenseCategoryDTO.Id);
+            if (expenseCategoryDTO == null)
+                return null;
+            _mapper.Map(expenseCategoryDTO, upToDateExpenseCategory);
+            await _unitOfWork.Complete();
+            return upToDateExpenseCategory;
+        }
+
+        public async Task<ExpenseCategory> CreateExpenseCategoryAsync(ExpenseCategory expenseCategory)
+        {
+            var existedCategory = await _expenseCategoryRepository.SingleOrDefaultAsync(u => u.Name == expenseCategory.Name);
+            if (expenseCategory != null)
+                return null;
+
+            await _expenseCategoryRepository.AddAsync(expenseCategory);
+            await _unitOfWork.Complete();
+            return expenseCategory;
+        }
     }
 }
