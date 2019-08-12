@@ -79,7 +79,7 @@ namespace FinApp.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             var userInDb = await _userService.GetAsync(id);
 

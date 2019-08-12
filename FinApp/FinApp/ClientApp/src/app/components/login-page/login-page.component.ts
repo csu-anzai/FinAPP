@@ -31,7 +31,7 @@ export class LoginPageComponent implements OnInit {
   onLogin() {
     this.authService.login(this.model).subscribe(
       next => {
-        console.log(this.model);
+        //console.log(this.model);
       },
       error => {
         this.alertService.errorMsg(error.message);

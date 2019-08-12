@@ -30,6 +30,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {  
     this._userService.getUser(this._authService.DecodedToken.sub).subscribe(res => { 
        this.user = res; 
+       console.log(this.user);
        this.profileForm.get('Name').setValue(this.user.name);
        this.profileForm.get('Surname').setValue(this.user.surname);
        this.profileForm.get('BirthDate').setValue(`${this.user.birthDate}`);
@@ -46,7 +47,6 @@ export class ProfileComponent implements OnInit {
       this.user.email =  this.profileForm.controls['Email'].value,
       
       this._userService.update(this.user).subscribe(() => {
-        console.log(this.user);
         this.alertService.successMsg('Profile updated');
       });
     }
