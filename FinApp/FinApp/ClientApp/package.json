@@ -23,6 +23,7 @@
     "@angular/platform-server": "6.1.10",
     "@angular/router": "6.1.10",
     "@auth0/angular-jwt": "^3.0.0",
+    "@ng-bootstrap/ng-bootstrap": "^2.0.0",
     "@nguniversal/module-map-ngfactory-loader": "6.0.0",
     "angular-font-awesome": "^3.1.2",
     "aspnet-prerendering": "^3.0.1",
