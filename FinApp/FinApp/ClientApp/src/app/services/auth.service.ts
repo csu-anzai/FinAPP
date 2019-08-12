@@ -63,15 +63,7 @@ export class AuthService implements OnInit {
   }
 
   isSelectAccount() {
-    if (this.cookieService.check('idToken')) {
-      const token = this.cookieService.get('idToken');
-      if (this.jwtHelper.isTokenExpired(token)) {
-        this.cookieService.delete('idToken');
-      }
-      this.getDataFromTokenId(token);
-    } else {
       this.oauthService.initLoginFlow();
-    }
   }
 
   getDataFromTokenId(tokenId: string): any {
@@ -82,7 +74,7 @@ export class AuthService implements OnInit {
           // User already exists
           if (response.token) {
             this.cookieService.set('token', response.token, null, null, null, true);
-            this.cookieService.set('idToken', tokenId, null, null, null, true);
+            // this.cookieService.set('idToken', tokenId, null, null, null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
             this.router.navigate(['sign-up']);
             return true;

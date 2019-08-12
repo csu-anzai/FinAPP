@@ -7,7 +7,7 @@ import { AuthGuard } from './auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
@@ -35,6 +35,8 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
+import { GlobalHeaderInterceptor } from './common/interceptors/global-header-interceptor';
+import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
 
 @NgModule({
   declarations: [
@@ -96,6 +98,7 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
         closeButton: true,
         timeOut: 3000,
         easeTime: 1000,
+        maxOpened: 5
       }
     )
   ],
@@ -105,7 +108,9 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
     NotificationService,
     GuestGuard,
     AuthGuard,
-    MessagingCenterService
+    MessagingCenterService,
+    { provide: HTTP_INTERCEPTORS, useClass: GlobalHeaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
