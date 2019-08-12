@@ -1,21 +1,22 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { MessagingCenterService } from '../../services/messaging-center.service';
 @Component({
   selector: 'sign-up-component',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
-
   signUpForm: FormGroup;
-  user;
+  user: any;
 
   constructor(
     private router: Router,
     private authService: AuthService,
+    private message: MessagingCenterService,
     fb: FormBuilder) {
     this.signUpForm = fb.group({
       'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
@@ -26,17 +27,22 @@ export class SignUpComponent implements OnInit {
       'RepeatedPassword': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
     });
     this.signUpForm.valueChanges.subscribe(field => {
-      if (this.signUpForm.controls['RepeatedPassword'].value != this.signUpForm.controls['Password'].value) {
-        this.signUpForm.controls['RepeatedPassword'].setErrors({ mismatch: true});
+      if (this.signUpForm.controls['Password'].value !== this.signUpForm.controls['RepeatedPassword'].value) {
+        this.signUpForm.controls['RepeatedPassword'].setErrors({ mismatch: true });
       } else {
         this.signUpForm.controls['RepeatedPassword'].setErrors(null);
       }
     });
-
   }
 
-  
-  ngOnInit() {
+  ngOnInit(): void {
+    this.message.currentParams.subscribe(
+      (obj: any) => {
+        this.signUpForm.controls['Email'].setValue(obj.email);
+        this.signUpForm.controls['Name'].setValue(obj.name);
+        this.signUpForm.controls['Surname'].setValue(obj.surname);
+      }
+    );
   }
 
   onSignUp() {
@@ -49,17 +55,14 @@ export class SignUpComponent implements OnInit {
         Password: this.signUpForm.controls['Password'].value,
       };
       this.authService.register(this.user).subscribe(() => {
-        //if email is not available -> show message
+        // if email is not available -> show message
         this.router.navigate(['login-page']);
       });
-    }
-    else {
+    } else {
       console.log(
         this.signUpForm.controls['RepeatedPassword'].errors);
       for (let i in this.signUpForm.controls)
         this.signUpForm.controls[i].markAsTouched();
     }
   }
-
-
 }

@@ -51,5 +51,27 @@ namespace BLL.Services.ImplementedServices
 
             return token;
         }
+
+        public async Task<TokenDTO> GoogleSignInAsync(string email)
+        {
+            var existedUser = await _authRepository.SingleOrDefaultAsync(u => u.Email == email);
+
+            if (existedUser == null)
+                return null;
+
+            var role = await _roleRepository.GetAsync(existedUser.RoleId);
+            var token = _jwtManager.GenerateToken(existedUser.Id, email, role?.Name);
+
+
+            var refreshToken = new Token();
+            refreshToken.RefreshToken = token.RefreshToken;
+            refreshToken.User = existedUser;
+            refreshToken.User.Id = existedUser.Id;
+
+            await _jwtManager.UpdateAsync(existedUser, refreshToken.RefreshToken);
+            //await _tokenRepository.AddAsync(refreshToken);
+
+            return token;
+        }
     }
 }

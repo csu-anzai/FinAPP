@@ -10,5 +10,6 @@ namespace DAL.DTOs
         public string Password { get; set; }
         public string Email { get; set; }
         public DateTime BirthDate { get; set; }
+        public int RoleId { get; set; }
     }
 }

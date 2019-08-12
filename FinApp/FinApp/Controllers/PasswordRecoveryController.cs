@@ -11,24 +11,24 @@ namespace FinApp.Controllers
     [Route("api/[controller]")]
     public class PasswordRecoveryController : Controller
     {
-        private readonly IConfirmationCodeService _confirmService;
+        private readonly IPasswordConfirmationCodeService _confirmPasswordService;
 
-        public PasswordRecoveryController(IConfirmationCodeService service)
+        public PasswordRecoveryController(IPasswordConfirmationCodeService service)
         {
-            _confirmService = service;
+            _confirmPasswordService = service;
         }
 
         [HttpPost("sendCode")]
-        public async Task<IActionResult> SendCode(ForgotPasswordDTO forgotPasswordDTO)
+        public async Task<IActionResult> SendCode(ForgotPasswordDTO forgotPasswordDto)
         {
-            await _confirmService.SendConfirmationCode(forgotPasswordDTO);
+            await _confirmPasswordService.SendConfirmationCodeAsync(forgotPasswordDto);
             return Ok();
         }
 
         [HttpPost("validateCode")]
-        public async Task<IActionResult> ValidateCode(ConfirmationCodeDTO confirmationCodeDTO)
+        public async Task<IActionResult> ValidateCode(PasswordConfirmationCodeDTO confirmationCodeDto)
         {
-            bool isValid=await _confirmService.ValidateConfirmationCode(confirmationCodeDTO);
+            var isValid = await _confirmPasswordService.ValidateConfirmationCodeAsync(confirmationCodeDto);
             return Ok(isValid);
         }
 

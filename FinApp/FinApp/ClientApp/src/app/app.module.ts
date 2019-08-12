@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 //components
 import { AppComponent } from './app.component';
@@ -30,7 +31,12 @@ import { PageContentWrapperComponent } from './components/user-main-page/page-co
 import { AccountComponent } from './components/user-main-page/page-content-wrapper/sections/account/account.component';
 import { SettingComponent } from './components/user-main-page/page-content-wrapper/sections/setting/setting.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
+
+
+
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
+
+
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
@@ -40,6 +46,7 @@ import { AddAccountComponent } from './components/user-main-page/page-content-wr
 import { AuthService } from './services/auth.service';
 import { GuestGuard } from './guest.guard';
 import { NotificationService } from './services/notification.service';
+import { MessagingCenterService } from './services/messaging-center.service';
 
 @NgModule({
   declarations: [
@@ -73,6 +80,7 @@ import { NotificationService } from './services/notification.service';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    OAuthModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgbModule.forRoot(),
     RouterModule.forRoot([
@@ -87,6 +95,8 @@ import { NotificationService } from './services/notification.service';
         children: [
           { path: 'profile', component: ProfileComponent },
           { path: 'charts', component: ChartComponent },
+          { path: 'accounts', component: AccountComponent },
+          { path: 'settings', component: SettingComponent },
           { path: 'accounts/:id', component: AccountComponent },
           { path: 'settings', component: SettingComponent },
           { path: 'adminPanel', component: AdminPanelComponent }
@@ -108,7 +118,8 @@ import { NotificationService } from './services/notification.service';
     CookieService,
     NotificationService,
     GuestGuard,
-    AuthGuard
+    AuthGuard,
+    MessagingCenterService
   ],
   bootstrap: [AppComponent]
 })

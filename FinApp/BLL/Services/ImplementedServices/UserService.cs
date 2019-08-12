@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using BLL.Security;
 using BLL.Services.IServices;
+using DAL.Context;
 using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -37,15 +40,13 @@ namespace BLL.Services.ImplementedServices
             }
             user.Password = _hasher.HashPassword(user.Password);
 
-            var token = new Token();
-            token.User = user;
+            var token = new Token {User = user};
             user.Token = token;
             user.TokenId = token.Id;
 
-            var confirmCode = new ConfirmationCode();
-            confirmCode.User = user;
-            user.ConfirmationCode = confirmCode;
-            user.ConfirmationCodeId = confirmCode.Id;
+            var confirmCode = new PasswordConfirmationCode {User = user};
+            user.PasswordConfirmationCode = confirmCode;
+            user.PasswordConfirmationCodeId = confirmCode.Id;
 
             await _tokenRepository.AddAsync(token);
             await _userRepository.AddAsync(user);
@@ -62,17 +63,37 @@ namespace BLL.Services.ImplementedServices
             if (user == null)
                 return null;
 
-            _mapper.Map<UserDTO, User>(user, upToDateUser);
+            _mapper.Map(user, upToDateUser);
+
             await _unitOfWork.Complete();
 
             return upToDateUser;
         }
 
-        public async Task<User> Get(int id)
+        public async Task<UserDTO> GetAsync(int id)
         {
             var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == id);
 
-            return user ?? null;
+            var userDTO = _mapper.Map<User, UserDTO>(user);
+
+            return userDTO ?? null;
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetAllAsync()
+        {
+            var users = await _userRepository.GetAllAsync();
+            var usersDTO = users.Select(_mapper.Map<User, UserDTO>);
+            
+            return usersDTO.Count() > 0 ? usersDTO : null;
+        }
+
+        public async Task DeleteAsync(UserDTO userDTO)
+        {
+            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == userDTO.Id);
+
+            _userRepository.Remove(user);
+
+            await _unitOfWork.Complete();
         }
     }
 }

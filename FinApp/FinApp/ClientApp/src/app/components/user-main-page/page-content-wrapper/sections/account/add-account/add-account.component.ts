@@ -7,7 +7,6 @@ import { ImageService } from '../../../../../../services/image.service';
 import { AccountService } from '../../../../../../services/account.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
-import { close } from 'inspector';
 
 @Component({
   selector: 'app-add-account',
