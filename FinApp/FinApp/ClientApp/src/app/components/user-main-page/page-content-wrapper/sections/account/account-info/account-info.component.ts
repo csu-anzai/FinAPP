@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Account } from '../../../../../../models/account';
-import { Currency } from '../../../../../../models/currency';
+import { AccountService } from '../../../../../../services/account.service'
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-account-info',
@@ -9,11 +10,23 @@ import { Currency } from '../../../../../../models/currency';
 })
 export class AccountInfoComponent implements OnInit {
 
-  account = new Account(1, 'PrivatAcc', new Currency(1, '$', 2.5), '1.jpg', 2000);
+  account: Account = new Account();
+  id: number;
 
-  constructor() { }
+  constructor(public accountService: AccountService, private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+
+      this.accountService.getAccount(this.id).subscribe(data => {
+        this.account = data;
+      });
+    });
+
   }
+
+
 
 }
