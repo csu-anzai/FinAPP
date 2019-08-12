@@ -40,21 +40,22 @@ namespace BLL.Services.ImplementedServices
             return incomeCategoriesDTO.Count() > 0 ? incomeCategoriesDTO : null;
         }
 
-        public async Task<IncomeCategory> GetIncomeCategoryAsync (int id)
+        public async Task<IncomeCategory> GetIncomeCategoryAsync(int id)
         {
             var incomeCategory = await _incomeCategoryRepository.SingleOrDefaultAsync(u => u.Id == id);
             return incomeCategory ?? null;
         }
 
-        public async Task<IncomeCategoryDTO> UpdateIncomeCategoryAsync(IncomeCategoryDTO incomeCategoryDTO)
+        public async Task<IncomeCategory> UpdateIncomeCategoryAsync(IncomeCategoryDTO incomeCategoryDTO)
         {
-            var upToDateIncomeCategory = await _incomeCategoryRepository.SingleOrDefaultAsync(u =>u.Id == incomeCategoryDTO.Id);
+            var upToDateIncomeCategory = await _incomeCategoryRepository.SingleOrDefaultAsync(u => u.Id == incomeCategoryDTO.Id);
             if (incomeCategoryDTO == null)
                 return null;
             _mapper.Map(incomeCategoryDTO, upToDateIncomeCategory);
             await _unitOfWork.Complete();
-            return incomeCategoryDTO;
+            return upToDateIncomeCategory;
         }
+
 
         public async Task<IncomeCategory> CreateIncomeCategoryAsync(IncomeCategory incomeCategory)
         {

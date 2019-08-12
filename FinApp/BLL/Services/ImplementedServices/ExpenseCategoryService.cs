@@ -61,7 +61,6 @@ namespace BLL.Services.ImplementedServices
             var existedCategory = await _expenseCategoryRepository.SingleOrDefaultAsync(u => u.Name == expenseCategory.Name);
             if (expenseCategory != null)
                 return null;
-
             await _expenseCategoryRepository.AddAsync(expenseCategory);
             await _unitOfWork.Complete();
             return expenseCategory;
