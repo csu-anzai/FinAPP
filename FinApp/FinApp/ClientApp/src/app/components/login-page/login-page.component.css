@@ -49,9 +49,9 @@ input {
 }
 
 
-  input:focus {
-    background: #fff
-  }
+input:focus {
+  background: #fff
+}
 
 
 
@@ -64,13 +64,13 @@ label {
   display: inline-block;
   padding: 4px 10px;
   font-weight: 400;
-  background-color: rgba(255,255,255,0);
+  background-color: rgba(255, 255, 255, 0);
 }
 
 
 .floatLabel {
   top: -11px;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255, 255, 255, 0.8);
   font-size: 12px;
 }
 
@@ -95,32 +95,173 @@ label {
   opacity: 0.8;
 }
 
-  .button:hover {
-    opacity: 1
-  }
+.button:hover {
+  opacity: 1
+}
 
-  .button span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-    opacity: 1;
-  }
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+  opacity: 1;
+}
 
-    .button span:after {
-      content: '\00bb';
-      position: absolute;
-      opacity: 1;
-      top: 0;
-      right: -20px;
-      transition: 0.5s;
-    }
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 1;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
 
-  .button:hover span {
-    padding-right: 25px;
-  }
+.button:hover span {
+  padding-right: 25px;
+}
 
-    .button:hover span:after {
-      opacity: 1;
-      right: 0;
-    }
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+#customBtn {
+  display: inline-block;
+  background: white;
+  color: #444;
+  width: 190px;
+  border-radius: 5px;
+  border: thin solid #888;
+  box-shadow: 1px 1px 1px grey;
+  white-space: nowrap;
+}
+
+#customBtn:hover {
+  cursor: pointer;
+}
+
+span.label {
+  font-family: serif;
+  font-weight: normal;
+}
+
+span.icon {
+  background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  width: 42px;
+  height: 42px;
+}
+
+span.buttonText {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 42px;
+  padding-right: 42px;
+  font-size: 14px;
+  font-weight: bold;
+  /* Use the Roboto font that is loaded in the <head> */
+  font-family: 'Roboto', sans-serif;
+}
+
+.google-btn {
+  margin: 25px;
+  width: 95%;
+  min-width: 184px;
+  max-width: 250px;
+  height: 42px;
+  background-color: #fcfcfc;
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .2);
+  cursor: pointer;
+  cursor: hand;
+  align-self: center;
+  user-select: none;
+  transition: all 400ms ease 0s;
+  display: flex;
+}
+
+.google-btn .google-icon-wrapper {
+  position: absolute;
+  margin-top: 1px;
+  margin-left: 1px;
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  user-select: none
+}
+
+.google-btn .google-icon-svg {
+  position: absolute;
+  margin-top: 11px;
+  margin-left: 11px;
+  width: 18px;
+  height: 18px;
+  user-select: none
+}
+
+.google-btn .btn-text {
+  float: right;
+  margin: 10px 20px 20px 60px;
+  color: rgb(93, 94, 95);
+  font-size: 18px;
+  letter-spacing: .2px;
+  font-family: Roboto;
+  user-select: none
+}
+
+.google-btn:hover {
+  box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
+  user-select: none
+}
+
+.google-btn:active {
+  box-shadow: 0 1px 1px #757575;
+  background: #F8F8F8;
+  color: #fff;
+  user-select: none
+}
+
+.normal-btn {
+  margin: 25px;
+  width: auto;
+  display: inline-block;
+  min-width: auto;
+  max-width: 184px;
+  height: 42px;
+  background-color: #fcfcfc;
+  border-radius: 2px;
+  box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .2);
+  cursor: pointer;
+  cursor: hand;
+  align-self: center;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  transition: all 400ms ease 0s
+}
+
+.normal-btn .btn-text {
+  float: left;
+  margin: 11px 14px 11px 14px;
+  color: #757575;
+  font-size: 14px;
+  letter-spacing: .2px;
+  font-family: Roboto;
+  user-select: none
+}
+
+.normal-btn:hover {
+  box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
+  user-select: none
+}
+
+.normal-btn:active {
+  box-shadow: 0 1px 1px #757575;
+  background: #F8F8F8;
+  color: #fff;
+  user-select: none
+}

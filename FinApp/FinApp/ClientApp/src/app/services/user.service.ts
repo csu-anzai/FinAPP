@@ -31,7 +31,6 @@ export class UserService {
   getUser(id: number) : Observable<User> {
      return this.http.get<User>(`${this.baseUrl}/${id}`).pipe (
        tap((receivedData: User) => {
-         console.log(receivedData);
          return receivedData; 
         }),
         catchError(this.handleError)

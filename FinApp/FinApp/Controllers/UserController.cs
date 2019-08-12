@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
 using BLL.Services.IServices;
-using DAL.Context;
 using DAL.DTOs;
 using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinApp.Controllers
 {
+
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : Controller
@@ -48,9 +45,7 @@ namespace FinApp.Controllers
             if (user == null)
                 return NotFound();
 
-            var userDTO = _mapper.Map<User, UserDTO>(user);
-
-            return Ok(userDTO);
+            return Ok(user);
         }
 
         [HttpGet]
@@ -64,7 +59,7 @@ namespace FinApp.Controllers
             return Ok(users);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
         {
             if (!ModelState.IsValid)

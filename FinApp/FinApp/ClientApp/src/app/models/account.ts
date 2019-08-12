@@ -1,21 +1,15 @@
 import { Currency } from './currency';
+import { Image } from './image';
 
 export class Account {
-  Id: number;
-  Name: string;
-  Currency: Currency;
-  Image: string;
-  Balance: number;
+  id: number;
+  name: string;
+  currency: Currency;
+  image: Image;
+  balance: number;
 
-  constructor(id: number,
-    name: string,
-    currency: Currency,
-    image: string,
-    balance: number) {
-    this.Id = id;
-    this.Name = name;
-    this.Currency = currency;
-    this.Image = image;
-    this.Balance = balance;
+  constructor() {
+    this.image = new Image();
+    this.currency = new Currency();
   }
 }

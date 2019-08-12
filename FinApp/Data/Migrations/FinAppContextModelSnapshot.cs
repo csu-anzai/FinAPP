@@ -46,21 +46,6 @@ namespace DAL.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("DAL.Entities.ConfirmationCode", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Code");
-
-                    b.Property<DateTime>("CreateDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ConfirmationCodes");
-                });
-
             modelBuilder.Entity("DAL.Entities.Currency", b =>
                 {
                     b.Property<int>("Id")
@@ -177,6 +162,21 @@ namespace DAL.Migrations
                     b.ToTable("IncomeCategories");
                 });
 
+            modelBuilder.Entity("DAL.Entities.PasswordConfirmationCode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code");
+
+                    b.Property<DateTime>("CreateDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PasswordConfirmationCodes");
+                });
+
             modelBuilder.Entity("DAL.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -230,13 +230,13 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("BirthDate");
 
-                    b.Property<int?>("ConfirmationCodeId");
-
                     b.Property<string>("Email");
 
                     b.Property<string>("Name");
 
                     b.Property<string>("Password");
+
+                    b.Property<int>("PasswordConfirmationCodeId");
 
                     b.Property<int>("RoleId");
 
@@ -246,9 +246,8 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConfirmationCodeId")
-                        .IsUnique()
-                        .HasFilter("[ConfirmationCodeId] IS NOT NULL");
+                    b.HasIndex("PasswordConfirmationCodeId")
+                        .IsUnique();
 
                     b.HasIndex("RoleId");
 
@@ -355,9 +354,10 @@ namespace DAL.Migrations
 
             modelBuilder.Entity("DAL.Entities.User", b =>
                 {
-                    b.HasOne("DAL.Entities.ConfirmationCode", "ConfirmationCode")
+                    b.HasOne("DAL.Entities.PasswordConfirmationCode", "PasswordConfirmationCode")
                         .WithOne("User")
-                        .HasForeignKey("DAL.Entities.User", "ConfirmationCodeId");
+                        .HasForeignKey("DAL.Entities.User", "PasswordConfirmationCodeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("DAL.Entities.Role", "Role")
                         .WithMany("Users")

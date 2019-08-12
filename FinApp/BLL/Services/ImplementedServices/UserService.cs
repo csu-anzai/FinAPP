@@ -40,15 +40,13 @@ namespace BLL.Services.ImplementedServices
             }
             user.Password = _hasher.HashPassword(user.Password);
 
-            var token = new Token();
-            token.User = user;
+            var token = new Token {User = user};
             user.Token = token;
             user.TokenId = token.Id;
 
-            var confirmCode = new ConfirmationCode();
-            confirmCode.User = user;
-            user.ConfirmationCode = confirmCode;
-            user.ConfirmationCodeId = confirmCode.Id;
+            var confirmCode = new PasswordConfirmationCode {User = user};
+            user.PasswordConfirmationCode = confirmCode;
+            user.PasswordConfirmationCodeId = confirmCode.Id;
 
             await _tokenRepository.AddAsync(token);
             await _userRepository.AddAsync(user);
@@ -72,11 +70,13 @@ namespace BLL.Services.ImplementedServices
             return upToDateUser;
         }
 
-        public async Task<User> GetAsync(int id)
+        public async Task<UserDTO> GetAsync(int id)
         {
             var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == id);
 
-            return user ?? null;
+            var userDTO = _mapper.Map<User, UserDTO>(user);
+
+            return userDTO ?? null;
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
@@ -87,8 +87,10 @@ namespace BLL.Services.ImplementedServices
             return usersDTO.Count() > 0 ? usersDTO : null;
         }
 
-        public async Task DeleteAsync(User user)
+        public async Task DeleteAsync(UserDTO userDTO)
         {
+            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == userDTO.Id);
+
             _userRepository.Remove(user);
 
             await _unitOfWork.Complete();
