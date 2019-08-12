@@ -1,5 +1,5 @@
 export class Currency {
-  Id: number;
-  Name: string;
-  ExchengeRate: number;
+  id: number;
+  name: string;
+  exchengeRate: number;
 }
