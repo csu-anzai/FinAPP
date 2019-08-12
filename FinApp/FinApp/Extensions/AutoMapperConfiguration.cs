@@ -13,6 +13,9 @@ namespace FinApp.Extensions
                 c.AddProfile(new SignInProfile());
                 c.AddProfile(new SignUpProfile());
                 c.AddProfile(new UserProfile());
+                c.AddProfile(new AccountProfile());
+                c.AddProfile(new ImageProfile());
+                c.AddProfile(new CurrencyProfile());
             }).CreateMapper());
         }
     }

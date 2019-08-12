@@ -38,6 +38,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\models\account.ts" />
+    <None Remove="ClientApp\src\app\models\accountAdd.ts" />
+    <None Remove="ClientApp\src\app\models\currency.ts" />
+    <None Remove="ClientApp\src\app\models\image.ts" />
     <None Remove="ClientApp\src\app\welcome-components\welcome-list\welcome-list.component.ts" />
     <None Remove="ClientApp\src\app\welcome-components\welcome-header\welcome-header.component.ts" />
     <None Remove="ClientApp\src\app\welcome-components\welcome-benefits\welcome-benefits.component.ts" />
@@ -51,6 +55,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\account.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\accountAdd.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\currency.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\image.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-list\welcome-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-header\welcome-header.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-benefits\welcome-benefits.component.ts" />
