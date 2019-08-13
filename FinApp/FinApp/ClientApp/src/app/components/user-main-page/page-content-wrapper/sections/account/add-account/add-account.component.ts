@@ -6,7 +6,7 @@ import { CurrencyService } from '../../../../../../services/currency.service';
 import { ImageService } from '../../../../../../services/image.service';
 import { AccountService } from '../../../../../../services/account.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-add-account',
@@ -32,7 +32,7 @@ export class AddAccountComponent implements OnInit {
     fb: FormBuilder) {
     this.accountAddForm = fb.group({
       'Name': new FormControl(this.accountAdd.name, Validators.required),
-      'Balance': new FormControl(this.accountAdd.balance, Validators.compose([Validators.required, Validators.min(0)])),
+      'Balance': new FormControl(this.accountAdd.balance, Validators.compose([Validators.required, Validators.min(0), Validators.pattern('^[0-9]*[.,]?[0-9]+$')])),
       'Image': new FormControl('', Validators.required),
       'Currency': new FormControl('', Validators.required),
     });
@@ -49,8 +49,6 @@ export class AddAccountComponent implements OnInit {
       .subscribe(data => {
         this.images = data;
       });
-
-
   }
 
   openVerticallyCentered(content) {
@@ -58,19 +56,30 @@ export class AddAccountComponent implements OnInit {
 
     console.log(this.currencies);
 
-   this.modal = this.modalService.open(content, { centered: true });
+    this.modal = this.modalService.open(content, { centered: true });
   }
 
   addAccount() {
-    this.accountAdd.imageId = this.accountAddForm.controls['Image'].value;
+    if (this.accountAddForm.valid) {
+      this.accountAdd.imageId = this.accountAddForm.controls['Image'].value;
+      this.accountAdd.currencyId = this.accountAddForm.controls['Currency'].value;
+      this.accountAdd.balance = this.accountAddForm.controls['Balance'].value;
+      this.accountAdd.name = this.accountAddForm.controls['Name'].value;
 
-    this.accountAdd.currencyId = this.accountAddForm.controls['Currency'].value;
+      this.accountService.addAccount(this.accountAdd).subscribe(data => {
+        this.modal.close();
+      });
+    }
+    else {
+      for (let i in this.accountAddForm.controls)
+        this.accountAddForm.controls[i].markAsTouched();
+    }
+  }
 
-    this.accountService.addAccount(this.accountAdd).subscribe(data => {
-
-      //handling errors in future
-      this.modal.close();
-    });
+  closeModal() {
+    this.modal.close();
+    for (let i in this.accountAddForm.controls)
+      this.accountAddForm.controls[i].markAsUntouched();
   }
 
 }
