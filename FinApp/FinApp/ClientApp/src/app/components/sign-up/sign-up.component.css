@@ -3,6 +3,10 @@ page-size {
   height: 90vh;
 }
 
+.mt-20 {
+  margin-top: 20px;
+}
+
 body {
   background: #384047;
   font-family: sans-serif;
@@ -36,7 +40,7 @@ h2 {
 .p {
   margin: 0 0 2em 0;
   position: relative;
-  
+
 }
 
 input {
@@ -50,9 +54,9 @@ input {
   border-radius: 2px;
 }
 
-  input:focus {
-    background: #fff
-  }
+input:focus {
+  background: #fff
+}
 
 
 label {
@@ -64,17 +68,17 @@ label {
   display: inline-block;
   padding: 4px 10px;
   font-weight: 400;
-  background-color: rgba(255,255,255,0);
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .floatLabel {
   top: -11px;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255, 255, 255, 0.8);
   font-size: 12px;
 }
 
 .google-icon {
-  width:50px;
+  width: 50px;
   height: 50px;
 }
 
@@ -94,36 +98,36 @@ label {
   opacity: 0.8;
 }
 
-  .button:hover {
-    opacity: 1
-  }
+.button:hover {
+  opacity: 1
+}
 
-  .button span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-    opacity: 1;
-  }
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+  opacity: 1;
+}
 
-    .button span:after {
-      content: '\00bb';
-      position: absolute;
-      opacity: 1;
-      top: 0;
-      right: -20px;
-      transition: 0.5s;
-    }
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 1;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
 
-  .button:hover span {
-    padding-right: 25px;
-  }
+.button:hover span {
+  padding-right: 25px;
+}
 
-    .button:hover span:after {
-      opacity: 1;
-      right: 0;
-    }
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
 
 .validation-message {
-  height:10px;
+  height: 10px;
 }
