@@ -1,13 +1,13 @@
 import { NotificationService } from './notification.service';
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, mergeMap, share } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { throwError, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { MessagingCenterService } from './messaging-center.service';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +63,7 @@ export class AuthService implements OnInit {
   }
 
   isSelectAccount() {
-      this.oauthService.initLoginFlow();
+    this.oauthService.initLoginFlow();
   }
 
   getDataFromTokenId(tokenId: string): any {
@@ -97,6 +97,10 @@ export class AuthService implements OnInit {
       });
   }
 
+  refreshToken(): Observable<any> {
+    return this.http.post('https://localhost:44397/api/token', { accessToken: this.cookieService.get('token') }).pipe(share());
+  }
+
   register(model: any) {
     try {
       return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model);
@@ -111,7 +115,20 @@ export class AuthService implements OnInit {
 
     if (isAvailable) {
       const token = this.cookieService.get('token');
-      return !this.jwtHelper.isTokenExpired(token);
+      // return !this.jwtHelper.isTokenExpired(token);
+      const isExpired = this.jwtHelper.isTokenExpired(token);
+      if (isExpired) {
+        this.refreshToken().subscribe(
+          share(),
+          ((data: any) => {
+            // If reload successful update tokens
+            // Update token
+            console.log('new token: ' + data.token);
+            this.cookieService.set('token', data.token);
+          }),
+        );
+      }
+      return true;
     }
     return false;
   }

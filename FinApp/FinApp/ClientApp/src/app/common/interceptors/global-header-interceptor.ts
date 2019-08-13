@@ -23,12 +23,11 @@ export class GlobalHeaderInterceptor implements HttpInterceptor {
                 request = request.clone({
                     setHeaders: {
                         ContentType: `application/json`,
-                        Application: `text/plain`
+                        Application: `application/json`
                     }
                 });
             }
         }
-
         return next.handle(request);
     }
 }

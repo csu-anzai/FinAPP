@@ -66,7 +66,7 @@ namespace BLL.Tests
             //Assert
             var exception = Assert.ThrowsAsync<ApiException>(async () =>
                 await _passwordConfirmationCodeService.SendConfirmationCodeAsync(forgotPasswordDto));
-            Assert.AreEqual(HttpStatusCode.NotFound, exception.Code);
+            Assert.AreEqual(HttpStatusCode.NotFound, exception.StatusCode);
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace BLL.Tests
             //Assert
             var exception = Assert.ThrowsAsync<ApiException>(async () =>
                 await _passwordConfirmationCodeService.ValidateConfirmationCodeAsync(passwordConfirmationCodeDto));
-            Assert.AreEqual(HttpStatusCode.Gone, exception.Code);
+            Assert.AreEqual(HttpStatusCode.Gone, exception.StatusCode);
         }
     }
 }

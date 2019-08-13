@@ -19,7 +19,7 @@ export class NavMenuComponent implements OnInit {
     private cookieService: CookieService,
     private router: Router,
     private oauthService: OAuthService,
-    private alertService: NotificationService) {  }
+    private alertService: NotificationService) { }
 
   ngOnInit() {
     this.loggedIn();

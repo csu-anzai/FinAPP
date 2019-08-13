@@ -37,16 +37,14 @@ namespace BLL.Services.ImplementedServices
             if (!_hasher.CheckPassWithHash(user.Password, existedUser.Password))
                 return null;
 
-            var role = await _roleRepository.GetAsync(existedUser.RoleId);
-            var token = _jwtManager.GenerateToken(existedUser.Id, user.Email, role?.Name);
-
+            var token = await GenerateNewTokensAsync(existedUser);
 
             var refreshToken = new Token();
             refreshToken.RefreshToken = token.RefreshToken;
             refreshToken.User = existedUser;
             refreshToken.User.Id = existedUser.Id;
 
-            await _jwtManager.UpdateAsync(existedUser, refreshToken.RefreshToken);
+            await _jwtManager.UpdateAsync(existedUser.Id, refreshToken.RefreshToken);
             //await _tokenRepository.AddAsync(refreshToken);
 
             return token;
@@ -63,15 +61,31 @@ namespace BLL.Services.ImplementedServices
             var token = _jwtManager.GenerateToken(existedUser.Id, email, role?.Name);
 
 
-            var refreshToken = new Token();
-            refreshToken.RefreshToken = token.RefreshToken;
-            refreshToken.User = existedUser;
-            refreshToken.User.Id = existedUser.Id;
+            var refreshToken = SetUpRefreshToken(existedUser, token.RefreshToken);
 
-            await _jwtManager.UpdateAsync(existedUser, refreshToken.RefreshToken);
+            // TODO: update method shoulb be in a user service
+            await _jwtManager.UpdateAsync(existedUser.Id, refreshToken);
             //await _tokenRepository.AddAsync(refreshToken);
 
             return token;
+        }
+
+        private async Task<TokenDTO> GenerateNewTokensAsync (User user)
+        {
+            var role = await _roleRepository.GetAsync(user.RoleId);
+            var token = _jwtManager.GenerateToken(user.Id, user.Email, role?.Name);
+
+            return token;
+        }
+
+        private string SetUpRefreshToken(User user, string token)
+        {
+            var refreshToken = new Token();
+            refreshToken.RefreshToken = token;
+            refreshToken.User = user;
+            refreshToken.User.Id = user.Id;
+
+            return refreshToken.RefreshToken;
         }
     }
 }

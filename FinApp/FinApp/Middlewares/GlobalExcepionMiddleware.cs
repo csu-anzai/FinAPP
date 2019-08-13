@@ -31,7 +31,7 @@ namespace FinApp.Middlewares
             catch (ApiException e)
             {
                 logger.LogDebug(e, "API Exception");
-                httpContext.Response.StatusCode = (int) e.Code;
+                httpContext.Response.StatusCode = (int) e.StatusCode;
                 if (!String.IsNullOrEmpty(e.Message))
                 {
                     var body = JsonConvert.SerializeObject(new {Error = e.Message});
