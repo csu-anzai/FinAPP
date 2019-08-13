@@ -44,12 +44,23 @@ namespace BLL.Security.Jwt
             {
                 tokenHandler.ValidateToken(accesToken, validationParameters, out validatedToken);
             }
-            catch (SecurityTokenExpiredException)
+
+            catch (Exception e)
             {
-                return false;
+                var exeption = e.Message;
+                return true;
             }
-            return true;
+            validatedToken.ToString();
+            return false;
         }
+        public string[] GetClaims(string token)
+        {
+
+            var claims = new JwtSecurityToken(token).Subject.Split();
+
+            return claims;
+        }
+
         public (ClaimsPrincipal principal, JwtSecurityToken jwt) GetPrincipalFromExpiredToken(string token)
         {
             var principal = new JwtSecurityTokenHandler()
@@ -76,7 +87,7 @@ namespace BLL.Security.Jwt
             return (principal, jwtSecurityToken);
         }
 
-        private string GenerateAccessToken(int userId, string login, string role) =>
+        public string GenerateAccessToken(int userId, string login, string role) =>
             new JwtSecurityTokenHandler()
                 .WriteToken(new JwtSecurityToken(
                     issuer: _jwtOptions.Issuer,
@@ -87,7 +98,7 @@ namespace BLL.Security.Jwt
                     signingCredentials: _jwtOptions.SigningCredentials
                 ));
 
-        private string GenerateRefreshToken(int userId, string login, string role) =>
+        public string GenerateRefreshToken(int userId, string login, string role) =>
             new JwtSecurityTokenHandler()
                 .WriteToken(new JwtSecurityToken(
                     issuer: _jwtOptions.Issuer,
@@ -123,9 +134,9 @@ namespace BLL.Security.Jwt
                      1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
                 .TotalSeconds);
 
-        public async Task<Token> UpdateAsync(User user, string refreshToken)
+        public async Task<Token> UpdateAsync(int userId, string refreshToken)
         {
-            var token = await _tokenRepository.GetTokenByUserId(user.Id);
+            var token = await _tokenRepository.GetTokenByUserId(userId);
 
             token.RefreshToken = refreshToken;
             await _unitOfWork.Complete();
