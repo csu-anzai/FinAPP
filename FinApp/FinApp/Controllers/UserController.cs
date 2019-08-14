@@ -76,6 +76,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {

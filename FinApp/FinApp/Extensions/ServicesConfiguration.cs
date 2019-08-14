@@ -21,10 +21,14 @@ namespace FinApp.Extensions
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordConfirmationCodeRepository, PasswordConfirmationCodeRepository>();
             services.AddScoped<IPasswordConfirmationCodeService, PasswordConfirmationCodeService>();
+
+            services.AddScoped<AuthorizeAttribute>();
+
             services.AddSingleton<IEmailSenderService, EmailSenderService>();
             services.AddScoped<AuthorizeAttribute>();
 

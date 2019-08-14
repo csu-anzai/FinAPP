@@ -19,11 +19,12 @@ namespace FinApp.Controllers
         [HttpPost]
         public IActionResult GetNewAccessToken(TokenDTO token)
         {
+            _jwtManager.IsExpired(token.AccessToken);
             var claims = _jwtManager.GetClaims(token.AccessToken);
 
-            int userId = Convert.ToInt32(claims[0]);
-            string email = claims[1];
-            string role = claims[2];
+            int userId = Convert.ToInt32(claims[2]);
+            string email = claims[0];
+            string role = claims[1];
 
             return Ok(new { token = _jwtManager.GenerateAccessToken(userId, email, role) });
         }

@@ -6,7 +6,6 @@ namespace BLL.Models.Exceptions
     public class ApiException : Exception
     {
         public HttpStatusCode Code { get; private set; }
-
         public ApiException(HttpStatusCode statusCode)
         {
             Code = statusCode;
@@ -15,7 +14,7 @@ namespace BLL.Models.Exceptions
         public ApiException(HttpStatusCode statusCode, string message)
             : base(message)
         {
-            this.Code = statusCode;
+            Code = statusCode;
         }
     }
 }

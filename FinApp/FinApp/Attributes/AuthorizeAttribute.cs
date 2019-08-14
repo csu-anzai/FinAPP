@@ -28,9 +28,9 @@ namespace FinApp.Attributes
             var accessToken = context.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
             var claims = _jwtManager.GetClaims(accessToken);
 
-            int userId = Convert.ToInt32(claims[0]);
-            string userEmail = claims[1];
-            string userRole = claims[2];
+            int userId = Convert.ToInt32(claims[2]);
+            string userEmail = claims[0];
+            string userRole = claims[1];
 
             _refreshToken = await _tokenRepository.GetTokenByUserId(userId);
 
