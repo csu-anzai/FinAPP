@@ -37,7 +37,7 @@ export class AccountService {
       .pipe(tap( // Log the result or error
         data => {
           console.log(data);
-          this.alertService.successMsg(data.message.toString());
+          this.alertService.successMsg(data.toString());
           return data;
         },
         error => { this.errorHandler.handleError(error); }
