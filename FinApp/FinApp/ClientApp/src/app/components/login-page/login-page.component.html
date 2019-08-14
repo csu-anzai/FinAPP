@@ -28,16 +28,18 @@
         <br>
 
       </div>
-      <div class="row justify-content-center text-center" >
-          <div class="google-btn" (click)="googleSignIn()">
-              <div class="google-icon-wrapper">
-                <img class="google-icon-svg" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
-              </div>
-              <p class="btn-text"><b>Sign in with Google</b></p>
-            </div>
+      <div class="row justify-content-center text-center">
+        <div class="google-btn" (click)="googleSignIn()">
+          <div class="google-icon-wrapper">
+            <img class="google-icon-svg" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+          </div>
+          <p class="btn-text"><b>Sign in with Google</b></p>
+        </div>
       </div>
+      <div class="row justify-content-center text-center">
+        <p><a [routerLink]='["/forgot-password"]'>Forgot password?</a> </p>
+      </div>
+
     </form>
   </div>
-  <h5 class="mt-4"><a [routerLink]='["/forgot-password"]'>Forgot password?</a> </h5>
-
 </div>
