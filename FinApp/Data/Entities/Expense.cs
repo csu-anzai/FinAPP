@@ -12,8 +12,6 @@ namespace DAL.Entities
         public ExpenseCategory ExpenseCategory { get; set; }
 
         public int TransactionId { get; set; }
-
-        [ForeignKey(nameof(TransactionId))]
         public Transaction Transaction { get; set; }
 
     }
