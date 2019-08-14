@@ -16,10 +16,10 @@ namespace BLL.Services.ImplementedServices
         private readonly IUserRepository _userRepository;
         private readonly IPasswordConfirmationCodeRepository _codeRepository;
         private readonly IEmailSenderService _emailSenderService;
-        public static TimeSpan PasswordCodeTimeout { get; } = new TimeSpan(0,15,0);
+        public static TimeSpan PasswordCodeTimeout { get; } = new TimeSpan(0, 15, 0);
 
         private readonly string _message = " is the code to reset your password.\n" +
-                                          $"The code is valid for {{PasswordCodeTimeoutMinutes}} minutes.";
+                                          $"The code is valid for {PasswordCodeTimeout.Minutes} minutes.";
 
         public PasswordConfirmationCodeService(IUnitOfWork unitOfWork, IUserRepository userRepository, IPasswordConfirmationCodeRepository codeRepository, IEmailSenderService emailService)
         {
@@ -42,12 +42,12 @@ namespace BLL.Services.ImplementedServices
                 throw new ApiException(HttpStatusCode.NotFound, "User doesn't exist.");
             }
 
-            var passwordConfirmCode = GeneratePasswordConfirmationCode();
-            user.PasswordConfirmationCode = new PasswordConfirmationCode
-            {
-                Code = passwordConfirmCode.ToString(),
-                CreateDate = DateTime.Now
-            };
+            var generatedCode = GeneratePasswordConfirmationCode();
+
+            var passwordConfirmCode = await _codeRepository.GetPasswordConfirmationCodeByUserIdAsync(user.Id);
+            passwordConfirmCode.Code = generatedCode.ToString();
+            passwordConfirmCode.CreateDate = DateTime.Now;
+
             await _unitOfWork.Complete();
         }
 
@@ -60,9 +60,9 @@ namespace BLL.Services.ImplementedServices
             }
 
             await AssignCodeAsync(user);
-            var passwordConfirmCode = user.PasswordConfirmationCode.Code;
+            var passwordConfirmCode = await _codeRepository.GetPasswordConfirmationCodeByUserIdAsync(user.Id);
 
-            var message = passwordConfirmCode + _message;
+            var message = passwordConfirmCode.Code + _message;
 
             await _emailSenderService.SendEmailAsync(forgotPasswordDto.Email, "Fin App: password reset code", message);
 

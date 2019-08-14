@@ -19,7 +19,7 @@ namespace DAL.Repositories.ImplementedRepositories
 
         public async Task<PasswordConfirmationCode> GetPasswordConfirmationCodeByUserIdAsync(int id)
         {
-            return await _entities.Include(u => u.User).SingleOrDefaultAsync(u => u.User.Id == id);
+            return await _entities.SingleOrDefaultAsync(u => u.UserId == id);
         }
     }
 }
