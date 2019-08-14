@@ -1,0 +1,25 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<div class="justify-content-center">
+ 
+  <div class="">
+      <canvas baseChart 
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+            
+  </div>
+  <div class="center">
+    <select id="soflow-color">
+        <option> Incomes&nbsp;&#8195;</option>
+        <option> Expences  </option>
+    </select>
+  </div>
+
+  <div class="">
+    <canvas id="doughnut-chart" width="800" height="450"></canvas>
+  </div>
+</div>

@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 //components
 import { AppComponent } from './app.component';
@@ -30,6 +31,8 @@ import { ProfileComponent } from './components/user-main-page/page-content-wrapp
 import { PageContentWrapperComponent } from './components/user-main-page/page-content-wrapper/page-content-wrapper.component';
 import { AccountComponent } from './components/user-main-page/page-content-wrapper/sections/account/account.component';
 import { SettingComponent } from './components/user-main-page/page-content-wrapper/sections/setting/setting.component';
+import { DaterangepickerComponent } from './components/user-main-page/page-content-wrapper/sections/chart/daterangepicker/daterangepicker.component';
+import { ChartsComponent } from './components/user-main-page/page-content-wrapper/sections/chart/charts/charts.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
 
 
@@ -73,11 +76,14 @@ import { MessagingCenterService } from './services/messaging-center.service';
     AccountInfoComponent,
     AdminPanelComponent,
     AddAccountComponent,
+    DaterangepickerComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    ChartsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     OAuthModule.forRoot(),
