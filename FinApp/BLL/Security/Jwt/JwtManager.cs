@@ -52,7 +52,6 @@ namespace BLL.Security.Jwt
             validatedToken.ToString();
             return false;
         }
-
         public string[] GetClaims(string token)
         {
 
@@ -86,33 +85,28 @@ namespace BLL.Security.Jwt
 
             return (principal, jwtSecurityToken);
         }
+        public string GenerateAccessToken(int userId, string login, string role) =>
+            new JwtSecurityTokenHandler()
+                .WriteToken(new JwtSecurityToken(
+                    issuer: _jwtOptions.Issuer,
+                    audience: _jwtOptions.Audience,
+                    notBefore: DateTime.UtcNow,
+                    claims: GenerateClaims(userId, login, role),
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_jwtOptions.AccessExpirationMins)),
+                    signingCredentials: _jwtOptions.SigningCredentials
+                ));
 
-        public string GenerateAccessToken(int userId, string login, string role)
-        {
-            var token = new JwtSecurityTokenHandler()
-                  .WriteToken(new JwtSecurityToken(
-                      issuer: _jwtOptions.Issuer,
-                      audience: _jwtOptions.Audience,
-                      notBefore: DateTime.UtcNow,
-                      claims: GenerateClaims(userId, login, role),
-                      expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_jwtOptions.AccessExpirationMins)),
-                      signingCredentials: _jwtOptions.SigningCredentials
-                  ));
-            return token;
-        }
-        public string GenerateRefreshToken(int userId, string login, string role)
-        {
-            var token = new JwtSecurityTokenHandler()
-                   .WriteToken(new JwtSecurityToken(
-                       issuer: _jwtOptions.Issuer,
-                       audience: _jwtOptions.Audience,
-                       notBefore: DateTime.UtcNow,
-                       claims: GenerateClaims(userId, login, role),
-                       expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_jwtOptions.RefreshExpirationMins)),
-                       signingCredentials: _jwtOptions.SigningCredentials
-               ));
-            return token;
-        }
+        public string GenerateRefreshToken(int userId, string login, string role) =>
+            new JwtSecurityTokenHandler()
+                .WriteToken(new JwtSecurityToken(
+                    issuer: _jwtOptions.Issuer,
+                    audience: _jwtOptions.Audience,
+                    notBefore: DateTime.UtcNow,
+                    claims: GenerateClaims(userId, login, role),
+                    expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_jwtOptions.RefreshExpirationMins)),
+                    signingCredentials: _jwtOptions.SigningCredentials
+            ));
+
         public TokenDTO GenerateToken(int userId, string login, string role) =>
             new TokenDTO
             {
@@ -138,9 +132,9 @@ namespace BLL.Security.Jwt
                      1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
                 .TotalSeconds);
 
-        public async Task<Token> UpdateAsync(int Id, string refreshToken)
+        public async Task<Token> UpdateAsync(int userId, string refreshToken)
         {
-            var token = await _tokenRepository.GetTokenByUserId(Id);
+            var token = await _tokenRepository.GetTokenByUserId(userId);
 
             token.RefreshToken = refreshToken;
             await _unitOfWork.Complete();

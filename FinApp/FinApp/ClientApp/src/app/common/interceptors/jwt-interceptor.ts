@@ -30,9 +30,9 @@ export class JwtInterceptor implements HttpInterceptor {
                     console.log('needs to be refreshed');
                     this.refreshing(request, next);
                 }
-                request = this.addToken(request, this.cookieService.get('token'));
+                // request = this.addToken(request, this.cookieService.get('token'));
             }
-            return next.handle(request).pipe(catchError(error => {
+            return next.handle(this.addToken(request, this.cookieService.get('token'))).pipe(catchError(error => {
                 return throwError(error);
             }));
         } else {
@@ -57,15 +57,6 @@ export class JwtInterceptor implements HttpInterceptor {
             this.refreshTokenSubject.next(null);
 
             return this.authService.refreshToken()
-                // .pipe(
-                //     switchMap(
-                //         (data: any) => {
-                //             this.isRefreshing = false;
-                //             this.refreshTokenSubject.next(data.token);
-                //             return next.handle(this.addToken(request, data.token));
-                //         }
-                //     )
-                // );
                 .pipe(
                     catchError(err => throwError(err))
                 )
@@ -79,25 +70,6 @@ export class JwtInterceptor implements HttpInterceptor {
                         return next.handle(this.addToken(request, this.cookieService.get('token')));
                     }
                 );
-
-            // .pipe(
-            //     mergeMap((response: any) => {
-            //         console.log(response);
-            //         return response.token;
-            //     })
-            // )
-            // .subscribe(
-            //     (data: any) => {
-            //         // Update token
-            //         console.log('new token: ' + data.token);
-            //         this.cookieService.set('token', data.token);
-            //         this.isRefreshing = false;
-            //         this.refreshTokenSubject.next(data.token);
-            //         return next.handle(this.addToken(request, data.token));
-            //     },
-            //     catchError(err => throwError(err))
-            // );
-
         } else {
             console.log('refreshing');
             return this.refreshTokenSubject.pipe(

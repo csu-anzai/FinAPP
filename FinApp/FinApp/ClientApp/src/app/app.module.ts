@@ -1,3 +1,4 @@
+// Modules
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -9,6 +10,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OAuthModule } from 'angular-oauth2-oidc';
+
+// Components
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
@@ -20,21 +25,28 @@ import { WelcomeHeaderComponent } from './components/welcome-components/welcome-
 import { WelcomeListComponent } from './components/welcome-components/welcome-list/welcome-list.component';
 import { WelcomeBenefitsComponent } from './components/welcome-components/welcome-benefits/welcome-benefits.component';
 import { WelcomeCarouselComponent } from './components/welcome-components/welcome-carousel/welcome-carousel.component';
-import { AuthService } from './services/auth.service';
 import { LeftSideBarComponent } from './components/user-main-page/left-side-bar/left-side-bar.component';
-import { GuestGuard } from './guest.guard';
 import { ProfileComponent } from './components/user-main-page/page-content-wrapper/sections/profile/profile.component';
 import { PageContentWrapperComponent } from './components/user-main-page/page-content-wrapper/page-content-wrapper.component';
 import { AccountComponent } from './components/user-main-page/page-content-wrapper/sections/account/account.component';
 import { SettingComponent } from './components/user-main-page/page-content-wrapper/sections/setting/setting.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
-import { NotificationService } from './services/notification.service';
+
+
+
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
-import { MessagingCenterService } from './services/messaging-center.service';
-import { OAuthModule } from 'angular-oauth2-oidc';
+
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
+import { AddAccountComponent } from './components/user-main-page/page-content-wrapper/sections/account/add-account/add-account.component';
+
+// Services
+import { AuthService } from './services/auth.service';
+import { GuestGuard } from './guest.guard';
+import { NotificationService } from './services/notification.service';
+import { MessagingCenterService } from './services/messaging-center.service';
+
 import { GlobalHeaderInterceptor } from './common/interceptors/global-header-interceptor';
 import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
 
@@ -62,6 +74,7 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
     AccountHistoryComponent,
     AccountInfoComponent,
     AdminPanelComponent,
+    AddAccountComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -71,6 +84,7 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
     BrowserAnimationsModule,
     OAuthModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    NgbModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: MainPageComponent, pathMatch: 'full' },
       { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },

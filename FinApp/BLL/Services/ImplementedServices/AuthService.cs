@@ -63,7 +63,6 @@ namespace BLL.Services.ImplementedServices
 
             var refreshToken = SetUpRefreshToken(existedUser, token.RefreshToken);
 
-            // TODO: update method shoulb be in a user service
             await _jwtManager.UpdateAsync(existedUser.Id, refreshToken);
             //await _tokenRepository.AddAsync(refreshToken);
 

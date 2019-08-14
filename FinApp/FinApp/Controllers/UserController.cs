@@ -61,6 +61,7 @@ namespace FinApp.Controllers
             return Ok(users);
         }
 
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
         {

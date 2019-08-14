@@ -6,6 +6,7 @@ using DAL.Context;
 using DAL.Repositories.ImplementedRepositories;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
+using FinApp.Attributes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,15 +21,22 @@ namespace FinApp.Extensions
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
-            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordConfirmationCodeRepository, PasswordConfirmationCodeRepository>();
             services.AddScoped<IPasswordConfirmationCodeService, PasswordConfirmationCodeService>();
-
             services.AddSingleton<IEmailSenderService, EmailSenderService>();
+            services.AddScoped<AuthorizeAttribute>();
 
-            services.AddTransient<JwtManager>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAccountService, AccountService>();
+
+            services.AddScoped<ICurrencyRepository, CurrencyRepository>();
+            services.AddScoped<ICurrencyService, CurrencyService>();
+
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IImageService, ImageService>();
+
             services.AddTransient<IPassHasher, PassHasher>();
         }
     }

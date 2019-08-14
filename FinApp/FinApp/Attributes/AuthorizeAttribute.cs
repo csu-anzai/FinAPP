@@ -3,6 +3,7 @@ using BLL.Security.Jwt;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace FinApp.Attributes
             _refreshToken = await _tokenRepository.GetTokenByUserId(userId);
 
             if (String.IsNullOrEmpty(accessToken))
-                throw new ApiException(HttpStatusCode.Unauthorized); ;
+                throw new ApiException(HttpStatusCode.Unauthorized);
 
             if (_jwtManager.IsExpired(accessToken))
             {
@@ -47,5 +48,4 @@ namespace FinApp.Attributes
             }
         }
     }
-
 }
