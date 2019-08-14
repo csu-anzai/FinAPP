@@ -9,7 +9,6 @@ namespace DAL.DTOs
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public int ImageDTOId { get; set; }
-        public ImageDTO ImageDTO { get; set; }
+        public ImageDTO Image { get; set; }
     }
 }
