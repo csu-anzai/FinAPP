@@ -32,7 +32,7 @@ import { AccountComponent } from './components/user-main-page/page-content-wrapp
 import { SettingComponent } from './components/user-main-page/page-content-wrapper/sections/setting/setting.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
 
-
+import { FilterPipe } from './components/user-main-page/page-content-wrapper/sections/account/account-history/filter.pipe';
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
 
@@ -75,6 +75,7 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
     AccountInfoComponent,
     AdminPanelComponent,
     AddAccountComponent,
+    FilterPipe,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -26,18 +26,29 @@
       </div>
     </div>
     <div class="p">
-      <label class="floatLabel" for="lastname">BirthDate:</label>
-      <input type="text"
-             class="form-control"
-             bsDatepicker
-             formControlName="BirthDate"
-             [bsConfig]="{ isAnimated: true,
-             dateInputFormat: 'DD.MM.YYYY'}"
-             #brthdate>
+
+      <div class="input-group">
+        <label class="floatLabel" for="lastname">BirthDate:</label>
+        <input type="text"
+               class="form-control"
+               formControlName="BirthDate"
+               #brthdate placeholder="yyyy-mm-dd" 
+               name="dp" ngbDatepicker #d="ngbDatepicker"
+               [minDate]="{year: 1900, month: 1, day: 1}"
+               [maxDate]="{year: 2012, month: 12, day: 30}"
+                [autoClose]="true">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="	fa fa-calendar"></i></button>
+        </div>
+      </div>
       <div class="validation-message">
         <ng-container *ngIf="signUpForm.controls['BirthDate'].touched">
           <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].hasError('required')">Please choose your birthdate</small>
-          <small class="text-danger" *ngIf="signUpForm.controls['BirthDate'].invalid">Date format should be DD.MM.YYYY</small>
+          <ng-container  *ngIf="signUpForm.controls['BirthDate']?.hasError('ngbDate') && !signUpForm.controls['BirthDate'].hasError('required')">
+            <small class="text-danger" *ngIf="signUpForm.controls['BirthDate']?.getError('ngbDate')['requiredAfter'] != undefined">Birthdate should be earlier than 2013 year</small>
+            <small class="text-danger" *ngIf="signUpForm.controls['BirthDate']?.getError('ngbDate')['requiredBefore'] != undefined">Birthdate should be later than 1900 year</small>
+            <small class="text-danger" *ngIf="signUpForm.controls['BirthDate']?.getError('ngbDate')['invalid'] != undefined">Date format should be yyyy-mm-dd</small>
+          </ng-container>
         </ng-container>
       </div>
     </div>
@@ -83,5 +94,5 @@
       <button type="submit" [disabled]=" loading" value="Create My Account" id="submit" class="button col-3" style="vertical-align:middle"><span>Sign Up</span></button>
     </div>
   </form>
-      <h5 class="text-center mt-20">Have already account? <a [routerLink]='["/login-page"]'>Log In</a> </h5>      
+  <h5 class="text-center mt-20">Have already account? <a [routerLink]='["/login-page"]'>Log In</a> </h5>
 </div>

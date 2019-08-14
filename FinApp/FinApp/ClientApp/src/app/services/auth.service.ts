@@ -1,13 +1,14 @@
 import { NotificationService } from './notification.service';
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError, mergeMap, share, tap } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { MessagingCenterService } from './messaging-center.service';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { ErrorHandlingService } from './error-handling.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +43,8 @@ export class AuthService implements OnInit {
     private oauthService: OAuthService,
     private message: MessagingCenterService,
     private router: Router,
-    private alertService: NotificationService) { }
+    private alertService: NotificationService,
+    private errorHandler: ErrorHandlingService) { }
 
   ngOnInit(): void {
   }
@@ -124,7 +126,14 @@ export class AuthService implements OnInit {
 
   register(model: any) {
     try {
-      return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model);
+      return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model)
+        .pipe(tap(
+          data =>  data,
+          error => {
+            this.errorHandler.handleError(error);
+            return error;
+          }
+        ));
     } catch (error) {
       this.alertService.errorMsg(error.message);
     }
@@ -138,7 +147,6 @@ export class AuthService implements OnInit {
       const isExpired = this.jwtHelper.isTokenExpired(token);
       if (isExpired) {
         if (!this.isLogging) {
-          console.log('!refreshing');
           this.isLogging = true;
           this.loggedInSubject.next(null);
           this.refreshToken()
@@ -148,7 +156,6 @@ export class AuthService implements OnInit {
             .subscribe(
               (data: any) => {
                 // Update token
-                console.log('new token: ' + data.token);
                 this.cookieService.set('token', data.token);
                 this.isLogging = false;
                 this.loggedInSubject.next(this.cookieService.get('token'));

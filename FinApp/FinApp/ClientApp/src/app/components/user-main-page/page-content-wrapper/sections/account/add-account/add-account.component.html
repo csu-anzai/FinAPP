@@ -1,7 +1,7 @@
 <ng-template #content let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Add account</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -10,10 +10,9 @@
 
       <div class="form-group">
         <label class="floatLabel">Name:</label>
-        <input  class="form-control"
+        <input class="form-control"
                type="text"
                formControlName="Name"
-               [(ngModel)]="accountAdd.name"
                #name>
         <div class="validation-message">
           <ng-container *ngIf="accountAddForm.controls['Name'].touched">
@@ -21,35 +20,51 @@
           </ng-container>
         </div>
       </div>
+
       <div class="form-group">
         <label class="floatLabel">Balance:</label>
-        <input  class="form-control"
-               type="text"
+        <input class="form-control"
                formControlName="Balance"
-               [(ngModel)]="accountAdd.balance"
                #name>
         <div class="validation-message">
           <ng-container *ngIf="accountAddForm.controls['Balance'].touched">
             <small class="text-danger" *ngIf="accountAddForm.controls['Balance'].hasError('required')">Please enter your balance</small>
             <small class="text-danger" *ngIf="accountAddForm.controls['Balance'].hasError('min')">Balance can`t be less then 0</small>
+            <small class="text-danger" *ngIf="accountAddForm.controls['Balance'].hasError('pattern')">Balance must be a number</small>
           </ng-container>
         </div>
       </div>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="inputGroupSelect01">Currency</label>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Currency</label>
+          </div>
+          <select class="custom-select" id="inputGroupSelect01" formControlName="Currency">
+            <option *ngFor="let c of currencies" [value]="c.id">{{c.name}}</option>
+          </select>
         </div>
-        <select class="custom-select" id="inputGroupSelect01"  formControlName="Currency">
-          <option *ngFor="let c of currencies" [value]="c.id">{{c.name}}</option>
-        </select>
+        <div class="validation-message">
+          <ng-container *ngIf="accountAddForm.controls['Currency'].touched">
+            <small class="text-danger" *ngIf="accountAddForm.controls['Currency'].hasError('required')">Please choose currency</small>
+          </ng-container>
+        </div>
       </div>
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <label class="input-group-text" for="inputGroupSelect01">Image</label>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01">Image</label>
+          </div>
+          <select class="custom-select" id="inputGroupSelect01" formControlName="Image">
+            <option *ngFor="let i of images" [value]="i.id">{{i.name}}</option>
+          </select>
         </div>
-        <select class="custom-select" id="inputGroupSelect01"  formControlName="Image">
-          <option *ngFor="let i of images" [value]="i.id">{{i.name}}</option>
-        </select>
+        <div class="validation-message">
+          <ng-container *ngIf="accountAddForm.controls['Image'].touched">
+            <small class="text-danger" *ngIf="accountAddForm.controls['Image'].hasError('required')">Please choose image</small>
+          </ng-container>
+        </div>
       </div>
 
     </div>

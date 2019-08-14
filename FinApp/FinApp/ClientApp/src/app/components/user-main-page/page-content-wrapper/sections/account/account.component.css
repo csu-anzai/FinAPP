@@ -1,0 +1,5 @@
+.account-img {
+  min-width: 120px;
+  max-width: 120px;
+  object-fit: cover;
+}
