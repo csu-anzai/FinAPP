@@ -24,8 +24,11 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        // if (request.url.includes('localhost')) {
-        //     if (this.cookieService.check('token')) {
+         if (request.url.includes('localhost')) {
+                if (this.cookieService.check('token')) {
+                    return next.handle(this.addToken(request, this.cookieService.get('token')));
+                }
+            }
         //         if (request.url.includes('api/token')) {
         //             this.refreshing(request, next);
         //         }

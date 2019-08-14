@@ -26,16 +26,17 @@ namespace FinApp.Attributes
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             var accessToken = context.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", string.Empty);
+
+            if (String.IsNullOrEmpty(accessToken))
+                throw new ApiException(HttpStatusCode.Unauthorized);
+
             var claims = _jwtManager.GetClaims(accessToken);
 
             int userId = Convert.ToInt32(claims[2]);
             string userEmail = claims[0];
             string userRole = claims[1];
 
-            _refreshToken = await _tokenRepository.GetTokenByUserId(userId);
-
-            if (String.IsNullOrEmpty(accessToken))
-                throw new ApiException(HttpStatusCode.Unauthorized);
+            _refreshToken = await _tokenRepository.GetTokenByUserId(userId);            
 
             if (_jwtManager.IsExpired(accessToken))
             {

@@ -38,7 +38,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-        // [ServiceFilter(typeof(AuthorizeAttribute))]
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -50,6 +50,7 @@ namespace FinApp.Controllers
             return Ok(user);
         }
 
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpGet]
         public async Task<IActionResult> GetUsersAsync()
         {
@@ -76,7 +77,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)
         {
