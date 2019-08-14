@@ -46,6 +46,11 @@ import { AuthService } from './services/auth.service';
 import { GuestGuard } from './guest.guard';
 import { NotificationService } from './services/notification.service';
 import { MessagingCenterService } from './services/messaging-center.service';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { UserService } from './services/user.service';
+import { ForgotPasswordService } from './services/forgot.password.service';
+import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
 
@@ -75,6 +80,9 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
     AdminPanelComponent,
     AddAccountComponent,
     FilterPipe,
+    ForgotPasswordComponent,
+    ConfirmCodeComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -90,6 +98,9 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
       { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
       { path: 'counter', component: CounterComponent },
       { path: 'sign-up', component: SignUpComponent, canActivate: [GuestGuard] },
+      { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },
+      { path: 'change-password', component: ChangePasswordComponent, canActivate: [GuestGuard] },
       {
         path: 'user',
         component: FetchDataComponent,
@@ -123,7 +134,9 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
     GuestGuard,
     AuthGuard,
     MessagingCenterService,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    UserService,
+    ForgotPasswordService
   ],
   bootstrap: [AppComponent]
 })
