@@ -4,8 +4,7 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories.IRepositories
 {
-    public interface IUserRepository : IBaseRepository<User>
+    public interface IExpenseCategoryRepository : IBaseRepository<ExpenseCategory>
     {
-
     }
 }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
-using BLL.Mappings;
+using DAL.DTOs;
+using DAL.Entities;
 using Microsoft.Extensions.DependencyInjection;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 namespace FinApp.Extensions
 {
@@ -10,12 +12,36 @@ namespace FinApp.Extensions
         {
             services.AddSingleton(new MapperConfiguration(c =>
             {
-                c.AddProfile(new SignInProfile());
-                c.AddProfile(new SignUpProfile());
-                c.AddProfile(new UserProfile());
-                c.AddProfile(new AccountProfile());
-                c.AddProfile(new ImageProfile());
-                c.AddProfile(new CurrencyProfile());
+                c.CreateMap<AccountDTO, Account>().ReverseMap()
+                   .ForMember(dest => dest.Incomes, act => act.MapFrom(src => src.Incomes));
+
+                c.CreateMap<AccountAddDTO, Account>();
+
+                c.CreateMap<CurrencyDTO, Currency>().ReverseMap();
+
+                c.CreateMap<ImageDTO, Image>().ReverseMap();
+
+                c.CreateMap<UserLoginDTO, User>();
+
+                c.CreateMap<UserRegistrationDTO, User>();
+
+                c.CreateMap<Payload, UserRegistrationDTO>()
+                    .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.GivenName))
+                    .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.FamilyName));
+
+                c.CreateMap<UserDTO, User>().ReverseMap()
+                    .ForMember(dest => dest.AccountsDTO, act => act.MapFrom(src => src.Accounts));
+
+                c.CreateMap<Transaction, TransactionDTO>().ReverseMap();
+
+                c.CreateMap<IncomeCategoryDTO, IncomeCategory>().ReverseMap()
+                    .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
+                c.CreateMap<ExpenseCategoryDTO, ExpenseCategory>().ReverseMap();
+
+                c.CreateMap<IncomeDTO, Income>().ReverseMap()
+                   .ForMember(dest => dest.IncomeCategoryDTO, act => act.MapFrom(src => src.IncomeCategory))
+                   .ForMember(dest => dest.TransactionDTO, act => act.MapFrom(src => src.Transaction));
+
             }).CreateMapper());
         }
     }
