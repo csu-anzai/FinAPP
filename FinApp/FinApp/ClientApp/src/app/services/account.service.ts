@@ -36,10 +36,11 @@ export class AccountService {
     return this.http.post(this.url + 'add', model)
       .pipe(tap( // Log the result or error
         data => {
-          this.alertService.successMsg(data.toString());
+          console.log(data);
+          this.alertService.successMsg(data.message.toString());
           return data;
         },
-        error => this.errorHandler.handleError(error)
+        error => { this.errorHandler.handleError(error); }
       ));
   }
 
