@@ -7,6 +7,10 @@ namespace BLL.Models.Exceptions
     {
         public HttpStatusCode Code { get; }
 
+        public ApiException(HttpStatusCode code)
+        {
+            Code = code;
+        }
         public ApiException(HttpStatusCode code, string message) : base(message)
         {
             Code = code;

@@ -2,6 +2,7 @@
 using BLL.Services.IServices;
 using DAL.DTOs;
 using DAL.Entities;
+using FinApp.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -59,6 +60,7 @@ namespace FinApp.Controllers
             return Ok(users);
         }
 
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
         {
@@ -72,6 +74,7 @@ namespace FinApp.Controllers
 
             return Ok();
         }
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteUser(int id)

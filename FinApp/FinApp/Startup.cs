@@ -34,6 +34,7 @@ namespace FinApp
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAutoMapper();
+            services.ConfigureAuthentication(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureDataAccessServices();
 
