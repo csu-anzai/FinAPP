@@ -1,7 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using BLL.DTOs;
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
-using DAL.DTOs;
+using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

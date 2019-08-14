@@ -1,6 +1,6 @@
-﻿using BLL.Models.Exceptions;
+﻿using BLL.DTOs;
+using BLL.Models.Exceptions;
 using BLL.Services.IServices;
-using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
@@ -16,7 +16,7 @@ namespace BLL.Services.ImplementedServices
         private readonly IUserRepository _userRepository;
         private readonly IPasswordConfirmationCodeRepository _codeRepository;
         private readonly IEmailSenderService _emailSenderService;
-        public static TimeSpan PasswordCodeTimeout { get; } = new TimeSpan(0,15,0);
+        public static TimeSpan PasswordCodeTimeout { get; } = new TimeSpan(0, 15, 0);
 
         private readonly string _message = " is the code to reset your password.\n" +
                                           $"The code is valid for {{PasswordCodeTimeoutMinutes}} minutes.";

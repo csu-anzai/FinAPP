@@ -1,15 +1,14 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using DAL.DTOs;
-using System.Threading.Tasks;
+﻿using BLL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BLL.Security.Jwt
 {
@@ -25,7 +24,7 @@ namespace BLL.Security.Jwt
             _tokenRepository = tokenRepository;
             _unitOfWork = unitOfWork;
         }
-        public bool IsExpired (string accesToken)
+        public bool IsExpired(string accesToken)
         {
             var token = new JwtSecurityToken(accesToken);
 

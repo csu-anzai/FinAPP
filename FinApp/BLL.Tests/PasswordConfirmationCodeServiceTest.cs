@@ -1,16 +1,16 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Net;
-using System.Threading.Tasks;
+﻿using BLL.DTOs;
 using BLL.Models.Exceptions;
 using BLL.Services.ImplementedServices;
 using BLL.Services.IServices;
-using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
 using Moq;
 using NUnit.Framework;
+using System;
+using System.Linq.Expressions;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace BLL.Tests
 {
@@ -44,7 +44,7 @@ namespace BLL.Tests
                 .Returns(Task.FromResult(user));
 
             //Act
-            var forgotPasswordDto = new ForgotPasswordDTO {Email = "email"};
+            var forgotPasswordDto = new ForgotPasswordDTO { Email = "email" };
             var userWithAssignedCode = await _passwordConfirmationCodeService.SendConfirmationCodeAsync(forgotPasswordDto);
 
             //Assert
@@ -58,7 +58,7 @@ namespace BLL.Tests
             _unitOfWorkMock.Setup(s => s.Complete());
 
             _userRepoMock.Setup(s => s.SingleOrDefaultAsync(It.IsAny<Expression<Func<User, bool>>>()))
-                .Returns(Task.FromResult((User) null));
+                .Returns(Task.FromResult((User)null));
 
             //Act
             var forgotPasswordDto = new ForgotPasswordDTO { Email = "notValidEmail" };

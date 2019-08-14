@@ -1,7 +1,5 @@
-﻿using DAL.DTOs;
-using System;
+﻿using BLL.DTOs;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services.IServices

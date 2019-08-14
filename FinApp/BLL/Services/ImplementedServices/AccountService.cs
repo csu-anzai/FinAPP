@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.Services.IServices;
-using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
 using System.Threading.Tasks;
-using System.Linq.Expressions;
-using System;
 
 namespace BLL.Services.ImplementedServices
 {

@@ -1,5 +1,5 @@
-﻿using BLL.Security.Jwt;
-using DAL.DTOs;
+﻿using BLL.DTOs;
+using BLL.Security.Jwt;
 using Microsoft.AspNetCore.Mvc;
 using System;
 

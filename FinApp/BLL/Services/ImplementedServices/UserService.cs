@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.Security;
 using BLL.Services.IServices;
-using DAL.Context;
-using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
@@ -30,20 +29,23 @@ namespace BLL.Services.ImplementedServices
             _mapper = mapper;
         }
 
-        public async Task<User> CreateUserAsync(User user)
+        public async Task<User> CreateUserAsync(UserRegistrationDTO userDTO)
         {
+            var user = _mapper.Map<User>(userDTO);
+
+            user.RoleId = 1;
+
             var existedUser = await _userRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
+
             if (existedUser != null)
-            {
-                //_logger.Fatal("Email already existed, do not create User");
                 return null;
-            }
+
             user.Password = _hasher.HashPassword(user.Password);
 
-            var token = new Token {User = user};
+            var token = new Token { User = user };
             user.Token = token;
 
-            var confirmCode = new PasswordConfirmationCode {User = user};
+            var confirmCode = new PasswordConfirmationCode { User = user };
             user.PasswordConfirmationCode = confirmCode;
 
             await _tokenRepository.AddAsync(token);
@@ -81,7 +83,7 @@ namespace BLL.Services.ImplementedServices
         {
             var users = await _userRepository.GetAllAsync();
             var usersDTO = users.Select(_mapper.Map<User, UserDTO>);
-            
+
             return usersDTO.Any() ? usersDTO : null;
         }
 

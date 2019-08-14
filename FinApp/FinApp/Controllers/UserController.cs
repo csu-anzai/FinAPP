@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.Services.IServices;
-using DAL.DTOs;
-using DAL.Entities;
+using DAL.Repositories.IRepositories;
 using FinApp.Attributes;
-using DAL.Repositories.IRepositories; 
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -21,18 +20,14 @@ namespace FinApp.Controllers
         public UserController(IUserService userService, IMapper mapper, IUserRepository userRepository)
         {
             _userService = userService;
-            _mapper = mapper;this.userRepository = userRepository;
+            _mapper = mapper; this.userRepository = userRepository;
         }
 
 
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(UserRegistrationDTO userDto)
         {
-            var user = _mapper.Map<User>(userDto);
-
-            user.RoleId = 1;
-
-            var newUser = await _userService.CreateUserAsync(user);
+            var newUser = await _userService.CreateUserAsync(userDto);
 
             if (newUser == null)
                 return BadRequest(new { message = "User already exists" });
@@ -48,7 +43,7 @@ namespace FinApp.Controllers
 
             if (user == null)
                 return NotFound();
-          //  var user = await userRepository.GetAsync(id);
+            //  var user = await userRepository.GetAsync(id);
 
             return Ok(user);
         }

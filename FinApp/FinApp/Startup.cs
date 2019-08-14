@@ -1,6 +1,6 @@
 using AutoMapper;
+using BLL.DTOs;
 using DAL.Context;
-using DAL.DTOs;
 using FinApp.Extensions;
 using FinApp.Middlewares;
 using Microsoft.AspNetCore.Builder;
@@ -35,7 +35,7 @@ namespace FinApp
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            }); 
+            });
 
             services.AddAutoMapper();
             services.ConfigureAuthentication(Configuration);
@@ -92,7 +92,7 @@ namespace FinApp
 
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action=Index}/{id?}");               
+                    template: "{controller}/{action=Index}/{id?}");
             });
 
             app.UseSpa(spa =>

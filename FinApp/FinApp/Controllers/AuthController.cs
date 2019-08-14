@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.Services.IServices;
-using DAL.DTOs;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

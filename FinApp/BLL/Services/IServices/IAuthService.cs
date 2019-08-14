@@ -1,4 +1,4 @@
-﻿using DAL.DTOs;
+﻿using BLL.DTOs;
 using System.Threading.Tasks;
 
 namespace BLL.Services.IServices

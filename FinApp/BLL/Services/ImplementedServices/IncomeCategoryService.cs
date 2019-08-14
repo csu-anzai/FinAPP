@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using BLL.Security;
+using BLL.DTOs;
 using BLL.Services.IServices;
-using DAL.Context;
-using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;

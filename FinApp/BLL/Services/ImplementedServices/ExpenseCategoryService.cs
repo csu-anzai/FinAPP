@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using BLL.Security;
+using BLL.DTOs;
 using BLL.Services.IServices;
-using DAL.Context;
-using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
@@ -13,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.ImplementedServices
 {
-    public class ExpenseCategoryService: IExpenseCategoryService
+    public class ExpenseCategoryService : IExpenseCategoryService
     {
         private readonly IMapper _mapper;
         private readonly IExpenseCategoryRepository _expenseCategoryRepository;
@@ -43,7 +41,7 @@ namespace BLL.Services.ImplementedServices
         public async Task<ExpenseCategory> GetExpenseCategoryAsync(int id)
         {
             var expenseCategory = await _expenseCategoryRepository.SingleOrDefaultAsync(u => u.Id == id);
-            return expenseCategory ?? null;           
+            return expenseCategory ?? null;
         }
 
         public async Task<ExpenseCategory> UpdateExpenseCategoryAsync(ExpenseCategoryDTO expenseCategoryDTO)

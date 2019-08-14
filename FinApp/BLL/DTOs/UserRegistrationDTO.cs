@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DAL.DTOs
+namespace BLL.DTOs
 {
     public class UserRegistrationDTO
     {

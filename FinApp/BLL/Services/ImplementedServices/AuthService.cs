@@ -1,7 +1,7 @@
-﻿using BLL.Security;
+﻿using BLL.DTOs;
+using BLL.Security;
 using BLL.Security.Jwt;
 using BLL.Services.IServices;
-using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using System.Threading.Tasks;
@@ -66,7 +66,7 @@ namespace BLL.Services.ImplementedServices
             return token;
         }
 
-        private async Task<TokenDTO> GenerateNewTokensAsync (User user)
+        private async Task<TokenDTO> GenerateNewTokensAsync(User user)
         {
             var role = await _roleRepository.GetAsync(user.RoleId);
             var token = _jwtManager.GenerateToken(user.Id, user.Email, role?.Name);

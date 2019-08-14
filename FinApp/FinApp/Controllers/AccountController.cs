@@ -1,7 +1,7 @@
-﻿using BLL.Services.IServices;
-using System.Threading.Tasks;
-using DAL.DTOs;
+﻿using BLL.DTOs;
+using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace FinApp.Controllers
 {

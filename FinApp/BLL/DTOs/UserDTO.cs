@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DAL.DTOs
+namespace BLL.DTOs
 {
     public class UserDTO
     {

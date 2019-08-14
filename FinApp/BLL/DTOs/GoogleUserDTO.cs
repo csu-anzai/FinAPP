@@ -1,4 +1,4 @@
-﻿namespace DAL.DTOs
+﻿namespace BLL.DTOs
 {
     public class TokenIdDTO
     {

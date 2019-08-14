@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace DAL.DTOs
+namespace BLL.DTOs
 {
     public class AccountDTO
     {
@@ -18,6 +16,6 @@ namespace DAL.DTOs
         public int ImageId { get; set; }
         public ImageDTO Image { get; set; }
 
-        public ICollection<IncomeDTO> Incomes{ get; set; }
+        public ICollection<IncomeDTO> Incomes { get; set; }
     }
 }

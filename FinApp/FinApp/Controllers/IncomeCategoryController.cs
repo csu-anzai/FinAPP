@@ -1,12 +1,8 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.Services.IServices;
-using DAL.Context;
-using DAL.DTOs;
 using DAL.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinApp.Controllers
@@ -70,8 +66,8 @@ namespace FinApp.Controllers
             var incomeCategory = _mapper.Map<IncomeCategory>(incomeCategoryDTO);
             var newIncomeCategory = await _incomeCategoryService.CreateIncomeCategoryAsync(incomeCategory);
             if (newIncomeCategory == null)
-                return BadRequest( new { message = "Category is already exist!"});
+                return BadRequest(new { message = "Category is already exist!" });
             return Ok();
         }
-    } 
+    }
 }

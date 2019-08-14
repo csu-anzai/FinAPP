@@ -1,5 +1,5 @@
-﻿using BLL.Services.IServices;
-using DAL.DTOs;
+﻿using BLL.DTOs;
+using BLL.Services.IServices;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
 using MimeKit;

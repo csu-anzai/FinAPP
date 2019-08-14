@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.Services.IServices;
-using DAL.DTOs;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BLL.Services.ImplementedServices
 {
-    public class ImageService: IImageService
+    public class ImageService : IImageService
     {
         private readonly IImageRepository imageRepository;
 

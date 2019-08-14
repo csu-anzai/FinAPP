@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using DAL.DTOs;
+using BLL.DTOs;
 using DAL.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using static Google.Apis.Auth.GoogleJsonWebSignature;

@@ -1,4 +1,4 @@
-﻿using DAL.DTOs;
+﻿using BLL.DTOs;
 using DAL.Entities;
 using System.Threading.Tasks;
 
