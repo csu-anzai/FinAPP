@@ -1,13 +1,15 @@
 import { NotificationService } from './notification.service';
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { throwError, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { MessagingCenterService } from './messaging-center.service';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { ErrorHandlingService } from './error-handling.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +42,8 @@ export class AuthService implements OnInit {
     private oauthService: OAuthService,
     private message: MessagingCenterService,
     private router: Router,
-    private alertService: NotificationService) { }
+    private alertService: NotificationService,
+    private errorHandler: ErrorHandlingService) { }
 
   ngOnInit(): void {
   }
@@ -107,7 +110,14 @@ export class AuthService implements OnInit {
 
   register(model: any) {
     try {
-      return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model);
+      return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model)
+        .pipe(tap(
+          data => { return data; },
+          error => {
+            this.errorHandler.handleError(error);
+            return error;
+          }
+        ));
     } catch (error) {
       this.alertService.errorMsg(error.message);
     }

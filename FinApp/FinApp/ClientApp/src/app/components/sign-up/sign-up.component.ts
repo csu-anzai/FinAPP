@@ -1,9 +1,9 @@
-
-import { Component, OnInit, AfterContentInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { MessagingCenterService } from '../../services/messaging-center.service';
+import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'sign-up-component',
   templateUrl: './sign-up.component.html',
@@ -17,6 +17,7 @@ export class SignUpComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private message: MessagingCenterService,
+    private parserFormatter: NgbDateParserFormatter,
     fb: FormBuilder) {
     this.signUpForm = fb.group({
       'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
@@ -50,17 +51,16 @@ export class SignUpComponent implements OnInit {
       this.user = {
         Name: this.signUpForm.controls['Name'].value,
         Surname: this.signUpForm.controls['Surname'].value,
-        BirthDate: this.signUpForm.controls['BirthDate'].value.toDateString(),
+        BirthDate: this.parserFormatter.format( this.signUpForm.controls['BirthDate'].value),
         Email: this.signUpForm.controls['Email'].value,
         Password: this.signUpForm.controls['Password'].value,
       };
       this.authService.register(this.user).subscribe(() => {
-        // if email is not available -> show message
         this.router.navigate(['login-page']);
-      });
+      },
+        error => {
+        });
     } else {
-      console.log(
-        this.signUpForm.controls['RepeatedPassword'].errors);
       for (let i in this.signUpForm.controls)
         this.signUpForm.controls[i].markAsTouched();
     }
