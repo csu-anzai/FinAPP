@@ -17,5 +17,7 @@ namespace DAL.DTOs
 
         public int ImageId { get; set; }
         public ImageDTO Image { get; set; }
+
+        public ICollection<IncomeDTO> Incomes{ get; set; }
     }
 }
