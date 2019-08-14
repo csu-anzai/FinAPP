@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { MessagingCenterService } from './messaging-center.service';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,8 @@ export class AuthService implements OnInit {
   withGoogle = 'signingoogle/';
 
   jwtHelper = new JwtHelperService();
+  private isLogging = false;
+  private loggedInSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   decodedToken: any;
 
   setLoggedIn(value: boolean) {
@@ -73,16 +75,16 @@ export class AuthService implements OnInit {
   }
 
   isSelectAccount() {
-      if (this.cookieService.check('idToken')) {
-        const token = this.cookieService.get('idToken');
-        if (this.jwtHelper.isTokenExpired(token)) {
-          this.cookieService.delete('idToken');
-        } else {
-          this.getDataFromTokenId(token);
-        }
+    if (this.cookieService.check('idToken')) {
+      const token = this.cookieService.get('idToken');
+      if (this.jwtHelper.isTokenExpired(token)) {
+        this.cookieService.delete('idToken');
       } else {
-        this.oauthService.initLoginFlow();
+        this.getDataFromTokenId(token);
       }
+    } else {
+      this.oauthService.initLoginFlow();
+    }
   }
 
   getDataFromTokenId(tokenId: string): any {
@@ -119,13 +121,13 @@ export class AuthService implements OnInit {
   refreshToken() {
     console.log('zaishlo');
     return this.http.post('https://localhost:44397/api/token', { accessToken: this.cookieService.get('token') });
-      // .subscribe(
-      //     (data) => {
-      //       // Update token
-      //       console.log('new token: ' + data.token);
-      //       this.cookieService.set('token', data.token);
-      //     }
-      // );
+    // .subscribe(
+    //     (data) => {
+    //       // Update token
+    //       console.log('new token: ' + data.token);
+    //       this.cookieService.set('token', data.token);
+    //     }
+    // );
   }
 
   // Clone our fieled request ant try to resend it
@@ -142,9 +144,29 @@ export class AuthService implements OnInit {
   loggedIn() {
     const isAvailable = this.cookieService.check('token');
     if (isAvailable) {
-      console.log('available');
       const token = this.cookieService.get('token');
-      console.log(!this.jwtHelper.isTokenExpired(token));
+      const isExpired = this.jwtHelper.isTokenExpired(token);
+      if (isExpired) {
+        if (!this.isLogging) {
+          console.log('!refreshing');
+          this.isLogging = true;
+          this.loggedInSubject.next(null);
+          this.refreshToken()
+            .pipe(
+              catchError(err => throwError(err))
+            )
+            .subscribe(
+              (data: any) => {
+                // Update token
+                console.log('new token: ' + data.token);
+                this.cookieService.set('token', data.token);
+                this.isLogging = false;
+                this.loggedInSubject.next(this.cookieService.get('token'));
+                return !this.jwtHelper.isTokenExpired(data.token);
+              }
+            );
+        }
+      }
       return !this.jwtHelper.isTokenExpired(token);
     }
     return false;

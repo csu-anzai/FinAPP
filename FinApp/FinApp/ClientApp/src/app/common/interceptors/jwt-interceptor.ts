@@ -24,20 +24,19 @@ export class JwtInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-        if (request.url.includes('localhost')) {
-            if (this.cookieService.check('token')) {
-                if (this.jwtHelper.isTokenExpired(this.cookieService.get('token'))) {
-                    console.log('needs to be refreshed');
-                    this.refreshing(request, next);
-                }
-                // request = this.addToken(request, this.cookieService.get('token'));
-            }
-            return next.handle(this.addToken(request, this.cookieService.get('token'))).pipe(catchError(error => {
-                return throwError(error);
-            }));
-        } else {
+        // if (request.url.includes('localhost')) {
+        //     if (this.cookieService.check('token')) {
+        //         if (request.url.includes('api/token')) {
+        //             this.refreshing(request, next);
+        //         }
+        //         // request = this.addToken(request, this.cookieService.get('token'));
+        //     }
+        //     return next.handle(this.addToken(request, this.cookieService.get('token'))).pipe(catchError(error => {
+        //         return throwError(error);
+        //     }));
+        // } else {
             return next.handle(request);
-        }
+        // }
     }
 
     private addToken(request: HttpRequest<any>, token: string) {
@@ -49,8 +48,6 @@ export class JwtInterceptor implements HttpInterceptor {
     }
 
     private refreshing(request: HttpRequest<any>, next: HttpHandler) {
-        console.log('refreshing method');
-
         if (!this.isRefreshing) {
             console.log('!refreshing');
             this.isRefreshing = true;

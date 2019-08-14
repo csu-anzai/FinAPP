@@ -38,7 +38,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(AuthorizeAttribute))]
+        // [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
