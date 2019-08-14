@@ -59,7 +59,6 @@ namespace BLL.Services.ImplementedServices
             var role = await _roleRepository.GetAsync(existedUser.RoleId);
             var token = _jwtManager.GenerateToken(existedUser.Id, email, role?.Name);
 
-
             var refreshToken = SetUpRefreshToken(existedUser, token.RefreshToken);
 
             await _jwtManager.UpdateAsync(existedUser.Id, refreshToken);

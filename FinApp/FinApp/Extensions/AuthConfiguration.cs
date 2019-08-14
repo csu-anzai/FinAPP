@@ -18,7 +18,7 @@ namespace FinApp.Extensions
     {
         public static void ConfigureAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var key = GenerateKey(25);
+            var key = configuration.GetValue<string>($"{nameof(JwtOptions)}:Key");
             var jwtAppSettingOptions = configuration.GetSection(nameof(JwtOptions));
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
 
@@ -78,25 +78,25 @@ namespace FinApp.Extensions
             services.AddScoped<IAuthService, AuthService>();
         }
 
-        private static string GenerateKey(int length)
-        {
-            var characterArray =
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123456789".ToCharArray();
-            if (length < 0)
-                throw new ArgumentException("length must not be negative", "length");
-            if (length > int.MaxValue / 8)
-                throw new ArgumentException("length is too big", "length");
+        //private static string GenerateKey(int length)
+        //{
+        //    var characterArray =
+        //        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123456789".ToCharArray();
+        //    if (length < 0)
+        //        throw new ArgumentException("length must not be negative", "length");
+        //    if (length > int.MaxValue / 8)
+        //        throw new ArgumentException("length is too big", "length");
 
-            var bytes = new byte[length * 8];
-            new RNGCryptoServiceProvider().GetBytes(bytes);
-            var result = new char[length];
-            for (int i = 0; i < length; i++)
-            {
-                ulong value = BitConverter.ToUInt64(bytes, i * 8);
-                result[i] = characterArray[value % (uint)characterArray.Length];
-            }
-            return new string(result);
-        }
+        //    var bytes = new byte[length * 8];
+        //    new RNGCryptoServiceProvider().GetBytes(bytes);
+        //    var result = new char[length];
+        //    for (int i = 0; i < length; i++)
+        //    {
+        //        ulong value = BitConverter.ToUInt64(bytes, i * 8);
+        //        result[i] = characterArray[value % (uint)characterArray.Length];
+        //    }
+        //    return new string(result);
+        //}
     }
 }
 

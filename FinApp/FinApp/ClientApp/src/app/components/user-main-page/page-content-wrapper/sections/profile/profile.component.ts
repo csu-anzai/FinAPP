@@ -30,10 +30,9 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this._authService.UserId);
-    this._userService.getUser(this._authService.UserId).subscribe(res => {
+    this._userService.getUser(this._authService.DecodedToken.sub).subscribe(res => {
       this.user = res;
-    
+
       this.profileForm.get('Name').setValue(this.user.name);
       this.profileForm.get('Surname').setValue(this.user.surname);
       this.profileForm.get('BirthDate').setValue(`${this.user.birthDate}`);
