@@ -3,6 +3,7 @@ using BLL.Services.IServices;
 using DAL.DTOs;
 using DAL.Entities;
 using FinApp.Attributes;
+using DAL.Repositories.IRepositories; 
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,11 +16,12 @@ namespace FinApp.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
+        IUserRepository userRepository { get; set; }
 
-        public UserController(IUserService userService, IMapper mapper)
+        public UserController(IUserService userService, IMapper mapper, IUserRepository userRepository)
         {
             _userService = userService;
-            _mapper = mapper;
+            _mapper = mapper;this.userRepository = userRepository;
         }
 
 
@@ -46,6 +48,7 @@ namespace FinApp.Controllers
 
             if (user == null)
                 return NotFound();
+          //  var user = await userRepository.GetAsync(id);
 
             return Ok(user);
         }
@@ -79,7 +82,7 @@ namespace FinApp.Controllers
 
         [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(int id)
         {
             var userInDb = await _userService.GetAsync(id);
 

@@ -24,6 +24,10 @@ namespace FinApp.Extensions
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
+            services.AddScoped<IExpenseCategoryRepository, ExpenseRepository>();
+            services.AddScoped<IIncomeCategoryService, IncomeCategoryService>();
+            services.AddScoped<IIncomeCategoryRepository, IncomeRepository>();
             services.AddScoped<IPasswordConfirmationCodeRepository, PasswordConfirmationCodeRepository>();
             services.AddScoped<IPasswordConfirmationCodeService, PasswordConfirmationCodeService>();
 

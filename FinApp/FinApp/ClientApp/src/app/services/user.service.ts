@@ -22,26 +22,26 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-      return this.http.get<User[]>(`${this.baseUrl}`).pipe(
-        tap(data => console.log(data)),
-        catchError(this.handleError)
-      );
+    return this.http.get<User[]>(`${this.baseUrl}`).pipe(
+      tap(data => console.log(data)),
+      catchError(this.handleError)
+    );
   }
 
   getUser(id: number): Observable<User> {
-     return this.http.get<User>(`${this.baseUrl}/${id}`).pipe (
-       tap((receivedData: User) => {
-         return receivedData;
-        }),
-        catchError(this.handleError)
-       );
+    return this.http.get<User>(`${this.baseUrl}/${id}`).pipe(
+      tap((receivedData: User) => {
+        return receivedData;
+      }),
+      catchError(this.handleError)
+    );
   }
 
   register(user: User) {
-      return this.http.post(`${this.baseUrl}/register`, user);
+    return this.http.post(`${this.baseUrl}/register`, user);
   }
 
-  update(user: User):  Observable<User> {
+  update(user: User): Observable<User> {
     return this.http.put<User>(`${this.baseUrl}/${user.id}`, user).pipe(
       map(() => user),
       catchError(this.handleError)
@@ -54,5 +54,4 @@ export class UserService {
       catchError(this.handleError)
     );
   }
-
 }

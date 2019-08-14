@@ -11,7 +11,7 @@ namespace DAL.Repositories
 {
     abstract public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        private readonly DbContext _context;
+        protected readonly DbContext _context;
         protected readonly DbSet<TEntity> _entities;
 
         public BaseRepository(DbContext context)

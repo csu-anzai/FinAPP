@@ -17,13 +17,9 @@ namespace DAL.Entities
         public Role Role { get; set; }
         public int RoleId { get; set; }
 
-        [ForeignKey(nameof(TokenId))]
         public Token Token { get; set; }
-        public int? TokenId { get; set; }
 
-        [ForeignKey(nameof(PasswordConfirmationCodeId))]
         public PasswordConfirmationCode PasswordConfirmationCode { get; set; }
-        public int PasswordConfirmationCodeId { get; set; }
 
         public ICollection<Account> Accounts { get; set; }
         public ICollection<UserIncomeCategory> UserIncomeCategories { get; set; }

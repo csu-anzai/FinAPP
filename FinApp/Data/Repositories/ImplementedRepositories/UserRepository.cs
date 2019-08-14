@@ -11,5 +11,17 @@ namespace DAL.Repositories.ImplementedRepositories
         public UserRepository(FinAppContext context) : base(context)
         {
         }
+
+        public override Task<User> GetAsync(int id)
+        {
+            return  _entities
+                 .Include(u => u.Accounts).ThenInclude(a => a.Image)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Currency)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Incomes).ThenInclude(i => i.Transaction)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Expenses).ThenInclude(i => i.Transaction)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Expenses).ThenInclude(e => e.ExpenseCategory)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Incomes).ThenInclude(i => i.IncomeCategory)
+                .FirstOrDefaultAsync(u => u.Id == id);
+        }
     }
 }

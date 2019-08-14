@@ -30,7 +30,8 @@ namespace DAL.Context
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserExpenseCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new UserIncomeCategoryConfiguration());
-            //  modelBuilder.ApplyConfiguration(new category configuration());
+            modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+
             base.OnModelCreating(modelBuilder);
 
         }
