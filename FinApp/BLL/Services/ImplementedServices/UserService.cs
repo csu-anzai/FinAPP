@@ -42,11 +42,9 @@ namespace BLL.Services.ImplementedServices
 
             var token = new Token {User = user};
             user.Token = token;
-            user.TokenId = token.Id;
 
             var confirmCode = new PasswordConfirmationCode {User = user};
             user.PasswordConfirmationCode = confirmCode;
-            user.PasswordConfirmationCodeId = confirmCode.Id;
 
             await _tokenRepository.AddAsync(token);
             await _userRepository.AddAsync(user);
