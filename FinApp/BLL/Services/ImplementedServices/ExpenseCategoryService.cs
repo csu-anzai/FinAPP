@@ -59,8 +59,9 @@ namespace BLL.Services.ImplementedServices
         public async Task<ExpenseCategory> CreateExpenseCategoryAsync(ExpenseCategory expenseCategory)
         {
             var existedCategory = await _expenseCategoryRepository.SingleOrDefaultAsync(u => u.Name == expenseCategory.Name);
-            if (expenseCategory != null)
+            if (existedCategory != null)
                 return null;
+            expenseCategory.ImageId = 1;
             await _expenseCategoryRepository.AddAsync(expenseCategory);
             await _unitOfWork.Complete();
             return expenseCategory;

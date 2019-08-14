@@ -1,55 +1,87 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { CategoryService } from 'src/app/services/category.service';
+import { Category } from 'src/app/models/category';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { User } from '../../models/user';
+import { UserService } from '../../services/user.service';
+import { NotificationService } from '../../services/notification.service';
+import { async } from '@angular/core/testing';
+import { P } from '@angular/core/src/render3';
+
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css']
+  styleUrls: ['./admin-panel.component.css'],
+  providers: [UserService, CategoryService]
 })
 export class AdminPanelComponent implements OnInit {
 
-  users: any;
-  expenseCategories: any;
-  incomeCategories: any;
+  categoryForm: FormGroup;
+  category: Category = new Category();
 
-  constructor(private client: HttpClient) { }
+  expenseCategories: Category[];
+  incomeCategories: Category[];
+  users: User[];
+
+  ready: boolean;
+
+  constructor(private categoryService: CategoryService, public userService: UserService, fb: FormBuilder, private alertService: NotificationService) {
+
+    this.categoryForm = fb.group({
+      'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
+    });
+  }
 
   ngOnInit() {
     this.doWork();
   }
 
+
   async doWork() {
-    this.users = await this.getJsonResult("user", "getUsers").toPromise();
+    // this._categoryService = await this.getJsonResult("user", "getUsers").toPromise();
+    this.loadUsers();
+    this.loadCategories();
+
+    this.ready = true;
   }
 
-  async deleteUser(user: any) {
-    console.log(await this.postJsonResult("user", "deleteUser", user).toPromise());
+  async loadUsers() {
+    this.users = await this.userService.getUsers().toPromise();
   }
 
-  async getExpenseCategories() {
-    this.expenseCategories = await this.getJsonResult("admin", "getExpenseCategory").toPromise();
+  async loadCategories() {
+    this.expenseCategories = await this.categoryService.getCategories(false).toPromise();
+    this.incomeCategories = await this.categoryService.getCategories(true).toPromise();
   }
 
-  async deleteExpenseCategory(expenseCategories: any) {
-    console.log(await this.postJsonResult("admin", "deleteExpenseCategory", expenseCategories).toPromise());
+  addExpenseCategory() {
+    this.categoryService.creationExpenseCategory(this.category, false).subscribe(() => {
+      console.log(this.category);
+      this.loadCategories();
+      this.alertService.successMsg('Category added');
+    });
+  }
+  addIncomeCategory() {
+    this.categoryService.creationIncomeCategory(this.category, true).subscribe(() => {
+      console.log(this.category);
+      this.loadCategories();
+      this.alertService.successMsg('Category added');
+    });
   }
 
-  async getIncomeCategories() {
-    this.incomeCategories = await this.getJsonResult("admin", "getIncomeCategory").toPromise();
+
+  deleteUser(id: number) {
+    this.userService.deleteUser(id).subscribe(() => {
+      this.loadUsers();
+      this.alertService.successMsg('Users updated');
+    });
   }
 
-  async deleteIncomeCategory(incomeCategories: any) {
-    console.log(await this.postJsonResult("admin", "deleteIncomeCategory", incomeCategories).toPromise());
+  deleteCategory(id: number, isIncomeCategory: boolean) {
+    this.categoryService.deleteCategory(id, isIncomeCategory).subscribe(() => {
+      this.loadCategories();
+      this.alertService.successMsg('Categories deleted');
+    });
   }
-  // Transfer to seperate service to use in different components
-
-  getJsonResult(controller: string, action: string): Observable<any> {
-    return this.client.get("https://localhost:44397/api/" + controller + "/" + action);
-  }
-
-  postJsonResult(controller: string, action: string, data: any): Observable<any> {
-    return this.client.post("https://localhost:44397/api/" + controller + "/" + action, data);
-  }
-
 }

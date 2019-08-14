@@ -62,6 +62,7 @@ namespace BLL.Services.ImplementedServices
             var existedCategory = await _incomeCategoryRepository.SingleOrDefaultAsync(u => u.Name == incomeCategory.Name);
             if (existedCategory != null)
                 return null;
+            incomeCategory.ImageId = 1;
             await _incomeCategoryRepository.AddAsync(incomeCategory);
             await _unitOfWork.Complete();
             return incomeCategory;
