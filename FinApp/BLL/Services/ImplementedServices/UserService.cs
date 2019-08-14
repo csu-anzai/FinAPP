@@ -95,5 +95,19 @@ namespace BLL.Services.ImplementedServices
 
             await _unitOfWork.Complete();
         }
+
+        public async Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto)
+        {
+            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == recoverPasswordDto.Id);
+            if (user != null)
+            {
+                //_logger.Fatal("Email already existed, do not create User");
+                //return null;
+            }
+            user.Password = _hasher.HashPassword(recoverPasswordDto.NewPassword);
+
+            await _unitOfWork.Complete();
+        }
+
     }
 }

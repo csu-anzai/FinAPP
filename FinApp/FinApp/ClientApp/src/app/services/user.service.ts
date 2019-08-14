@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user';
 import { tap, catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { RecoverPassword } from '../models/recoverPassword';
 
 @Injectable({
   providedIn: 'root'
@@ -54,5 +55,9 @@ export class UserService {
       catchError(this.handleError)
     );
   }
-  
+
+  recoverPassword(model: RecoverPassword) {
+    console.log(model);
+    return this.http.post(this.baseUrl + '/recoverPassword', model);
+  }
 }

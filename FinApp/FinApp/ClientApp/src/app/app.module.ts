@@ -35,6 +35,11 @@ import { MainPageComponent } from './landing-page/main-page/main-page.component'
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { UserService } from './services/user.service';
+import { ForgotPasswordService } from './services/forgot.password.service';
+import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +65,9 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
     AccountHistoryComponent,
     AccountInfoComponent,
     AdminPanelComponent,
+    ForgotPasswordComponent,
+    ConfirmCodeComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -73,6 +81,9 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
       { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
       { path: 'counter', component: CounterComponent },
       { path: 'sign-up', component: SignUpComponent, canActivate: [GuestGuard] },
+      { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },
+      { path: 'change-password', component: ChangePasswordComponent, canActivate: [GuestGuard] },
       {
         path: 'user',
         component: FetchDataComponent,
@@ -101,7 +112,9 @@ import { AccountInfoComponent } from './components/user-main-page/page-content-w
     CookieService,
     NotificationService,
     GuestGuard,
-    AuthGuard
+    AuthGuard,
+    UserService,
+    ForgotPasswordService
   ],
   bootstrap: [AppComponent]
 })
