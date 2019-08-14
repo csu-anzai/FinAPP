@@ -1,6 +1,6 @@
 <div class="form">
   <div class="container">
-    <form #loginForm="ngForm" (ngSubmit)="onLogin()" [formGroup]="signInForm" >
+    <form #loginForm="ngForm" (ngSubmit)="onLogin()" [formGroup]="signInForm">
       <h2>Login</h2>
       <p>
         <label class="floatLabel" for="email">Email:</label>
@@ -38,4 +38,6 @@
       </div>
     </form>
   </div>
+  <h5 class="mt-4"><a [routerLink]='["/forgot-password"]'>Forgot password?</a> </h5>
+
 </div>
