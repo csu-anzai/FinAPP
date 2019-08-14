@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\components\user-main-page\page-content-wrapper\sections\account\account-history\filter.pipe.ts" />
     <None Remove="ClientApp\src\app\models\account.ts" />
     <None Remove="ClientApp\src\app\models\accountAdd.ts" />
     <None Remove="ClientApp\src\app\models\category.ts" />
@@ -58,6 +59,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\components\user-main-page\page-content-wrapper\sections\account\account-history\filter.pipe.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\account.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\accountAdd.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\category.ts" />

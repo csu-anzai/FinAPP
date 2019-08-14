@@ -29,7 +29,7 @@ namespace FinApp.Controllers
         {
             var result = await accountService.AddAccount(account);
 
-            return result == null ? Ok() : (IActionResult)Conflict(result);
+            return result == null ? Ok(new { message = "Adding account was successful" }) : (IActionResult)Conflict(new { message = "User already has account with this name" });
         }
     }
 }
