@@ -12,17 +12,16 @@ namespace DAL.Repositories.ImplementedRepositories
         {
         }
 
-        public async Task<User> GetAsync(int id)
+        public override Task<User> GetAsync(int id)
         {
-            return await FinAppContext.Users
-                .Include(u => u.Accounts).ThenInclude(a => a.Image)
-                .Include(u => u.Accounts).ThenInclude(a => a.Currency)
-                .Include(u => u.Accounts).ThenInclude(a => a.Incomes).ThenInclude( i => i.Transaction)
-                .Include(u => u.Accounts).ThenInclude(a => a.Expenses).ThenInclude(i => i.Transaction)
-               .FirstOrDefaultAsync(u => u.Id == id);
+            return  _entities
+                 .Include(u => u.Accounts).ThenInclude(a => a.Image)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Currency)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Incomes).ThenInclude(i => i.Transaction)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Expenses).ThenInclude(i => i.Transaction)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Expenses).ThenInclude(e => e.ExpenseCategory)
+                 .Include(u => u.Accounts).ThenInclude(a => a.Incomes).ThenInclude(i => i.IncomeCategory)
+                .FirstOrDefaultAsync(u => u.Id == id);
         }
-
-
-        protected FinAppContext FinAppContext { get { return _context as FinAppContext; } }
     }
 }

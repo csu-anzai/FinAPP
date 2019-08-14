@@ -8,7 +8,8 @@ namespace BLL.Mappings
     {
         public AccountProfile()
         {
-            CreateMap<AccountDTO, Account>().ReverseMap();
+            CreateMap<AccountDTO, Account>().ReverseMap()
+                .ForMember(dest => dest.Incomes, act => act.MapFrom(src => src.Incomes));
 
             CreateMap<AccountAddDTO, Account>();
         }

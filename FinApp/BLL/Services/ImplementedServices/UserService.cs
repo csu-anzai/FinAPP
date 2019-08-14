@@ -72,7 +72,7 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<UserDTO> GetAsync(int id)
         {
-            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == id);
+            var user = await _userRepository.GetAsync(id);
 
             var userDTO = _mapper.Map<User, UserDTO>(user);
 
