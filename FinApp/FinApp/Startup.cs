@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Serilog;
 
 namespace FinApp
@@ -31,7 +32,10 @@ namespace FinApp
         {
             services.AddDbContext<FinAppContext>(options =>
                 options.UseSqlServer(Configuration["Data:DefaultConnection"]));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            }); 
 
             services.AddAutoMapper();
             services.ConfigureAutoMapper();

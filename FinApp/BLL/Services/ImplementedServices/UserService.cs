@@ -72,11 +72,11 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<UserDTO> GetAsync(int id)
         {
-            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == id);
+            var user = await _userRepository.GetAsync(id);
 
             var userDTO = _mapper.Map<User, UserDTO>(user);
 
-            return userDTO ?? null;
+            return userDTO;
         }
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
@@ -84,7 +84,7 @@ namespace BLL.Services.ImplementedServices
             var users = await _userRepository.GetAllAsync();
             var usersDTO = users.Select(_mapper.Map<User, UserDTO>);
             
-            return usersDTO.Count() > 0 ? usersDTO : null;
+            return usersDTO.Any() ? usersDTO : null;
         }
 
         public async Task DeleteAsync(UserDTO userDTO)

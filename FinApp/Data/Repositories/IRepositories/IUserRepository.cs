@@ -6,5 +6,6 @@ namespace DAL.Repositories.IRepositories
 {
     public interface IUserRepository : IBaseRepository<User>
     {
+
     }
 }
