@@ -1,13 +1,13 @@
 import { NotificationService } from './notification.service';
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError, mergeMap, share } from 'rxjs/operators';
+import { map, catchError, mergeMap, share, tap } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { MessagingCenterService } from './messaging-center.service';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +63,16 @@ export class AuthService implements OnInit {
   }
 
   isSelectAccount() {
-    this.oauthService.initLoginFlow();
+      if (this.cookieService.check('idToken')) {
+        const token = this.cookieService.get('idToken');
+        if (this.jwtHelper.isTokenExpired(token)) {
+          this.cookieService.delete('idToken');
+        } else {
+          this.getDataFromTokenId(token);
+        }
+      } else {
+        this.oauthService.initLoginFlow();
+      }
   }
 
   getDataFromTokenId(tokenId: string): any {
@@ -74,9 +83,9 @@ export class AuthService implements OnInit {
           // User already exists
           if (response.token) {
             this.cookieService.set('token', response.token, null, null, null, true);
-            // this.cookieService.set('idToken', tokenId, null, null, null, true);
+            this.cookieService.set('idToken', tokenId, null, null, null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
-            this.router.navigate(['sign-up']);
+            this.router.navigate(['user/profile']);
             return true;
           } // Passes data to the sign up page
           else if (response.googleProfile) {
@@ -97,9 +106,19 @@ export class AuthService implements OnInit {
       });
   }
 
-  refreshToken(): Observable<any> {
-    return this.http.post('https://localhost:44397/api/token', { accessToken: this.cookieService.get('token') }).pipe(share());
+  refreshToken() {
+    console.log('zaishlo');
+    return this.http.post('https://localhost:44397/api/token', { accessToken: this.cookieService.get('token') });
+      // .subscribe(
+      //     (data) => {
+      //       // Update token
+      //       console.log('new token: ' + data.token);
+      //       this.cookieService.set('token', data.token);
+      //     }
+      // );
   }
+
+  // Clone our fieled request ant try to resend it
 
   register(model: any) {
     try {
@@ -112,23 +131,11 @@ export class AuthService implements OnInit {
   // Check if access token expires
   loggedIn() {
     const isAvailable = this.cookieService.check('token');
-
     if (isAvailable) {
+      console.log('available');
       const token = this.cookieService.get('token');
-      // return !this.jwtHelper.isTokenExpired(token);
-      const isExpired = this.jwtHelper.isTokenExpired(token);
-      if (isExpired) {
-        this.refreshToken().subscribe(
-          share(),
-          ((data: any) => {
-            // If reload successful update tokens
-            // Update token
-            console.log('new token: ' + data.token);
-            this.cookieService.set('token', data.token);
-          }),
-        );
-      }
-      return true;
+      console.log(!this.jwtHelper.isTokenExpired(token));
+      return !this.jwtHelper.isTokenExpired(token);
     }
     return false;
   }

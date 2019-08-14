@@ -109,7 +109,7 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
     GuestGuard,
     AuthGuard,
     MessagingCenterService,
-    { provide: HTTP_INTERCEPTORS, useClass: GlobalHeaderInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: GlobalHeaderInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

@@ -2,6 +2,7 @@
 using BLL.Services.IServices;
 using DAL.DTOs;
 using DAL.Entities;
+using FinApp.Attributes;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -37,6 +38,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
