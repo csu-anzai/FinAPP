@@ -47,7 +47,6 @@ import { GuestGuard } from './guest.guard';
 import { NotificationService } from './services/notification.service';
 import { MessagingCenterService } from './services/messaging-center.service';
 
-import { GlobalHeaderInterceptor } from './common/interceptors/global-header-interceptor';
 import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
 
 @NgModule({
@@ -124,7 +123,6 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
     GuestGuard,
     AuthGuard,
     MessagingCenterService,
-    // { provide: HTTP_INTERCEPTORS, useClass: GlobalHeaderInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

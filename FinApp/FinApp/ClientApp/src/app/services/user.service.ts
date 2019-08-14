@@ -11,10 +11,6 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   baseUrl = 'https://localhost:44397/api/user';
-  headers = new HttpHeaders().set('Content-Type', 'application/json').set('Accept', 'application/json');
-  httpOptions = {
-    headers: this.headers
-  };
 
   private handleError(error: any) {
     console.log(error);
@@ -50,7 +46,7 @@ export class UserService {
 
   deleteUser(id: number) {
     const url = `${this.baseUrl}/${id}`;
-    return this.http.delete(url, this.httpOptions).pipe(
+    return this.http.delete(url).pipe(
       catchError(this.handleError)
     );
   }

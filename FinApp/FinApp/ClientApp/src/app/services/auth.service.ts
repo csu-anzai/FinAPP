@@ -89,6 +89,7 @@ export class AuthService implements OnInit {
             this.cookieService.set('token', response.token, null, null, null, true);
             this.cookieService.set('idToken', tokenId, null, null, null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
+            this.alertService.successMsg('Logged in successfuly');
             this.router.navigate(['user/profile']);
             return true;
           } // Passes data to the sign up page
@@ -102,27 +103,21 @@ export class AuthService implements OnInit {
             this.message.passParameters(queryParams);
             this.router.navigate(['sign-up']);
             return true;
+          } else if (response.code) {
+            return this.alertService.errorMsg(response.message);
           }
           return false;
         }
       ).catch(error => {
-        this.oauthService.initLoginFlow();
+        this.alertService.errorMsg(error.message);
       });
   }
 
   refreshToken() {
     console.log('zaishlo');
     return this.http.post('https://localhost:44397/api/token', { accessToken: this.cookieService.get('token') });
-    // .subscribe(
-    //     (data) => {
-    //       // Update token
-    //       console.log('new token: ' + data.token);
-    //       this.cookieService.set('token', data.token);
-    //     }
-    // );
   }
 
-  // Clone our fieled request ant try to resend it
 
   register(model: any) {
     try {
