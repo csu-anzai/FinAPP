@@ -19,7 +19,7 @@ namespace BLL.Services.ImplementedServices
         public static TimeSpan PasswordCodeTimeout { get; } = new TimeSpan(0, 15, 0);
 
         private readonly string _message = " is the code to reset your password.\n" +
-                                          $"The code is valid for {PasswordCodeTimeout} minutes.";
+                                          $"The code is valid for {PasswordCodeTimeout.Minutes} minutes.";
 
         public PasswordConfirmationCodeService(IUnitOfWork unitOfWork, IUserRepository userRepository, IPasswordConfirmationCodeRepository codeRepository, IEmailSenderService emailService)
         {
@@ -65,7 +65,7 @@ namespace BLL.Services.ImplementedServices
 
             var message = passwordConfirmCode + _message;
 
-            //await _emailSenderService.SendEmailAsync(forgotPasswordDto.Email, "Fin App: password reset code", message);
+            await _emailSenderService.SendEmailAsync(forgotPasswordDto.Email, "Fin App: password reset code", message);
 
             return user;
         }

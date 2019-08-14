@@ -57,7 +57,6 @@ export class UserService {
   }
 
   recoverPassword(model: RecoverPassword) {
-    console.log(model);
-    return this.http.post(this.baseUrl + '/recoverPassword', model);
+    return this.http.put(this.baseUrl + '/recoverPassword', model);
   }
 }
