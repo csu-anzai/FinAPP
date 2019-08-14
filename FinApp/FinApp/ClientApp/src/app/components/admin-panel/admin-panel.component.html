@@ -41,11 +41,11 @@
         <input placeholder="Name category" [(ngModel)]="category.name" />
       </div>
       <div style="display:inline-block; text-align: start">
-        <input type="radio" name="category" class="mr-2" />Expenses category <br />
-        <input type="radio" name="category" class="mr-2" />Income category
+        <p>Expenses category</p>
+        <button class="btn btn-block btn-secondary" (click)="addExpenseCategory()">Add</button>  
+        <p>Income category</p>
+        <button class="btn btn-block btn-sm" (click)="addIncomeCategory()">Add</button>
       </div>
-      <button (click)="addExpenseCategory()"></button>
-      <button (click)="addIncomeCategory()"></button>
     </div>
     <div class="tab-pane fade" id="pills-fourth" role="tabpanel" aria-labelledby="pills-fourth-tab">
       <ul class="nav nav-pills mb-3" id="pills-tab2" role="tablist" style="margin-left:20%; margin-right:20%; margin-top:5%">
