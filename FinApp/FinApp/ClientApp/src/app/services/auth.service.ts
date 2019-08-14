@@ -35,6 +35,16 @@ export class AuthService implements OnInit {
     return this.jwtHelper.decodeToken(this.cookieService.get('token'));
   }
 
+  get UserEmail() {
+    const list = this.jwtHelper.decodeToken(this.cookieService.get('token')).sub.split(' ');
+    return list[1];
+  }
+
+  get UserId() {
+    const list = this.jwtHelper.decodeToken(this.cookieService.get('token')).sub.split(' ');
+    return list[0];
+  }
+
   constructor(private http: HttpClient,
     private cookieService: CookieService,
     private oauthService: OAuthService,

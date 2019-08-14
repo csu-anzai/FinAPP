@@ -126,7 +126,7 @@ namespace BLL.Security.Jwt
                     ClaimValueTypes.Integer64)
             };
 
-        private long ToUnixEpochDate(DateTime date) =>
+        private long ToUnixEpochDate(DateTime date) =>-
             (long)Math.Round(
                 (date.ToUniversalTime() - new DateTimeOffset(
                      1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
