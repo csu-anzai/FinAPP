@@ -14,7 +14,12 @@
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="margin-top:2.5%">Statistics</div>
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="margin-top:2.5%">
+      Statistics
+      <fusioncharts [chartConfig]="chartConfig"
+                    [dataSource]="dataSource">
+      </fusioncharts>
+    </div>
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" style="margin-top:2.5%">
       <table class="table">
         <thead>
@@ -42,9 +47,9 @@
       </div>
       <div style="display:inline-block; text-align: start">
         <p>Expenses category</p>
-        <button class="btn btn-block btn-secondary" (click)="addExpenseCategory()">Add</button>  
+        <button class="btn btn-block btn-info" (click)="addExpenseCategory()">Add</button>
         <p>Income category</p>
-        <button class="btn btn-block btn-sm" (click)="addIncomeCategory()">Add</button>
+        <button class="btn btn-block btn-info" (click)="addIncomeCategory()">Add</button>
       </div>
     </div>
     <div class="tab-pane fade" id="pills-fourth" role="tabpanel" aria-labelledby="pills-fourth-tab">
@@ -67,8 +72,13 @@
             </thead>
             <tbody>
               <tr *ngFor="let exp of expenseCategories">
-                <td style="width:50%">{{exp.name}}</td>
-                <td><button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(exp.id, false)">Delete</button><button class="btn btn-warning ml-5 mr-5">Update</button></td>
+                <td style="width:50%">
+                  <input [(ngModel)]="exp.name" class="form-control my-input" />
+                </td>
+                <td>
+                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(exp.id, false)">Delete</button>
+                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(exp)">Update</button>
+                </td>
               </tr>
             </tbody>
           </table>

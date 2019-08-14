@@ -1,0 +1,23 @@
+.raphael-group-18-creditgroup {
+  display: none !important;
+}
+
+.my-input {
+  border-width: 0px !important;
+  box-shadow: none !important;
+  transition: 0.5s;
+  padding-left: 0px;
+  color: grey;
+}
+
+  .my-input:hover {
+    border-bottom-width: 1px !important;
+    padding-left: 5px;
+    color: black;
+  }
+
+  .my-input:focus {
+    border-bottom-width: 1px !important;
+    padding-left: 5px;
+    color: black;
+  }

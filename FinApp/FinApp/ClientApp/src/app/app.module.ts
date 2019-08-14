@@ -48,6 +48,13 @@ import { GuestGuard } from './guest.guard';
 import { NotificationService } from './services/notification.service';
 import { MessagingCenterService } from './services/messaging-center.service';
 
+import { FusionChartsModule } from 'angular-fusioncharts';
+import * as FusionCharts from 'fusioncharts';
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+
+FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -78,6 +85,7 @@ import { MessagingCenterService } from './services/messaging-center.service';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    FusionChartsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     OAuthModule.forRoot(),
