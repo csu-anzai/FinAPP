@@ -44,25 +44,24 @@ namespace BLL.Services.ImplementedServices
 
             var generatedCode = GeneratePasswordConfirmationCode();
 
-            var passwordConfirmCode = await _codeRepository.GetPasswordConfirmationCodeByUserIdAsync(user.Id);
-            passwordConfirmCode.Code = generatedCode.ToString();
-            passwordConfirmCode.CreateDate = DateTime.Now;
+            user.PasswordConfirmationCode.Code = generatedCode.ToString();
+            user.PasswordConfirmationCode.CreateDate = DateTime.Now;
 
             await _unitOfWork.Complete();
         }
 
         public async Task<User> SendConfirmationCodeAsync(ForgotPasswordDTO forgotPasswordDto)
         {
-            var user = await _userRepository.SingleOrDefaultAsync(u => u.Email == forgotPasswordDto.Email);
+            var user = await _userRepository.SingleOrDefaultWithConfirmCodeAsync(u => u.Email == forgotPasswordDto.Email);
             if (user == null)
             {
                 throw new ApiException(HttpStatusCode.NotFound, "User with such email was not found.");
             }
 
             await AssignCodeAsync(user);
-            var passwordConfirmCode = await _codeRepository.GetPasswordConfirmationCodeByUserIdAsync(user.Id);
+            var passwordConfirmCode = user.PasswordConfirmationCode.Code;
 
-            var message = passwordConfirmCode.Code + _message;
+            var message = passwordConfirmCode + _message;
 
             await _emailSenderService.SendEmailAsync(forgotPasswordDto.Email, "Fin App: password reset code", message);
 
