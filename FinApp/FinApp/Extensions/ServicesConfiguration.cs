@@ -6,6 +6,7 @@ using DAL.Context;
 using DAL.Repositories.ImplementedRepositories;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
+using FinApp.Attributes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,12 +21,20 @@ namespace FinApp.Extensions
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
-            services.AddScoped<IAuthService, AuthService>();
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
+            services.AddScoped<IExpenseCategoryRepository, ExpenseRepository>();
+            services.AddScoped<IIncomeCategoryService, IncomeCategoryService>();
+            services.AddScoped<IIncomeCategoryRepository, IncomeRepository>();
             services.AddScoped<IPasswordConfirmationCodeRepository, PasswordConfirmationCodeRepository>();
             services.AddScoped<IPasswordConfirmationCodeService, PasswordConfirmationCodeService>();
+
+            services.AddScoped<AuthorizeAttribute>();
+
             services.AddSingleton<IEmailSenderService, EmailSenderService>();
+            services.AddScoped<AuthorizeAttribute>();
 
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IAccountService, AccountService>();
@@ -36,7 +45,6 @@ namespace FinApp.Extensions
             services.AddScoped<IImageRepository, ImageRepository>();
             services.AddScoped<IImageService, ImageService>();
 
-            services.AddTransient<JwtManager>();
             services.AddTransient<IPassHasher, PassHasher>();
         }
     }

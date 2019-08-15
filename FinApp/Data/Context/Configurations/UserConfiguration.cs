@@ -8,7 +8,14 @@ namespace DAL.Context.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.Property(u => u.Id).ValueGeneratedOnAdd();
+            builder.HasOne(u => u.Token)
+                .WithOne(t => t.User)
+                .HasForeignKey<Token>(t => t.UserId);
+
+            builder.HasOne(u => u.PasswordConfirmationCode)
+                .WithOne(p => p.User)
+                .HasForeignKey<PasswordConfirmationCode>(p => p.UserId);
+
         }
     }
 }

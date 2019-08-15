@@ -168,7 +168,12 @@ namespace DAL.Migrations
 
                     b.Property<DateTime>("CreateDate");
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("PasswordConfirmationCodes");
                 });
@@ -196,7 +201,12 @@ namespace DAL.Migrations
 
                     b.Property<string>("RefreshToken");
 
+                    b.Property<int>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Tokens");
                 });
@@ -232,24 +242,13 @@ namespace DAL.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<int>("PasswordConfirmationCodeId");
-
                     b.Property<int>("RoleId");
 
                     b.Property<string>("Surname");
 
-                    b.Property<int?>("TokenId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PasswordConfirmationCodeId")
-                        .IsUnique();
-
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("TokenId")
-                        .IsUnique()
-                        .HasFilter("[TokenId] IS NOT NULL");
 
                     b.ToTable("Users");
                 });
@@ -348,21 +347,28 @@ namespace DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("DAL.Entities.PasswordConfirmationCode", b =>
+                {
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithOne("PasswordConfirmationCode")
+                        .HasForeignKey("DAL.Entities.PasswordConfirmationCode", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DAL.Entities.Token", b =>
+                {
+                    b.HasOne("DAL.Entities.User", "User")
+                        .WithOne("Token")
+                        .HasForeignKey("DAL.Entities.Token", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("DAL.Entities.User", b =>
                 {
-                    b.HasOne("DAL.Entities.PasswordConfirmationCode", "PasswordConfirmationCode")
-                        .WithOne("User")
-                        .HasForeignKey("DAL.Entities.User", "PasswordConfirmationCodeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("DAL.Entities.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("DAL.Entities.Token", "Token")
-                        .WithOne("User")
-                        .HasForeignKey("DAL.Entities.User", "TokenId");
                 });
 
             modelBuilder.Entity("DAL.Entities.UserExpenseCategory", b =>

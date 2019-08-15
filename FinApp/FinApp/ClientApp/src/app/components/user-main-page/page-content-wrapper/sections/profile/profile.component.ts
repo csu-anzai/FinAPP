@@ -33,6 +33,7 @@ export class ProfileComponent implements OnInit {
     this._userService.getUser(this._authService.DecodedToken.sub).subscribe(res => {
       //console.log(res)
       this.user = res;
+
       this.profileForm.get('Name').setValue(this.user.name);
       this.profileForm.get('Surname').setValue(this.user.surname);
       this.profileForm.get('BirthDate').setValue(`${this.user.birthDate}`);

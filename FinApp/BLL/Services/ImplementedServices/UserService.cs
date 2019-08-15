@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Models.Exceptions;
 using BLL.Security;
 using BLL.Services.IServices;
 using DAL.Context;
@@ -8,6 +9,7 @@ using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 
@@ -42,11 +44,9 @@ namespace BLL.Services.ImplementedServices
 
             var token = new Token {User = user};
             user.Token = token;
-            user.TokenId = token.Id;
 
             var confirmCode = new PasswordConfirmationCode {User = user};
             user.PasswordConfirmationCode = confirmCode;
-            user.PasswordConfirmationCodeId = confirmCode.Id;
 
             await _tokenRepository.AddAsync(token);
             await _userRepository.AddAsync(user);
@@ -95,5 +95,19 @@ namespace BLL.Services.ImplementedServices
 
             await _unitOfWork.Complete();
         }
+
+        public async Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto)
+        {
+            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == recoverPasswordDto.Id);
+            if (user == null)
+            {
+                throw new ApiException(HttpStatusCode.NotFound, "User was not found.");
+            }
+
+            user.Password = _hasher.HashPassword(recoverPasswordDto.NewPassword);
+
+            await _unitOfWork.Complete();
+        }
+
     }
 }

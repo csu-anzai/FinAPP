@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { JwtHelperService } from '@auth0/angular-jwt/src/jwthelper.service';
+import { share, map } from 'rxjs/operators';
 
 
 
@@ -13,13 +15,14 @@ import { OAuthService } from 'angular-oauth2-oidc';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent implements OnInit {
+  jwtHelper = new JwtHelperService();
   isExpanded = false;
 
   constructor(private authService: AuthService,
     private cookieService: CookieService,
     private router: Router,
     private oauthService: OAuthService,
-    private alertService: NotificationService) {  }
+    private alertService: NotificationService) { }
 
   ngOnInit() {
     this.loggedIn();

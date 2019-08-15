@@ -23,7 +23,6 @@ namespace DAL.Context
 
         public FinAppContext(DbContextOptions options) : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,7 +30,8 @@ namespace DAL.Context
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserExpenseCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new UserIncomeCategoryConfiguration());
-            //  modelBuilder.ApplyConfiguration(new category configuration());
+            modelBuilder.ApplyConfiguration(new TransactionConfiguration());
+
             base.OnModelCreating(modelBuilder);
 
         }
