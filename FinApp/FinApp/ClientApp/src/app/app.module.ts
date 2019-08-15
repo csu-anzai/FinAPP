@@ -12,6 +12,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 // Components
 import { AppComponent } from './app.component';
@@ -30,6 +31,8 @@ import { ProfileComponent } from './components/user-main-page/page-content-wrapp
 import { PageContentWrapperComponent } from './components/user-main-page/page-content-wrapper/page-content-wrapper.component';
 import { AccountComponent } from './components/user-main-page/page-content-wrapper/sections/account/account.component';
 import { SettingComponent } from './components/user-main-page/page-content-wrapper/sections/setting/setting.component';
+import { DaterangepickerComponent } from './components/user-main-page/page-content-wrapper/sections/chart/daterangepicker/daterangepicker.component';
+import { ChartsComponent } from './components/user-main-page/page-content-wrapper/sections/chart/charts/charts.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
 
 import { FilterPipe } from './components/user-main-page/page-content-wrapper/sections/account/account-history/filter.pipe';
@@ -46,8 +49,21 @@ import { AuthService } from './services/auth.service';
 import { GuestGuard } from './guest.guard';
 import { NotificationService } from './services/notification.service';
 import { MessagingCenterService } from './services/messaging-center.service';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { UserService } from './services/user.service';
+import { ForgotPasswordService } from './services/forgot.password.service';
+import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
+import { ChartsService} from './services/charts.service';
+
+import { FusionChartsModule } from 'angular-fusioncharts';
+import * as FusionCharts from 'fusioncharts';
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+
+FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
 @NgModule({
   declarations: [
@@ -75,11 +91,18 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
     AdminPanelComponent,
     AddAccountComponent,
     FilterPipe,
+    ForgotPasswordComponent,
+    ConfirmCodeComponent,
+    ChangePasswordComponent,
+    DaterangepickerComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    FusionChartsModule,
+    ChartsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     OAuthModule.forRoot(),
@@ -90,6 +113,9 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
       { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
       { path: 'counter', component: CounterComponent },
       { path: 'sign-up', component: SignUpComponent, canActivate: [GuestGuard] },
+      { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },
+      { path: 'change-password', component: ChangePasswordComponent, canActivate: [GuestGuard] },
       {
         path: 'user',
         component: FetchDataComponent,
@@ -123,7 +149,11 @@ import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
     GuestGuard,
     AuthGuard,
     MessagingCenterService,
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    UserService,
+      ForgotPasswordService,
+      ChartsService,
+
   ],
   bootstrap: [AppComponent]
 })

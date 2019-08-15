@@ -2,6 +2,7 @@
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using DAL.Entities;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,8 +22,8 @@ namespace FinApp.Controllers
         [HttpPost("sendCode")]
         public async Task<IActionResult> SendCode(ForgotPasswordDTO forgotPasswordDto)
         {
-            await _confirmPasswordService.SendConfirmationCodeAsync(forgotPasswordDto);
-            return Ok();
+            var user = await _confirmPasswordService.SendConfirmationCodeAsync(forgotPasswordDto);
+            return Ok(user);
         }
 
         [HttpPost("validateCode")]

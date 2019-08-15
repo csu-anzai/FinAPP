@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user';
 import { tap, catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import { RecoverPassword } from '../models/recoverPassword';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +50,9 @@ export class UserService {
     return this.http.delete(url).pipe(
       catchError(this.handleError)
     );
+  }
+
+  recoverPassword(model: RecoverPassword) {
+    return this.http.put(this.baseUrl + '/recoverPassword', model);
   }
 }

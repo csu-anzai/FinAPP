@@ -19,7 +19,7 @@ namespace BLL.Services.ImplementedServices
         public static TimeSpan PasswordCodeTimeout { get; } = new TimeSpan(0, 15, 0);
 
         private readonly string _message = " is the code to reset your password.\n" +
-                                          $"The code is valid for {{PasswordCodeTimeoutMinutes}} minutes.";
+                                          $"The code is valid for {PasswordCodeTimeout.Minutes} minutes.";
 
         public PasswordConfirmationCodeService(IUnitOfWork unitOfWork, IUserRepository userRepository, IPasswordConfirmationCodeRepository codeRepository, IEmailSenderService emailService)
         {
@@ -42,18 +42,17 @@ namespace BLL.Services.ImplementedServices
                 throw new ApiException(HttpStatusCode.NotFound, "User doesn't exist.");
             }
 
-            var passwordConfirmCode = GeneratePasswordConfirmationCode();
-            user.PasswordConfirmationCode = new PasswordConfirmationCode
-            {
-                Code = passwordConfirmCode.ToString(),
-                CreateDate = DateTime.Now
-            };
+            var generatedCode = GeneratePasswordConfirmationCode();
+
+            user.PasswordConfirmationCode.Code = generatedCode.ToString();
+            user.PasswordConfirmationCode.CreateDate = DateTime.Now;
+
             await _unitOfWork.Complete();
         }
 
         public async Task<User> SendConfirmationCodeAsync(ForgotPasswordDTO forgotPasswordDto)
         {
-            var user = await _userRepository.SingleOrDefaultAsync(u => u.Email == forgotPasswordDto.Email);
+            var user = await _userRepository.SingleOrDefaultWithConfirmCodeAsync(u => u.Email == forgotPasswordDto.Email);
             if (user == null)
             {
                 throw new ApiException(HttpStatusCode.NotFound, "User with such email was not found.");

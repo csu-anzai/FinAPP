@@ -40,7 +40,8 @@ namespace BLL.Tests
             _unitOfWorkMock.Setup(s => s.Complete());
 
             var user = new User();
-            _userRepoMock.Setup(s => s.SingleOrDefaultAsync(It.IsAny<Expression<Func<User, bool>>>()))
+            user.PasswordConfirmationCode = new PasswordConfirmationCode();
+            _userRepoMock.Setup(s => s.SingleOrDefaultWithConfirmCodeAsync(It.IsAny<Expression<Func<User, bool>>>()))
                 .Returns(Task.FromResult(user));
 
             //Act

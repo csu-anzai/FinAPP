@@ -88,5 +88,13 @@ namespace FinApp.Controllers
 
             return Ok();
         }
+
+        [HttpPut("recoverPassword")]
+        public async Task<IActionResult> RecoverPassword(RecoverPasswordDTO recoverPasswordDto)
+        {
+            await _userService.RecoverPasswordAsync(recoverPasswordDto);
+            return Ok();
+        }
+
     }
 }

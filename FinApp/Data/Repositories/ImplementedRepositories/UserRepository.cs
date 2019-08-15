@@ -2,6 +2,8 @@
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories.ImplementedRepositories
@@ -22,6 +24,11 @@ namespace DAL.Repositories.ImplementedRepositories
                  .Include(u => u.Accounts).ThenInclude(a => a.Expenses).ThenInclude(e => e.ExpenseCategory)
                  .Include(u => u.Accounts).ThenInclude(a => a.Incomes).ThenInclude(i => i.IncomeCategory)
                 .FirstOrDefaultAsync(u => u.Id == id);
+        }
+
+        public async Task<User> SingleOrDefaultWithConfirmCodeAsync(Expression<Func<User, bool>> expression)
+        {
+            return await _entities.Include(e => e.PasswordConfirmationCode).SingleOrDefaultAsync(expression);
         }
     }
 }

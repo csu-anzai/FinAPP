@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
 
-        public IncomeCategoryDTO IncomeCategoryDTO { get; set; }
+        public IncomeCategoryDTO IncomeCategory { get; set; }
 
-        public TransactionDTO TransactionDTO { get; set; }
+        public TransactionDTO Transaction { get; set; }
     }
 }

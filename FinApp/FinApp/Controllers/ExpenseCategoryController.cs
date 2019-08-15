@@ -30,7 +30,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateExpenseCategory(int id, ExpenseCategoryDTO expenseCategoryDTO)
         {
             if (!ModelState.IsValid)
