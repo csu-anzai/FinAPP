@@ -5,11 +5,16 @@ namespace BLL.Models.Exceptions
 {
     public class ApiException : Exception
     {
-        public HttpStatusCode Code { get; }
-
-        public ApiException(HttpStatusCode code, string message) : base(message)
+        public HttpStatusCode Code { get; private set; }
+        public ApiException(HttpStatusCode statusCode)
         {
-            Code = code;
+            Code = statusCode;
+        }
+
+        public ApiException(HttpStatusCode statusCode, string message)
+            : base(message)
+        {
+            Code = statusCode;
         }
     }
 }

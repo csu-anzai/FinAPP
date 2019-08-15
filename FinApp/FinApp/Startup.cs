@@ -38,6 +38,7 @@ namespace FinApp
             }); 
 
             services.AddAutoMapper();
+            services.ConfigureAuthentication(Configuration);
             services.ConfigureAutoMapper();
             services.ConfigureDataAccessServices();
 

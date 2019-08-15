@@ -1,4 +1,4 @@
-//modules
+// Modules
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -8,12 +8,12 @@ import { AuthGuard } from './auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
-//components
+// Components
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
@@ -32,21 +32,27 @@ import { AccountComponent } from './components/user-main-page/page-content-wrapp
 import { SettingComponent } from './components/user-main-page/page-content-wrapper/sections/setting/setting.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
 
-
+import { FilterPipe } from './components/user-main-page/page-content-wrapper/sections/account/account-history/filter.pipe';
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
-
 
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
 import { AddAccountComponent } from './components/user-main-page/page-content-wrapper/sections/account/add-account/add-account.component';
 
-//services
+// Services
 import { AuthService } from './services/auth.service';
 import { GuestGuard } from './guest.guard';
 import { NotificationService } from './services/notification.service';
 import { MessagingCenterService } from './services/messaging-center.service';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { UserService } from './services/user.service';
+import { ForgotPasswordService } from './services/forgot.password.service';
+import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+
+import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
 
 import { FusionChartsModule } from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
@@ -80,6 +86,10 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     AccountInfoComponent,
     AdminPanelComponent,
     AddAccountComponent,
+    FilterPipe,
+    ForgotPasswordComponent,
+    ConfirmCodeComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -96,6 +106,9 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
       { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
       { path: 'counter', component: CounterComponent },
       { path: 'sign-up', component: SignUpComponent, canActivate: [GuestGuard] },
+      { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },
+      { path: 'change-password', component: ChangePasswordComponent, canActivate: [GuestGuard] },
       {
         path: 'user',
         component: FetchDataComponent,
@@ -118,6 +131,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
         closeButton: true,
         timeOut: 3000,
         easeTime: 1000,
+        maxOpened: 5
       }
     )
   ],
@@ -127,7 +141,10 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     NotificationService,
     GuestGuard,
     AuthGuard,
-    MessagingCenterService
+    MessagingCenterService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    UserService,
+    ForgotPasswordService
   ],
   bootstrap: [AppComponent]
 })

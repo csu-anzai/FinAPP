@@ -23,7 +23,6 @@ namespace DAL.Context
 
         public FinAppContext(DbContextOptions options) : base(options)
         {
-
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

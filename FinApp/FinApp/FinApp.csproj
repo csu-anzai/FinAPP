@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\components\user-main-page\page-content-wrapper\sections\account\account-history\filter.pipe.ts" />
     <None Remove="ClientApp\src\app\models\account.ts" />
     <None Remove="ClientApp\src\app\models\accountAdd.ts" />
     <None Remove="ClientApp\src\app\models\category.ts" />
@@ -46,6 +47,9 @@
     <None Remove="ClientApp\src\app\models\image.ts" />
     <None Remove="ClientApp\src\app\services\income-category.service.spec.ts" />
     <None Remove="ClientApp\src\app\services\income-category.service.ts" />
+    <None Remove="ClientApp\src\app\models\forgotPassword.ts" />
+    <None Remove="ClientApp\src\app\models\passwordConfirmationCode.ts" />
+    <None Remove="ClientApp\src\app\models\recoverPassword.ts" />
     <None Remove="ClientApp\src\app\welcome-components\welcome-list\welcome-list.component.ts" />
     <None Remove="ClientApp\src\app\welcome-components\welcome-header\welcome-header.component.ts" />
     <None Remove="ClientApp\src\app\welcome-components\welcome-benefits\welcome-benefits.component.ts" />
@@ -58,11 +62,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\components\user-main-page\page-content-wrapper\sections\account\account-history\filter.pipe.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\account.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\accountAdd.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\category.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\currency.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\image.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\forgotPassword.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\passwordConfirmationCode.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\recoverPassword.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-list\welcome-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-header\welcome-header.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-benefits\welcome-benefits.component.ts" />

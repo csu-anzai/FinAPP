@@ -2,7 +2,8 @@
 using BLL.Services.IServices;
 using DAL.DTOs;
 using DAL.Entities;
-using DAL.Repositories.IRepositories;
+using FinApp.Attributes;
+using DAL.Repositories.IRepositories; 
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -39,6 +40,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -51,6 +53,7 @@ namespace FinApp.Controllers
             return Ok(user);
         }
 
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpGet]
         public async Task<IActionResult> GetUsersAsync()
         {
@@ -62,6 +65,7 @@ namespace FinApp.Controllers
             return Ok(users);
         }
 
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
         {
@@ -76,6 +80,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -88,5 +93,13 @@ namespace FinApp.Controllers
 
             return Ok();
         }
+
+        [HttpPut("recoverPassword")]
+        public async Task<IActionResult> RecoverPassword(RecoverPasswordDTO recoverPasswordDto)
+        {
+            await _userService.RecoverPasswordAsync(recoverPasswordDto);
+            return Ok();
+        }
+
     }
 }

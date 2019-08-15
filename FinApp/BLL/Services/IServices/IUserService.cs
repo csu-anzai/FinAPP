@@ -12,5 +12,6 @@ namespace BLL.Services.IServices
         Task<IEnumerable<UserDTO>> GetAllAsync();
         Task<User> UpdateAsync(UserDTO userDTO);
         Task DeleteAsync(UserDTO user);
+        Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto);
     }
 }
