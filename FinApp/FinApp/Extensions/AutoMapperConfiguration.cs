@@ -30,7 +30,7 @@ namespace FinApp.Extensions
                     .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.FamilyName));
 
                 c.CreateMap<UserDTO, User>().ReverseMap()
-                    .ForMember(dest => dest.AccountsDTO, act => act.MapFrom(src => src.Accounts));
+                    .ForMember(dest => dest.Accounts, act => act.MapFrom(src => src.Accounts));
 
                 c.CreateMap<Transaction, TransactionDTO>().ReverseMap();
 
@@ -39,8 +39,8 @@ namespace FinApp.Extensions
                 c.CreateMap<ExpenseCategoryDTO, ExpenseCategory>().ReverseMap();
 
                 c.CreateMap<IncomeDTO, Income>().ReverseMap()
-                   .ForMember(dest => dest.IncomeCategoryDTO, act => act.MapFrom(src => src.IncomeCategory))
-                   .ForMember(dest => dest.TransactionDTO, act => act.MapFrom(src => src.Transaction));
+                   .ForMember(dest => dest.IncomeCategory, act => act.MapFrom(src => src.IncomeCategory))
+                   .ForMember(dest => dest.Transaction, act => act.MapFrom(src => src.Transaction));
 
             }).CreateMapper());
         }

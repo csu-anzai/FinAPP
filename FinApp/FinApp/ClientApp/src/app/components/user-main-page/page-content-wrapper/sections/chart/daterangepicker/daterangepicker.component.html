@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-start">
+  <div class="col-md-3">
+    <input type="text"
+           id="daterangepicker"
+           placeholder="Choose a date range:"
+           class="form-control"
+           bsDaterangepicker [bsConfig] = "datePickerConfig"
+           [(ngModel)]="selectedDates"
+           >
+           <select id="soflow-color" (change)="onChange($event.target.value)">
+            <option *ngFor = "let value of dataRanges">{{value}}</option>
+          </select>
+    </div>
+</div>
