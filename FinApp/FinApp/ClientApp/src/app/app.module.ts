@@ -58,6 +58,13 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
 import { ChartsService} from './services/charts.service';
 
+import { FusionChartsModule } from 'angular-fusioncharts';
+import * as FusionCharts from 'fusioncharts';
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+
+FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,6 +101,7 @@ import { ChartsService} from './services/charts.service';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    FusionChartsModule,
     ChartsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

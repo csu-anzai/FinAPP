@@ -5,9 +5,8 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { NotificationService } from '../../services/notification.service';
-import { async } from '@angular/core/testing';
-import { P } from '@angular/core/src/render3';
 
+import * as FusionCharts from 'fusioncharts';
 
 @Component({
   selector: 'app-admin-panel',
@@ -26,7 +25,52 @@ export class AdminPanelComponent implements OnInit {
 
   ready: boolean;
 
+  dataSource: Object;
+  chartConfig: Object;
+
   constructor(private categoryService: CategoryService, public userService: UserService, fb: FormBuilder, private alertService: NotificationService) {
+    this.chartConfig = {
+      width: '700',
+      height: '400',
+      type: 'column3d',
+      dataFormat: 'json',
+    };
+
+    this.dataSource = {
+      "chart": {
+        "caption": "Title",
+        "subCaption": "SubTitle",
+        "xAxisName": "Month",
+        "yAxisName": "Cash ($)",
+        "numberSuffix": "K",
+        "theme": "fusion",
+      },
+      "data": [{
+        "label": "Venezuela",
+        "value": "290"
+      }, {
+        "label": "Saudi",
+        "value": "260"
+      }, {
+        "label": "Canada",
+        "value": "180"
+      }, {
+        "label": "Iran",
+        "value": "140"
+      }, {
+        "label": "Russia",
+        "value": "115"
+      }, {
+        "label": "UAE",
+        "value": "100"
+      }, {
+        "label": "US",
+        "value": "30"
+      }, {
+        "label": "China",
+        "value": "30"
+      }]
+    };
 
     this.categoryForm = fb.group({
       'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
@@ -70,6 +114,12 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+  editCategory(category: Category) {
+    this.categoryService.updateCategory(category, false).subscribe(() => {
+      this.loadCategories();
+      this.alertService.successMsg('Category was updated');
+    });;
+  }
 
   deleteUser(id: number) {
     this.userService.deleteUser(id).subscribe(() => {
