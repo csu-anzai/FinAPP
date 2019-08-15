@@ -1,3 +1,5 @@
+import {Account} from './account'
+
 export class User {
     id: number;
     name: string;
@@ -6,5 +8,6 @@ export class User {
     password: string;
     birthDate: Date;
     roleId:number;
+    accounts : Account[];
     
 }

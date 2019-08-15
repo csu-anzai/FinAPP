@@ -31,6 +31,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this._userService.getUser(this._authService.DecodedToken.sub).subscribe(res => {
+      //console.log(res)
       this.user = res;
       this.profileForm.get('Name').setValue(this.user.name);
       this.profileForm.get('Surname').setValue(this.user.surname);

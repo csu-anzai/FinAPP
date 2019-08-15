@@ -12,6 +12,6 @@ namespace DAL.DTOs
         public DateTime BirthDate { get; set; }
         public int RoleId { get; set; }
 
-        public ICollection<AccountDTO> AccountsDTO { get; set; }
+        public ICollection<AccountDTO> Accounts { get; set; }
     }
 }

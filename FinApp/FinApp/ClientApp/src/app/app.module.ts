@@ -50,6 +50,7 @@ import { AuthService } from './services/auth.service';
 import { GuestGuard } from './guest.guard';
 import { NotificationService } from './services/notification.service';
 import { MessagingCenterService } from './services/messaging-center.service';
+import { ChartsService} from './services/charts.service';
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import { MessagingCenterService } from './services/messaging-center.service';
     NotificationService,
     GuestGuard,
     AuthGuard,
-    MessagingCenterService
+    MessagingCenterService,
+    ChartsService,
   ],
   bootstrap: [AppComponent]
 })
