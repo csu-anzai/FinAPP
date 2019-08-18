@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BLL.Models.Exceptions;
+﻿using BLL.Models.Exceptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Serilog;
+using System;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FinApp.Middlewares
 {
@@ -31,10 +28,10 @@ namespace FinApp.Middlewares
             catch (ApiException e)
             {
                 logger.LogDebug(e, "API Exception");
-                httpContext.Response.StatusCode = (int) e.Code;
+                httpContext.Response.StatusCode = (int)e.Code;
                 if (!String.IsNullOrEmpty(e.Message))
                 {
-                    var body = JsonConvert.SerializeObject(new {Error = e.Message});
+                    var body = JsonConvert.SerializeObject(new { Error = e.Message });
                     var bytes = Encoding.UTF8.GetBytes(body);
                     await httpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
                 }
@@ -44,7 +41,7 @@ namespace FinApp.Middlewares
             {
                 logger.LogError(e, "Unhandled exception");
                 httpContext.Response.StatusCode = 500;
-      
+
                 var body = JsonConvert.SerializeObject(new { e.Message });
                 var bytes = Encoding.UTF8.GetBytes(body);
                 await httpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);

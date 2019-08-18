@@ -33,20 +33,19 @@ export class LoginPageComponent {
         this.alertService.errorMsg(error.message);
       },
       () => {
-        this.authService.setLoggedIn(true);
         this.alertService.successMsg('Logged in successfuly');
         this.router.navigate(['user/profile']);
       });
   }
 
   googleSignIn() {
-    this.authService.isSelectAccount();
+    this.authService.organizeGoogleAuthFlow();
   }
 
   get f() { return this.signInForm.controls; }
 
   loggedIn() {
-    return this.authService.loggedIn();
+    return this.authService.isLoggedIn;
   }
 
   public getClaims() {
