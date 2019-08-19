@@ -55,21 +55,37 @@ export class AuthService implements OnInit {
   }
 
   login(model: any) {
-    try {
-      return this.http.post(this.baseUrl + this.signInParameter + 'signin', model)
-        .pipe(
-          map((response: any) => {
+    return this.http.post(this.baseUrl + this.signInParameter + 'signin', model)
+      .pipe(
+        map((response: any) => {
+          if (response.token) {
             const user = response;
             if (user) {
               this.setLoggedIn(true);
               this.cookieService.set('token', user.token, null, null, null, true);
               this.decodedToken = this.jwtHelper.decodeToken(user.token);
             }
-          })
-        );
-    } catch (error) {
-      this.alertService.errorMsg(error.message);
-    }
+          } else if (response.error) {
+            throw new Error(response.error);
+          }
+        })
+      );
+  }
+
+  register(model: any) {
+    return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model)
+      .pipe(
+        tap(
+          (response: any) => {
+            if (response && response.error) {
+              throw new Error(response.error);
+            }
+          },
+          error => {
+            this.errorHandler.handleError(error);
+            return error;
+          }
+        ));
   }
 
   // in token service
@@ -86,7 +102,7 @@ export class AuthService implements OnInit {
     }
   }
 
-   // in token service
+  // in token service
   getDataFromTokenId(tokenId: string): any {
     return this.http.post(this.baseUrl + this.signInParameter + this.withGoogle, { 'idToken': tokenId })
       .toPromise()
@@ -129,6 +145,8 @@ export class AuthService implements OnInit {
       .pipe(
         tap((data: any) => {
           // Update token
+          this.cookieService.delete('token', '/');
+          this.cookieService.delete('token', '/user');
           this.cookieService.set('token', data.token);
           return data.token;
         }),
@@ -136,27 +154,13 @@ export class AuthService implements OnInit {
       );
   }
 
-
-  register(model: any) {
-    try {
-      return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model)
-        .pipe(tap(
-          data => data,
-          error => {
-            this.errorHandler.handleError(error);
-            return error;
-          }
-        ));
-    } catch (error) {
-      this.alertService.errorMsg(error.message);
-    }
-  }
-
- loggedIn() {
+  loggedIn() {
     const isAvailable = this.cookieService.check('token');
     if (isAvailable) {
       const token = this.cookieService.get('token');
-      return !this.jwtHelper.isTokenExpired(token);
+      const isLoggedIn = !this.jwtHelper.isTokenExpired(token);
+      this.loggedInStatus = isLoggedIn;
+      return isLoggedIn;
     }
     return false;
   }

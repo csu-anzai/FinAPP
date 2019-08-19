@@ -1,9 +1,9 @@
-﻿using AutoMapper;
-using BLL.DTOs;
+﻿using BLL.DTOs;
+using BLL.Models.Exceptions;
 using BLL.Services.IServices;
-using DAL.Repositories.IRepositories;
 using FinApp.Attributes;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace FinApp.Controllers
@@ -13,16 +13,12 @@ namespace FinApp.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private readonly IMapper _mapper;
         private readonly IUserService _userService;
-        IUserRepository userRepository { get; set; }
 
-        public UserController(IUserService userService, IMapper mapper, IUserRepository userRepository)
+        public UserController(IUserService userService)
         {
             _userService = userService;
-            _mapper = mapper; this.userRepository = userRepository;
         }
-
 
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(UserRegistrationDTO userDto)
@@ -30,7 +26,7 @@ namespace FinApp.Controllers
             var newUser = await _userService.CreateUserAsync(userDto);
 
             if (newUser == null)
-                return BadRequest(new { message = "User already exists" });
+                throw new ValidationExeption(HttpStatusCode.Forbidden, "User already exists");
 
             return Ok();
         }

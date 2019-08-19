@@ -13,7 +13,7 @@ export class GuestGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        if (this.auth.isLoggedIn) {
+        if (this.auth.loggedIn()) {
           this.router.navigate(['/user/profile']);
       return false;
     }

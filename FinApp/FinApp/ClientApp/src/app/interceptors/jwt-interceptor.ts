@@ -11,6 +11,7 @@ import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/services/auth.service';
 import { catchError, switchMap, filter, take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -19,6 +20,7 @@ export class JwtInterceptor implements HttpInterceptor {
     private isRefreshing = false;
 
     constructor(private http: HttpClient,
+        private router: Router,
         public authService: AuthService,
         private cookieService: CookieService) { }
 
@@ -40,6 +42,8 @@ export class JwtInterceptor implements HttpInterceptor {
                         return throwError(error);
                     }
                 }));
+            } else {
+                this.router.navigate(['login-page']);
             }
         }
 
