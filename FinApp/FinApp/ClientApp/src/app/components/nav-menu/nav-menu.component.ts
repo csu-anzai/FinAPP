@@ -37,7 +37,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   isloggedIn() {
-    return this.authService.isLoggedIn;
+    return this.authService.loggedIn();
   }
 
   onLogout() {

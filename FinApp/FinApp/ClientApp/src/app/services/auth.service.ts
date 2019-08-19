@@ -154,15 +154,19 @@ export class AuthService implements OnInit {
       );
   }
 
-  loggedIn() {
-    const isAvailable = this.cookieService.check('token');
-    if (isAvailable) {
+  isTokenActive() {
+    const isTokenAvailable = this.loggedIn();
+    if (isTokenAvailable) {
       const token = this.cookieService.get('token');
       const isLoggedIn = !this.jwtHelper.isTokenExpired(token);
       this.loggedInStatus = isLoggedIn;
       return isLoggedIn;
     }
     return false;
+  }
+
+  loggedIn() {
+    return this.cookieService.check('token');
   }
 
 
