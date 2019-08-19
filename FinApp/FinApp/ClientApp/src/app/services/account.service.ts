@@ -14,7 +14,7 @@ import { ErrorHandlingService } from './error-handling.service';
 })
 export class AccountService {
 
-  url = 'https://localhost:44397/api/account/';
+  url = 'https://localhost:44397/api/accounts/';
 
   constructor(public http: HttpClient,
     private authService: AuthService,

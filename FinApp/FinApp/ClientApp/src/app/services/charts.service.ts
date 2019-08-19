@@ -14,7 +14,7 @@ import { AuthService } from './auth.service';
 })
 export class ChartsService {
 
-  url = 'https://localhost:44397/api/currency/';
+  url = 'https://localhost:44397/api/currencies/';
   user: User = new User();
   accounts : Account[];
 

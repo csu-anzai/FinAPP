@@ -7,11 +7,11 @@ namespace FinApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TokenController : Controller
+    public class TokensController : Controller
     {
         private readonly JwtManager _jwtManager;
 
-        public TokenController(JwtManager jwtManager)
+        public TokensController(JwtManager jwtManager)
         {
             _jwtManager = jwtManager;
         }
