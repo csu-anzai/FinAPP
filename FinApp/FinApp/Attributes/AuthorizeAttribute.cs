@@ -44,7 +44,7 @@ namespace FinApp.Attributes
                     var newRefreshToken = _jwtManager.GenerateRefreshToken(userId, userEmail, userRole);
                     await _jwtManager.UpdateAsync(userId, newRefreshToken);
                 }
-                throw new ApiException(HttpStatusCode.Unauthorized);
+                throw new ValidationExeption(HttpStatusCode.Unauthorized, nameof(HttpStatusCode.Unauthorized));
             }
         }
     }

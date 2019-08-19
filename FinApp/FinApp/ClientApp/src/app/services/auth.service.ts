@@ -62,7 +62,7 @@ export class AuthService implements OnInit {
             const user = response;
             if (user) {
               this.setLoggedIn(true);
-              this.cookieService.set('token', user.token, null, null, null, true);
+              this.cookieService.set('token', user.token, null, '/', null, true);
               this.decodedToken = this.jwtHelper.decodeToken(user.token);
             }
           } else if (response.error) {
@@ -110,7 +110,7 @@ export class AuthService implements OnInit {
         (response: any) => {
           // User already exists
           if (response.token) {
-            this.cookieService.set('token', response.token, null, null, null, true);
+            this.cookieService.set('token', response.token, null, '/', null, true);
 
             this.cookieService.set('idToken', tokenId, null, null, null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
@@ -147,7 +147,7 @@ export class AuthService implements OnInit {
           // Update token
           this.cookieService.delete('token', '/');
           this.cookieService.delete('token', '/user');
-          this.cookieService.set('token', data.token);
+          this.cookieService.set('token', data.token, null, '/', null, true);
           return data.token;
         }),
         catchError(err => throwError(err))
@@ -169,7 +169,7 @@ export class AuthService implements OnInit {
     return this.cookieService.check('token');
   }
 
-
+  // Don't touch it - so important !!!!
   // Check if access token expires
   // loggedIn() {
   //   const isAvailable = this.cookieService.check('token');

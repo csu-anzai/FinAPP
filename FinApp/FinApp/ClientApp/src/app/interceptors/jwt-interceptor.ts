@@ -5,12 +5,12 @@ import {
     HttpEvent,
     HttpInterceptor,
     HttpClient,
-    HttpErrorResponse
+    HttpResponse
 } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/services/auth.service';
-import { catchError, switchMap, filter, take } from 'rxjs/operators';
+import { switchMap, filter, take, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -35,13 +35,19 @@ export class JwtInterceptor implements HttpInterceptor {
             });
 
             if (this.cookieService.check('token')) {
-                return next.handle(this.addToken(request, this.cookieService.get('token'))).pipe(catchError(error => {
-                    if (error instanceof HttpErrorResponse && error.status === 401) {
-                        return this.handle401Error(request, next);
-                    } else {
-                        return throwError(error);
-                    }
-                }));
+                return next.handle(this.addToken(request, this.cookieService.get('token'))).pipe(
+                    tap((event: any) => {
+                        if (event instanceof HttpResponse) {
+                            if (event.body.code === 401 && event.body.error === 'Unauthorized') {
+                                this.handle401Error(request, next).subscribe(
+                                    () => {
+                                        return event;
+                                    }
+                                );
+                            }
+                        }
+                        return event;
+                    }));
             } else {
                 this.router.navigate(['login-page']);
             }
