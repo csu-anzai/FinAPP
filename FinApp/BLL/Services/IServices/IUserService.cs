@@ -10,7 +10,7 @@ namespace BLL.Services.IServices
         Task<User> CreateUserAsync(UserRegistrationDTO userDTO);
         Task<UserDTO> GetAsync(int id);
         Task<IEnumerable<UserDTO>> GetAllAsync();
-        Task<User> UpdateAsync(UserDTO userDTO);
+        Task<User> UpdateAsync(ProfileDTO profileDTO);
         Task DeleteAsync(UserDTO user);
         Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto);
     }

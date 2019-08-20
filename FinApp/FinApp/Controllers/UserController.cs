@@ -60,14 +60,14 @@ namespace FinApp.Controllers
             return Ok(users);
         }
 
-        [ServiceFilter(typeof(AuthorizeAttribute))]
+        
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
+        public async Task<IActionResult> UpdateUser(int id, ProfileDTO profileDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var user = await _userService.UpdateAsync(userDTO);
+            var user = await _userService.UpdateAsync(profileDTO);
 
             if (user == null)
                 return BadRequest(new { message = "User Id is incorrect" });

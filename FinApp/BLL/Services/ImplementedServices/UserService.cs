@@ -58,14 +58,14 @@ namespace BLL.Services.ImplementedServices
             return user;
         }
 
-        public async Task<User> UpdateAsync(UserDTO user)
+        public async Task<User> UpdateAsync(ProfileDTO profileDTO)
         {
-            var upToDateUser = await _userRepository.SingleOrDefaultAsync(u => u.Id == user.Id);
+            var upToDateUser = await _userRepository.SingleOrDefaultAsync(u => u.Id == profileDTO.Id);
 
-            if (user == null)
+            if (upToDateUser == null)
                 return null;
 
-            _mapper.Map(user, upToDateUser);
+            _mapper.Map(profileDTO, upToDateUser);
 
             await _unitOfWork.Complete();
 

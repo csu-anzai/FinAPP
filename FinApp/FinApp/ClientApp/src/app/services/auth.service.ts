@@ -114,7 +114,6 @@ export class AuthService implements OnInit {
   }
 
   refreshToken() {
-    console.log('zaishlo');
     return this.http.post('https://localhost:44397/api/token', { accessToken: this.cookieService.get('token') });
   }
 

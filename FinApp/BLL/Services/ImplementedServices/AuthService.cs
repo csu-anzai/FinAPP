@@ -39,12 +39,9 @@ namespace BLL.Services.ImplementedServices
 
             var token = await GenerateNewTokensAsync(existedUser);
 
-            var refreshToken = new Token();
-            refreshToken.RefreshToken = token.RefreshToken;
-            refreshToken.User = existedUser;
-            refreshToken.User.Id = existedUser.Id;
+            var refreshToken = SetUpRefreshToken(existedUser, token.RefreshToken);
 
-            await _jwtManager.UpdateAsync(existedUser.Id, refreshToken.RefreshToken);
+            await _jwtManager.UpdateAsync(existedUser.Id, refreshToken);
 
             return token;
         }
@@ -56,8 +53,7 @@ namespace BLL.Services.ImplementedServices
             if (existedUser == null)
                 return null;
 
-            var role = await _roleRepository.GetAsync(existedUser.RoleId);
-            var token = _jwtManager.GenerateToken(existedUser.Id, email, role?.Name);
+            var token = await GenerateNewTokensAsync(existedUser);
 
             var refreshToken = SetUpRefreshToken(existedUser, token.RefreshToken);
 

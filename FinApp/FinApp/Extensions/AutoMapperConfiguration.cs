@@ -42,6 +42,8 @@ namespace FinApp.Extensions
                    .ForMember(dest => dest.IncomeCategory, act => act.MapFrom(src => src.IncomeCategory))
                    .ForMember(dest => dest.Transaction, act => act.MapFrom(src => src.Transaction));
 
+                c.CreateMap<ProfileDTO, User>().ReverseMap();
+
             }).CreateMapper());
         }
     }

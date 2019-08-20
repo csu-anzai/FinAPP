@@ -37,7 +37,7 @@ export class AccountService {
       .pipe(tap( // Log the result or error
         data => {
           console.log(data);
-          this.alertService.successMsg(data.toString());
+          this.alertService.successMsg("Account added successful");
           return data;
         },
         error => { this.errorHandler.handleError(error); }

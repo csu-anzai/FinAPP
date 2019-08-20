@@ -121,13 +121,13 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
         component: FetchDataComponent,
         canActivate: [AuthGuard],
         children: [
-          { path: 'profile', component: ProfileComponent },
-          { path: 'charts', component: ChartComponent },
-          { path: 'accounts', component: AccountComponent },
-          { path: 'settings', component: SettingComponent },
-          { path: 'accounts/:id', component: AccountComponent },
-          { path: 'settings', component: SettingComponent },
-          { path: 'adminPanel', component: AdminPanelComponent }
+          { path: 'profile', component: ProfileComponent,canActivate: [AuthGuard] },
+          { path: 'charts', component: ChartComponent,canActivate: [AuthGuard] },
+          { path: 'accounts', component: AccountComponent,canActivate: [AuthGuard] },
+          { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
+          { path: 'accounts/:id', component: AccountComponent,canActivate: [AuthGuard] },
+          { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
+          { path: 'adminPanel', component: AdminPanelComponent,canActivate: [AuthGuard] }
         ]
       }
     ]),
