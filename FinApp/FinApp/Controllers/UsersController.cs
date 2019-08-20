@@ -11,13 +11,13 @@ namespace FinApp.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
         IUserRepository userRepository { get; set; }
 
-        public UserController(IUserService userService, IMapper mapper, IUserRepository userRepository)
+        public UsersController(IUserService userService, IMapper mapper, IUserRepository userRepository)
         {
             _userService = userService;
             _mapper = mapper; this.userRepository = userRepository;

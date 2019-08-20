@@ -18,7 +18,7 @@ export class AuthService implements OnInit {
 
   baseUrl = 'https://localhost:44397/api/';
   signInParameter = 'auth/';
-  signUpParameter = 'user/';
+  signUpParameter = 'users/';
   withGoogle = 'signingoogle/';
 
   jwtHelper = new JwtHelperService();
@@ -114,7 +114,12 @@ export class AuthService implements OnInit {
   }
 
   refreshToken() {
+<<<<<<< HEAD
     return this.http.post('https://localhost:44397/api/token', { accessToken: this.cookieService.get('token') });
+=======
+    console.log('zaishlo');
+    return this.http.post('https://localhost:44397/api/tokens', { accessToken: this.cookieService.get('token') });
+>>>>>>> aca7099b2eb65d89628c297ce2423260042309ea
   }
 
 

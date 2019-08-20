@@ -10,7 +10,7 @@ import { ErrorHandlingService } from './error-handling.service';
 })
 export class ImageService {
 
-  url = 'https://localhost:44397/api/image/';
+  url = 'https://localhost:44397/api/images/';
 
   constructor(public http: HttpClient,
      private errorHandler: ErrorHandlingService) { }

@@ -9,12 +9,12 @@ namespace FinApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ExpenseCategoryController : Controller
+    public class ExpenseCategoriesController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IExpenseCategoryService _expenseCategoryService;
 
-        public ExpenseCategoryController(IMapper mapper, IExpenseCategoryService expenseCategoryService)
+        public ExpenseCategoriesController(IMapper mapper, IExpenseCategoryService expenseCategoryService)
         {
             _mapper = mapper;
             _expenseCategoryService = expenseCategoryService;

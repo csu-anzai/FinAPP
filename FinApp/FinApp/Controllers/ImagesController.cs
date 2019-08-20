@@ -9,11 +9,11 @@ namespace FinApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ImageController : ControllerBase
+    public class ImagesController : ControllerBase
     {
         private readonly IImageService imageService;
 
-        public ImageController(IImageService imageService)
+        public ImagesController(IImageService imageService)
         {
             this.imageService = imageService;
         }
