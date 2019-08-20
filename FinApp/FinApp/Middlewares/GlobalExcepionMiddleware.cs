@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BLL.Models.Exceptions;
-using Microsoft.AspNetCore.Builder;
+﻿using BLL.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Serilog;
+using System;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FinApp.Middlewares
 {
@@ -30,35 +27,34 @@ namespace FinApp.Middlewares
             }
             catch (ApiException e)
             {
-                logger.LogDebug(e, "API Exception");
-                httpContext.Response.StatusCode = (int) e.Code;
-                if (!String.IsNullOrEmpty(e.Message))
-                {
-                    var body = JsonConvert.SerializeObject(new {Error = e.Message});
-                    var bytes = Encoding.UTF8.GetBytes(body);
-                    await httpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
-                }
-
+                logger.LogDebug(e, nameof(ApiException));
+                await FillUpExceptionMessage(e, new { error = e.Message });
+            }
+            catch (ValidationExeption e)
+            {
+                await FillUpExceptionMessage(e, new { code = e.ValidationErrorCode, error = e.Message, parameter = e.Parameter });
             }
             catch (Exception e)
             {
                 logger.LogError(e, "Unhandled exception");
-                httpContext.Response.StatusCode = 500;
-      
-                var body = JsonConvert.SerializeObject(new { e.Message });
-                var bytes = Encoding.UTF8.GetBytes(body);
-                await httpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+
+                var customException = e as CustomExeption;
+                customException.Code = HttpStatusCode.InternalServerError;
+
+                await FillUpExceptionMessage(customException, new { e.Message });
             }
 
-        }
-    }
+            async Task FillUpExceptionMessage(CustomExeption exception, object jsonObj)
+            {
+                httpContext.Response.StatusCode = (int)exception.Code;
 
-    // Extension method used to add the middleware to the HTTP request pipeline.
-    public static class GlobalExcepionMiddlewareExtensions
-    {
-        public static IApplicationBuilder UseGlobalExcepionMiddleware(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<GlobalExcepionMiddleware>();
+                if (!String.IsNullOrEmpty(exception.Message))
+                {
+                    var body = JsonConvert.SerializeObject(jsonObj);
+                    var bytes = Encoding.UTF8.GetBytes(body);
+                    await httpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+                }
+            }
         }
     }
 }

@@ -28,10 +28,7 @@ namespace BLL.Security.Jwt
         {
             var token = new JwtSecurityToken(accesToken);
 
-            if (DateTime.Now > token.ValidTo)
-                return false;
-            else
-                return true;
+            return DateTime.UtcNow > token.ValidTo;
         }
 
         public List<string> GetClaims(string token)
