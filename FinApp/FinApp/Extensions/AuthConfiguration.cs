@@ -6,9 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +23,7 @@ namespace FinApp.Extensions
             {
                 options.Issuer = jwtAppSettingOptions[nameof(JwtOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtOptions.Audience)];
-                options.AccessExpirationMins = int.Parse(jwtAppSettingOptions["Lifetime"]);               
+                options.AccessExpirationMins = int.Parse(jwtAppSettingOptions["Lifetime"]);
                 options.RefreshExpirationMins = 60 * 24 * 7;
 
                 options.SigningCredentials = new SigningCredentials(

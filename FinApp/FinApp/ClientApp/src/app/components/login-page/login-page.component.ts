@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -18,8 +18,8 @@ export class LoginPageComponent {
   constructor(private authService: AuthService,
     private router: Router,
     private oauthService: OAuthService,
-    fb: FormBuilder,
-    private alertService: NotificationService) {
+    private alertService: NotificationService,
+    fb: FormBuilder) {
     this.signInForm = fb.group({
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
       'Password': new FormControl('', Validators.required),
@@ -33,20 +33,19 @@ export class LoginPageComponent {
         this.alertService.errorMsg(error.message);
       },
       () => {
-        this.authService.setLoggedIn(true);
         this.alertService.successMsg('Logged in successfuly');
         this.router.navigate(['user/profile']);
       });
   }
 
   googleSignIn() {
-    this.authService.isSelectAccount();
+    this.authService.organizeGoogleAuthFlow();
   }
 
   get f() { return this.signInForm.controls; }
 
   loggedIn() {
-    return this.authService.loggedIn();
+    return this.authService.isLoggedIn;
   }
 
   public getClaims() {

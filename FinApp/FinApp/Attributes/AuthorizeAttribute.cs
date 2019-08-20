@@ -3,7 +3,6 @@ using BLL.Security.Jwt;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -36,7 +35,7 @@ namespace FinApp.Attributes
             string userEmail = claims[0];
             string userRole = claims[1];
 
-            _refreshToken = await _tokenRepository.GetTokenByUserId(userId);            
+            _refreshToken = await _tokenRepository.GetTokenByUserId(userId);
 
             if (_jwtManager.IsExpired(accessToken))
             {
@@ -45,7 +44,7 @@ namespace FinApp.Attributes
                     var newRefreshToken = _jwtManager.GenerateRefreshToken(userId, userEmail, userRole);
                     await _jwtManager.UpdateAsync(userId, newRefreshToken);
                 }
-                throw new ApiException(HttpStatusCode.Unauthorized);
+                throw new ValidationExeption(HttpStatusCode.Unauthorized, nameof(HttpStatusCode.Unauthorized));
             }
         }
     }

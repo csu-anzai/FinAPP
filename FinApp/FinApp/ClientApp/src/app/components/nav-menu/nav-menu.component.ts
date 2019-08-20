@@ -25,7 +25,7 @@ export class NavMenuComponent implements OnInit {
     private alertService: NotificationService) { }
 
   ngOnInit() {
-    this.loggedIn();
+    this.isloggedIn();
   }
 
   collapse() {
@@ -36,16 +36,11 @@ export class NavMenuComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
-  loggedIn() {
+  isloggedIn() {
     return this.authService.loggedIn();
   }
 
   onLogout() {
-    console.log('onLogout()');
-    this.authService.setLoggedIn(false);
-    // this.oauthService.logOut(true);
-    this.cookieService.delete('token', '/');
-    this.router.navigate(['']);
-    this.alertService.infoMsg('Logged Out');
+    this.authService.logOut();
   }
 }

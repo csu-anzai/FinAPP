@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { AuthService } from 'src/app/services/auth.service';
 import { MessagingCenterService } from '../../services/messaging-center.service';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationService } from 'src/app/services/notification.service';
 @Component({
   selector: 'sign-up-component',
   templateUrl: './sign-up.component.html',
@@ -17,6 +18,7 @@ export class SignUpComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private message: MessagingCenterService,
+    private alertService: NotificationService,
     private parserFormatter: NgbDateParserFormatter,
     fb: FormBuilder) {
     this.signUpForm = fb.group({
@@ -55,11 +57,11 @@ export class SignUpComponent implements OnInit {
         Email: this.signUpForm.controls['Email'].value,
         Password: this.signUpForm.controls['Password'].value,
       };
-      this.authService.register(this.user).subscribe(() => {
-        this.router.navigate(['login-page']);
-      },
-        error => {
-        });
+      this.authService.register(this.user).subscribe(
+        next => {},
+        error => this.alertService.errorMsg(error),
+        () => this.router.navigate(['login-page'])
+      );
     } else {
       for (let i in this.signUpForm.controls)
         this.signUpForm.controls[i].markAsTouched();

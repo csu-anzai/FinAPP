@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using BLL.Models.Exceptions;
 using BLL.Services.IServices;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -29,7 +31,7 @@ namespace FinApp.Controllers
             var token = await _authService.SignInAsync(userDto);
 
             if (token == null)
-                return BadRequest(new { message = "Credentials are invalid" });
+                throw new ValidationExeption(HttpStatusCode.BadRequest, "Credentials are invalid");
 
             return Ok(new { token = token.AccessToken });
         }

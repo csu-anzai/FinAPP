@@ -55,7 +55,7 @@ import { ForgotPasswordService } from './services/forgot.password.service';
 import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
-import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
+import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ChartsService} from './services/charts.service';
 
 import { FusionChartsModule } from 'angular-fusioncharts';
