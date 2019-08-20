@@ -40,6 +40,7 @@ export class ProfileComponent implements OnInit {
       this.profileForm.get('Email').setValue(this.user.email);
     });
   }
+  
 
   updateProfile() {
     if (this.profileForm.valid) {
