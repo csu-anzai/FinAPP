@@ -1,0 +1,23 @@
+{
+    "WelcomeMessage": "Herzlich willkommen",
+    "LogoutLink": "Ausloggen",
+    "LogInLink": "Einloggen",
+    "RegisterLink":"Registrieren",
+
+    "ProfileLabel": "Profil",
+    "AccountsLabel": "Konten",
+    "ChartsLabel": "Diagramme",
+    "SettingsLabel": "Einstellungen",
+    "AdminPanelLabel": "Administrationsmenü",
+    "FAQLabel": "FAQ",
+    
+    "UserNameLabel": "Name",
+    "EmailLabel": "Email",
+    "BirthDateLabel": "Geburtstag",
+    "DeleteUserLabel":"Benutzer löschen",
+    "DeleteLabel": "Löschen",
+    
+    "EnglishLabel": "Englisch",
+    "GermanLabel": "Deutsche",
+    "FrenchLabel": "Französisch"
+}

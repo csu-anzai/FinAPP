@@ -1,0 +1,23 @@
+{
+    "WelcomeMessage": "Bienvenu",
+    "LogoutLink": "Connectez - Out",
+    "LogInLink": "S'identifier",
+    "RegisterLink":"Registre",
+
+    "ProfileLabel": "Profil",
+    "AccountsLabel": "Comptes",
+    "ChartsLabel": "Graphiques",
+    "SettingsLabel": "Réglages",
+    "AdminPanelLabel": "Panneau d'administration",
+    "FAQLabel": "FAQ",
+    
+    "UserNameLabel": "Prénom",
+    "EmailLabel": "Email",
+    "BirthDateLabel": "Date de naissance",
+    "DeleteUserLabel":"Supprimer l'utilisateur",
+    "DeleteLabel": "Effacer",
+    
+    "EnglishLabel": "Anglais",
+    "GermanLabel": "Allemand",
+    "FrenchLabel": "Francais"
+}

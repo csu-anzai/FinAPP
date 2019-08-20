@@ -1,0 +1,23 @@
+{
+    "WelcomeMessage": "Welcome ",
+    "LogoutLink": "Logout",
+    "LogInLink": "Log in",
+    "RegisterLink":"Register",
+
+    "ProfileLabel": "Profile",
+    "AccountsLabel": "Accounts",
+    "ChartsLabel": "Charts",
+    "SettingsLabel": "Settings",
+    "AdminPanelLabel": "Admin Panel",
+    "FAQLabel": "FAQ",
+
+    "UserNameLabel": "Name",
+    "EmailLabel": "Email",
+    "BirthDateLabel": "Birthdate",
+    "DeleteUserLabel":"Delete user",
+    "DeleteLabel": "Delete",
+
+    "EnglishLabel": "English",
+    "GermanLabel": "German",
+    "FrenchLabel": "French"
+}

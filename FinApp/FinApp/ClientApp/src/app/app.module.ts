@@ -8,11 +8,12 @@ import { AuthGuard } from './auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 // Components
 import { AppComponent } from './app.component';
@@ -56,14 +57,19 @@ import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.com
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
-import { ChartsService} from './services/charts.service';
+import { ChartsService } from './services/charts.service';
 
 import { FusionChartsModule } from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -108,6 +114,13 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     OAuthModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgbModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
     RouterModule.forRoot([
       { path: '', component: MainPageComponent, pathMatch: 'full' },
       { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
@@ -151,8 +164,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     MessagingCenterService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     UserService,
-      ForgotPasswordService,
-      ChartsService,
+    ForgotPasswordService,
+    ChartsService,
 
   ],
   bootstrap: [AppComponent]

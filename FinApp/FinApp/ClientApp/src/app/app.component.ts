@@ -4,6 +4,7 @@ import { authCodeFlowConfig } from './configs/auth-code-flow.config';
 import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,13 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   title = 'app';
 
-  constructor(private oauthService: OAuthService, private authService: AuthService, private router: Router) {
+  constructor(private oauthService: OAuthService,
+    private authService: AuthService,
+    private router: Router,
+    private translate: TranslateService) {
+    this.languageSetUp();
     this.configure();
-
+    
     // Receives a response from google oauth2
     this.oauthService.events
     .pipe(filter(e => e.type === 'token_received'))
@@ -29,7 +34,13 @@ export class AppComponent {
     this.oauthService.configure(authCodeFlowConfig);
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
-
     this.oauthService.setupAutomaticSilentRefresh();
+  }
+
+  languageSetUp() {
+    // this language will be used as a fallback when a translation isn't found in the current language
+    this.translate.setDefaultLang('en');
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+   this.translate.use('en');
   }
 }

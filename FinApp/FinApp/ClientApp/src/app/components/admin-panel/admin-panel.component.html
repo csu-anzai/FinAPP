@@ -24,10 +24,10 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Birth date</th>
-            <th>Delete User</th>
+            <th translate>UserNameLabel</th>
+            <th translate>EmailLabel</th>
+            <th translate>BirthDateLabel</th>
+            <th translate>DeleteUserLabel</th>
           </tr>
         </thead>
         <tbody>
@@ -35,7 +35,7 @@
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td>{{user.birthDate | date:'longDate' }}</td>
-            <td><button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button></td>
+            <td><button class="btn btn-danger" (click)="deleteUser(user.id)" translate>DeleteLabel</button></td>
           </tr>
         </tbody>
       </table>

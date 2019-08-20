@@ -18,12 +18,12 @@
           <li class="nav-item"
               [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark"
-               [routerLink]='["/login-page"]'>Log in</a>
+               [routerLink]='["/login-page"]' translate>LogInLink</a>
           </li>
           <li class="nav-item"
               [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark"
-               [routerLink]='["/sign-up"]'>Register</a>
+               [routerLink]='["/sign-up"]' translate>RegisterLink</a>
           </li>
         </ul>
       </div>
@@ -33,12 +33,12 @@
           <ul class="navbar-nav flex-grow">
             <li class="nav-item">
               <a class="nav-link text-dark"
-                 [routerLink]='["/user/profile"]'>Welcome <b>{{ authService.DecodedToken?.login}}</b></a>
+                 [routerLink]='["/user/profile"]' translate>WelcomeMessage<b>{{ authService.DecodedToken?.login}}</b></a>
             </li>
             <li class="nav-item cursor-on"
                 [routerLinkActive]='["link-active"]'>
               <a class="nav-link text-dark"
-                 (click)="onLogout()">Logout</a>
+                 (click)="onLogout()" translate>LogoutLink</a>
             </li>
           </ul>
         </div>
