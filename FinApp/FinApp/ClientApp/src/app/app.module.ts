@@ -19,7 +19,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { CounterComponent } from './components/counter/counter.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { WelcomePageComponent } from './components/welcome-components/welcome-page/welcome-page.component';
@@ -77,7 +76,6 @@ export function createTranslateLoader(http: HttpClient) {
     NavMenuComponent,
     WelcomePageComponent,
     HomeComponent,
-    CounterComponent,
     FetchDataComponent,
     LoginPageComponent,
     SignUpComponent,
@@ -124,7 +122,6 @@ export function createTranslateLoader(http: HttpClient) {
     RouterModule.forRoot([
       { path: '', component: MainPageComponent, pathMatch: 'full' },
       { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
-      { path: 'counter', component: CounterComponent },
       { path: 'sign-up', component: SignUpComponent, canActivate: [GuestGuard] },
       { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
       { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },

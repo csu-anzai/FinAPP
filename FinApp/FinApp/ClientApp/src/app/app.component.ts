@@ -5,6 +5,7 @@ import { filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
+import { LanguageService } from './services/language.service';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +17,8 @@ export class AppComponent {
 
   constructor(private oauthService: OAuthService,
     private authService: AuthService,
-    private router: Router,
-    private translate: TranslateService) {
-    this.languageSetUp();
+    private language: LanguageService) {
+    this.language.languageSetUp();
     this.configure();
     
     // Receives a response from google oauth2
@@ -35,12 +35,5 @@ export class AppComponent {
     this.oauthService.tokenValidationHandler = new JwksValidationHandler();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
     this.oauthService.setupAutomaticSilentRefresh();
-  }
-
-  languageSetUp() {
-    // this language will be used as a fallback when a translation isn't found in the current language
-    this.translate.setDefaultLang('en');
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-   this.translate.use('en');
   }
 }

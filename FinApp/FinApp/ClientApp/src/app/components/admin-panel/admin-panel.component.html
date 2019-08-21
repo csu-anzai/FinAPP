@@ -1,21 +1,21 @@
 <div *ngIf="ready">
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-left:10%; margin-right:10%; margin-top:5%">
     <li class="nav-item" style="width:25%">
-      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Statistics</a>
+      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" translate>Statistics</a>
     </li>
     <li class="nav-item" style="width:25%">
-      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">User Inspection</a>
+      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" translate>UserInspectionTab</a>
     </li>
     <li class="nav-item" style="width:25%">
-      <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Add standart category</a>
+      <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" translate>AddStandartCategoryTab</a>
     </li>
     <li class="nav-item" style="width:25%">
-      <a class="nav-link" id="pills-fourth-tab" data-toggle="pill" href="#pills-fourth" role="tab" aria-controls="pills-fourth" aria-selected="false"> Change standart category</a>
+      <a class="nav-link" id="pills-fourth-tab" data-toggle="pill" href="#pills-fourth" role="tab" aria-controls="pills-fourth" aria-selected="false" translate>ChangeStandartCategoryTab</a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="margin-top:2.5%">
-      Statistics
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="margin-top:2.5%" translate>
+      StatisticsTab
       <fusioncharts [chartConfig]="chartConfig"
                     [dataSource]="dataSource">
       </fusioncharts>
@@ -41,24 +41,24 @@
       </table>
     </div>
     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" style="text-align: center; margin-top:2.5%">
-      <h1 style="margin-top:5%">Creation category</h1>
+      <h1 style="margin-top:5%" translate>CreationCategory</h1>
       <div style="margin-top: 5%; margin-bottom:1%">
         <input placeholder="Name category" [(ngModel)]="category.name" />
       </div>
       <div style="display:inline-block; text-align: start">
-        <p>Expenses category</p>
-        <button class="btn btn-block btn-info" (click)="addExpenseCategory()">Add</button>
-        <p>Income category</p>
-        <button class="btn btn-block btn-info" (click)="addIncomeCategory()">Add</button>
+        <p translate>ExpensesCategory</p>
+        <button class="btn btn-block btn-info" (click)="addExpenseCategory()" translate>AddBtn</button>
+        <p translate>IncomeCategory</p>
+        <button class="btn btn-block btn-info" (click)="addIncomeCategory()" translate>AddBtn</button>
       </div>
     </div>
     <div class="tab-pane fade" id="pills-fourth" role="tabpanel" aria-labelledby="pills-fourth-tab">
       <ul class="nav nav-pills mb-3" id="pills-tab2" role="tablist" style="margin-left:20%; margin-right:20%; margin-top:5%">
         <li class="nav-item" style="width:50%">
-          <a class="nav-link active" id="pills-home-tab2" data-toggle="pill" href="#pills-home2" role="tab" aria-controls="pills-home2" aria-selected="true">Expense</a>
+          <a class="nav-link active" id="pills-home-tab2" data-toggle="pill" href="#pills-home2" role="tab" aria-controls="pills-home2" aria-selected="true" translate>ExpenseLable</a>
         </li>
         <li class="nav-item" style="width:50%">
-          <a class="nav-link" id="pills-profile-tab2" data-toggle="pill" href="#pills-profile2" role="tab" aria-controls="pills-profile2" aria-selected="false">Income</a>
+          <a class="nav-link" id="pills-profile-tab2" data-toggle="pill" href="#pills-profile2" role="tab" aria-controls="pills-profile2" aria-selected="false" translate>IncomeLable</a>
         </li>
       </ul>
       <div class="tab-content" id="pills-tabContent2">
@@ -66,8 +66,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th style="width:50%">Name</th>
-                <th>Delete/Update Category</th>
+                <th style="width:50%" translate>UserNameLabel</th>
+                <th translate> {{ 'DeleteLabel' + '/' + 'UpdateCategoryLable' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -76,8 +76,8 @@
                   <input [(ngModel)]="exp.name" class="form-control my-input" />
                 </td>
                 <td>
-                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(exp.id, false)">Delete</button>
-                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(exp)">Update</button>
+                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(exp.id, false)" translate>DeleteLabel</button>
+                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(exp)" translate>UpdateLabel</button>
                 </td>
               </tr>
             </tbody>
@@ -87,14 +87,17 @@
           <table class="table">
             <thead>
               <tr>
-                <th style="width:50%">Name</th>
-                <th>Delete/Update Category</th>
+                <th style="width:50%" translate>UserNameLabel</th>
+                <th translate>DeleteLabel / UpdateCategoryLable</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let inc of incomeCategories">
                 <td style="width:50%">{{inc.name}}</td>
-                <td><button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)">Delete</button><button class="btn btn-warning ml-5 mr-5">Update</button></td>
+                <td>
+                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)" translate>DeleteLabel</button>
+                  <button class="btn btn-warning ml-5 mr-5" translate>UpdateLabel</button>
+                </td>
               </tr>
             </tbody>
           </table>
