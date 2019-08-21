@@ -11,6 +11,8 @@ namespace DAL.UnitOfWork
         private readonly DbContext _context;
         private bool _disposed = false;
 
+        #region properties
+
         public IAccountRepository AccountRepository { get; }
         public IAuthRepository AuthRepository { get; }
         public ICurrencyRepository CurrencyRepository { get; }
@@ -21,11 +23,14 @@ namespace DAL.UnitOfWork
         public IRoleRepository RoleRepository { get; }
         public ITokenRepository TokenRepository { get; }
         public IUserRepository UserRepository { get; }
+        #endregion properties
 
+        #region constructor
         public UnitOfWork(FinAppContext context, IAccountRepository accountRepository, IAuthRepository authRepository, ICurrencyRepository currencyRepository,
             IExpenseCategoryRepository expenseCategoryRepository, IImageRepository imageRepository, IIncomeCategoryRepository incomeCategoryRepository,
              IPasswordConfirmationCodeRepository passwordConfirmationCodeRepository, IRoleRepository roleRepository,
                 ITokenRepository tokenRepository, IUserRepository userRepository)
+
         {
             _context = context;
             AccountRepository = accountRepository;
@@ -39,7 +44,9 @@ namespace DAL.UnitOfWork
             TokenRepository = tokenRepository;
             UserRepository = userRepository;
         }
+        #endregion constructor
 
+        #region methods
         public async Task<int> Complete()
         {
             return await _context.SaveChangesAsync();
@@ -62,5 +69,7 @@ namespace DAL.UnitOfWork
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        #endregion methods
     }
 }
+
