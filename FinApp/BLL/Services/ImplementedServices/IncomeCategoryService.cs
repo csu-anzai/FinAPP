@@ -15,38 +15,38 @@ namespace BLL.Services.ImplementedServices
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IIncomeCategoryRepository _incomeCategoryRepository;
 
-        public IncomeCategoryService(IMapper mapper, IUnitOfWork unitOfWork, IIncomeCategoryRepository incomeCategoryRepository)
+
+        public IncomeCategoryService(IMapper mapper, IUnitOfWork unitOfWork)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
-            _incomeCategoryRepository = incomeCategoryRepository;
+            
         }
 
         public async Task DeleteIncomeCategoryAsync(IncomeCategory incomeCategory)
         {
-            _incomeCategoryRepository.Remove(incomeCategory);
+            _unitOfWork.IncomeCategoryRepository.Remove(incomeCategory);
 
             await _unitOfWork.Complete();
         }
 
         public async Task<IEnumerable<IncomeCategoryDTO>> GetAllIncomeCategoryAsync()
         {
-            var incomeCategories = await _incomeCategoryRepository.GetAllAsync();
+            var incomeCategories = await _unitOfWork.IncomeCategoryRepository.GetAllAsync();
             var incomeCategoriesDTO = incomeCategories.Select(_mapper.Map<IncomeCategory, IncomeCategoryDTO>);
             return incomeCategoriesDTO.Count() > 0 ? incomeCategoriesDTO : null;
         }
 
         public async Task<IncomeCategory> GetIncomeCategoryAsync(int id)
         {
-            var incomeCategory = await _incomeCategoryRepository.SingleOrDefaultAsync(u => u.Id == id);
+            var incomeCategory = await _unitOfWork.IncomeCategoryRepository.SingleOrDefaultAsync(u => u.Id == id);
             return incomeCategory ?? null;
         }
 
         public async Task<IncomeCategory> UpdateIncomeCategoryAsync(IncomeCategoryDTO incomeCategoryDTO)
         {
-            var upToDateIncomeCategory = await _incomeCategoryRepository.SingleOrDefaultAsync(u => u.Id == incomeCategoryDTO.Id);
+            var upToDateIncomeCategory = await _unitOfWork.IncomeCategoryRepository.SingleOrDefaultAsync(u => u.Id == incomeCategoryDTO.Id);
             if (incomeCategoryDTO == null)
                 return null;
             _mapper.Map(incomeCategoryDTO, upToDateIncomeCategory);
@@ -57,11 +57,11 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<IncomeCategory> CreateIncomeCategoryAsync(IncomeCategory incomeCategory)
         {
-            var existedCategory = await _incomeCategoryRepository.SingleOrDefaultAsync(u => u.Name == incomeCategory.Name);
+            var existedCategory = await _unitOfWork.IncomeCategoryRepository.SingleOrDefaultAsync(u => u.Name == incomeCategory.Name);
             if (existedCategory != null)
                 return null;
             incomeCategory.ImageId = 1;
-            await _incomeCategoryRepository.AddAsync(incomeCategory);
+            await _unitOfWork.IncomeCategoryRepository.AddAsync(incomeCategory);
             await _unitOfWork.Complete();
             return incomeCategory;
         }

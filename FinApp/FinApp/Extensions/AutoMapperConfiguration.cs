@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using BLL.Models.ViewModels;
 using DAL.Entities;
 using Microsoft.Extensions.DependencyInjection;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
@@ -21,11 +22,11 @@ namespace FinApp.Extensions
 
                 c.CreateMap<ImageDTO, Image>().ReverseMap();
 
-                c.CreateMap<UserLoginDTO, User>();
+                c.CreateMap <LoginViewModel, User>();
 
-                c.CreateMap<UserRegistrationDTO, User>();
+                c.CreateMap<RegistrationViewModel, User>();
 
-                c.CreateMap<Payload, UserRegistrationDTO>()
+                c.CreateMap<Payload, RegistrationViewModel>()
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.GivenName))
                     .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.FamilyName));
 

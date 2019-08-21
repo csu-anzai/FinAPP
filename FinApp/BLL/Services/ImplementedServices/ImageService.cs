@@ -5,24 +5,25 @@ using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DAL.UnitOfWork;
 
 namespace BLL.Services.ImplementedServices
 {
     public class ImageService : IImageService
     {
-        private readonly IImageRepository imageRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        private readonly IMapper mapper;
+        private readonly IMapper _mapper;
 
-        public ImageService(IImageRepository imageRepository, IMapper mapper)
+        public ImageService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.imageRepository = imageRepository;
-            this.mapper = mapper;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<ImageDTO>> GetAllAsync()
         {
-            return mapper.Map<IEnumerable<Image>, IEnumerable<ImageDTO>>(await imageRepository.GetAllAsync());
+            return _mapper.Map<IEnumerable<Image>, IEnumerable<ImageDTO>>(await _unitOfWork.ImageRepository.GetAllAsync());
         }
     }
 }

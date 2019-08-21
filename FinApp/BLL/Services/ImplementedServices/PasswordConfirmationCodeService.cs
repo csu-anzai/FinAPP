@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.Models.Exceptions;
+using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
@@ -13,19 +14,15 @@ namespace BLL.Services.ImplementedServices
     public class PasswordConfirmationCodeService : IPasswordConfirmationCodeService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserRepository _userRepository;
-        private readonly IPasswordConfirmationCodeRepository _codeRepository;
         private readonly IEmailSenderService _emailSenderService;
         public static TimeSpan PasswordCodeTimeout { get; } = new TimeSpan(0, 15, 0);
 
         private readonly string _message = " is the code to reset your password.\n" +
                                           $"The code is valid for {PasswordCodeTimeout.Minutes} minutes.";
 
-        public PasswordConfirmationCodeService(IUnitOfWork unitOfWork, IUserRepository userRepository, IPasswordConfirmationCodeRepository codeRepository, IEmailSenderService emailService)
+        public PasswordConfirmationCodeService(IUnitOfWork unitOfWork, IEmailSenderService emailService)
         {
             _unitOfWork = unitOfWork;
-            _userRepository = userRepository;
-            _codeRepository = codeRepository;
             _emailSenderService = emailService;
         }
 
@@ -50,9 +47,9 @@ namespace BLL.Services.ImplementedServices
             await _unitOfWork.Complete();
         }
 
-        public async Task<User> SendConfirmationCodeAsync(ForgotPasswordDTO forgotPasswordDto)
+        public async Task<User> SendConfirmationCodeAsync(ForgotPasswordViewModel forgotPasswordModel)
         {
-            var user = await _userRepository.SingleOrDefaultWithConfirmCodeAsync(u => u.Email == forgotPasswordDto.Email);
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultWithConfirmCodeAsync(u => u.Email == forgotPasswordModel.Email);
             if (user == null)
             {
                 throw new ApiException(HttpStatusCode.NotFound, "User with such email was not found.");
@@ -63,14 +60,14 @@ namespace BLL.Services.ImplementedServices
 
             var message = passwordConfirmCode + _message;
 
-            await _emailSenderService.SendEmailAsync(forgotPasswordDto.Email, "Fin App: password reset code", message);
+            await _emailSenderService.SendEmailAsync(forgotPasswordModel.Email, "Fin App: password reset code", message); ;
 
             return user;
         }
 
         public async Task<bool> ValidateConfirmationCodeAsync(PasswordConfirmationCodeDTO confirmationCodeDto)
         {
-            var passwordConfirmCode = await _codeRepository.GetPasswordConfirmationCodeByUserIdAsync(confirmationCodeDto.UserId);
+            var passwordConfirmCode = await _unitOfWork.PasswordConfirmationCodeRepository.GetPasswordConfirmationCodeByUserIdAsync(confirmationCodeDto.UserId);
 
             TimeSpan timeAfterCodeCreation = DateTime.Now - passwordConfirmCode.CreateDate;
             if (timeAfterCodeCreation > PasswordCodeTimeout)

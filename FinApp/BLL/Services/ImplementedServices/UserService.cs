@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
 using BLL.Models.Exceptions;
+using BLL.Models.ViewModels;
 using BLL.Security;
 using BLL.Services.IServices;
 using DAL.Entities;
@@ -16,28 +17,24 @@ namespace BLL.Services.ImplementedServices
 {
     public class UserService : IUserService
     {
-        private readonly ITokenRepository _tokenRepository;
         private readonly IPassHasher _hasher;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserRepository _userRepository;
 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository, ITokenRepository tokenRepository, IPassHasher hasher, IMapper mapper)
+        public UserService(IUnitOfWork unitOfWork, IPassHasher hasher, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
-            _userRepository = userRepository;
-            _tokenRepository = tokenRepository;
             _hasher = hasher;
             _mapper = mapper;
         }
 
-        public async Task<User> CreateUserAsync(UserRegistrationDTO userDTO)
+        public async Task<User> CreateUserAsync(RegistrationViewModel registrationModel)
         {
-            var user = _mapper.Map<User>(userDTO);
+            var user = _mapper.Map<User>(registrationModel);
 
             user.RoleId = 1;
 
-            var existedUser = await _userRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
+            var existedUser = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
 
             if (existedUser != null)
                 return null;
@@ -50,8 +47,8 @@ namespace BLL.Services.ImplementedServices
             var confirmCode = new PasswordConfirmationCode { User = user };
             user.PasswordConfirmationCode = confirmCode;
 
-            await _tokenRepository.AddAsync(token);
-            await _userRepository.AddAsync(user);
+            await _unitOfWork.TokenRepository.AddAsync(token);
+            await _unitOfWork.UserRepository.AddAsync(user);
 
             await _unitOfWork.Complete();
 
@@ -60,7 +57,7 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<User> UpdateAsync(ProfileDTO profileDTO)
         {
-            var upToDateUser = await _userRepository.SingleOrDefaultAsync(u => u.Id == profileDTO.Id);
+            var upToDateUser = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == profileDTO.Id);
 
             if (upToDateUser == null)
                 return null;
@@ -74,7 +71,7 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<UserDTO> GetAsync(int id)
         {
-            var user = await _userRepository.GetAsync(id);
+            var user = await _unitOfWork.UserRepository.GetAsync(id);
 
             var userDTO = _mapper.Map<User, UserDTO>(user);
 
@@ -83,7 +80,7 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<IEnumerable<UserDTO>> GetAllAsync()
         {
-            var users = await _userRepository.GetAllAsync();
+            var users = await _unitOfWork.UserRepository.GetAllAsync();
             var usersDTO = users.Select(_mapper.Map<User, UserDTO>);
 
             return usersDTO.Any() ? usersDTO : null;
@@ -91,16 +88,16 @@ namespace BLL.Services.ImplementedServices
 
         public async Task DeleteAsync(UserDTO userDTO)
         {
-            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == userDTO.Id);
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == userDTO.Id);
 
-            _userRepository.Remove(user);
+            _unitOfWork.UserRepository.Remove(user);
 
             await _unitOfWork.Complete();
         }
 
         public async Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto)
         {
-            var user = await _userRepository.SingleOrDefaultAsync(u => u.Id == recoverPasswordDto.Id);
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == recoverPasswordDto.Id);
             if (user == null)
             {
                 throw new ApiException(HttpStatusCode.NotFound, "User was not found.");
@@ -110,6 +107,5 @@ namespace BLL.Services.ImplementedServices
 
             await _unitOfWork.Complete();
         }
-
     }
 }

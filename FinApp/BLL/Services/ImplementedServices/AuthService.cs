@@ -1,9 +1,11 @@
 ﻿using BLL.DTOs;
+using BLL.Models.ViewModels;
 using BLL.Security;
 using BLL.Security.Jwt;
 using BLL.Services.IServices;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
+using DAL.UnitOfWork;
 using System.Threading.Tasks;
 
 namespace BLL.Services.ImplementedServices
@@ -11,30 +13,26 @@ namespace BLL.Services.ImplementedServices
     public class AuthService : IAuthService
     {
         protected IPassHasher _hasher;
-        private readonly ITokenRepository _tokenRepository;
-        private readonly IRoleRepository _roleRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly JwtManager _jwtManager;
 
-        private IAuthRepository _authRepository;
 
-        public AuthService(IAuthRepository authRepository, IPassHasher hasher, IRoleRepository roleRepository, ITokenRepository tokenRepository, JwtManager jwtManager)
+        public AuthService(IUnitOfWork unitOfWork, IPassHasher hasher, IRoleRepository roleRepository, JwtManager jwtManager)
         {
-            _authRepository = authRepository;
+            _unitOfWork = unitOfWork;
             _hasher = hasher;
-            _roleRepository = roleRepository;
-            _tokenRepository = tokenRepository;
             _jwtManager = jwtManager;
 
         }
 
-        public async Task<TokenDTO> SignInAsync(UserLoginDTO user)
+        public async Task<TokenDTO> SignInAsync(LoginViewModel loginModel)
         {
-            var existedUser = await _authRepository.SingleOrDefaultAsync(u => u.Email == user.Email);
+            var existedUser = await _unitOfWork.AuthRepository.SingleOrDefaultAsync(u => u.Email == loginModel.Email);
 
             if (existedUser == null)
                 return null;
 
-            if (!_hasher.CheckPassWithHash(user.Password, existedUser.Password))
+            if (!_hasher.CheckPassWithHash(loginModel.Password, existedUser.Password))
                 return null;
 
             var token = await GenerateNewTokensAsync(existedUser);
@@ -48,10 +46,11 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<TokenDTO> GoogleSignInAsync(string email)
         {
-            var existedUser = await _authRepository.SingleOrDefaultAsync(u => u.Email == email);
+            var existedUser = await _unitOfWork.AuthRepository.SingleOrDefaultAsync(u => u.Email == email);
 
             if (existedUser == null)
                 return null;
+
 
             var token = await GenerateNewTokensAsync(existedUser);
 
@@ -64,7 +63,7 @@ namespace BLL.Services.ImplementedServices
 
         private async Task<TokenDTO> GenerateNewTokensAsync(User user)
         {
-            var role = await _roleRepository.GetAsync(user.RoleId);
+            var role = await _unitOfWork.RoleRepository.GetAsync(user.RoleId);
             var token = _jwtManager.GenerateToken(user.Id, user.Email, role?.Name);
 
             return token;

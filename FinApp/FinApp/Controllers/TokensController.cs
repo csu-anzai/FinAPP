@@ -2,6 +2,7 @@
 using BLL.Security.Jwt;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using BLL.Models.ViewModels;
 
 namespace FinApp.Controllers
 {
@@ -17,10 +18,10 @@ namespace FinApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetNewAccessToken(TokenDTO token)
+        public IActionResult GetNewAccessToken(TokenViewModel tokenModel)
         {
-            _jwtManager.IsExpired(token.AccessToken);
-            var claims = _jwtManager.GetClaims(token.AccessToken);
+            _jwtManager.IsExpired(tokenModel.IdToken);
+            var claims = _jwtManager.GetClaims(tokenModel.IdToken);
 
             int userId = Convert.ToInt32(claims[2]);
             string email = claims[0];

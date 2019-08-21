@@ -1,5 +1,6 @@
 ﻿using BLL.DTOs;
 using BLL.Models.Exceptions;
+using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using FinApp.Attributes;
 using Microsoft.AspNetCore.Mvc;
@@ -21,9 +22,9 @@ namespace FinApp.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> SignUp(UserRegistrationDTO userDto)
+        public async Task<IActionResult> SignUp(RegistrationViewModel registrationModels)
         {
-            var newUser = await _userService.CreateUserAsync(userDto);
+            var newUser = await _userService.CreateUserAsync(registrationModels);
 
             if (newUser == null)
                 throw new ValidationExeption(HttpStatusCode.Forbidden, "User already exists");
