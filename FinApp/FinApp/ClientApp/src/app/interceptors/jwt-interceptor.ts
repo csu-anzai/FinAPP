@@ -12,7 +12,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/services/auth.service';
 import { switchMap, filter, take, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { EventHandlerVars } from '@angular/compiler/src/compiler_util/expression_converter';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -39,17 +38,21 @@ export class JwtInterceptor implements HttpInterceptor {
                 return next.handle(this.addToken(request, this.cookieService.get('token'))).pipe(
                     tap((event: any) => {
                         if (event instanceof HttpResponse) {
-                            if(event.hasOwnProperty('code') && event.hasOwnProperty('error') ) {
-                                if (event.body.code === 401 && event.body.error === 'Unauthorized') {
-                                    this.handle401Error(request, next).subscribe(
-                                        () => {
-                                            return event;
-                                        }
-                                    );
+                            if (event.body) {
+                                if (event.body.hasOwnProperty('code') && event.body.hasOwnProperty('error')) {
+                                    if (event.body.code === 401 && event.body.error === 'Unauthorized') {
+                                        this.handle401Error(request, next).subscribe(
+                                            () => {
+                                                console.log(event);
+                                                return event;
+                                            }
+                                        );
+                                    }
                                 }
                             }
+                            return;
                         }
-                        return event;
+                        return event.body;
                     }));
             } else {
                 this.router.navigate(['login-page']);

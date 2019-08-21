@@ -112,7 +112,7 @@ export class AuthService implements OnInit {
           if (response.token) {
             this.cookieService.set('token', response.token, null, '/', null, true);
 
-            this.cookieService.set('idToken', tokenId, null, null, null, true);
+            this.cookieService.set('idToken', tokenId, null, '/', null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
             this.alertService.successMsg('Logged in successfuly');
             this.setLoggedIn(true);
@@ -205,7 +205,6 @@ export class AuthService implements OnInit {
     this.setLoggedIn(false);
     this.oauthService.logOut(true);
     this.cookieService.delete('token', '/');
-    this.cookieService.delete('token', '/user');
     // this.cookieService.delete('idToken', '/');
     this.router.navigate(['']);
     this.alertService.infoMsg('Logged Out');

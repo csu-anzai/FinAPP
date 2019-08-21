@@ -38,10 +38,14 @@ namespace FinApp.Middlewares
             {
                 logger.LogError(e, "Unhandled exception");
 
-                var customException = e as CustomExeption;
-                customException.Code = HttpStatusCode.InternalServerError;
+                httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                await FillUpExceptionMessage(customException, new { e.Message });
+                if (!String.IsNullOrEmpty(e.Message))
+                {
+                    var body = JsonConvert.SerializeObject(e.Message);
+                    var bytes = Encoding.UTF8.GetBytes(body);
+                    await httpContext.Response.Body.WriteAsync(bytes, 0, bytes.Length);
+                }
             }
 
             async Task FillUpExceptionMessage(CustomExeption exception, object jsonObj)
