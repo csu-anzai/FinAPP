@@ -32,7 +32,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(AuthorizeAttribute))]
+       // [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -40,7 +40,6 @@ namespace FinApp.Controllers
 
             if (user == null)
                 return NotFound();
-            //  var user = await userRepository.GetAsync(id);
 
             return Ok(user);
         }
@@ -90,6 +89,16 @@ namespace FinApp.Controllers
         public async Task<IActionResult> RecoverPassword(RecoverPasswordDTO recoverPasswordDto)
         {
             await _userService.RecoverPasswordAsync(recoverPasswordDto);
+            return Ok();
+        }
+
+        [HttpPut("changePassword")]
+        public async Task<IActionResult> ChangePassword(NewPasswordViewModel newPassword)
+        {
+            if (!ModelState.IsValid || newPassword.Password != newPassword.ConfirmPassword)
+                return BadRequest();
+
+            await _userService.ChangePasswordAsync(newPassword);
             return Ok();
         }
     }

@@ -95,6 +95,23 @@ namespace BLL.Services.ImplementedServices
             await _unitOfWork.Complete();
         }
 
+
+        public async Task ChangePasswordAsync(NewPasswordViewModel model)
+        {
+            var user = await _unitOfWork.UserRepository.GetAsync(model.UserId);
+
+            if (user == null)
+                throw new ApiException(HttpStatusCode.NotFound, "User was not found");
+
+            if (!_hasher.CheckPassWithHash(model.OldPassword, user.Password))
+                throw new ApiException(HttpStatusCode.BadRequest, "Old password incorrect");
+
+            user.Password = _hasher.HashPassword(model.Password);
+
+            await _unitOfWork.Complete();
+                
+        }
+
         public async Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto)
         {
             var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == recoverPasswordDto.Id);
@@ -107,5 +124,7 @@ namespace BLL.Services.ImplementedServices
 
             await _unitOfWork.Complete();
         }
+
+        
     }
 }
