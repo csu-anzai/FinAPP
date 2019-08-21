@@ -43,5 +43,4 @@ export class AccountService {
         error => { this.errorHandler.handleError(error); }
       ));
   }
-
 }

@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login-page',
@@ -19,6 +20,7 @@ export class LoginPageComponent {
     private router: Router,
     private oauthService: OAuthService,
     fb: FormBuilder,
+    private translate: TranslateService,
     private alertService: NotificationService) {
     this.signInForm = fb.group({
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
@@ -34,7 +36,7 @@ export class LoginPageComponent {
       },
       () => {
         this.authService.setLoggedIn(true);
-        this.alertService.successMsg('Logged in successfuly');
+        this.alertService.successMsg('build sucess');
         this.router.navigate(['user/profile']);
       });
   }

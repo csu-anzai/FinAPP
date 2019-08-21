@@ -46,6 +46,6 @@ export class NavMenuComponent implements OnInit {
     // this.oauthService.logOut(true);
     this.cookieService.delete('token', '/');
     this.router.navigate(['']);
-    this.alertService.infoMsg('Logged Out');
+    this.alertService.infoMsg(this.alertService.logOutMessage);
   }
 }

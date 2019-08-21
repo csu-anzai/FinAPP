@@ -37,9 +37,11 @@
         <ul class="navbar-nav flex-grow">
           <li class="nav-item">
             <a class="nav-link text-dark"
-               [routerLink]='["/user/profile"]'
-               translate>
-              WelcomeMessage<b>{{ authService.DecodedToken?.login}}</b>
+               [routerLink]='["/user/profile"]'>
+               <span translate>WelcomeMessage</span>
+               <b>
+                 {{ authService.DecodedToken?.login}}
+                </b>
             </a>
           </li>
           <li class="nav-item cursor-on"

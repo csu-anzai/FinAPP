@@ -1,5 +1,5 @@
 {
-    "WelcomeMessage": "Bienvenu",
+    "WelcomeMessage": "Bienvenu ",
     "LogoutLink": "Connectez - Out",
     "LogInLink": "S'identifier",
     "RegisterLink":"Registre",
@@ -99,5 +99,13 @@
     
     "EnglishLabel": "Anglais",
     "GermanLabel": "Allemand",
-    "FrenchLabel": "Francais"
+    "FrenchLabel": "Francais",
+
+    "SuccessNotification": "Succès",
+    "ErrorNotification": "Erreur",
+    "InfoNotification": "Info",
+    "WarningNotification": "Attention",
+
+    "LoggedInSuccessfullyMsg": "Connecté avec succès",
+    "LogOutMsg": "Déconnecté"
 }

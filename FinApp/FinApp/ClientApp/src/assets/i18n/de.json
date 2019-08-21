@@ -99,5 +99,8 @@
 
     "EnglishLabel": "Englisch",
     "GermanLabel": "Deutsche",
-    "FrenchLabel": "Französisch"
+    "FrenchLabel": "Französisch",
+
+    "LoggedInSuccessfullyMsg": "Erfolgreich eingeloggt",
+    "LogOutMsg": "Abgemeldet"
 }
