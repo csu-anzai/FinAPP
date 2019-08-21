@@ -11,7 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
+  private logginMsg: string;
   model: any = {};
   signInForm: FormGroup;
   googleTokenId?: string;
@@ -28,6 +29,13 @@ export class LoginPageComponent {
     });
   }
 
+  ngOnInit() {
+    this.translate.get('notifications.loggedInSuccessfullyMsg').subscribe
+    (
+      (text: string) => this.logginMsg = text
+    );
+  }
+
   onLogin() {
     this.authService.login(this.model).subscribe(
       next => { },
@@ -36,7 +44,7 @@ export class LoginPageComponent {
       },
       () => {
         this.authService.setLoggedIn(true);
-        this.alertService.successMsg('build sucess');
+        this.alertService.successMsg(this.logginMsg);
         this.router.navigate(['user/profile']);
       });
   }

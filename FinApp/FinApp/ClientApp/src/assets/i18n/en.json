@@ -101,6 +101,12 @@
     "GermanLabel": "German",
     "FrenchLabel": "French",
 
-    "LoggedInSuccessfullyMsg": "Logged in successfully",
-    "LogOutMsg": "Logged Out"
+    "notifications": {
+        "successMsg": "Success",
+        "errorMsg": "Error",
+        "infoMsg": "Info",
+        "warningMsg": "Warning",
+        "loggedInSuccessfullyMsg": "Logged in successfully",
+        "logOutMsg": "Logged Out"
+    }    
 }

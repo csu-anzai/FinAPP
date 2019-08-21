@@ -106,6 +106,12 @@
     "InfoNotification": "Info",
     "WarningNotification": "Attention",
 
-    "LoggedInSuccessfullyMsg": "Connecté avec succès",
-    "LogOutMsg": "Déconnecté"
+    "notifications": {
+        "successMsg": "Succès",
+        "errorMsg": "Erreur",
+        "infoMsg": "Info",
+        "warningMsg": "Attention",
+        "loggedInSuccessfullyMsg": "Connecté avec succès",
+        "logOutMsg": "Déconnecté"
+    }
 }
