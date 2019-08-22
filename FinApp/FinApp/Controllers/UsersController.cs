@@ -32,7 +32,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-       // [ServiceFilter(typeof(AuthorizeAttribute))]
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -89,6 +89,7 @@ namespace FinApp.Controllers
         public async Task<IActionResult> RecoverPassword(RecoverPasswordDTO recoverPasswordDto)
         {
             await _userService.RecoverPasswordAsync(recoverPasswordDto);
+
             return Ok();
         }
 
@@ -99,6 +100,7 @@ namespace FinApp.Controllers
                 return BadRequest();
 
             await _userService.ChangePasswordAsync(newPassword);
+
             return Ok();
         }
     }
