@@ -24,7 +24,7 @@ export class CategoryService {
   }
 
   getCategories(isIncomeCategories: boolean): Observable<Category[]> {
-    return this.http.get<Category[]>(`${this.baseUrl}/${isIncomeCategories ? "incomecategory" : "expensecategory"}`).pipe(
+    return this.http.get<Category[]>(`${this.baseUrl}/${isIncomeCategories ? "incomecategories" : "expensecategories"}`).pipe(
       tap(data => console.log(data)),
       catchError(this.handleError)
     );
@@ -40,18 +40,18 @@ export class CategoryService {
   }
 
   creationExpenseCategory(category: Category, isIncomeCategories: boolean) {
-    const url = `${this.baseUrl}/${"expensecategory"}/createExpenseCategory`;
+    const url = `${this.baseUrl}/${"expensecategories"}/createExpenseCategory`;
     return this.http.post(url, category);
   }
 
   creationIncomeCategory(category: Category, isIncomeCategories: boolean) {
-    const url = `${this.baseUrl}/${"incomecategory"}/createIncomeCategory`;
+    const url = `${this.baseUrl}/${"incomecategories"}/createIncomeCategory`;
     return this.http.post(url, category);
   }
 
 
   updateCategory(category: Category, isIncomeCategories: boolean): Observable<Category> {
-    const url = `${this.baseUrl}/${isIncomeCategories ? "incomecategory" : "expensecategory"}/`;
+    const url = `${this.baseUrl}/${isIncomeCategories ? "incomecategories" : "expensecategories"}/`;
     return this.http.put<Category>(url + `${category.id}`, category).pipe(
       map(() => category),
       catchError(this.handleError)
@@ -59,7 +59,7 @@ export class CategoryService {
   }
 
   deleteCategory(id: number, isIncomeCategories: boolean) {
-    const url = `${this.baseUrl}/${isIncomeCategories ? "incomecategory" : "expensecategory"}/${id}`;
+    const url = `${this.baseUrl}/${isIncomeCategories ? "incomecategories" : "expensecategories"}/${id}`;
     return this.http.delete(url, this.httpOptions).pipe(
       catchError(this.handleError)
     );
