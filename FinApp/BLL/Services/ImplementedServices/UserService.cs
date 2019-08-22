@@ -5,7 +5,6 @@ using BLL.Models.ViewModels;
 using BLL.Security;
 using BLL.Services.IServices;
 using DAL.Entities;
-using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
 using System.Collections.Generic;
 using System.Linq;

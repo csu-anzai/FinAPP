@@ -61,3 +61,8 @@ input:focus, input:active{
   color:#fff ;
   
 }
+
+ngx-dropzone,
+.custom-dropzone {
+  margin: 20px;
+}

@@ -57,7 +57,7 @@ namespace FinApp.Controllers
             return Ok(users);
         }
 
-        
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, ProfileDTO profileDTO)
         {

@@ -4,7 +4,9 @@ import { User } from 'src/app/models/user';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 import  * as moment from 'moment';
+import { UploadService } from 'src/app/services/upload.service';
 
 @Component({
   selector: 'app-profile',
@@ -19,6 +21,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _userService: UserService,
+    private _uploadService: UploadService,
     fb: FormBuilder,
     private alertService: NotificationService) {
 
@@ -60,6 +63,26 @@ export class ProfileComponent implements OnInit {
       for (let i in this.profileForm.controls)
         this.profileForm.controls[i].markAsTouched();
     }
+  }
+
+  // drag&drop
+  files: File[] = [];
+
+	onSelect(event) {
+    console.log(event);
+    this.files.push(...event.addedFiles);
+    if (this.files.length > 1) {
+      this.files.shift();
+    }
+	}
+
+	onRemove(event) {
+		console.log(event);
+		this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  onSendImage() {
+    this._uploadService.uploadUserAvatar(this.user.id, this.files);
   }
 }
 

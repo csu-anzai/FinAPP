@@ -2,10 +2,9 @@
 using BLL.DTOs;
 using BLL.Services.IServices;
 using DAL.Entities;
-using DAL.Repositories.IRepositories;
+using DAL.UnitOfWork;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DAL.UnitOfWork;
 
 namespace BLL.Services.ImplementedServices
 {

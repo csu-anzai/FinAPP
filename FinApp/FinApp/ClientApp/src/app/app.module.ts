@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 // Components
 import { AppComponent } from './app.component';
@@ -105,6 +106,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     ChartsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgxDropzoneModule,
     OAuthModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgbModule.forRoot(),
