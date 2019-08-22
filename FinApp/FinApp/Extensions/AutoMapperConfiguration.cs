@@ -28,7 +28,8 @@ namespace FinApp.Extensions
 
                 c.CreateMap<Payload, RegistrationViewModel>()
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.GivenName))
-                    .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.FamilyName));
+                    .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.FamilyName))
+                    .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.Picture));
 
                 c.CreateMap<UserDTO, User>().ReverseMap()
                     .ForMember(dest => dest.Accounts, act => act.MapFrom(src => src.Accounts));

@@ -33,7 +33,12 @@ namespace FinApp.Controllers
         {
             var fullPath = DefaultUserImagePath();
 
-            registrationModels.Avatar = ImageConvertor.GetImageFromPath(fullPath);
+            var image = registrationModels.Avatar;
+
+            if (string.IsNullOrEmpty(image))
+                registrationModels.Avatar = ImageConvertor.GetImageFromPath(fullPath);
+            else
+                registrationModels.Avatar = await Downloader.GetImageAsBase64Url(image);
 
             var newUser = await _userService.CreateUserAsync(registrationModels);
 

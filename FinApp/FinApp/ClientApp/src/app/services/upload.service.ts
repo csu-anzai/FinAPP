@@ -17,14 +17,7 @@ export class UploadService {
     const self = this;
     fileReader.onloadend = function(e) {
       self.fileContent = fileReader.result;
-      console.log(self.fileContent);
-      self.http.post(self.baseUrl + 'upload/', {'userId': id, 'avatar': self.fileContent})
-      .toPromise()
-      .then(
-        (response: any) => {
-          console.log(response);
-        }
-      );
+      self.http.post(self.baseUrl + 'upload/', {'userId': id, 'avatar': self.fileContent}).toPromise();
     };
     fileReader.readAsDataURL(file);
   }
