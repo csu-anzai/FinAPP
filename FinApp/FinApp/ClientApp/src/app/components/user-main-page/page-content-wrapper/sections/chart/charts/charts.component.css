@@ -16,6 +16,9 @@ select#soflow-color {
     margin: auto;
  }
  .center{
-     text-align: center;
+    width: 50%;
+    padding: 2em 4em 2em;
+    margin:0 auto;
+    padding: 30px 25px;
  }
  

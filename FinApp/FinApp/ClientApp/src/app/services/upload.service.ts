@@ -1,30 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
   baseUrl = 'https://localhost:44397/api/';
-  http: HttpClient;
-  public base64data: string;
   fileContent: string | ArrayBuffer = '';
 
-  constructor(httpService: HttpClient) {
-    this.http = httpService;
-  }
+  constructor(private http: HttpClient) {}
 
   uploadUserAvatar(id: number, avatars: File[]) {
-    let file = avatars[0];
-    let fileReader: FileReader = new FileReader();
-    let self = this;
-    fileReader.onloadend = function(x) {
+    const file = avatars[0];
+    const fileReader: FileReader = new FileReader();
+    const self = this;
+    fileReader.onloadend = function(e) {
       self.fileContent = fileReader.result;
       console.log(self.fileContent);
-      self.http.post(self.baseUrl + 'upload/', {'userId': id, 'avatar': self.fileContent});
-      console.log('opa-opa-tishe-tishe');
-    }
-    fileReader.readAsText(file);
+      self.http.post(self.baseUrl + 'upload/', {'userId': id, 'avatar': self.fileContent})
+      .toPromise()
+      .then(
+        (response: any) => {
+          console.log(response);
+        }
+      );
+    };
+    fileReader.readAsDataURL(file);
   }
 }

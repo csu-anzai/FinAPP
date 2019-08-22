@@ -32,6 +32,7 @@ namespace FinApp.Extensions
 
                 c.CreateMap<UserDTO, User>().ReverseMap()
                     .ForMember(dest => dest.Accounts, act => act.MapFrom(src => src.Accounts));
+                    //.ForMember(dest => dest.Avatar, act => act.MapFrom(src => src.Avatar));
 
                 c.CreateMap<Transaction, TransactionDTO>().ReverseMap();
 

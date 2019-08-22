@@ -12,7 +12,7 @@ namespace DAL.Entities
         public string Password { get; set; }
         public string Email { get; set; }
         public DateTime BirthDate { get; set; }
-        public byte[] Avatar { get; set; }
+        public string Avatar { get; set; }
 
         public Role Role { get; set; }
         public int RoleId { get; set; }

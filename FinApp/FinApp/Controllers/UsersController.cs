@@ -1,9 +1,12 @@
 ﻿using BLL.DTOs;
+using BLL.Helpers;
 using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using FinApp.Attributes;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -14,16 +17,26 @@ namespace FinApp.Controllers
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
+        private IHostingEnvironment _hostingEnvironment;
+        private IUploadService _uploadService;
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IUploadService uploadService, IHostingEnvironment hostingEnvironment)
         {
             _userService = userService;
+            _uploadService = uploadService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [HttpPost("signup")]
         public async Task<IActionResult> SignUp(RegistrationViewModel registrationModels)
         {
+            var webRootPath = _hostingEnvironment.WebRootPath;
+            var newPath = Path.Combine(webRootPath, "DefaultImages");
+            string fullPath = Path.Combine(newPath, "profile-icon.png");
+
+            registrationModels.Avatar = ImageConvertor.GetImageFromPath(fullPath);
+
             var newUser = await _userService.CreateUserAsync(registrationModels);
 
             if (newUser == null)

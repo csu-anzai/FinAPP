@@ -2,6 +2,8 @@
 using BLL.Services.IServices;
 using DAL.Entities;
 using DAL.UnitOfWork;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace BLL.Services.ImplementedServices
@@ -22,7 +24,7 @@ namespace BLL.Services.ImplementedServices
             if (upToDateUser == null)
                 return null;
 
-            upToDateUser.Avatar = System.Text.ASCIIEncoding.ASCII.GetBytes(avatarDTO.Avatar);
+            upToDateUser.Avatar = avatarDTO.Avatar;
 
             await _unitOfWork.Complete();
 
