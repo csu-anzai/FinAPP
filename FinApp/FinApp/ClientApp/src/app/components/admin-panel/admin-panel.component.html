@@ -35,7 +35,7 @@
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td>{{user.birthDate | date:'longDate' }}</td>
-            <td><button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button></td>
+            <td><button *ngIf="user.roleId != 2" class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button></td>
           </tr>
         </tbody>
       </table>
@@ -77,7 +77,7 @@
                 </td>
                 <td>
                   <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(exp.id, false)">Delete</button>
-                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(exp)">Update</button>
+                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(exp, false)">Update</button>
                 </td>
               </tr>
             </tbody>
@@ -93,8 +93,13 @@
             </thead>
             <tbody>
               <tr *ngFor="let inc of incomeCategories">
-                <td style="width:50%">{{inc.name}}</td>
-                <td><button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)">Delete</button><button class="btn btn-warning ml-5 mr-5">Update</button></td>
+                <td style="width:50%">
+                  <input [(ngModel)]="inc.name" class="form-control my-input"/>
+                </td>
+                <td>
+                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)">Delete</button>
+                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(inc, true)">Update</button>
+                </td>
               </tr>
             </tbody>
           </table>
