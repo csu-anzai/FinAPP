@@ -32,7 +32,7 @@
         Settings
       </a>
     </li>
-    <li>
+    <li *ngIf="authService.DecodedToken.role == 'admin'">
       <a routerLink="/user/adminPanel">
         <i class="fa fa-user-circle"></i>
         Admin Panel
