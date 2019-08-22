@@ -1,5 +1,5 @@
 <div class="profile-content">
-  <img [src]="user.avatar" class="imgcenter" height="200px">
+  <img [src]="Avatar" class="imgcenter" height="200px" (click)="onUpdateAvatar(updateModal)">
   <div class="form">
     <form method="post" (ngSubmit)="updateProfile()" [formGroup]="profileForm">
       <div class="form-group">
@@ -58,8 +58,17 @@
 
     </form>
   </div>
+</div>
 
-  <div class="container">
+<!-- Modal window -->
+<ng-template #updateModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Update avatar</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container">
     <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
       <ngx-dropzone-label>
         <div>
@@ -68,9 +77,8 @@
       </ngx-dropzone-label>
       <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
         [removable]="true" (removed)="onRemove(f)">
-        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
       </ngx-dropzone-image-preview>
     </div>
     <button (click)="onSendImage()">Send</button>
   </div>
-</div>
+  </ng-template>

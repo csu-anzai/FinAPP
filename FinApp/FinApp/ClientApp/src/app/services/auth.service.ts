@@ -73,7 +73,7 @@ export class AuthService implements OnInit {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model)
+    return this.http.post(this.baseUrl + this.signUpParameter, model)
       .pipe(
         tap(
           (response: any) => {

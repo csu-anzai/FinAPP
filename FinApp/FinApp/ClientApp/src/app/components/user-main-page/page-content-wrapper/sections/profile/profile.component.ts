@@ -4,9 +4,8 @@ import { User } from 'src/app/models/user';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { NgxDropzoneModule } from 'ngx-dropzone';
-import  * as moment from 'moment';
 import { UploadService } from 'src/app/services/upload.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -18,10 +17,25 @@ export class ProfileComponent implements OnInit {
   profileForm: FormGroup;
   user: User = new User();
   date: any;
+  updateModal: any;
+  files: File[] = [];
+
+
+  public get Avatar(): string {
+    // for default images
+    if (this.user.avatar) {
+      return this.user.avatar.includes('base64') ? this.user.avatar : `data:image/png;base64,${this.user.avatar}`;
+    }
+
+    return null;
+  }
+
+
   constructor(
     private _authService: AuthService,
     private _userService: UserService,
     private _uploadService: UploadService,
+    private _modalService: NgbModal,
     fb: FormBuilder,
     private alertService: NotificationService) {
 
@@ -40,7 +54,7 @@ export class ProfileComponent implements OnInit {
 
       this.profileForm.get('Name').setValue(this.user.name);
       this.profileForm.get('Surname').setValue(this.user.surname);
-    //  this.profileForm.get('BirthDate').setValue(this.user.birthDate);
+      //  this.profileForm.get('BirthDate').setValue(this.user.birthDate);
       this.date = this.user.birthDate.toString().split('-').reverse().join('-');
       this.profileForm.get('BirthDate').setValue(this.date);
       this.profileForm.get('Email').setValue(this.user.email);
@@ -52,12 +66,12 @@ export class ProfileComponent implements OnInit {
       this.user.name = this.profileForm.controls['Name'].value,
         this.user.surname = this.profileForm.controls['Surname'].value,
         this.user.email = this.profileForm.controls['Email'].value,
-       // this.user.birthDate = new Date(moment(this.profileForm.controls['BirthDate'].value,'DD/MM/YYYY').format('MM/DD/YYYY'));
+        // this.user.birthDate = new Date(moment(this.profileForm.controls['BirthDate'].value,'DD/MM/YYYY').format('MM/DD/YYYY'));
         this.user.birthDate = new Date((this.profileForm.controls['BirthDate'].value).split('-').reverse().join('-'));
-        this._userService.update(this.user).subscribe(() => {
-          console.log(this.user);
-          this.alertService.successMsg('Profile updated');
-        });
+      this._userService.update(this.user).subscribe(() => {
+        console.log(this.user);
+        this.alertService.successMsg('Profile updated');
+      });
     }
     else {
       for (let i in this.profileForm.controls)
@@ -66,21 +80,33 @@ export class ProfileComponent implements OnInit {
   }
 
   // drag&drop
-  files: File[] = [];
+  onUpdateAvatar(content) {
+    this.updateModal = this._modalService.open(content, { centered: true });
+  }
 
-	onSelect(event) {
+  closeModal() {
+    this.updateModal.close();
+    if (this.files.length > 1) {
+      this.files.shift();
+    }
+  }
+
+  // select kinda an event
+  onSelect(event) {
     console.log(event);
     this.files.push(...event.addedFiles);
     if (this.files.length > 1) {
       this.files.shift();
     }
-	}
-
-	onRemove(event) {
-		console.log(event);
-		this.files.splice(this.files.indexOf(event), 1);
   }
 
+  // remove from drap&drop
+  onRemove(event) {
+    console.log(event);
+    this.files.splice(this.files.indexOf(event), 1);
+  }
+
+  // sent file into the service
   onSendImage() {
     this._uploadService.uploadUserAvatar(this.user.id, this.files);
   }

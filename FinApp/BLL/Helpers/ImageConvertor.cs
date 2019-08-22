@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace BLL.Helpers
 {
@@ -9,9 +7,9 @@ namespace BLL.Helpers
     {
         public static string GetImageFromPath(string fullPath)
         {
-            byte[] imageArray = File.ReadAllBytes(fullPath);
-            string base64ImageRepresentation = Convert.ToBase64String(imageArray);
-            return $"data:image/png;base64,{base64ImageRepresentation}";
+            var imageArray = File.ReadAllBytes(fullPath);
+            var base64ImageRepresentation = Convert.ToBase64String(imageArray);
+            return base64ImageRepresentation;
         }
     }
 }

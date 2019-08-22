@@ -22,7 +22,7 @@ namespace FinApp.Extensions
 
                 c.CreateMap<ImageDTO, Image>().ReverseMap();
 
-                c.CreateMap <LoginViewModel, User>();
+                c.CreateMap<LoginViewModel, User>();
 
                 c.CreateMap<RegistrationViewModel, User>();
 
@@ -32,7 +32,7 @@ namespace FinApp.Extensions
 
                 c.CreateMap<UserDTO, User>().ReverseMap()
                     .ForMember(dest => dest.Accounts, act => act.MapFrom(src => src.Accounts));
-                    //.ForMember(dest => dest.Avatar, act => act.MapFrom(src => src.Avatar));
+                //.ForMember(dest => dest.Avatar, act => act.MapFrom(src => src.Avatar));
 
                 c.CreateMap<Transaction, TransactionDTO>().ReverseMap();
 

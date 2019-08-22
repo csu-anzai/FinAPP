@@ -28,12 +28,10 @@ namespace FinApp.Controllers
             _hostingEnvironment = hostingEnvironment;
         }
 
-        [HttpPost("signup")]
-        public async Task<IActionResult> SignUp(RegistrationViewModel registrationModels)
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(RegistrationViewModel registrationModels)
         {
-            var webRootPath = _hostingEnvironment.WebRootPath;
-            var newPath = Path.Combine(webRootPath, "DefaultImages");
-            string fullPath = Path.Combine(newPath, "profile-icon.png");
+            var fullPath = DefaultUserImagePath();
 
             registrationModels.Avatar = ImageConvertor.GetImageFromPath(fullPath);
 
@@ -104,6 +102,15 @@ namespace FinApp.Controllers
         {
             await _userService.RecoverPasswordAsync(recoverPasswordDto);
             return Ok();
+        }
+
+        private string DefaultUserImagePath()
+        {
+            var webRootPath = _hostingEnvironment.WebRootPath;
+            var newPath = Path.Combine(webRootPath, "DefaultImages");
+            string fullPath = Path.Combine(newPath, "profile-icon.png");
+
+            return fullPath;
         }
     }
 }
