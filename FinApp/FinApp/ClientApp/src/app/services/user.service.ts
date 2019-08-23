@@ -50,11 +50,13 @@ export class UserService {
     );
   }
   
-  updatePassword(changePassword: ChangePassword): Observable<ChangePassword>{
-    return this.http.post<ChangePassword>(`${this.baseUrl}/changePassword`, changePassword).pipe(
+  updatePassword(changePasswordModel: ChangePassword){
+    
+    return this.http.put<ChangePassword>(`${this.baseUrl}/changePassword`, changePasswordModel).pipe(
       catchError(this.handleError)
-    )
-  
+    ) ;
+    
+
   }
 
   deleteUser(id: number) {

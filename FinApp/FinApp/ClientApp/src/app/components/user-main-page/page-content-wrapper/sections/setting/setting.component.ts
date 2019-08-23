@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { changePassword, ChangePassword } from 'src/app/models/changePassword';
+import { ChangePassword } from 'src/app/models/changePassword';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { FormBuilder, FormControl, Validators, FormGroup } from '@angular/forms';
@@ -20,7 +20,7 @@ export class SettingComponent implements OnInit {
     private _authService: AuthService,
     private _userService: UserService,
     fb: FormBuilder,
-    private alertService: NotificationService) {
+    private _alertService: NotificationService) {
 
 
     this.changePasswordForm = fb.group({
@@ -51,8 +51,10 @@ export class SettingComponent implements OnInit {
         this.changePassword.password = this.changePasswordForm.controls["Password"].value,
         this.changePassword.confirmPassword = this.changePasswordForm.controls["ConfirmPassword"].value,
         this.changePassword.userId = this._authService.DecodedToken.sub;
-      this._userService.updatePassword(changePassword);
+      this._userService.updatePassword(this.changePassword).subscribe(
+        data => this._alertService.successMsg("Your Pass was updated"),
+       error => this._alertService.errorMsg(error.error.error));         
     }
   }
-  
+
 }
