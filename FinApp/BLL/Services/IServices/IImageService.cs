@@ -7,5 +7,6 @@ namespace BLL.Services.IServices
     public interface IImageService
     {
         Task<IEnumerable<ImageDTO>> GetAllAsync();
+        //Task<ImageDTO> CreateImaAsync(ImageViewModel imageVm);
     }
 }

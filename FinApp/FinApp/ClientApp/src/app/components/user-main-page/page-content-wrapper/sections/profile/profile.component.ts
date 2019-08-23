@@ -13,6 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  private _userAvatar: string;
 
   profileForm: FormGroup;
   user: User = new User();
@@ -22,14 +23,17 @@ export class ProfileComponent implements OnInit {
 
 
   public get Avatar(): string {
-    // for default images
     if (this.user.avatar) {
-      return this.user.avatar.includes('base64') ? this.user.avatar : `data:image/png;base64,${this.user.avatar}`;
+      this._userAvatar = this.user.avatar;
+      return this._userAvatar.includes('base64') ? this._userAvatar : `data:image/png;base64,${this._userAvatar}`;
     }
 
     return null;
   }
 
+  public set Avatar(imgBase64: string) {
+    this._userAvatar = imgBase64;
+  }
 
   constructor(
     private _authService: AuthService,
@@ -49,7 +53,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this._userService.getUser(this._authService.DecodedToken.sub).subscribe(res => {
-      console.log(res)
+      console.log(res);
       this.user = res;
 
       this.profileForm.get('Name').setValue(this.user.name);
@@ -70,6 +74,7 @@ export class ProfileComponent implements OnInit {
         this.user.birthDate = new Date((this.profileForm.controls['BirthDate'].value).split('-').reverse().join('-'));
       this._userService.update(this.user).subscribe(() => {
         console.log(this.user);
+        this.Avatar = this.user.avatar;
         this.alertService.successMsg('Profile updated');
       });
     }
@@ -86,8 +91,11 @@ export class ProfileComponent implements OnInit {
 
   closeModal() {
     this.updateModal.close();
+    // clear image after closing modal
     if (this.files.length > 1) {
       this.files.shift();
+      this.updateProfile();
+      this.ngOnInit();
     }
   }
 
@@ -108,7 +116,13 @@ export class ProfileComponent implements OnInit {
 
   // sent file into the service
   onSendImage() {
-    this._uploadService.uploadUserAvatar(this.user.id, this.files);
+    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]);
+    this.closeModal();
+    // this._uploadService.uploadCategoryImage(this.files[0]).subscribe(
+    //   () => {
+    //     this.closeModal();
+    //   }
+    // );
   }
 }
 

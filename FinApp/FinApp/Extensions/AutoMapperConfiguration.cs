@@ -22,6 +22,8 @@ namespace FinApp.Extensions
 
                 c.CreateMap<ImageDTO, Image>().ReverseMap();
 
+                c.CreateMap<ImageViewModel, Image>().ReverseMap();
+
                 c.CreateMap<LoginViewModel, User>();
 
                 c.CreateMap<RegistrationViewModel, User>();

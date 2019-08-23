@@ -1,10 +1,11 @@
 ﻿using BLL.DTOs;
 using BLL.Services.IServices;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace FinApp.Controllers
@@ -14,9 +15,11 @@ namespace FinApp.Controllers
     public class ImagesController : ControllerBase
     {
         private readonly IImageService imageService;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ImagesController(IImageService imageService)
+        public ImagesController(IHostingEnvironment hostingEnvironment, IImageService imageService)
         {
+            _hostingEnvironment = hostingEnvironment;
             this.imageService = imageService;
         }
 
@@ -29,20 +32,34 @@ namespace FinApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadAvatar(int id, IFormFile file)
+        public async Task<IActionResult> Create(/*ImageViewModel imageVm*/)
         {
-            if (file.Length > 0)
+            try
             {
-                byte[] userAvatar = null;
-
-                using (var binaryReader = new BinaryReader(file.OpenReadStream()))
+                var file = Request.Form.Files[0];
+                string folderName = "Upload";
+                string webRootPath = _hostingEnvironment.WebRootPath;
+                string newPath = Path.Combine(webRootPath, folderName);
+                if (!Directory.Exists(newPath))
                 {
-                    userAvatar = binaryReader.ReadBytes((int)file.Length);
+                    Directory.CreateDirectory(newPath);
                 }
+                if (file.Length > 0)
+                {
+                    string fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                    string fullPath = Path.Combine(newPath, fileName);
+                    using (var stream = new FileStream(fullPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
 
+                }
+                return Ok();
             }
-            return Ok();
+            catch (System.Exception ex)
+            {
+                return BadRequest();
+            }
         }
-
     }
 }

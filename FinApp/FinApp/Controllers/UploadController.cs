@@ -1,8 +1,6 @@
 ﻿using BLL.DTOs;
-using BLL.Models.Exceptions;
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

@@ -16,13 +16,11 @@ namespace BLL.Services.ImplementedServices
         private readonly IUnitOfWork _unitOfWork;
         private readonly JwtManager _jwtManager;
 
-
         public AuthService(IUnitOfWork unitOfWork, IPassHasher hasher, IRoleRepository roleRepository, JwtManager jwtManager)
         {
             _unitOfWork = unitOfWork;
             _hasher = hasher;
             _jwtManager = jwtManager;
-
         }
 
         public async Task<TokenDTO> SignInAsync(LoginViewModel loginModel)

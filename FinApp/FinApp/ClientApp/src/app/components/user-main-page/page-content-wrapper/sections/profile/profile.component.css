@@ -66,3 +66,8 @@ ngx-dropzone,
 .custom-dropzone {
   margin: 20px;
 }
+
+.disabled{
+    opacity: 0.5;
+    pointer-events: none;
+  }

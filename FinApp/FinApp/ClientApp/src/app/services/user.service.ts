@@ -16,7 +16,7 @@ export class UserService {
   httpOptions = {
     headers: this.headers
   };
-  
+
   private handleError(error: any) {
     console.log(error);
     return throwError(error);
