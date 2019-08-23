@@ -75,6 +75,8 @@ export class ProfileComponent implements OnInit {
       this._userService.update(this.user).subscribe(() => {
         console.log(this.user);
         this.Avatar = this.user.avatar;
+        console.log( this.Avatar);
+        
         this.alertService.successMsg('Profile updated');
       });
     }
@@ -90,13 +92,11 @@ export class ProfileComponent implements OnInit {
   }
 
   closeModal() {
-    this.updateModal.close();
     // clear image after closing modal
     if (this.files.length > 1) {
       this.files.shift();
-      this.updateProfile();
-      this.ngOnInit();
     }
+    this.updateModal.close();
   }
 
   // select kinda an event
@@ -116,9 +116,15 @@ export class ProfileComponent implements OnInit {
 
   // sent file into the service
   onSendImage() {
+    
     this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).subscribe(
-      () => this.closeModal());
-    // this.closeModal();
+      next => {},
+      err => {},
+      () => {
+        this.closeModal();
+        this.ngOnInit();
+        this.alertService.successMsg('Image updated');
+      });
 
     // this._uploadService.uploadCategoryImage({name: 'image.png', path: '/incomes/'}, this.files[0]).subscribe(
     //   () => {

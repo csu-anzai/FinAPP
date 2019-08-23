@@ -1,10 +1,11 @@
 ﻿using BLL.DTOs;
+using BLL.Helpers;
+using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -41,28 +42,15 @@ namespace FinApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm]ImageViewModel imageVm)
         {
-            // in helper create class for file saving
-            var file = imageVm.Image;
-            var folderName = _defaultFolderForUploadImages;
             var webRootPath = _hostingEnvironment.WebRootPath;
-            var newPath = Path.Combine(webRootPath, folderName);
 
-            if (!Directory.Exists(newPath))
-            {
-                Directory.CreateDirectory(newPath);
-            }
+            var result = await DirectoryManager.SaveFileInFolder(webRootPath, _defaultFolderForUploadImages, imageVm);
 
-            if (file.Length > 0)
-            {
-                // var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                var fullPath = Path.Combine(newPath, imageVm.Name);
-                using (var stream = new FileStream(fullPath, FileMode.Create))
-                {
-                    file.CopyTo(stream);
-                }
+            if (result == null)
+                throw new ApiException(System.Net.HttpStatusCode.InternalServerError);
 
-                await _imageService.AddImage(imageVm);
-            }
+            await _imageService.AddImage(imageVm);
+
             return Ok();
         }
     }

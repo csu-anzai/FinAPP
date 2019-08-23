@@ -3,6 +3,7 @@ import { HttpClient, HttpRequest } from '@angular/common/http';
 import { map, switchMap, catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Image } from '../models/image';
+import { bypassSanitizationTrustResourceUrl } from '@angular/core/src/sanitization/bypass';
 
 @Injectable({
   providedIn: 'root'

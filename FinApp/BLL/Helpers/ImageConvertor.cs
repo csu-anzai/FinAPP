@@ -18,10 +18,10 @@ namespace BLL.Helpers
             if (file.Length <= 0)
                 return null;
 
-            using (var ms = new MemoryStream())
+            using (var memoryStream = new MemoryStream())
             {
-                file.CopyTo(ms);
-                var fileBytes = ms.ToArray();
+                file.CopyTo(memoryStream);
+                var fileBytes = memoryStream.ToArray();
                 return Convert.ToBase64String(fileBytes);
             }
         }
