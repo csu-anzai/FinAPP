@@ -116,33 +116,14 @@ export class ProfileComponent implements OnInit {
 
   // sent file into the service
   onSendImage() {
-    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]);
-    this.closeModal();
-    // this._uploadService.uploadCategoryImage(this.files[0]).subscribe(
+    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).subscribe(
+      () => this.closeModal());
+    // this.closeModal();
+
+    // this._uploadService.uploadCategoryImage({name: 'image.png', path: '/incomes/'}, this.files[0]).subscribe(
     //   () => {
     //     this.closeModal();
     //   }
     // );
   }
 }
-
-// getUsers(){
-  //   this._userService.getUsers().subscribe(data => {
-  //     this.users=data;
-  //   });
-  // }
-
-//   deleteUser(id:number) {
-//     console.log(id);
-//   //   this._userService.deleteUser(id).subscribe(data => {
-//   //     this.getUsers();
-//   //  });
-//   this._userService.deleteUser(id).subscribe(data => {
-//     this.getUsers();
-//  });
-//   }
-
-// this.user.birthDate
-    //   this.date = new Date(moment(this.profileForm.controls['BirthDate'].value,'DD/MM/YYYY').format('MM/DD/YYYY'));
-    //   console.log(this.date);
-      //   this.date = new Date(moment(this.profileForm.controls['BirthDate'].value).format("MM/dd/YYYY")),

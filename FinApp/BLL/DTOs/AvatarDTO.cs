@@ -1,8 +1,10 @@
-﻿namespace BLL.DTOs
+﻿using Microsoft.AspNetCore.Http;
+
+namespace BLL.DTOs
 {
     public class AvatarDTO
     {
-        public int UserId { get; set; }
-        public string Avatar { get; set; }
+        public string UserId { get; set; }
+        public IFormFile Avatar { get; set; }
     }
 }

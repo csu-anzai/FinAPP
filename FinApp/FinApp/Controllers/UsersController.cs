@@ -43,7 +43,7 @@ namespace FinApp.Controllers
             var newUser = await _userService.CreateUserAsync(registrationModels);
 
             if (newUser == null)
-                throw new ValidationExeption(HttpStatusCode.Forbidden, "User already exists");
+                throw new ValidationException(HttpStatusCode.Forbidden, "User already exists");
 
             return Ok();
         }

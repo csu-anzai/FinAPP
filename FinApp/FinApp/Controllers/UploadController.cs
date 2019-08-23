@@ -18,7 +18,7 @@ namespace FinApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UserAvatar(AvatarDTO avatar)
+        public async Task<IActionResult> UserAvatar([FromForm]AvatarDTO avatar)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
