@@ -10,19 +10,9 @@ import { bypassSanitizationTrustResourceUrl } from '@angular/core/src/sanitizati
 })
 export class UploadService {
   baseUrl = 'https://localhost:44397/api/';
-  fileContent: string | ArrayBuffer = '';
+  fileContent: string | ArrayBuffer;
 
   constructor(private http: HttpClient) { }
-
-  // uploadUserAvatar(id: number, avatar: File) {
-  //   const fileReader: FileReader = new FileReader();
-  //   const self = this;
-  //   fileReader.onloadend = function (e) {
-  //     self.fileContent = fileReader.result;
-  //     self.http.post(self.baseUrl + 'upload/', { 'userId': id, 'avatar': self.fileContent }).toPromise();
-  //   };
-  //   fileReader.readAsDataURL(avatar);
-  // }
 
   uploadUserAvatar(id: number, avatar: File) {
     const attachedInfo  = new FormData();

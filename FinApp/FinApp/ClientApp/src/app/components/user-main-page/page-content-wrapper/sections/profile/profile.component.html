@@ -1,5 +1,5 @@
 <div class="profile-content">
-  <img [src]="Avatar" class="imgcenter" height="200px" (click)="onUpdateAvatar(updateModal)">
+  <img [attr.src]="Avatar" class="imgcenter" height="200px" (click)="onUpdateAvatar(updateModal)">
   <div class="form">
     <form method="post" (ngSubmit)="updateProfile()" [formGroup]="profileForm">
       <div class="form-group">
