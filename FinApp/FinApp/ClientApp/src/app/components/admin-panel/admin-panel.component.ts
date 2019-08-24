@@ -107,6 +107,11 @@ export class AdminPanelComponent implements OnInit {
     });
   }
   addIncomeCategory() {
+    if (!this.category.name) {
+      this.alertService.errorMsg('Category doesn`t have a value');
+      return;
+    }
+
     this.categoryService.creationIncomeCategory(this.category, true).subscribe(() => {
       console.log(this.category);
       this.loadCategories();
@@ -114,11 +119,11 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  editCategory(category: Category) {
-    this.categoryService.updateCategory(category, false).subscribe(() => {
+  editCategory(category: Category, isIncomeCategory: boolean) {
+    this.categoryService.updateCategory(category, isIncomeCategory).subscribe(() => {
       this.loadCategories();
       this.alertService.successMsg('Category was updated');
-    });;
+    });
   }
 
   deleteUser(id: number) {

@@ -51,7 +51,7 @@ export class CategoryService {
 
 
   updateCategory(category: Category, isIncomeCategories: boolean): Observable<Category> {
-    const url = `${this.baseUrl}/${"expensecategories"}/`;
+    const url = `${this.baseUrl}/${isIncomeCategories ? "incomecategories" : "expensecategories"}/`;
     return this.http.put<Category>(url + `${category.id}`, category).pipe(
       map(() => category),
       catchError(this.handleError)
