@@ -19,7 +19,7 @@ export class UploadService {
     attachedInfo.append('avatar', avatar);
     attachedInfo.append('userId', id.toString());
 
-    const uploadReq = new HttpRequest('POST', this.baseUrl + 'upload/', attachedInfo, {
+    const uploadReq = new HttpRequest('POST', `${this.baseUrl}upload/`, attachedInfo, {
       reportProgress: true,
     });
 
@@ -29,14 +29,13 @@ export class UploadService {
   }
 
   uploadCategoryImage(imageInfo: Image, imageFile: File) {
-
-    // set up request
+    // setting up a request
     const attachedInfo  = new FormData();
     attachedInfo.append('image', imageFile);
     attachedInfo.append('name', imageInfo.name);
     attachedInfo.append('path', imageInfo.path);
 
-    const uploadReq = new HttpRequest('POST', this.baseUrl + 'images', attachedInfo, {
+    const uploadReq = new HttpRequest('POST', `${this.baseUrl}images/`, attachedInfo, {
       reportProgress: true,
     });
 

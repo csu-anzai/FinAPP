@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.Models.Exceptions;
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -22,12 +23,14 @@ namespace FinApp.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-
-            var user = await _uploadService.UploadUserAvatar(avatar);
-
-            if (user == null)
-                return NotFound();
-
+            try
+            {
+                await _uploadService.UploadUserAvatar(avatar);
+            }
+            catch (ValidationException)
+            {
+                throw;
+            }
             return Ok();
         }
     }

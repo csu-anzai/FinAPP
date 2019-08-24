@@ -25,13 +25,21 @@ namespace BLL.Services.ImplementedServices
             var upToDateUser = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == userId);
 
             if (upToDateUser == null)
-                throw new ApiException(System.Net.HttpStatusCode.NotFound, "User doesn't exist");
+                throw new ValidationException(System.Net.HttpStatusCode.NotFound, "User doesn't exist");
 
-            upToDateUser.Avatar = ImageConvertor.GetByte64FromImage(avatarDTO.Avatar);
+            var convertedImg = ImageConvertor.GetByte64FromImage(avatarDTO.Avatar);
+
+            if (CheckIsTheSameImages(upToDateUser.Avatar, convertedImg))
+                throw new ValidationException(System.Net.HttpStatusCode.NotModified, "It's the same images");
+
+            upToDateUser.Avatar = convertedImg;
 
             await _unitOfWork.Complete();
 
             return upToDateUser;
         }
+
+        private bool CheckIsTheSameImages(string existedImg, string uploadedImg) =>
+            String.Equals(existedImg, uploadedImg);
     }
 }

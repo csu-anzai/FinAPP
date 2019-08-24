@@ -6,6 +6,10 @@ import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { first, finalize, catchError, takeLast } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandlingService } from 'src/app/services/error-handling.service';
+import { last } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +44,7 @@ export class ProfileComponent implements OnInit {
     private _userService: UserService,
     private _uploadService: UploadService,
     private _modalService: NgbModal,
+    private _errorHandler: ErrorHandlingService,
     fb: FormBuilder,
     private alertService: NotificationService) {
 
@@ -75,8 +80,8 @@ export class ProfileComponent implements OnInit {
       this._userService.update(this.user).subscribe(() => {
         console.log(this.user);
         this.Avatar = this.user.avatar;
-        console.log( this.Avatar);
-        
+        console.log(this.Avatar);
+
         this.alertService.successMsg('Profile updated');
       });
     }
@@ -93,7 +98,7 @@ export class ProfileComponent implements OnInit {
 
   closeModal() {
     // clear image after closing modal
-    if (this.files.length > 1) {
+    if (this.files.length) {
       this.files.shift();
     }
     this.updateModal.close();
@@ -101,7 +106,6 @@ export class ProfileComponent implements OnInit {
 
   // select kinda an event
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
     if (this.files.length > 1) {
       this.files.shift();
@@ -110,26 +114,26 @@ export class ProfileComponent implements OnInit {
 
   // remove from drap&drop
   onRemove(event) {
-    console.log(event);
+
     this.files.splice(this.files.indexOf(event), 1);
   }
 
   // sent file into the service
   onSendImage() {
-    
-    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).subscribe(
-      next => {},
-      err => {},
-      () => {
-        this.closeModal();
-        this.ngOnInit();
-        this.alertService.successMsg('Image updated');
-      });
 
-    // this._uploadService.uploadCategoryImage({name: 'image.png', path: '/incomes/'}, this.files[0]).subscribe(
-    //   () => {
-    //     this.closeModal();
-    //   }
-    // );
+    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).toPromise().then(
+      (res: any) => {
+        // validation error
+        if (res.body) {
+          if (res.body.error && res.body.code === 304) {
+            this.alertService.waringMsg(res.body.error);
+            return;
+          }
+        }
+        this.ngOnInit();
+        this.closeModal();
+        this.alertService.successMsg('Image updated');
+      }
+    );
   }
 }
