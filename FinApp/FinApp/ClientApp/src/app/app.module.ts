@@ -39,7 +39,7 @@ import { ChartComponent } from './components/user-main-page/page-content-wrapper
 import { FilterPipe } from './components/user-main-page/page-content-wrapper/sections/account/account-history/filter.pipe';
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
-
+import {LoaderComponent} from './loader/loader.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
@@ -96,7 +96,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     ConfirmCodeComponent,
     ChangePasswordComponent,
     DaterangepickerComponent,
-    ChartsComponent
+    ChartsComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
