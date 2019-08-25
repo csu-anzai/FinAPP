@@ -1,4 +1,4 @@
-﻿using BLL.DTOs;
+﻿using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace FinApp.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddAccount(AccountAddDTO account)
+        public async Task<IActionResult> AddAccount(AccountAddModel account)
         {
             var result = await accountService.AddAccount(account);
 
