@@ -74,7 +74,6 @@
           <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('required')">Please create a password</small>
           <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('minlength')">Password should contain at least 6 symbols</small>
           <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('maxlength')">Password should contain a maximum of 16 symbols</small>
-          <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('pattern')">Password  </small>
         </ng-container>
       </div>
     </div>

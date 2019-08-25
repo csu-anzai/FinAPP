@@ -11,9 +11,10 @@ import { OAuthService } from 'angular-oauth2-oidc';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-  model: any = {};
   signInForm: FormGroup;
   googleTokenId?: string;
+
+  loading = false;
 
   constructor(private authService: AuthService,
     private router: Router,
@@ -22,17 +23,20 @@ export class LoginPageComponent {
     fb: FormBuilder) {
     this.signInForm = fb.group({
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
-      'Password': new FormControl('', Validators.required),
+      'Password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
     });
   }
 
   onLogin() {
-    this.authService.login(this.model).subscribe(
+    this.loading = true;
+    this.authService.login(this.signInForm.value).subscribe(
       next => { },
       error => {
+        this.loading = false;
         this.alertService.errorMsg(error.message);
       },
       () => {
+        this.loading = false;
         this.alertService.successMsg('Logged in successfuly');
         this.router.navigate(['user/profile']);
       });
