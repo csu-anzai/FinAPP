@@ -14,9 +14,10 @@ namespace FinApp.Extensions
             services.AddSingleton(new MapperConfiguration(c =>
             {
                 c.CreateMap<AccountDTO, Account>().ReverseMap()
-                   .ForMember(dest => dest.Incomes, act => act.MapFrom(src => src.Incomes));
+                   .ForMember(dest => dest.Incomes, act => act.MapFrom(src => src.Incomes))
+                   .ForMember(dest=>dest.Expenses, act => act.MapFrom(src=>src.Expenses));
 
-                c.CreateMap<AccountAddDTO, Account>();
+                c.CreateMap<AccountAddModel, Account>();
 
                 c.CreateMap<CurrencyDTO, Currency>().ReverseMap();
 
@@ -46,6 +47,8 @@ namespace FinApp.Extensions
                 c.CreateMap<IncomeDTO, Income>().ReverseMap()
                    .ForMember(dest => dest.IncomeCategory, act => act.MapFrom(src => src.IncomeCategory))
                    .ForMember(dest => dest.Transaction, act => act.MapFrom(src => src.Transaction));
+
+                c.CreateMap<ExpenseDTO, Expense>().ReverseMap();
 
                 c.CreateMap<ProfileDTO, User>().ReverseMap();
 

@@ -22,11 +22,6 @@ import { HomeComponent } from './components/home/home.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { WelcomePageComponent } from './components/welcome-components/welcome-page/welcome-page.component';
-import { WelcomeHeaderComponent } from './components/welcome-components/welcome-header/welcome-header.component';
-import { WelcomeListComponent } from './components/welcome-components/welcome-list/welcome-list.component';
-import { WelcomeBenefitsComponent } from './components/welcome-components/welcome-benefits/welcome-benefits.component';
-import { WelcomeCarouselComponent } from './components/welcome-components/welcome-carousel/welcome-carousel.component';
 import { LeftSideBarComponent } from './components/user-main-page/left-side-bar/left-side-bar.component';
 import { ProfileComponent } from './components/user-main-page/page-content-wrapper/sections/profile/profile.component';
 import { PageContentWrapperComponent } from './components/user-main-page/page-content-wrapper/page-content-wrapper.component';
@@ -70,16 +65,11 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
   declarations: [
     AppComponent,
     NavMenuComponent,
-    WelcomePageComponent,
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
     LoginPageComponent,
     SignUpComponent,
-    WelcomeListComponent,
-    WelcomeHeaderComponent,
-    WelcomeBenefitsComponent,
-    WelcomeCarouselComponent,
     MainPageComponent,
     LeftSideBarComponent,
     PageContentWrapperComponent,
