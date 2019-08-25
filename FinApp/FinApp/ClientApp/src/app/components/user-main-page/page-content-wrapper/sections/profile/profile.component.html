@@ -54,7 +54,7 @@
         </div>
       </div>
 
-      <button type="submit">Save</button>
+      <button class="save-btn" type="submit">Save</button>
 
     </form>
   </div>
@@ -63,7 +63,7 @@
 <!-- Modal window -->
 <ng-template #updateModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">Update avatar</h4>
+        <h4 class="modal-title">Update an avatar</h4>
         <button type="button" class="close" aria-label="Close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -79,6 +79,6 @@
         [removable]="true" (removed)="onRemove(f)">
       </ngx-dropzone-image-preview>
     </div>
-    <button (click)="onSendImage()" [ngClass]="{disabled: !files.length}">Send</button>
+    <button class="save-btn" (click)="onSendImage()" [ngClass]="{disabled: !files.length}">Send</button>
   </div>
   </ng-template>

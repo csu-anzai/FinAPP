@@ -30,7 +30,7 @@ namespace BLL.Services.ImplementedServices
             var convertedImg = ImageConvertor.GetByte64FromImage(avatarDTO.Avatar);
 
             if (CheckIsTheSameImages(upToDateUser.Avatar, convertedImg))
-                throw new ValidationException(System.Net.HttpStatusCode.NotModified, "It's the same images");
+                throw new ValidationException(System.Net.HttpStatusCode.NotModified, "These are the same images");
 
             upToDateUser.Avatar = convertedImg;
 
