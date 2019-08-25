@@ -10,7 +10,7 @@ import { tap } from 'rxjs/operators';
 })
 export class CurrencyService {
 
-  url = 'https://localhost:44397/api/currency/';
+  url = 'https://localhost:44397/api/currencies/';
 
   constructor(public http: HttpClient,
     private errorHandler: ErrorHandlingService) { }

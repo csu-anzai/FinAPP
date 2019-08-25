@@ -11,7 +11,7 @@ import { RecoverPassword } from '../models/recoverPassword';
 export class UserService {
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'https://localhost:44397/api/user';
+  baseUrl = 'https://localhost:44397/api/users';
 
   private handleError(error: any) {
     console.log(error);

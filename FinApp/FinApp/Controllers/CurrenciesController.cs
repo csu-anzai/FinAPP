@@ -7,11 +7,11 @@ namespace FinApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CurrencyController : Controller
+    public class CurrenciesController : Controller
     {
         private readonly ICurrencyService currencyService;
 
-        public CurrencyController(ICurrencyService currencyService)
+        public CurrenciesController(ICurrencyService currencyService)
         {
             this.currencyService = currencyService;
         }

@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 // Components
 import { AppComponent } from './app.component';
@@ -55,7 +56,7 @@ import { ForgotPasswordService } from './services/forgot.password.service';
 import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
-import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
+import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ChartsService} from './services/charts.service';
 
 import { FusionChartsModule } from 'angular-fusioncharts';
@@ -106,6 +107,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     ChartsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgxDropzoneModule,
     OAuthModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgbModule.forRoot(),
@@ -122,13 +124,13 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
         component: FetchDataComponent,
         canActivate: [AuthGuard],
         children: [
-          { path: 'profile', component: ProfileComponent },
-          { path: 'charts', component: ChartComponent },
-          { path: 'accounts', component: AccountComponent },
-          { path: 'settings', component: SettingComponent },
-          { path: 'accounts/:id', component: AccountComponent },
-          { path: 'settings', component: SettingComponent },
-          { path: 'adminPanel', component: AdminPanelComponent }
+          { path: 'profile', component: ProfileComponent,canActivate: [AuthGuard] },
+          { path: 'charts', component: ChartComponent,canActivate: [AuthGuard] },
+          { path: 'accounts', component: AccountComponent,canActivate: [AuthGuard] },
+          { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
+          { path: 'accounts/:id', component: AccountComponent,canActivate: [AuthGuard] },
+          { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
+          { path: 'adminPanel', component: AdminPanelComponent,canActivate: [AuthGuard] }
         ]
       }
     ]),

@@ -234,6 +234,8 @@ namespace DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Avatar");
+
                     b.Property<DateTime>("BirthDate");
 
                     b.Property<string>("Email");

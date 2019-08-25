@@ -4,12 +4,14 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { AuthService } from 'src/app/services/auth.service';
 import { MessagingCenterService } from '../../services/messaging-center.service';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { NotificationService } from 'src/app/services/notification.service';
 @Component({
   selector: 'sign-up-component',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+  imageUrl: string;
   signUpForm: FormGroup;
   user: any;
 
@@ -17,6 +19,7 @@ export class SignUpComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private message: MessagingCenterService,
+    private alertService: NotificationService,
     private parserFormatter: NgbDateParserFormatter,
     fb: FormBuilder) {
     this.signUpForm = fb.group({
@@ -42,6 +45,7 @@ export class SignUpComponent implements OnInit {
         this.signUpForm.controls['Email'].setValue(obj.email);
         this.signUpForm.controls['Name'].setValue(obj.name);
         this.signUpForm.controls['Surname'].setValue(obj.surname);
+        this.imageUrl = obj.avatar;
       }
     );
   }
@@ -54,12 +58,13 @@ export class SignUpComponent implements OnInit {
         BirthDate: this.parserFormatter.format( this.signUpForm.controls['BirthDate'].value),
         Email: this.signUpForm.controls['Email'].value,
         Password: this.signUpForm.controls['Password'].value,
+        Avatar: this.imageUrl
       };
-      this.authService.register(this.user).subscribe(() => {
-        this.router.navigate(['login-page']);
-      },
-        error => {
-        });
+      this.authService.register(this.user).subscribe(
+        next => {},
+        error => this.alertService.errorMsg(error),
+        () => this.router.navigate(['login-page'])
+      );
     } else {
       for (let i in this.signUpForm.controls)
         this.signUpForm.controls[i].markAsTouched();

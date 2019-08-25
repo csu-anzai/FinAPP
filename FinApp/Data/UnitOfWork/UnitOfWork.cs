@@ -1,4 +1,5 @@
 ﻿using DAL.Context;
+using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -10,11 +11,42 @@ namespace DAL.UnitOfWork
         private readonly DbContext _context;
         private bool _disposed = false;
 
-        public UnitOfWork(FinAppContext context)
+        #region properties
+
+        public IAccountRepository AccountRepository { get; }
+        public IAuthRepository AuthRepository { get; }
+        public ICurrencyRepository CurrencyRepository { get; }
+        public IExpenseCategoryRepository ExpenseCategoryRepository { get; }
+        public IImageRepository ImageRepository { get; }
+        public IIncomeCategoryRepository IncomeCategoryRepository { get; }
+        public IPasswordConfirmationCodeRepository PasswordConfirmationCodeRepository { get; }
+        public IRoleRepository RoleRepository { get; }
+        public ITokenRepository TokenRepository { get; }
+        public IUserRepository UserRepository { get; }
+        #endregion properties
+
+        #region constructor
+        public UnitOfWork(FinAppContext context, IAccountRepository accountRepository, IAuthRepository authRepository, ICurrencyRepository currencyRepository,
+            IExpenseCategoryRepository expenseCategoryRepository, IImageRepository imageRepository, IIncomeCategoryRepository incomeCategoryRepository,
+             IPasswordConfirmationCodeRepository passwordConfirmationCodeRepository, IRoleRepository roleRepository,
+                ITokenRepository tokenRepository, IUserRepository userRepository)
+
         {
             _context = context;
+            AccountRepository = accountRepository;
+            AuthRepository = authRepository;
+            CurrencyRepository = currencyRepository;
+            ExpenseCategoryRepository = expenseCategoryRepository;
+            ImageRepository = imageRepository;
+            IncomeCategoryRepository = incomeCategoryRepository;
+            PasswordConfirmationCodeRepository = passwordConfirmationCodeRepository;
+            RoleRepository = roleRepository;
+            TokenRepository = tokenRepository;
+            UserRepository = userRepository;
         }
+        #endregion constructor
 
+        #region methods
         public async Task<int> Complete()
         {
             return await _context.SaveChangesAsync();
@@ -37,5 +69,7 @@ namespace DAL.UnitOfWork
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+        #endregion methods
     }
 }
+

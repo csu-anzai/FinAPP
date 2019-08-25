@@ -7,11 +7,11 @@ namespace FinApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
         IAccountService accountService;
 
-        public AccountController(IAccountService accountService)
+        public AccountsController(IAccountService accountService)
         {
             this.accountService = accountService;
         }

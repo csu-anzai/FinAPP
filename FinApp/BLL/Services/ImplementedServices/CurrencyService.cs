@@ -3,6 +3,7 @@ using BLL.DTOs;
 using BLL.Services.IServices;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
+using DAL.UnitOfWork;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,19 +11,18 @@ namespace BLL.Services.ImplementedServices
 {
     public class CurrencyService : ICurrencyService
     {
-        private readonly ICurrencyRepository currencyRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        private readonly IMapper mapper;
-
-        public CurrencyService(ICurrencyRepository currencyRepository, IMapper mapper)
+        public CurrencyService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            this.currencyRepository = currencyRepository;
-            this.mapper = mapper;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<CurrencyDTO>> GetAllAsync()
         {
-            return mapper.Map<IEnumerable<Currency>, IEnumerable<CurrencyDTO>>(await currencyRepository.GetAllAsync());
+            return _mapper.Map<IEnumerable<Currency>, IEnumerable<CurrencyDTO>>(await _unitOfWork.CurrencyRepository.GetAllAsync());
         }
     }
 }
