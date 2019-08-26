@@ -108,5 +108,17 @@
         "warningMsg": "Warning",
         "loggedInSuccessfullyMsg": "Logged in successfully",
         "logOutMsg": "Logged Out"
-    }    
+    },
+
+    "mainPage": {
+        "subtitleLabel": "All your flow in one screen!",
+        "learnMoreLinkTitle": "Learn More",
+        "extraordinaryTitle":"Extraordinary convenience!",
+        "description1":"All actions are very simple. You can quickly and easily add the transaction you need, which will take you seconds to adjust immediately after changing your balance!",
+        "financesControlTitle": "Control over finances!",
+        "description2": "Get control of all your accounts! It doesn't matter if you have one bank card or many, you can manage everything in one place!",
+        "globalizationTitle" : "Monetary globalization!",
+        "description3": "Our resource supports many foreign currencies, which is especially beneficial for travelers and businessmen! You can now make changes to your balance in the currency that is convenient for you. In addition, in each account you can keep everything in different currencies!",
+        "copyrightLabel": "Copyright"
+    }
 }

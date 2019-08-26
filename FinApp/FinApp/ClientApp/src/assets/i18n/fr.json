@@ -113,5 +113,17 @@
         "warningMsg": "Attention",
         "loggedInSuccessfullyMsg": "Connecté avec succès",
         "logOutMsg": "Déconnecté"
+    },
+
+    "mainPage": {
+        "subtitleLabel": "Tout votre flux sur un seul écran!",
+        "learnMoreLinkTitle": "Apprendre encore plus",
+        "extraordinaryTitle": "Confort extraordinaire!",
+        "description1": "Toutes les actions sont très simples. Vous pouvez rapidement et facilement ajouter la transaction dont vous avez besoin, ce qui vous prendra quelques secondes pour vous ajuster immédiatement après avoir modifié votre solde!",
+        "financesControlTitle": "Contrôle des finances!",
+        "description2": "Prenez le contrôle de tous vos comptes! Peu importe si vous avez une ou plusieurs cartes bancaires, vous pouvez tout gérer en un seul endroit!",
+        "globalizationTitle" : "Mondialisation monétaire!",
+        "description3": "Notre ressource prend en charge de nombreuses devises étrangères, ce qui est particulièrement avantageux pour les voyageurs et les hommes d'affaires! Vous pouvez maintenant modifier le solde de votre compte dans la devise de votre choix. De plus, dans chaque compte, vous pouvez tout conserver dans différentes devises!",
+        "copyrightLabel": "Droits d'auteur"
     }
 }
