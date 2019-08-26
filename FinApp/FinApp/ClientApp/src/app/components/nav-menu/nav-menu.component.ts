@@ -7,6 +7,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { JwtHelperService } from '@auth0/angular-jwt/src/jwthelper.service';
 import { share, map } from 'rxjs/operators';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { LanguageService } from 'src/app/services/language.service';
 
 
 
@@ -17,6 +18,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 })
 export class NavMenuComponent implements OnInit {
   private logOutMsg: string;
+  private languages: any = [];
   jwtHelper = new JwtHelperService();
   isExpanded = false;
 
@@ -24,6 +26,7 @@ export class NavMenuComponent implements OnInit {
     private cookieService: CookieService,
     private router: Router,
     private alertService: NotificationService,
+    private languageService: LanguageService,
     private translate: TranslateService) { }
 
   ngOnInit() {
@@ -35,6 +38,7 @@ export class NavMenuComponent implements OnInit {
       );
     });
 
+    this.languages = LanguageService.LANGUAGES;
   }
 
   collapse() {
@@ -56,5 +60,10 @@ export class NavMenuComponent implements OnInit {
     this.cookieService.delete('token', '/');
     this.router.navigate(['']);
     this.alertService.infoMsg(this.logOutMsg);
+  }
+
+  onLanguageChange(event: any) {
+    const languageAbbr = event.target.value;
+    this.languageService.switchLanguage(languageAbbr);
   }
 }

@@ -5,6 +5,7 @@ using FinApp.Extensions;
 using FinApp.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Serilog;
+using System.Globalization;
 
 namespace FinApp
 {
@@ -32,6 +34,9 @@ namespace FinApp
         {
             services.AddDbContext<FinAppContext>(options =>
                 options.UseSqlServer(Configuration["Data:DefaultConnection"]));
+
+            services.AddLocalization(o => o.ResourcesPath = "Resources");
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -80,6 +85,19 @@ namespace FinApp
                 app.UseHsts();
             }
             app.UseGlobalExcepionMiddleware();
+
+            var supportedCultures = new[]
+            {
+                new CultureInfo("en"),
+                new CultureInfo("de"),
+                new CultureInfo("fr")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("en"),
+                SupportedCultures = supportedCultures
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();

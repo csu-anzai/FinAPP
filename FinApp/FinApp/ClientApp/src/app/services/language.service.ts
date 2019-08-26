@@ -7,12 +7,20 @@ import { lang } from 'moment';
   providedIn: 'root'
 })
 export class LanguageService implements OnInit {
+  static LANGUAGES: any = [
+    { name: 'English', abbreviation: 'en' },
+    { name: 'Deutschland', abbreviation: 'de' },
+    { name: 'Franch', abbreviation: 'fr' }
+  ];
+
+  public get SelectedLanguage(): string {
+    return this.isLanguageWasSelected() ? this.cookieService.get('language') : 'en';
+  }
 
   constructor(private translate: TranslateService,
     private cookieService: CookieService) { }
 
   ngOnInit() {
-    // this.languageSetUp();
   }
 
   switchLanguage(language: string) {

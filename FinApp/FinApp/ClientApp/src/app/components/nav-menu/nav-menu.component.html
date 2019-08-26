@@ -13,6 +13,17 @@
             (click)="toggle()">
       <span class="navbar-toggler-icon"></span>
     </button>
+    <div class="navbar-nav float-right">
+      <div class="form-group">
+        <select id="contactMethod"
+                class="form-control"
+                (change)="onLanguageChange($event)">
+          <option *ngFor="let language of languages"
+                  [selected]="language.abbreviation==languageService.SelectedLanguage"
+                  [value]="language.abbreviation">{{ language.name }}</option>
+        </select>
+      </div>
+    </div>
     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
          [ngClass]='{"show": isExpanded}'
          *ngIf="!loggedIn();else logOut">
@@ -38,10 +49,10 @@
           <li class="nav-item">
             <a class="nav-link text-dark"
                [routerLink]='["/user/profile"]'>
-               <span translate>WelcomeMessage</span>
-               <b>
-                 {{ authService.DecodedToken?.login}}
-                </b>
+              <span translate>WelcomeMessage</span>
+              <b>
+                {{ authService.DecodedToken?.login}}
+              </b>
             </a>
           </li>
           <li class="nav-item cursor-on"

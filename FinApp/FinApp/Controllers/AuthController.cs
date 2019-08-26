@@ -3,6 +3,7 @@ using BLL.DTOs;
 using BLL.Services.IServices;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,11 +16,13 @@ namespace FinApp.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IAuthService _authService;
+        private readonly IStringLocalizer<AuthController> _localizer;
 
-        public AuthController(IAuthService userService, IMapper mapper)
+        public AuthController(IAuthService userService, IMapper mapper, IStringLocalizer<AuthController> localizer)
         {
             _authService = userService;
             _mapper = mapper;
+            _localizer = localizer;
         }
 
         [HttpPost]
@@ -29,7 +32,7 @@ namespace FinApp.Controllers
             var token = await _authService.SignInAsync(userDto);
 
             if (token == null)
-                return BadRequest(new { message = "Credentials are invalid" });
+                return BadRequest(new { message = _localizer["InvalidCredentials"] });
 
             return Ok(new { token = token.AccessToken });
         }
@@ -41,7 +44,7 @@ namespace FinApp.Controllers
             var validPayload = await GoogleJsonWebSignature.ValidateAsync(googleToken.IdToken);
 
             if (validPayload == null)
-                return Ok(new { code = 401, message = "Non authorized" });
+                return Ok(new { code = 401, message = _localizer["NonAuthorized"] });
 
             var token = await _authService.GoogleSignInAsync(validPayload.Email);
 
