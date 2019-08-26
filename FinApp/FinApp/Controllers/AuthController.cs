@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BLL.DTOs;
+using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Mvc;
@@ -27,9 +27,9 @@ namespace FinApp.Controllers
 
         [HttpPost]
         [Route("signin")]
-        public async Task<IActionResult> Login(UserLoginDTO userDto)
+        public async Task<IActionResult> Login(LoginViewModel loginModel)
         {
-            var token = await _authService.SignInAsync(userDto);
+            var token = await _authService.SignInAsync(loginModel);
 
             if (token == null)
                 return BadRequest(new { message = _localizer["InvalidCredentials"] });
@@ -39,7 +39,7 @@ namespace FinApp.Controllers
 
         [HttpPost]
         [Route("signingoogle")]
-        public async Task<IActionResult> GoogleSignIn(TokenIdDTO googleToken)
+        public async Task<IActionResult> GoogleSignIn(TokenViewModel googleToken)
         {
             var validPayload = await GoogleJsonWebSignature.ValidateAsync(googleToken.IdToken);
 
@@ -51,7 +51,7 @@ namespace FinApp.Controllers
             if (token != null)
                 return Ok(new { token = token.AccessToken });
 
-            var googleProfile = _mapper.Map<UserRegistrationDTO>(validPayload);
+            var googleProfile = _mapper.Map<RegistrationViewModel>(validPayload);
             return Ok(new { code = 404, googleProfile });
         }
     }

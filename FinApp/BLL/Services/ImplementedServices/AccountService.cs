@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Models.ViewModels;
 using BLL.DTOs;
 using BLL.Services.IServices;
 using DAL.Entities;
@@ -12,27 +13,25 @@ namespace BLL.Services.ImplementedServices
     {
         private readonly IMapper mapper;
         private readonly IUnitOfWork unitOfWork;
-        private readonly IAccountRepository accountRepository;
 
-        public AccountService(IMapper mapper, IUnitOfWork unitOfWork, IAccountRepository accountRepository)
+        public AccountService(IMapper mapper, IUnitOfWork unitOfWork)
         {
             this.mapper = mapper;
             this.unitOfWork = unitOfWork;
-            this.accountRepository = accountRepository;
         }
 
         public async Task<AccountDTO> GetInfoById(int userId, int accountId)
         {
-            return mapper.Map<Account, AccountDTO>(await accountRepository.FindAsyncAccountWithImgCurrency(p => p.UserId == userId && p.Id == accountId));
+            return mapper.Map<Account, AccountDTO>(await  unitOfWork.AccountRepository.FindAsyncAccountWithImgCurrency(p => p.UserId == userId && p.Id == accountId));
         }
 
-        public async Task<Account> AddAccount(AccountAddDTO account)
+        public async Task<Account> AddAccount(AccountAddModel account)
         {
-            Account exitedAccount = await accountRepository.SingleOrDefaultAsync(a => a.Name == account.Name && a.UserId == account.UserId);
+            Account exitedAccount = await unitOfWork.AccountRepository.SingleOrDefaultAsync(a => a.Name == account.Name && a.UserId == account.UserId);
 
             if (exitedAccount == null)
             {
-                await accountRepository.AddAsync(mapper.Map<AccountAddDTO, Account>(account));
+                await unitOfWork.AccountRepository.AddAsync(mapper.Map<AccountAddModel, Account>(account));
 
                 await unitOfWork.Complete();
 

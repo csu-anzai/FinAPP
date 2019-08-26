@@ -2,7 +2,6 @@ using AutoMapper;
 using BLL.DTOs;
 using DAL.Context;
 using FinApp.Extensions;
-using FinApp.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Localization;

@@ -1,9 +1,13 @@
-﻿using AutoMapper;
-using BLL.DTOs;
+﻿using BLL.DTOs;
+using BLL.Helpers;
+using BLL.Models.Exceptions;
+using BLL.Models.ViewModels;
 using BLL.Services.IServices;
-using DAL.Repositories.IRepositories;
 using FinApp.Attributes;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace FinApp.Controllers
@@ -11,26 +15,35 @@ namespace FinApp.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : Controller
+    public class UsersController : Controller
     {
-        private readonly IMapper _mapper;
+        private IHostingEnvironment _hostingEnvironment;
+        private IUploadService _uploadService;
         private readonly IUserService _userService;
-        IUserRepository userRepository { get; set; }
 
-        public UserController(IUserService userService, IMapper mapper, IUserRepository userRepository)
+        public UsersController(IUserService userService, IUploadService uploadService, IHostingEnvironment hostingEnvironment)
         {
             _userService = userService;
-            _mapper = mapper; this.userRepository = userRepository;
+            _uploadService = uploadService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
-
-        [HttpPost("signup")]
-        public async Task<IActionResult> SignUp(UserRegistrationDTO userDto)
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(RegistrationViewModel registrationModels)
         {
-            var newUser = await _userService.CreateUserAsync(userDto);
+            var fullPath = DefaultUserImagePath();
+
+            var image = registrationModels.Avatar;
+
+            if (string.IsNullOrEmpty(image))
+                registrationModels.Avatar = ImageConvertor.GetImageFromPath(fullPath);
+            else
+                registrationModels.Avatar = await Downloader.GetImageAsBase64Url(image);
+
+            var newUser = await _userService.CreateUserAsync(registrationModels);
 
             if (newUser == null)
-                return BadRequest(new { message = "User already exists" });
+                throw new ValidationException(HttpStatusCode.Forbidden, "User already exists");
 
             return Ok();
         }
@@ -60,14 +73,14 @@ namespace FinApp.Controllers
             return Ok(users);
         }
 
-        [ServiceFilter(typeof(AuthorizeAttribute))]
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(int id, UserDTO userDTO)
+        public async Task<IActionResult> UpdateUser(int id, ProfileDTO profileDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var user = await _userService.UpdateAsync(userDTO);
+            var user = await _userService.UpdateAsync(profileDTO);
 
             if (user == null)
                 return BadRequest(new { message = "User Id is incorrect" });
@@ -96,5 +109,13 @@ namespace FinApp.Controllers
             return Ok();
         }
 
+        private string DefaultUserImagePath()
+        {
+            var webRootPath = _hostingEnvironment.WebRootPath;
+            var newPath = Path.Combine(webRootPath, "DefaultImages");
+            string fullPath = Path.Combine(newPath, "profile-icon.png");
+
+            return fullPath;
+        }
     }
 }

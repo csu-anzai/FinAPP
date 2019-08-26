@@ -1,4 +1,4 @@
-﻿using BLL.DTOs;
+﻿using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -7,11 +7,11 @@ namespace FinApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : Controller
+    public class AccountsController : Controller
     {
         IAccountService accountService;
 
-        public AccountController(IAccountService accountService)
+        public AccountsController(IAccountService accountService)
         {
             this.accountService = accountService;
         }
@@ -25,7 +25,7 @@ namespace FinApp.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> AddAccount(AccountAddDTO account)
+        public async Task<IActionResult> AddAccount(AccountAddModel account)
         {
             var result = await accountService.AddAccount(account);
 

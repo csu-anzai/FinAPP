@@ -73,13 +73,12 @@
         <ng-container *ngIf="signUpForm.controls['Password'].touched">
           <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('required')" translate>PwdSignUpValidation1</small>
           <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('minlength')" translate>PwdSignUpValidation2</small>
-          <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('maxlength')" translate>PwdSignUpValidation3</small>
-          <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('pattern')" translate>PasswordTitle</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['Password'].hasError('maxlength')" translate>PasswordTitle</small>
         </ng-container>
       </div>
     </div>
     <div class="p">
-      <label class="floatLabel" for="lastname" translate>Repeat password:</label>
+      <label class="floatLabel" for="lastname" translate>RepeatPwdLabel</label>
       <input type="password"
              formControlName="RepeatedPassword"
              #repeated>

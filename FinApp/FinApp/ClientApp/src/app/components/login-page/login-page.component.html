@@ -1,12 +1,13 @@
 <div class="form">
   <div class="container">
+    
     <form #loginForm="ngForm" (ngSubmit)="onLogin()" [formGroup]="signInForm">
       <h2 translate>LoginTitle</h2>
       <p>
         <label class="floatLabel" for="email" translate>EmailWithColonLabel</label>
         <input type="email"
                formControlName="Email"
-               #email [(ngModel)]="model.email" #login required>
+               #email >
         <ng-container *ngIf="signInForm.controls['Email'].touched">
           <small class="text-danger" *ngIf="signInForm.controls['Email'].hasError('required')" translate>EmailValidation1</small>
           <small class="text-danger" *ngIf="signInForm.controls['Email'].hasError('email')" translate>EmailLabel </small>
@@ -16,15 +17,16 @@
         <label class="floatLabel" for="password" translate>PwdWithColonLabel</label>
         <input type="password"
                formControlName="Password"
-               #password [(ngModel)]="model.password" #pwd required>
+               #password>
         <ng-container *ngIf="signInForm.controls['Password'].touched">
           <small class="text-danger" *ngIf="signInForm.controls['Password'].hasError('required')" translate>PwdValidation1</small>
-          <small class="text-danger" *ngIf="signInForm.controls['Password'].hasError('pattern')" translate>PasswordTitle </small>
+          <small class="text-danger" *ngIf="signInForm.controls['Password'].hasError('minlength')">Password should contain at least 6 symbols</small>
+          <small class="text-danger" *ngIf="signInForm.controls['Password'].hasError('maxlength')">Password should contain a maximum of 16 symbols</small>
         </ng-container>
       </p>
 
       <div class="row justify-content-center text-center">
-        <button type="submit" class="button" style="vertical-align:middle" [disabled]="!loginForm.form.valid"><span translate>SignInTitle</span></button>
+        <button type="submit" class="button" style="vertical-align:middle" [disabled]="!loginForm.form.valid || loading"><span translate>SignInTitle</span></button>
         <br>
 
       </div>

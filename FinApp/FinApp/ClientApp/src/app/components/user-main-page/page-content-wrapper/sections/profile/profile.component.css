@@ -1,63 +1,76 @@
 .profile-content {
-    display: flow-root;
-    min-height: 100vh;
+  display: flow-root;
+  min-height: 100vh;
 }
 
 .imgcenter {
-    padding-top: 30px;
-    display:block; 
-    margin:0 auto;
-    
+  padding-top: 30px;
+  display: block;
+  margin: 0 auto;
+
 }
 
 .form {
-    width: 50%;
-    padding: 2em 4em 2em;
-    margin:0 auto;
-    padding: 30px 25px;
-    background-color: white;
-    border-radius: 40px;
-  }
-  
+  width: 50%;
+  padding: 2em 4em 2em;
+  margin: 0 auto;
+  padding: 30px 25px;
+  background-color: white;
+  border-radius: 40px;
+}
+
 @media screen and (max-width: 700px) {
-    .form {
-        width: 90%
-    }
+  .form {
+    width: 90%
+  }
 }
 
-button {
-    margin-top: 15px;
-    background-color: white;
-    border: 1px solid rgb(17, 74, 138);
-    line-height: 0;
-    font-size: 17px;
-    padding: 20px 15px ;
-    border-radius: 80px;
-    color: rgb(17, 74, 138);
-    cursor: pointer;
+.save-btn {
+  margin-top: 15px;
+  background-color: white;
+  border: 1px solid rgb(17, 74, 138);
+  line-height: 0;
+  font-size: 17px;
+  padding: 20px 15px;
+  border-radius: 80px;
+  color: rgb(17, 74, 138);
+  cursor: pointer;
 }
 
-button:hover, button:focus {
-    color: white;
-    background-color:rgb(17, 74, 138);
+.save-btn:hover,
+.save-btn:focus {
+  color: white;
+  background-color: rgb(17, 74, 138);
 }
 
 input {
-    outline: none ;
-    background-color: none;
-    border: 1px solid blue;
-    line-height: 0;
-    font-size: 17px;
-    width: 100%;
-    display: block;
-    box-sizing: border-box;
-    padding: 10px 15px;
-    border-radius: 60px;
-    color: blue;
+  outline: none;
+  background-color: none;
+  border: 1px solid blue;
+  line-height: 0;
+  font-size: 17px;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  padding: 10px 15px;
+  border-radius: 60px;
+  color: blue;
 }
-input:focus, input:active{
+
+input:focus,
+input:active {
   background: rgb(17, 74, 138);
   border: 1px solid white;
-  color:#fff ;
-  
+  color: #fff;
+
+}
+
+ngx-dropzone,
+.custom-dropzone {
+  margin: 20px;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }

@@ -30,7 +30,7 @@ export class NavMenuComponent implements OnInit {
     private translate: TranslateService) { }
 
   ngOnInit() {
-    this.loggedIn();
+    this.isloggedIn();
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
           this.translate.get('notifications.logOutMsg').subscribe(
@@ -49,7 +49,7 @@ export class NavMenuComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
-  loggedIn() {
+  isloggedIn() {
     return this.authService.loggedIn();
   }
 

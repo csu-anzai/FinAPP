@@ -9,12 +9,12 @@ namespace FinApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class IncomeCategoryController : Controller
+    public class IncomeCategoriesController : Controller
     {
         private readonly IMapper _mapper;
         private readonly IIncomeCategoryService _incomeCategoryService;
 
-        public IncomeCategoryController(IMapper mapper, IIncomeCategoryService incomeCategoryService)
+        public IncomeCategoriesController(IMapper mapper, IIncomeCategoryService incomeCategoryService)
         {
             _mapper = mapper;
             _incomeCategoryService = incomeCategoryService;
@@ -30,7 +30,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateIncomeCategory(int id, IncomeCategoryDTO incomeCategoryDTO)
         {
             if (!ModelState.IsValid)

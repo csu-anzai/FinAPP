@@ -14,7 +14,7 @@ import { AuthService } from './auth.service';
 })
 export class ChartsService {
 
-  url = 'https://localhost:44397/api/currency/';
+  url = 'https://localhost:44397/api/currencies/';
   user: User = new User();
   accounts : Account[];
 
@@ -31,11 +31,6 @@ export class ChartsService {
       console.log(res.accounts);
       return res.accounts;
      });
-
-     return this.accounts;
-    // let res = await this._userService.getUser(this._authService.DecodedToken.sub);
-    // console.log(res)
-    // return res.accounts;
   }
     
 }

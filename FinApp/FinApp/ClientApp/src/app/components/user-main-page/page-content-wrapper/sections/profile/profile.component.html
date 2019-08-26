@@ -1,5 +1,5 @@
 <div class="profile-content">
-  <img src="assets/images/profile-icon.png" class = "imgcenter" height="200px">
+  <img [attr.src]="Avatar" class="imgcenter" height="200px" (click)="onUpdateAvatar(updateModal)">
   <div class="form">
     <form method="post" (ngSubmit)="updateProfile()" [formGroup]="profileForm">
       <div class="form-group">
@@ -26,11 +26,10 @@
 
       <div class="form-group">
         <label for="BirthDate" translate>BirthDateLabel</label>
-        <input type="text" id="BirthDate"  formControlName="BirthDate"  [value]="user.birthDate | date:'dd/MM/yyyy'">
+        <input type="text" id="BirthDate"  formControlName="BirthDate"  [value]="user.birthDate | date:'dd-MM-yyyy'" placeholder="dd-mm-yyyy">
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['BirthDate'].touched">
             <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].hasError('required')" translate>EnterYourBirthdateValidation1</small>
-            <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].invalid" translate>EnterYourBirthdateValidation2</small>
           </ng-container>
         </div>
       </div>
@@ -46,8 +45,31 @@
         </div>
       </div>
 
-      <button type="submit" translate>SaveButton</button>
+      <button class="save-btn" type="submit" translate>SaveButton</button>
 
     </form>
   </div>
 </div>
+
+<!-- Modal window -->
+<ng-template #updateModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Update an avatar</h4>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="container">
+    <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+      <ngx-dropzone-label>
+        <div>
+          <h2>Drag and drop or click here</h2>
+        </div>
+      </ngx-dropzone-label>
+      <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
+        [removable]="true" (removed)="onRemove(f)">
+      </ngx-dropzone-image-preview>
+    </div>
+    <button class="save-btn" (click)="onSendImage()" [ngClass]="{disabled: !files.length}">Send</button>
+  </div>
+  </ng-template>

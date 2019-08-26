@@ -14,6 +14,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 // Components
 import { AppComponent } from './app.component';
@@ -21,11 +22,6 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { WelcomePageComponent } from './components/welcome-components/welcome-page/welcome-page.component';
-import { WelcomeHeaderComponent } from './components/welcome-components/welcome-header/welcome-header.component';
-import { WelcomeListComponent } from './components/welcome-components/welcome-list/welcome-list.component';
-import { WelcomeBenefitsComponent } from './components/welcome-components/welcome-benefits/welcome-benefits.component';
-import { WelcomeCarouselComponent } from './components/welcome-components/welcome-carousel/welcome-carousel.component';
 import { LeftSideBarComponent } from './components/user-main-page/left-side-bar/left-side-bar.component';
 import { ProfileComponent } from './components/user-main-page/page-content-wrapper/sections/profile/profile.component';
 import { PageContentWrapperComponent } from './components/user-main-page/page-content-wrapper/page-content-wrapper.component';
@@ -38,7 +34,7 @@ import { ChartComponent } from './components/user-main-page/page-content-wrapper
 import { FilterPipe } from './components/user-main-page/page-content-wrapper/sections/account/account-history/filter.pipe';
 
 import { MainPageComponent } from './landing-page/main-page/main-page.component';
-
+import {LoaderComponent} from './loader/loader.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
@@ -54,9 +50,8 @@ import { UserService } from './services/user.service';
 import { ForgotPasswordService } from './services/forgot.password.service';
 import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-
-import { JwtInterceptor } from './common/interceptors/jwt-interceptor';
-import { ChartsService } from './services/charts.service';
+import { JwtInterceptor } from './interceptors/jwt-interceptor';
+import { ChartsService} from './services/charts.service';
 
 import { FusionChartsModule } from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
@@ -74,15 +69,10 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [
     AppComponent,
     NavMenuComponent,
-    WelcomePageComponent,
     HomeComponent,
     FetchDataComponent,
     LoginPageComponent,
     SignUpComponent,
-    WelcomeListComponent,
-    WelcomeHeaderComponent,
-    WelcomeBenefitsComponent,
-    WelcomeCarouselComponent,
     MainPageComponent,
     LeftSideBarComponent,
     PageContentWrapperComponent,
@@ -99,7 +89,8 @@ export function createTranslateLoader(http: HttpClient) {
     ConfirmCodeComponent,
     ChangePasswordComponent,
     DaterangepickerComponent,
-    ChartsComponent
+    ChartsComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -109,6 +100,7 @@ export function createTranslateLoader(http: HttpClient) {
     ChartsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgxDropzoneModule,
     OAuthModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgbModule.forRoot(),
@@ -131,13 +123,13 @@ export function createTranslateLoader(http: HttpClient) {
         component: FetchDataComponent,
         canActivate: [AuthGuard],
         children: [
-          { path: 'profile', component: ProfileComponent },
-          { path: 'charts', component: ChartComponent },
-          { path: 'accounts', component: AccountComponent },
-          { path: 'settings', component: SettingComponent },
-          { path: 'accounts/:id', component: AccountComponent },
-          { path: 'settings', component: SettingComponent },
-          { path: 'adminPanel', component: AdminPanelComponent }
+          { path: 'profile', component: ProfileComponent,canActivate: [AuthGuard] },
+          { path: 'charts', component: ChartComponent,canActivate: [AuthGuard] },
+          { path: 'accounts', component: AccountComponent,canActivate: [AuthGuard] },
+          { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
+          { path: 'accounts/:id', component: AccountComponent,canActivate: [AuthGuard] },
+          { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
+          { path: 'adminPanel', component: AdminPanelComponent,canActivate: [AuthGuard] }
         ]
       }
     ]),

@@ -35,7 +35,7 @@
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td>{{user.birthDate | date:'longDate' }}</td>
-            <td><button class="btn btn-danger" (click)="deleteUser(user.id)" translate>DeleteLabel</button></td>
+            <td><button *ngIf="user.roleId != 2" class="btn btn-danger" (click)="deleteUser(user.id)" translate>DeleteLabel</button></td>
           </tr>
         </tbody>
       </table>
@@ -93,10 +93,12 @@
             </thead>
             <tbody>
               <tr *ngFor="let inc of incomeCategories">
-                <td style="width:50%">{{inc.name}}</td>
+                <td style="width:50%">
+                  <input [(ngModel)]="inc.name" class="form-control my-input"/>
+                </td>
                 <td>
                   <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)" translate>DeleteLabel</button>
-                  <button class="btn btn-warning ml-5 mr-5" translate>UpdateLabel</button>
+                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(inc, true)" translate>UpdateLabel</button>
                 </td>
               </tr>
             </tbody>

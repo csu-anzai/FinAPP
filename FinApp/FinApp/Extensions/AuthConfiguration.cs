@@ -6,9 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +23,7 @@ namespace FinApp.Extensions
             {
                 options.Issuer = jwtAppSettingOptions[nameof(JwtOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtOptions.Audience)];
-                options.AccessExpirationMins = int.Parse(jwtAppSettingOptions["Lifetime"]);               
+                options.AccessExpirationMins = int.Parse(jwtAppSettingOptions["Lifetime"]);
                 options.RefreshExpirationMins = 60 * 24 * 7;
 
                 options.SigningCredentials = new SigningCredentials(
@@ -77,26 +74,6 @@ namespace FinApp.Extensions
             services.AddTransient<JwtManager>();
             services.AddScoped<IAuthService, AuthService>();
         }
-
-        //private static string GenerateKey(int length)
-        //{
-        //    var characterArray =
-        //        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123456789".ToCharArray();
-        //    if (length < 0)
-        //        throw new ArgumentException("length must not be negative", "length");
-        //    if (length > int.MaxValue / 8)
-        //        throw new ArgumentException("length is too big", "length");
-
-        //    var bytes = new byte[length * 8];
-        //    new RNGCryptoServiceProvider().GetBytes(bytes);
-        //    var result = new char[length];
-        //    for (int i = 0; i < length; i++)
-        //    {
-        //        ulong value = BitConverter.ToUInt64(bytes, i * 8);
-        //        result[i] = characterArray[value % (uint)characterArray.Length];
-        //    }
-        //    return new string(result);
-        //}
     }
 }
 

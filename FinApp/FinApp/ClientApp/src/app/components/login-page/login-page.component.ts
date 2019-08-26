@@ -11,11 +11,12 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit {
-  private logginMsg: string;
-  model: any = {};
+export class LoginPageComponent implements OnInit{
+  private loginMsg: string;
+
   signInForm: FormGroup;
   googleTokenId?: string;
+  loading = false;
 
   constructor(private authService: AuthService,
     private router: Router,
@@ -25,38 +26,41 @@ export class LoginPageComponent implements OnInit {
     private alertService: NotificationService) {
     this.signInForm = fb.group({
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
-      'Password': new FormControl('', Validators.required),
+      'Password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
     });
   }
 
   ngOnInit() {
     this.translate.get('notifications.loggedInSuccessfullyMsg').subscribe
     (
-      (text: string) => this.logginMsg = text
+      (text: string) => this.loginMsg = text
     );
   }
 
   onLogin() {
-    this.authService.login(this.model).subscribe(
+    this.loading = true;
+    this.authService.login(this.signInForm.value).subscribe(
       next => { },
       error => {
+        this.loading = false;
         this.alertService.errorMsg(error.message);
       },
       () => {
+        this.loading = false;
         this.authService.setLoggedIn(true);
-        this.alertService.successMsg(this.logginMsg);
+        this.alertService.successMsg(this.loginMsg);
         this.router.navigate(['user/profile']);
       });
   }
 
   googleSignIn() {
-    this.authService.isSelectAccount();
+    this.authService.organizeGoogleAuthFlow();
   }
 
   get f() { return this.signInForm.controls; }
 
   loggedIn() {
-    return this.authService.loggedIn();
+    return this.authService.isLoggedIn;
   }
 
   public getClaims() {

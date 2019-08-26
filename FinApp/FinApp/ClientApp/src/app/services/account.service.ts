@@ -14,7 +14,7 @@ import { ErrorHandlingService } from './error-handling.service';
 })
 export class AccountService {
 
-  url = 'https://localhost:44397/api/account/';
+  url = 'https://localhost:44397/api/accounts/';
 
   constructor(public http: HttpClient,
     private authService: AuthService,
@@ -37,7 +37,7 @@ export class AccountService {
       .pipe(tap( // Log the result or error
         data => {
           console.log(data);
-          this.alertService.successMsg(data.toString());
+          this.alertService.successMsg("Account added successful");
           return data;
         },
         error => { this.errorHandler.handleError(error); }
