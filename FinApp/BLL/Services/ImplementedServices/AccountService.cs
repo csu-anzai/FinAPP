@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Models.ViewModels;
 using BLL.DTOs;
 using BLL.Services.IServices;
 using DAL.Entities;
@@ -24,13 +25,13 @@ namespace BLL.Services.ImplementedServices
             return mapper.Map<Account, AccountDTO>(await  unitOfWork.AccountRepository.FindAsyncAccountWithImgCurrency(p => p.UserId == userId && p.Id == accountId));
         }
 
-        public async Task<Account> AddAccount(AccountAddDTO account)
+        public async Task<Account> AddAccount(AccountAddModel account)
         {
             Account exitedAccount = await unitOfWork.AccountRepository.SingleOrDefaultAsync(a => a.Name == account.Name && a.UserId == account.UserId);
 
             if (exitedAccount == null)
             {
-                await unitOfWork.AccountRepository.AddAsync(mapper.Map<AccountAddDTO, Account>(account));
+                await unitOfWork.AccountRepository.AddAsync(mapper.Map<AccountAddModel, Account>(account));
 
                 await unitOfWork.Complete();
 

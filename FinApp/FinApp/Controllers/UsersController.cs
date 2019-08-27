@@ -1,9 +1,12 @@
 ﻿using BLL.DTOs;
+using BLL.Helpers;
 using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using FinApp.Attributes;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -14,20 +17,33 @@ namespace FinApp.Controllers
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
+        private IHostingEnvironment _hostingEnvironment;
+        private IUploadService _uploadService;
         private readonly IUserService _userService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IUploadService uploadService, IHostingEnvironment hostingEnvironment)
         {
             _userService = userService;
+            _uploadService = uploadService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
-        [HttpPost("signup")]
-        public async Task<IActionResult> SignUp(RegistrationViewModel registrationModels)
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(RegistrationViewModel registrationModels)
         {
+            var fullPath = DefaultUserImagePath();
+
+            var image = registrationModels.Avatar;
+
+            if (string.IsNullOrEmpty(image))
+                registrationModels.Avatar = ImageConvertor.GetImageFromPath(fullPath);
+            else
+                registrationModels.Avatar = await Downloader.GetImageAsBase64Url(image);
+
             var newUser = await _userService.CreateUserAsync(registrationModels);
 
             if (newUser == null)
-                throw new ValidationExeption(HttpStatusCode.Forbidden, "User already exists");
+                throw new ValidationException(HttpStatusCode.Forbidden, "User already exists");
 
             return Ok();
         }
@@ -56,7 +72,7 @@ namespace FinApp.Controllers
             return Ok(users);
         }
 
-        
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, ProfileDTO profileDTO)
         {
@@ -102,6 +118,15 @@ namespace FinApp.Controllers
             await _userService.ChangePasswordAsync(newPassword);
 
             return Ok();
+        }
+
+        private string DefaultUserImagePath()
+        {
+            var webRootPath = _hostingEnvironment.WebRootPath;
+            var newPath = Path.Combine(webRootPath, "DefaultImages");
+            string fullPath = Path.Combine(newPath, "profile-icon.png");
+
+            return fullPath;
         }
     }
 }

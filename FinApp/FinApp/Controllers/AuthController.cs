@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using BLL.DTOs;
 using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Services.IServices;
@@ -32,7 +31,7 @@ namespace FinApp.Controllers
             var token = await _authService.SignInAsync(loginModel);
 
             if (token == null)
-                throw new ValidationExeption(HttpStatusCode.BadRequest, "Credentials are invalid");
+                throw new ValidationException(HttpStatusCode.BadRequest, "Credentials are invalid");
 
             return Ok(new { token = token.AccessToken });
         }

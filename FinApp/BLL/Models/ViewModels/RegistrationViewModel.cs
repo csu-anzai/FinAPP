@@ -10,6 +10,7 @@ namespace BLL.Models.ViewModels
         public string Password { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Avatar { get; set; }
         public DateTime BirthDate { get; set; }
     }
 }

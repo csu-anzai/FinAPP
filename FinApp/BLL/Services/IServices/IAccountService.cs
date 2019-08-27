@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.Models.ViewModels;
 using DAL.Entities;
 using System.Threading.Tasks;
 
@@ -8,6 +9,6 @@ namespace BLL.Services.IServices
     {
         Task<AccountDTO> GetInfoById(int userId, int accountId);
 
-        Task<Account> AddAccount(AccountAddDTO account);
+        Task<Account> AddAccount(AccountAddModel account);
     }
 }
