@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using Google.Apis.Auth;
@@ -32,7 +33,7 @@ namespace FinApp.Controllers
             var token = await _authService.SignInAsync(loginModel);
 
             if (token == null)
-                return BadRequest(new { message = _localizer["InvalidCredentials"] });
+                throw new ValidationException(_localizer["InvalidCredentials"].Value);
 
             return Ok(new { token = token.AccessToken });
         }

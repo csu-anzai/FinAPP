@@ -16,6 +16,7 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Serilog;
 using System.Globalization;
+using System.Linq;
 
 namespace FinApp
 {
@@ -38,27 +39,54 @@ namespace FinApp
 
             services.AddLocalization(o => o.ResourcesPath = "Resources");
 
-            var supportedCultures = new[]
-            {
-                new CultureInfo("en"),
-                new CultureInfo("de"),
-                new CultureInfo("fr"),
-            };
+            //var supportedCultures = new[]
+            //{
+            //    new CultureInfo("en"),
+            //    new CultureInfo("de"),
+            //    new CultureInfo("fr"),
+            //};
 
 
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
-                options.RequestCultureProviders = new[] { new CookieRequestCultureProvider { CookieName = "language" } };
-            });
+            //services.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
+            //    options.SupportedCultures = supportedCultures;
+            //    options.SupportedUICultures = supportedCultures;
+            //    options.RequestCultureProviders = new[] { new CookieRequestCultureProvider { CookieName = "language" } };
+            //});
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization()
                 .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                var supportedCultures = new[]
+               {
+                new CultureInfo("en"),
+                new CultureInfo("de"),
+                new CultureInfo("fr"),
+                };
+                options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+                var defaultCookieRequestProvider =
+                    options.RequestCultureProviders.FirstOrDefault(rcp =>
+                        rcp.GetType() == typeof(CookieRequestCultureProvider));
+
+                if (defaultCookieRequestProvider != null)
+                    options.RequestCultureProviders.Remove(defaultCookieRequestProvider);
+
+                options.RequestCultureProviders.Insert(0,
+                    new CookieRequestCultureProvider()
+                    {
+                        CookieName = "language_for_checking",
+                        Options = options
+                    });
+            });
 
             services.AddAutoMapper();
             services.ConfigureAuthentication(Configuration);
@@ -92,9 +120,6 @@ namespace FinApp
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FinApp");
             });
 
-            var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(localizationOptions.Value);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -110,6 +135,9 @@ namespace FinApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(localizationOptions.Value);
 
             app.UseMvc(routes =>
             {

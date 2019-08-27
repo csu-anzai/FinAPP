@@ -31,6 +31,7 @@ export class LanguageService implements OnInit {
   renewLanguage(language: string) {
     this.cookieService.delete('language');
     this.cookieService.set('language', language, null, '/', null, true);
+    this.cookieService.set('language_for_checking', `c=${language}|uic=${language}`, null, '/', null, true);
   }
 
   languageSetUp() {
@@ -38,16 +39,12 @@ export class LanguageService implements OnInit {
     const isSelectedInCookies = this.isLanguageWasSelected();
     if (!isSelectedInCookies) {
       const defaultLanguage = this.translate.getDefaultLang();
-      console.log(this.translate.getLangs());
-      console.log(this.translate.getDefaultLang());
       this.translate.use(defaultLanguage);
     }
   }
 
   isLanguageWasSelected() {
     const isSelected = this.cookieService.check('language');
-
-    this.cookieService.set('.AspNetCore.Culture', 'c=de');
 
     if (isSelected) {
       const getLanguage = this.cookieService.get('language');
