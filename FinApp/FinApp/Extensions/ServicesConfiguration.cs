@@ -37,6 +37,7 @@ namespace FinApp.Extensions
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IImageService, ImageService>();
+            services.AddScoped<IUploadService, UploadService>();
 
             services.AddScoped<AuthorizeAttribute>();
             services.AddScoped<AuthorizeAttribute>();

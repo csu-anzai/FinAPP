@@ -31,11 +31,6 @@ export class ChartsService {
       console.log(res.accounts);
       return res.accounts;
      });
-
-     return this.accounts;
-    // let res = await this._userService.getUser(this._authService.DecodedToken.sub);
-    // console.log(res)
-    // return res.accounts;
   }
     
 }

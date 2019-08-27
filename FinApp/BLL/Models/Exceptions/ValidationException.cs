@@ -2,20 +2,20 @@
 
 namespace BLL.Models.Exceptions
 {
-    public class ValidationExeption : CustomExeption
+    public class ValidationException : CustomExeption
     {
         public object Parameter { get; set; }
         public HttpStatusCode ValidationErrorCode { get; private set; }
 
-        public ValidationExeption() : base(HttpStatusCode.OK) { }
+        public ValidationException() : base(HttpStatusCode.OK) { }
 
-        public ValidationExeption(HttpStatusCode code, string message)
+        public ValidationException(HttpStatusCode code, string message)
             : base(HttpStatusCode.OK, message)
         {
             ValidationErrorCode = code;
         }
 
-        public ValidationExeption(HttpStatusCode code, string message, object parameter)
+        public ValidationException(HttpStatusCode code, string message, object parameter)
             : this(code, message)
         {
             Parameter = parameter;

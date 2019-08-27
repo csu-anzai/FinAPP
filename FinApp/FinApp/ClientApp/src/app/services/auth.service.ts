@@ -73,7 +73,7 @@ export class AuthService implements OnInit {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + this.signUpParameter + 'signup', model)
+    return this.http.post(this.baseUrl + this.signUpParameter, model)
       .pipe(
         tap(
           (response: any) => {
@@ -124,7 +124,8 @@ export class AuthService implements OnInit {
             const queryParams = {
               email: user.email,
               name: user.name,
-              surname: user.surname
+              surname: user.surname,
+              avatar: user.avatar
             };
             this.message.passParameters(queryParams);
             this.router.navigate(['sign-up']);

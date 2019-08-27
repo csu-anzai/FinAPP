@@ -14,24 +14,29 @@ namespace FinApp.Extensions
             services.AddSingleton(new MapperConfiguration(c =>
             {
                 c.CreateMap<AccountDTO, Account>().ReverseMap()
-                   .ForMember(dest => dest.Incomes, act => act.MapFrom(src => src.Incomes));
+                   .ForMember(dest => dest.Incomes, act => act.MapFrom(src => src.Incomes))
+                   .ForMember(dest=>dest.Expenses, act => act.MapFrom(src=>src.Expenses));
 
-                c.CreateMap<AccountAddDTO, Account>();
+                c.CreateMap<AccountAddModel, Account>();
 
                 c.CreateMap<CurrencyDTO, Currency>().ReverseMap();
 
                 c.CreateMap<ImageDTO, Image>().ReverseMap();
 
-                c.CreateMap <LoginViewModel, User>();
+                c.CreateMap<ImageViewModel, Image>().ReverseMap();
+
+                c.CreateMap<LoginViewModel, User>();
 
                 c.CreateMap<RegistrationViewModel, User>();
 
                 c.CreateMap<Payload, RegistrationViewModel>()
                     .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.GivenName))
-                    .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.FamilyName));
+                    .ForMember(dest => dest.Surname, opt => opt.MapFrom(src => src.FamilyName))
+                    .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.Picture));
 
                 c.CreateMap<UserDTO, User>().ReverseMap()
                     .ForMember(dest => dest.Accounts, act => act.MapFrom(src => src.Accounts));
+                //.ForMember(dest => dest.Avatar, act => act.MapFrom(src => src.Avatar));
 
                 c.CreateMap<Transaction, TransactionDTO>().ReverseMap();
 
@@ -46,6 +51,8 @@ namespace FinApp.Extensions
                 c.CreateMap<IncomeDTO, Income>().ReverseMap()
                    .ForMember(dest => dest.IncomeCategory, act => act.MapFrom(src => src.IncomeCategory))
                    .ForMember(dest => dest.Transaction, act => act.MapFrom(src => src.Transaction));
+
+                c.CreateMap<ExpenseDTO, Expense>().ReverseMap();
 
                 c.CreateMap<ProfileDTO, User>().ReverseMap();
 

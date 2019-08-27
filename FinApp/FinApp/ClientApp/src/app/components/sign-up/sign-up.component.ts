@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+  imageUrl: string;
   signUpForm: FormGroup;
   user: any;
 
@@ -44,6 +45,7 @@ export class SignUpComponent implements OnInit {
         this.signUpForm.controls['Email'].setValue(obj.email);
         this.signUpForm.controls['Name'].setValue(obj.name);
         this.signUpForm.controls['Surname'].setValue(obj.surname);
+        this.imageUrl = obj.avatar;
       }
     );
   }
@@ -56,6 +58,7 @@ export class SignUpComponent implements OnInit {
         BirthDate: this.parserFormatter.format( this.signUpForm.controls['BirthDate'].value),
         Email: this.signUpForm.controls['Email'].value,
         Password: this.signUpForm.controls['Password'].value,
+        Avatar: this.imageUrl
       };
       this.authService.register(this.user).subscribe(
         next => {},

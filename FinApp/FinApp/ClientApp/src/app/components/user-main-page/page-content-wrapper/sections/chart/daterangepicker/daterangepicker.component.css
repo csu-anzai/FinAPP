@@ -1,6 +1,5 @@
 select#soflow-color {
     color: #fff;
-    background-image: url(http://i62.tinypic.com/15xvbd5.png), -webkit-linear-gradient(#2834d8, #2834d8 40%, #2834d8);
     background-color: #2834d8;
     -webkit-border-radius: 20px;
     background-repeat: no-repeat;

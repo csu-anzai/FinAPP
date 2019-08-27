@@ -30,7 +30,7 @@ namespace FinApp.Middlewares
                 logger.LogDebug(e, nameof(ApiException));
                 await FillUpExceptionMessage(e, new { error = e.Message });
             }
-            catch (ValidationExeption e)
+            catch (ValidationException e)
             {
                 await FillUpExceptionMessage(e, new { code = e.ValidationErrorCode, error = e.Message, parameter = e.Parameter });
             }

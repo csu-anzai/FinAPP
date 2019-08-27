@@ -13,6 +13,7 @@ namespace BLL.Services.IServices
         Task<IEnumerable<UserDTO>> GetAllAsync();
         Task<User> UpdateAsync(ProfileDTO profileDTO);
         Task DeleteAsync(UserDTO user);
+        Task ChangePasswordAsync(NewPasswordViewModel model);
         Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto);
     }
 }

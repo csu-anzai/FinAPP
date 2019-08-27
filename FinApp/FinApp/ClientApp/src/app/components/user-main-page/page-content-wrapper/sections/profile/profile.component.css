@@ -25,7 +25,7 @@
     }
 }
 
-button {
+.save-btn {
     margin-top: 15px;
     background-color: white;
     border: 1px solid rgb(17, 74, 138);
@@ -37,7 +37,7 @@ button {
     cursor: pointer;
 }
 
-button:hover, button:focus {
+.save-btn:hover, .save-btn:focus {
     color: white;
     background-color:rgb(17, 74, 138);
 }
@@ -61,3 +61,13 @@ input:focus, input:active{
   color:#fff ;
   
 }
+
+ngx-dropzone,
+.custom-dropzone {
+  margin: 20px;
+}
+
+.disabled{
+    opacity: 0.5;
+    pointer-events: none;
+  }

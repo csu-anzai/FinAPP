@@ -1,6 +1,6 @@
-﻿namespace BLL.DTOs
+﻿namespace BLL.Models.ViewModels
 {
-    public class AccountAddDTO
+    public class AccountAddModel
     {
         public string Name { get; set; }
         public decimal Balance { get; set; }

@@ -1,5 +1,9 @@
 ﻿using BLL.DTOs;
+using BLL.Helpers;
+using BLL.Models.Exceptions;
+using BLL.Models.ViewModels;
 using BLL.Services.IServices;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,19 +15,43 @@ namespace FinApp.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
-        private readonly IImageService imageService;
+        private const string _defaultFolderForCustomImages = "DefaultImages";
+        private const string _defaultFolderForUploadImages = "Uploads";
+        private readonly IImageService _imageService;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ImagesController(IImageService imageService)
+        public ImagesController(IHostingEnvironment hostingEnvironment, IImageService imageService)
         {
-            this.imageService = imageService;
+            _hostingEnvironment = hostingEnvironment;
+            _imageService = imageService;
         }
 
         [HttpGet("getAll")]
         public async Task<IActionResult> GetAll()
         {
-            IEnumerable<ImageDTO> images = await imageService.GetAllAsync();
+            IEnumerable<ImageDTO> images = await _imageService.GetAllAsync();
 
             return images.Any() ? Ok(images) : (IActionResult)NotFound();
+        }
+
+        /// <summary>
+        ///  FromForm attribute for FormData request
+        /// </summary>
+        /// <param name="imageVm"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Create([FromForm]ImageViewModel imageVm)
+        {
+            var webRootPath = _hostingEnvironment.WebRootPath;
+
+            var result = await DirectoryManager.SaveFileInFolder(webRootPath, _defaultFolderForUploadImages, imageVm);
+
+            if (result == null)
+                throw new ApiException(System.Net.HttpStatusCode.InternalServerError);
+
+            await _imageService.AddImage(imageVm);
+
+            return Ok();
         }
     }
 }

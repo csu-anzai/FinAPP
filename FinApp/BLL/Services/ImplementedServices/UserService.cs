@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
+using BLL.Helpers;
 using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Security;
 using BLL.Services.IServices;
 using DAL.Entities;
-using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-
 
 namespace BLL.Services.ImplementedServices
 {
@@ -95,6 +94,22 @@ namespace BLL.Services.ImplementedServices
             await _unitOfWork.Complete();
         }
 
+
+        public async Task ChangePasswordAsync(NewPasswordViewModel model)
+        {
+            var user = await _unitOfWork.UserRepository.GetAsync(model.UserId);
+
+            if (user == null) {
+                throw new ApiException(HttpStatusCode.NotFound, "User was not found"); }
+
+            if (!_hasher.CheckPassWithHash(model.OldPassword, user.Password))
+                throw new ApiException(HttpStatusCode.BadRequest, "Old password incorrect");
+
+            user.Password = _hasher.HashPassword(model.Password);
+
+            await _unitOfWork.Complete();       
+        }
+
         public async Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto)
         {
             var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == recoverPasswordDto.Id);
@@ -107,5 +122,7 @@ namespace BLL.Services.ImplementedServices
 
             await _unitOfWork.Complete();
         }
+
+        
     }
 }
