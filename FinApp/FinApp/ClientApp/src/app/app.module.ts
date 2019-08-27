@@ -120,7 +120,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
           { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
           { path: 'accounts/:id', component: AccountComponent,canActivate: [AuthGuard] },
           { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
-          { path: 'adminPanel', component: AdminPanelComponent,canActivate: [AuthGuard] }
+          { path: 'adminPanel', component: AdminPanelComponent, canActivate: [AuthGuard] },
+          { path: 'add-account', component: AddAccountComponent, canActivate: [AuthGuard] }
         ]
       }
     ]),
