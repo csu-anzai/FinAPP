@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
 
-        public ExpenseCategoryDTO IncomeCategory { get; set; }
+        public ExpenseCategoryDTO ExpenseCategory { get; set; }
 
         public TransactionDTO Transaction { get; set; }
     }
