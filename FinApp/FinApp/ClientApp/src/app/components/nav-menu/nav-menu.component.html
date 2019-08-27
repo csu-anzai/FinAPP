@@ -13,20 +13,20 @@
             (click)="toggle()">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-nav float-right">
-      <div class="form-group">
-        <select id="contactMethod"
-                class="form-control"
-                (change)="onLanguageChange($event)">
-          <option *ngFor="let language of languages"
-                  [selected]="language.abbreviation==languageService.SelectedLanguage"
-                  [value]="language.abbreviation">{{ language.name }}</option>
-        </select>
-      </div>
-    </div>
     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-         [ngClass]='{"show": isExpanded}'
-         *ngIf="!isloggedIn();else loggedIn">
+         [ngClass]='{"show": isExpanded}'>
+         <div class="navbar-nav flex-grow">
+            <select id="contactMethod"
+                    class="selectpicker show-menu-arrow form-control"
+                    (change)="onLanguageChange($event)">
+              <option *ngFor="let language of languages"
+                      [selected]="language.abbreviation==languageService.SelectedLanguage"
+                      [value]="language.abbreviation">{{ language.name }}</option>
+            </select>
+        </div>
+         <ng-template *ngIf="!isloggedIn();then loggedOut else loggedIn"></ng-template>         
+    </div>
+    <ng-template #loggedOut>
       <ul class="navbar-nav flex-grow">
         <li class="nav-item"
             [routerLinkActive]='["link-active"]'>
@@ -41,10 +41,8 @@
              translate>RegisterLink</a>
         </li>
       </ul>
-    </div>
+    </ng-template>
     <ng-template #loggedIn>
-      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse"
-           [ngClass]='{"show": isExpanded}'>
         <ul class="navbar-nav flex-grow">
           <li class="nav-item">
             <a class="nav-link text-dark"
@@ -62,7 +60,6 @@
                translate>LogoutLink</a>
           </li>
         </ul>
-      </div>
     </ng-template>
   </nav>
 </header>

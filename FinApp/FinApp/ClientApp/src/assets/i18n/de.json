@@ -21,7 +21,10 @@
     "EnterYourBirthdateValidation2": "Das Datumsformat sollte TT.MM.JJJJ sein",
     "EnterYourEmailValidation1": "Bitte geben Sie ihre E-Mail-Adresse ein",
     "EnterYourEmailValidation2": "E-Mail-Beispiel finApp@gmail.com",
-    
+    "UpdateAvatarTitle": "Aktualisiere einen Avatar",
+    "DragAndDropTitle": "Hier ziehen und ablegen oder klicken",
+    "SendBtn": "Senden",
+
     "FromPlaceholder": "Von",
     "ToPlaceholder": "Zu",
     "FilterLabel": "Filter: ",
@@ -67,7 +70,7 @@
     "PwdValidation1": "Passwort wird benötigt",
     "SignInTitle" : "Einloggen",
     "LogInLabel" : "Einloggen",
-    "GoogleSignInTitle" : "Anmeldung mit Google",
+    "GoogleSignInTitle" : "Google durchgehen",
     "ForgotPasswordTitle" : "Passwort vergessen?",
 
     "RegistrationTitle" : "Anmeldung",

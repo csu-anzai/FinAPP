@@ -41,6 +41,7 @@ namespace FinApp.Extensions
 
             services.AddScoped<AuthorizeAttribute>();
             services.AddScoped<AuthorizeAttribute>();
+            services.AddScoped<IServices>();
 
             services.AddTransient<IPassHasher, PassHasher>();
 

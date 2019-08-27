@@ -76,5 +76,3 @@ namespace FinApp.Extensions
         }
     }
 }
-
-

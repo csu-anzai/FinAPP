@@ -21,7 +21,10 @@
     "EnterYourBirthdateValidation2": "Le format de la date doit être JJ.MM.AAAA",
     "EnterYourEmailValidation1": "S'il vous plaît entrer votre email",
     "EnterYourEmailValidation2": "Exemple de courrier électronique finApp@gmail.com",
-    
+    "UpdateAvatarTitle": "Mettre à jour un avatar",
+    "DragAndDropTitle": "Glissez-déposez ou cliquez ici",
+    "SendBtn": "Envoyer",
+
     "FromPlaceholder": "De",
     "ToPlaceholder": "À",
     "FilterLabel": "Filtre: ",

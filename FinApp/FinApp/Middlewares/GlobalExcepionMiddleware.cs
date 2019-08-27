@@ -1,5 +1,6 @@
 ﻿using BLL.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
@@ -13,10 +14,12 @@ namespace FinApp.Middlewares
     public class GlobalExcepionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly IStringLocalizer _localizer;
 
-        public GlobalExcepionMiddleware(RequestDelegate next)
+        public GlobalExcepionMiddleware(RequestDelegate next, IStringLocalizer localizer)
         {
             _next = next;
+            _localizer = localizer;
         }
 
         public async Task Invoke(HttpContext httpContext, ILogger<GlobalExcepionMiddleware> logger)
@@ -32,7 +35,7 @@ namespace FinApp.Middlewares
             }
             catch (ValidationException e)
             {
-                await FillUpExceptionMessage(e, new { code = e.ValidationErrorCode, error = e.Message, parameter = e.Parameter });
+                await FillUpExceptionMessage(e, new { code = e.ValidationErrorCode, error = _localizer[e.Message], parameter = e.Parameter });
             }
             catch (Exception e)
             {

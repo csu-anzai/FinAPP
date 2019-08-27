@@ -54,7 +54,7 @@
 <!-- Modal window -->
 <ng-template #updateModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">Update an avatar</h4>
+        <h4 class="modal-title" translate>UpdateAvatarTitle</h4>
         <button type="button" class="close" aria-label="Close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -63,13 +63,13 @@
     <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
       <ngx-dropzone-label>
         <div>
-          <h2>Drag and drop or click here</h2>
+          <h2 translate>DragAndDropTitle</h2>
         </div>
       </ngx-dropzone-label>
       <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
         [removable]="true" (removed)="onRemove(f)">
       </ngx-dropzone-image-preview>
     </div>
-    <button class="save-btn" (click)="onSendImage()" [ngClass]="{disabled: !files.length}">Send</button>
+    <button class="save-btn" (click)="onSendImage()" [ngClass]="{disabled: !files.length}" translate>SendBtn</button>
   </div>
   </ng-template>

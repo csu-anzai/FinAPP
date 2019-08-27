@@ -21,6 +21,9 @@
     "EnterYourBirthdateValidation2": "Date format should be DD.MM.YYYY",
     "EnterYourEmailValidation1": "Please enter your email",
     "EnterYourEmailValidation2": "E-mail example finApp@gmail.com",
+    "UpdateAvatarTitle": "Update an avatar",
+    "DragAndDropTitle": "Drag and drop or click here",
+    "SendBtn": "Send",
 
     "FromPlaceholder": "From",
     "ToPlaceholder": "To",
