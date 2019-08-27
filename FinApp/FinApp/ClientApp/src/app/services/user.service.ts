@@ -4,6 +4,7 @@ import { User } from '../models/user';
 import { tap, catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { RecoverPassword } from '../models/recoverPassword';
+import { ChangePassword } from '../models/changePassword';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +44,15 @@ export class UserService {
       map(() => user),
       catchError(this.handleError)
     );
+  }
+  
+  updatePassword(changePasswordModel: ChangePassword){
+    
+    return this.http.put<ChangePassword>(`${this.baseUrl}/changePassword`, changePasswordModel).pipe(
+      catchError(this.handleError)
+    ) ;
+    
+
   }
 
   deleteUser(id: number) {
