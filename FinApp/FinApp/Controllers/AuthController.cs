@@ -44,7 +44,7 @@ namespace FinApp.Controllers
             var validPayload = await GoogleJsonWebSignature.ValidateAsync(googleToken.IdToken);
 
             if (validPayload == null)
-                return Ok(new { code = 401, message = _localizer["NonAuthorized"] });
+                return Ok(new { code = 401, message = _localizer["NonAuthorized"].Value });
 
             var token = await _authService.GoogleSignInAsync(validPayload.Email);
 

@@ -38,12 +38,17 @@ export class LanguageService implements OnInit {
     const isSelectedInCookies = this.isLanguageWasSelected();
     if (!isSelectedInCookies) {
       const defaultLanguage = this.translate.getDefaultLang();
+      console.log(this.translate.getLangs());
+      console.log(this.translate.getDefaultLang());
       this.translate.use(defaultLanguage);
     }
   }
 
   isLanguageWasSelected() {
     const isSelected = this.cookieService.check('language');
+
+    this.cookieService.set('.AspNetCore.Culture', 'c=de');
+
     if (isSelected) {
       const getLanguage = this.cookieService.get('language');
       this.translate.use(getLanguage);
