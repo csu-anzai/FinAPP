@@ -7,10 +7,14 @@
         <input type="text" id="firstName" formControlName="Name">
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['Name'].touched">
-            <small class="text-danger" *ngIf="profileForm.controls['Name'].hasError('required')">Please enter your
-              name</small>
-            <small class="text-danger" *ngIf="profileForm.controls['Name'].hasError('pattern')">Name should contain only
-              letters and '-'</small>
+            <small class="text-danger" *ngIf="profileForm.controls['Name'].hasError('required')">
+              Please enter your
+              name
+            </small>
+            <small class="text-danger" *ngIf="profileForm.controls['Name'].hasError('pattern')">
+              Name should contain only
+              letters and '-'
+            </small>
           </ng-container>
         </div>
       </div>
@@ -20,10 +24,14 @@
         <input type="text" id="surname" formControlName="Surname">
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['Surname'].touched">
-            <small class="text-danger" *ngIf="profileForm.controls['Surname'].hasError('required')">Please enter your
-              surname</small>
-            <small class="text-danger" *ngIf="profileForm.controls['Surname'].hasError('pattern')">Surname should
-              contain only letters and '-'</small>
+            <small class="text-danger" *ngIf="profileForm.controls['Surname'].hasError('required')">
+              Please enter your
+              surname
+            </small>
+            <small class="text-danger" *ngIf="profileForm.controls['Surname'].hasError('pattern')">
+              Surname should
+              contain only letters and '-'
+            </small>
           </ng-container>
         </div>
       </div>
@@ -31,11 +39,13 @@
       <div class="form-group">
         <label for="BirthDate">BirthDate: </label>
         <input type="text" id="BirthDate" formControlName="BirthDate" [value]="user.birthDate | date:'dd-MM-yyyy'"
-          placeholder="dd-mm-yyyy" />
+               placeholder="dd-mm-yyyy" />
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['BirthDate'].touched">
-            <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].hasError('required')">Please enter your
-              birthdate</small>
+            <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].hasError('required')">
+              Please enter your
+              birthdate
+            </small>
 
           </ng-container>
         </div>
@@ -46,18 +56,23 @@
         <input type="text" id="formGroupExampleInput2" formControlName="Email">
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['Email'].touched">
-            <small class="text-danger" *ngIf="profileForm.controls['Email'].hasError('required')">Please enter your
-              email</small>
-            <small class="text-danger" *ngIf="profileForm.controls['Email'].hasError('pattern')">E-mail example
-              finApp@gmail.com</small>
+            <small class="text-danger" *ngIf="profileForm.controls['Email'].hasError('required')">
+              Please enter your
+              email
+            </small>
+            <small class="text-danger" *ngIf="profileForm.controls['Email'].hasError('pattern')">
+              E-mail example
+              finApp@gmail.com
+            </small>
           </ng-container>
         </div>
       </div>
 
       <button class="save-btn" type="submit">Save</button>
-
     </form>
   </div>
+  <button class="btn-info " *ngIf="!emailConfirmed" (click)="sendConfirmEmailLink()">Email</button>
+
 </div>
 
 <!-- Modal window -->

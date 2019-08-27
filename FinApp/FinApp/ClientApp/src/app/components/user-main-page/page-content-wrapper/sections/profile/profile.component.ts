@@ -10,6 +10,7 @@ import { first, finalize, catchError, takeLast } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import { last } from '@angular/router/src/utils/collection';
+import { EmailConfirmationService } from 'src/app/services/email-confirmation.service';
 
 @Component({
   selector: 'app-profile',
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
     private _authService: AuthService,
     private _userService: UserService,
     private _uploadService: UploadService,
+    private _emailConfirmationService: EmailConfirmationService,
     private _modalService: NgbModal,
     private _errorHandler: ErrorHandlingService,
     fb: FormBuilder,
@@ -89,6 +91,12 @@ export class ProfileComponent implements OnInit {
       for (let i in this.profileForm.controls)
         this.profileForm.controls[i].markAsTouched();
     }
+  }
+
+  sendConfirmEmailLink() {
+    this._emailConfirmationService.sendConfirmEmailLink(this.user).subscribe(() => {
+      this.alertService.successMsg('Confirm email link was sent');
+    });
   }
 
   // drag&drop

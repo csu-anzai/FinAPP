@@ -58,6 +58,8 @@ import { FusionChartsModule } from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import { ConfirmEmailSuccessComponent } from './components/confirm-email-success/confirm-email-success.component';
+import { EmailConfirmationService } from './services/email-confirmation.service';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
@@ -88,6 +90,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     DaterangepickerComponent,
     ChartsComponent,
     LoaderComponent,
+    ConfirmEmailSuccessComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -109,6 +112,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
       { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
       { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-email-success', component: ConfirmEmailSuccessComponent, canActivate: [AuthGuard] },
+      { path: 'confirm-email-success/:token', component: ConfirmEmailSuccessComponent, canActivate: [AuthGuard] },
       {
         path: 'user',
         component: FetchDataComponent,
@@ -144,9 +149,9 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     MessagingCenterService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     UserService,
-      ForgotPasswordService,
-      ChartsService,
-
+    ForgotPasswordService,
+    ChartsService,
+    EmailConfirmationService,
   ],
   bootstrap: [AppComponent]
 })

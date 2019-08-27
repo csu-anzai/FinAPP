@@ -8,6 +8,7 @@ export class User {
     password: string;
     birthDate: Date;
     avatar: string;
+    emailConfirmed: boolean;
     roleId: number;
     accounts: Account[];
 }
