@@ -1,30 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent {
+export class LoginPageComponent implements OnInit {
+  private loginMsg: string;
+
   signInForm: FormGroup;
   googleTokenId?: string;
-
   loading = false;
 
   constructor(private authService: AuthService,
     private router: Router,
     private oauthService: OAuthService,
-    private alertService: NotificationService,
-    fb: FormBuilder) {
+    fb: FormBuilder,
+    private translate: TranslateService,
+    private alertService: NotificationService) {
     this.signInForm = fb.group({
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
       'Password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
     });
+  }
+
+  ngOnInit() {
+
+      this.translate.get('notifications.loggedInSuccessfullyMsg').subscribe
+        (
+          (text: string) => { this.loginMsg = text; console.log(this.loginMsg); }
+
+        );
   }
 
   onLogin() {
@@ -37,7 +49,8 @@ export class LoginPageComponent {
       },
       () => {
         this.loading = false;
-        this.alertService.successMsg('Logged in successfuly');
+        this.authService.setLoggedIn(true);
+        this.alertService.successMsg(this.loginMsg);
         this.router.navigate(['user/profile']);
       });
   }
