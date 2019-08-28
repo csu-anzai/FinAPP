@@ -5,7 +5,8 @@
    </div>
       <div class="form-group">
         <label class="floatLabel">Name:</label>
-        <input type="text"
+        <input class="form-control"
+               type="text"
                formControlName="Name"
                #name>
         <div class="validation-message">
@@ -17,7 +18,8 @@
 
       <div class="form-group">
         <label class="floatLabel">Balance:</label>
-        <input formControlName="Balance"
+        <input class="form-control"
+               formControlName="Balance"
                #name>
         <div class="validation-message">
           <ng-container *ngIf="accountAddForm.controls['Balance'].touched">
