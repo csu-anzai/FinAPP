@@ -20,9 +20,6 @@ namespace FinApp.Controllers
         [HttpPost]
         public IActionResult GetNewAccessToken(TokenViewModel tokenModel)
         {
-            _jwtManager.IsExpired(tokenModel.IdToken);
-            _jwtManager.IsValid(tokenModel.IdToken);
-
             var claims = _jwtManager.GetClaims(tokenModel.IdToken);
 
             return Ok(new { token = _jwtManager.GenerateAccessToken(claims.Id, claims.Email, claims.Role) });

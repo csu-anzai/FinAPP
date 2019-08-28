@@ -40,7 +40,6 @@ namespace FinApp.Extensions
             services.AddScoped<IUploadService, UploadService>();
 
             services.AddScoped<AuthorizeAttribute>();
-            services.AddScoped<AuthorizeAttribute>();
 
             services.AddTransient<IPassHasher, PassHasher>();
 

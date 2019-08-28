@@ -17,17 +17,14 @@ namespace BLL.Security.Jwt
     public class JwtManager
     {
         private readonly JwtOptions _jwtOptions;
-        private readonly ITokenRepository _tokenRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IConfiguration _configuration;
 
-        public JwtManager(IOptions<JwtOptions> jwtOptions, ITokenRepository tokenRepository, IUnitOfWork unitOfWork, IConfiguration configuration)
+        public JwtManager(IOptions<JwtOptions> jwtOptions,  IUnitOfWork unitOfWork)
         {
             _jwtOptions = jwtOptions.Value;
-            _tokenRepository = tokenRepository;
             _unitOfWork = unitOfWork;
-            _configuration = configuration;
         }
+
         public bool IsExpired(string accesToken)
         {
             var token = new JwtSecurityToken(accesToken);
@@ -58,28 +55,26 @@ namespace BLL.Security.Jwt
 
         public bool IsValid(string token)
         {
-            try
+            var validationParameters = new TokenValidationParameters()
             {
-                var validationParameters = new TokenValidationParameters()
-                {
-                    ValidateAudience = true,
-                    ValidAudience = _jwtOptions.Audience,
-                    ValidateIssuer = true,
-                    ValidIssuer = _jwtOptions.Issuer,
-                    ValidateIssuerSigningKey = true,                    
-                    IssuerSigningKey = _jwtOptions.SigningCredentials.Key,
-                    ValidateLifetime = false,
-                };
-
+                ValidateAudience = true,
+                ValidAudience = _jwtOptions.Audience,
+                ValidateIssuer = true,
+                ValidIssuer = _jwtOptions.Issuer,
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = _jwtOptions.SigningCredentials.Key,
+                ValidateLifetime = false,
+            };
+            try
+            {        
                 var Handler = new JwtSecurityTokenHandler()
                      .ValidateToken(
                          token,
                          validationParameters,
                          out var securityToken);
             }
-            catch(Exception e)
+            catch(Exception)
             {
-                var message = e.Message;
                 return false;
             }
             return true;
@@ -98,6 +93,7 @@ namespace BLL.Security.Jwt
                   ));
             return token;
         }
+
         public string GenerateRefreshToken(int userId, string login, string role)
         {
             var token = new JwtSecurityTokenHandler()
@@ -111,6 +107,7 @@ namespace BLL.Security.Jwt
                ));
             return token;
         }
+
         public TokenDTO GenerateToken(int userId, string login, string role) =>
             new TokenDTO
             {
@@ -138,25 +135,14 @@ namespace BLL.Security.Jwt
 
         public async Task<Token> UpdateAsync(int Id, string refreshToken)
         {
-            var token = await _tokenRepository.GetTokenByUserId(Id);
+            var token = await _unitOfWork.TokenRepository.GetTokenByUserId(Id);
 
             token.RefreshToken = refreshToken;
             await _unitOfWork.Complete();
 
             return token;
         }
-
-        private static void ThrowIfInvalidOptions(JwtOptions options)
-        {
-            if (options == null)
-                throw new ArgumentNullException(nameof(options));
-            if (options.ValidFor <= TimeSpan.Zero)
-                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtOptions.ValidFor));
-            if (options.SigningCredentials == null)
-                throw new ArgumentNullException(nameof(JwtOptions.SigningCredentials));
-            if (options.JtiGenerator == null)
-                throw new ArgumentNullException(nameof(JwtOptions.JtiGenerator));
-        }
+        
         
 
     }

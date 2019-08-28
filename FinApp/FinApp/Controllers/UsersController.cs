@@ -108,7 +108,7 @@ namespace FinApp.Controllers
 
             return Ok();
         }
-
+        [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpPut("changePassword")]
         public async Task<IActionResult> ChangePassword(NewPasswordViewModel newPassword)
         {

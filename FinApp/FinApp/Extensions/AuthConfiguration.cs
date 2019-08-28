@@ -30,6 +30,7 @@ namespace FinApp.Extensions
                      signingKey,
                      SecurityAlgorithms.HmacSha256);
             });
+
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
