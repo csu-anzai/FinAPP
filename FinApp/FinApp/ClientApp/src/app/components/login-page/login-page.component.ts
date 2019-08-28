@@ -4,14 +4,14 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit{
+export class LoginPageComponent implements OnInit {
   private loginMsg: string;
 
   signInForm: FormGroup;
@@ -31,10 +31,12 @@ export class LoginPageComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.translate.get('notifications.loggedInSuccessfullyMsg').subscribe
-    (
-      (text: string) => this.loginMsg = text
-    );
+
+      this.translate.get('notifications.loggedInSuccessfullyMsg').subscribe
+        (
+          (text: string) => { this.loginMsg = text; console.log(this.loginMsg); }
+
+        );
   }
 
   onLogin() {

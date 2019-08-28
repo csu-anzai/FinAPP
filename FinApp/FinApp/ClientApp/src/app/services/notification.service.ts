@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +15,19 @@ export class NotificationService implements OnInit {
     private translate: TranslateService) { }
 
   ngOnInit() {
-    this.translate.get('notifications.successMsg').subscribe((text: string) => this.successTitle = text);
-    this.translate.get('notifications.errorMsg').subscribe((text: string) => this.errorTitle = text);
-    this.translate.get('notifications.infoMsg').subscribe((text: string) => this.infoTitle = text);
-    this.translate.get('notifications.warningMsg').subscribe((text: string) => this.warningTitle = text);
   }
 
   successMsg(content: string) {
-    this.toastr.success(content, 'Success');
+    this.toastr.success(content);
   }
   errorMsg(content: string) {
-    this.toastr.error(content, 'Error');
+    this.toastr.error(content);
 
   }
   infoMsg(content: string) {
-    this.toastr.info(content, 'Information');
+    this.toastr.info(content);
   }
   waringMsg(content: string) {
-    this.toastr.warning(content, 'Warning');
+    this.toastr.warning(content);
   }
 }
