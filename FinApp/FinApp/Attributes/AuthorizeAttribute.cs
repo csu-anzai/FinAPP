@@ -1,8 +1,8 @@
 ﻿using BLL.Models.Exceptions;
 using BLL.Security.Jwt;
-using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Net;
 using System.Threading.Tasks;
@@ -13,7 +13,6 @@ namespace FinApp.Attributes
     public class AuthorizeAttribute : System.Attribute, IAsyncAuthorizationFilter
     {
         private JwtManager _jwtManager;
-        private Token _refreshToken = new Token();
         private readonly ITokenRepository _tokenRepository;
         public AuthorizeAttribute(JwtManager jwtManager, ITokenRepository tokenRepository)
 
@@ -31,21 +30,31 @@ namespace FinApp.Attributes
 
             var claims = _jwtManager.GetClaims(accessToken);
 
-            int userId = Convert.ToInt32(claims[2]);
-            string userEmail = claims[0];
-            string userRole = claims[1];
+            var _refreshToken = await _tokenRepository.GetTokenByUserId(claims.Id);
 
-            _refreshToken = await _tokenRepository.GetTokenByUserId(userId);
+            if (!_jwtManager.IsValid(accessToken))
+            {
+                throw new SecurityTokenException();
+            }
 
             if (_jwtManager.IsExpired(accessToken))
             {
+
                 if (_jwtManager.IsExpired(_refreshToken.RefreshToken))
                 {
-                    var newRefreshToken = _jwtManager.GenerateRefreshToken(userId, userEmail, userRole);
-                    await _jwtManager.UpdateAsync(userId, newRefreshToken);
+
+                    var newRefreshToken = _jwtManager.GenerateRefreshToken(claims.Id, claims.Email, claims.Role);
+                    await _jwtManager.UpdateAsync(claims.Id, newRefreshToken);
+
+                    // throw new ValidationException(HttpStatusCode.Unauthorized, nameof(HttpStatusCode.Unauthorized)); unlogin when refresh is expired
+
                 }
+
                 throw new ValidationException(HttpStatusCode.Unauthorized, nameof(HttpStatusCode.Unauthorized));
+
             }
+
+
         }
     }
 }
