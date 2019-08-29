@@ -19,20 +19,8 @@
       <fusioncharts [chartConfig]="chartConfig"
                     [dataSource]="dataSource">
       </fusioncharts>
-
-      <div class="container">
-        <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
-        <button type="button" class="btn btn-success btn-s"
-                (click)="uploader.uploadAll()"
-                [disabled]="!uploader.getNotUploadedItems().length">
-          Upload an Image
-        </button>
-      </div>
-
-      <ul>
-        <li *ngFor="let img of images" (click)="deleteImage(img)">{{img.name}}</li>
-      </ul>
     </div>
+
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" style="margin-top:2.5%">
       <table class="table">
         <thead>
@@ -53,18 +41,22 @@
         </tbody>
       </table>
     </div>
-    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" style="text-align: center; margin-top:2.5%">
-      <h1 style="margin-top:5%">Creation category</h1>
-      <div style="margin-top: 5%; margin-bottom:1%">
-        <input placeholder="Name category" [(ngModel)]="category.name" />
+
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" style="margin-top:2.5%">
+      <div class="container">
+        <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+        <button type="button" class="btn btn-success btn-s"
+                (click)="uploader.uploadAll()"
+                [disabled]="!uploader.getNotUploadedItems().length">
+          Upload an Image
+        </button>
       </div>
-      <div style="display:inline-block; text-align: start">
-        <p>Expenses category</p>
-        <button class="btn btn-block btn-info" (click)="addExpenseCategory()">Add</button>
-        <p>Income category</p>
-        <button class="btn btn-block btn-info" (click)="addIncomeCategory()">Add</button>
-      </div>
+
+      <ul>
+        <li *ngFor="let img of images" (click)="deleteImage(img)">{{img.name}}</li>
+      </ul>
     </div>
+
     <div class="tab-pane fade" id="pills-fourth" role="tabpanel" aria-labelledby="pills-fourth-tab">
       <ul class="nav nav-pills mb-3" id="pills-tab2" role="tablist" style="margin-left:20%; margin-right:20%; margin-top:5%">
         <li class="nav-item" style="width:33.33%">
