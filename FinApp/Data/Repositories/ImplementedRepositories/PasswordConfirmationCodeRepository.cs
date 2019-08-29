@@ -12,7 +12,7 @@ namespace DAL.Repositories.ImplementedRepositories
 {
     public class PasswordConfirmationCodeRepository : BaseRepository<PasswordConfirmationCode>, IPasswordConfirmationCodeRepository
     {
-        public PasswordConfirmationCodeRepository(FinAppContext context) : base(context)
+        public PasswordConfirmationCodeRepository(DbContext context) : base(context)
         {
 
         }

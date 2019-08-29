@@ -10,7 +10,7 @@ namespace DAL.Repositories.ImplementedRepositories
 {
     public class AccountRepository: BaseRepository<Account>, IAccountRepository
     {
-        public AccountRepository(FinAppContext context) : base(context)
+        public AccountRepository(DbContext context) : base(context)
         {
 
         }

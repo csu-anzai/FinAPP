@@ -10,8 +10,9 @@ namespace DAL.Repositories.ImplementedRepositories
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository(FinAppContext context) : base(context)
+        public UserRepository(DbContext context) : base(context)
         {
+
         }
 
         public override Task<User> GetAsync(int id)
