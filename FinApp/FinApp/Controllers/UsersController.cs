@@ -6,6 +6,7 @@ using BLL.Services.IServices;
 using FinApp.Attributes;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -20,12 +21,14 @@ namespace FinApp.Controllers
         private IHostingEnvironment _hostingEnvironment;
         private IUploadService _uploadService;
         private readonly IUserService _userService;
+        private readonly IStringLocalizer<UsersController> _localizer;
 
-        public UsersController(IUserService userService, IUploadService uploadService, IHostingEnvironment hostingEnvironment)
+        public UsersController(IUserService userService, IUploadService uploadService, IHostingEnvironment hostingEnvironment, IStringLocalizer<UsersController> localizer)
         {
             _userService = userService;
             _uploadService = uploadService;
             _hostingEnvironment = hostingEnvironment;
+            _localizer = localizer;
         }
 
         [HttpPost]
@@ -43,7 +46,7 @@ namespace FinApp.Controllers
             var newUser = await _userService.CreateUserAsync(registrationModels);
 
             if (newUser == null)
-                throw new ValidationException(HttpStatusCode.Forbidden, "User already exists");
+                throw new ValidationException(HttpStatusCode.Forbidden, _localizer["UserAlreadyExists"].Value);
 
             return Ok();
         }
@@ -82,7 +85,7 @@ namespace FinApp.Controllers
             var user = await _userService.UpdateAsync(profileDTO);
 
             if (user == null)
-                return BadRequest(new { message = "User Id is incorrect" });
+                return BadRequest(new { message = _localizer["UserIdIncorrect"].Value });
 
             return Ok();
         }

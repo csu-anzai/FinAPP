@@ -1,7 +1,9 @@
 ﻿using BLL.DTOs;
+using BLL.Security.Jwt.Models;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -17,12 +19,14 @@ namespace BLL.Security.Jwt
         private readonly JwtOptions _jwtOptions;
         private readonly ITokenRepository _tokenRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
 
-        public JwtManager(IOptions<JwtOptions> jwtOptions, ITokenRepository tokenRepository, IUnitOfWork unitOfWork)
+        public JwtManager(IOptions<JwtOptions> jwtOptions, ITokenRepository tokenRepository, IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _jwtOptions = jwtOptions.Value;
             _tokenRepository = tokenRepository;
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
         public bool IsExpired(string accesToken)
         {
@@ -31,21 +35,10 @@ namespace BLL.Security.Jwt
             return DateTime.UtcNow > token.ValidTo;
         }
 
-        public List<string> GetClaims(string token)
+        public UserClaims GetClaims(string token)
         {
-            var principal = new JwtSecurityTokenHandler()
-                 .ValidateToken(
-                     token,
-                     new TokenValidationParameters
-                     {
-                         ValidateAudience = false,
-                         ValidateIssuer = false,
-                         ValidateIssuerSigningKey = true,
-                         IssuerSigningKey = _jwtOptions.SigningCredentials.Key,
-                         ValidateLifetime = false
-                     },
-                     out var securityToken);
-
+            var principal = new JwtSecurityToken(token);
+                       
             List<string> claims = new List<string>();
 
             foreach (Claim claim in principal.Claims)
@@ -53,8 +46,43 @@ namespace BLL.Security.Jwt
                 claims.Add(claim.Value);
             }
 
-            return claims;
+            UserClaims userClaims = new UserClaims()
+            {
+                Email = claims[0],
+                Role = claims[1],
+                Id = Convert.ToInt32(claims[2])
+            };
 
+            return userClaims;
+        }
+
+        public bool IsValid(string token)
+        {
+            try
+            {
+                var validationParameters = new TokenValidationParameters()
+                {
+                    ValidateAudience = true,
+                    ValidAudience = _jwtOptions.Audience,
+                    ValidateIssuer = true,
+                    ValidIssuer = _jwtOptions.Issuer,
+                    ValidateIssuerSigningKey = true,                    
+                    IssuerSigningKey = _jwtOptions.SigningCredentials.Key,
+                    ValidateLifetime = false,
+                };
+
+                var Handler = new JwtSecurityTokenHandler()
+                     .ValidateToken(
+                         token,
+                         validationParameters,
+                         out var securityToken);
+            }
+            catch(Exception e)
+            {
+                var message = e.Message;
+                return false;
+            }
+            return true;
         }
 
         public string GenerateAccessToken(int userId, string login, string role)
@@ -129,5 +157,7 @@ namespace BLL.Security.Jwt
             if (options.JtiGenerator == null)
                 throw new ArgumentNullException(nameof(JwtOptions.JtiGenerator));
         }
+        
+
     }
 }

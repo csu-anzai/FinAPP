@@ -40,9 +40,10 @@ namespace BLL.Services.ImplementedServices
                 throw new ApiException(System.Net.HttpStatusCode.Conflict, "The image already exist");
 
             var image = _mapper.Map<Image>(imageVm);
+            //var image = new Image() { Name = imageVm.Name, Path = imageVm.Path };
 
             await _unitOfWork.ImageRepository.AddAsync(image);
-            await _unitOfWork.Complete();
+            //await _unitOfWork.Complete();
         }
 
         public async Task DeleteImage(Image image)

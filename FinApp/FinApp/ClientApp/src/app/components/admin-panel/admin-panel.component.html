@@ -1,10 +1,10 @@
 <div *ngIf="ready">
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-left:10%; margin-right:10%; margin-top:5%">
     <li class="nav-item" style="width:25%">
-      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Statistics</a>
+      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" translate>Statistics</a>
     </li>
     <li class="nav-item" style="width:25%">
-      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">User Inspection</a>
+      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" translate>UserInspectionTab</a>
     </li>
     <li class="nav-item" style="width:25%">
       <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Images</a>
@@ -14,8 +14,8 @@
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
-    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="margin-top:2.5%">
-      Statistics
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="margin-top:2.5%" translate>
+      StatisticsTab
       <fusioncharts [chartConfig]="chartConfig"
                     [dataSource]="dataSource">
       </fusioncharts>
@@ -25,10 +25,10 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Birth date</th>
-            <th>Delete User</th>
+            <th translate>UserNameLabel</th>
+            <th translate>EmailLabel</th>
+            <th translate>BirthDateLabel</th>
+            <th translate>DeleteUserLabel</th>
           </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td>{{user.birthDate | date:'longDate' }}</td>
-            <td><button *ngIf="user.roleId != 2" class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button></td>
+            <td><button *ngIf="user.roleId != 2" class="btn btn-danger" (click)="deleteUser(user.id)" translate>DeleteLabel</button></td>
           </tr>
         </tbody>
       </table>
@@ -89,8 +89,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th style="width:50%">Name</th>
-                <th>Delete/Update Category</th>
+                <th style="width:50%" translate>UserNameLabel</th>
+                <th translate> {{ 'DeleteLabel' + '/' + 'UpdateCategoryLable' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -99,8 +99,8 @@
                   <input [(ngModel)]="exp.name" class="form-control my-input" />
                 </td>
                 <td>
-                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(exp.id, false)">Delete</button>
-                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(exp, false)">Update</button>
+                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(exp.id, false)" translate>DeleteLabel</button>
+                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(exp)" translate>UpdateLabel</button>
                 </td>
               </tr>
             </tbody>
@@ -111,8 +111,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th style="width:50%">Name</th>
-                <th>Delete/Update Category</th>
+                <th style="width:50%" translate>UserNameLabel</th>
+                <th translate>DeleteLabel / UpdateCategoryLable</th>
               </tr>
             </thead>
             <tbody>
@@ -121,8 +121,8 @@
                   <input [(ngModel)]="inc.name" class="form-control my-input" />
                 </td>
                 <td>
-                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)">Delete</button>
-                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(inc, true)">Update</button>
+                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)" translate>DeleteLabel</button>
+                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(inc, true)" translate>UpdateLabel</button>
                 </td>
               </tr>
             </tbody>
