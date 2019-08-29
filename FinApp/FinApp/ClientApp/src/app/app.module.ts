@@ -58,6 +58,7 @@ import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { FileSelectDirective } from 'ng2-file-upload';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
@@ -91,6 +92,7 @@ export function createTranslateLoader(http: HttpClient) {
     DaterangepickerComponent,
     ChartsComponent,
     LoaderComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
