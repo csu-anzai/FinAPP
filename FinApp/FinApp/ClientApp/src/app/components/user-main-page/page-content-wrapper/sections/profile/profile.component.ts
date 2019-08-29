@@ -93,12 +93,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  sendConfirmEmailLink() {
-    this._emailConfirmationService.sendConfirmEmailLink(this.user).subscribe(() => {
-      this.alertService.successMsg('Confirm email link was sent');
-    });
-  }
-
   // drag&drop
   onUpdateAvatar(content) {
     this.updateModal = this._modalService.open(content, { centered: true });

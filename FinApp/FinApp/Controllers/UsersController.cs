@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace FinApp.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class UsersController : Controller
@@ -20,30 +19,36 @@ namespace FinApp.Controllers
         private IHostingEnvironment _hostingEnvironment;
         private IUploadService _uploadService;
         private readonly IUserService _userService;
+        private readonly IEmailConfirmationService _emailConfirmationService;
 
-        public UsersController(IUserService userService, IUploadService uploadService, IHostingEnvironment hostingEnvironment)
+
+        public UsersController(IUserService userService, IUploadService uploadService, IHostingEnvironment hostingEnvironment, IEmailConfirmationService emailConfirmationService)
         {
             _userService = userService;
             _uploadService = uploadService;
             _hostingEnvironment = hostingEnvironment;
+            _emailConfirmationService = emailConfirmationService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser(RegistrationViewModel registrationModels)
+        public async Task<IActionResult> CreateUser(RegistrationViewModel registrationModel)
         {
             var fullPath = DefaultUserImagePath();
 
-            var image = registrationModels.Avatar;
+            var image = registrationModel.Avatar;
 
             if (string.IsNullOrEmpty(image))
-                registrationModels.Avatar = ImageConvertor.GetImageFromPath(fullPath);
+                registrationModel.Avatar = ImageConvertor.GetImageFromPath(fullPath);
             else
-                registrationModels.Avatar = await Downloader.GetImageAsBase64Url(image);
+                registrationModel.Avatar = await Downloader.GetImageAsBase64Url(image);
 
-            var newUser = await _userService.CreateUserAsync(registrationModels);
+            var newUser = await _userService.CreateUserAsync(registrationModel);
 
             if (newUser == null)
                 throw new ValidationException(HttpStatusCode.Forbidden, "User already exists");
+
+            var confirmEmailDto = new ConfirmEmailDTO { UserEmail = newUser.Email, CallbackUrl = registrationModel.CallbackUrlForEmailConfirm };
+            await _emailConfirmationService.SendConfirmEmailLinkAsync(confirmEmailDto);
 
             return Ok();
         }

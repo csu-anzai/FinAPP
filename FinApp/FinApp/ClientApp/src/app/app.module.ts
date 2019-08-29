@@ -60,6 +60,7 @@ import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 import { ConfirmEmailSuccessComponent } from './components/confirm-email-success/confirm-email-success.component';
 import { EmailConfirmationService } from './services/email-confirmation.service';
+import { SendConfirmEmailComponent } from './components/send-confirm-email/send-confirm-email.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
@@ -91,6 +92,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     ChartsComponent,
     LoaderComponent,
     ConfirmEmailSuccessComponent,
+    SendConfirmEmailComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -112,8 +114,9 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
       { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
       { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [GuestGuard] },
-      { path: 'confirm-email-success', component: ConfirmEmailSuccessComponent, canActivate: [AuthGuard] },
-      { path: 'confirm-email-success/:token', component: ConfirmEmailSuccessComponent, canActivate: [AuthGuard] },
+      { path: 'confirm-email-success', component: ConfirmEmailSuccessComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-email-success/:token', component: ConfirmEmailSuccessComponent, canActivate: [GuestGuard] },
+      { path: 'send-confirm-email', component: SendConfirmEmailComponent, canActivate: [GuestGuard]},
       {
         path: 'user',
         component: FetchDataComponent,

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL.Migrations
 {
     [DbContext(typeof(FinAppContext))]
-    [Migration("20190827030954_AddEmailConfirmedFieldToUser")]
+    [Migration("20190827192059_AddEmailConfirmedFieldToUser")]
     partial class AddEmailConfirmedFieldToUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -242,7 +242,7 @@ namespace DAL.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<bool>("EmailConfirmed");
+                    b.Property<bool>("IsEmailConfirmed");
 
                     b.Property<string>("Name");
 

@@ -3,10 +3,7 @@ using BLL.Models.Exceptions;
 using BLL.Security.Jwt;
 using BLL.Services.IServices;
 using DAL.UnitOfWork;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Services.ImplementedServices
@@ -15,22 +12,22 @@ namespace BLL.Services.ImplementedServices
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailSenderService _emailSenderService;
-        private readonly IUserService _userService;
         private readonly JwtManager _jwtManager;
 
-        private readonly string _message = " is the code to reset your password.\n" +
-                                          $"The code is valid for PasswordCodeTimeout.Minutes minutes.";
+        private readonly string _message;
 
         public EmailConfirmationService(IUnitOfWork unitOfWork, IEmailSenderService emailService, JwtManager jwtManager)
         {
             _unitOfWork = unitOfWork;
             _emailSenderService = emailService;
             _jwtManager = jwtManager;
+            _message = "The link to confirm your email.\n" +
+                       $"The link is valid for {_jwtManager.JwtOptions.AccessExpirationMins} minutes.\n";
         }
 
         public async Task SendConfirmEmailLinkAsync(ConfirmEmailDTO confirmEmailDto)
         {
-            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == confirmEmailDto.UserId);
+            var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Email == confirmEmailDto.UserEmail);
             if (user == null)
             {
                 throw new ApiException(HttpStatusCode.NotFound, "User was not found.");
@@ -52,11 +49,23 @@ namespace BLL.Services.ImplementedServices
             {
                 throw new ApiException(HttpStatusCode.NotFound, "User was not found.");
             }
-            // validate token
-            user.EmailConfirmed = true;
-            await _unitOfWork.Complete();
+
+            if (user.IsEmailConfirmed == true)
+            {
+                throw new ApiException(HttpStatusCode.Forbidden, "Email is already confirmed.");
+            }
+
+            var token = confirmEmailDto.AccessToken;
+
+            if (_jwtManager.IsValid(token) && !_jwtManager.IsExpired(token))
+            {
+                user.IsEmailConfirmed = true;
+                await _unitOfWork.Complete();
+            }
+            else
+            {
+                throw new ApiException(HttpStatusCode.Forbidden, "Validation failed.");
+            }
         }
-
-
     }
 }

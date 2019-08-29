@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../models/user';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +10,13 @@ export class EmailConfirmationService {
   constructor(private http: HttpClient) { }
 
   baseUrl = 'https://localhost:44397/api/emailConfirmation';
+  callbackUrl = window.location.origin + '/confirm-email-success?token=';
+  isValidLink: boolean;
 
-  sendConfirmEmailLink(user: User) {
-    let callbackUrl = window.location.origin + '/confirm-email-success?token=';
+  sendConfirmEmailLink(email: string) {
     let model = {
-      userId: user.id,
-      callbackUrl: callbackUrl
+      userEmail: email,
+      callbackUrl: this.callbackUrl
     };
 
     return this.http.post(this.baseUrl + '/sendConfirmEmailLink', model);
@@ -23,7 +24,10 @@ export class EmailConfirmationService {
 
   validateConfirmEmailLink(model:any) {
 
-    return this.http.post(this.baseUrl + '/validateEmailLink', model);
+    return this.http.post(this.baseUrl + '/validateEmailLink', model).pipe(
+      map((response: any) => {
+        this.isValidLink = response;
+        })
+      );
   }
-
 }
