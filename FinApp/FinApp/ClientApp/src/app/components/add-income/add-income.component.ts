@@ -20,7 +20,7 @@ export class AddIncomeComponent implements OnInit {
       'Description': new FormControl(''),
       'Sum': new FormControl('', Validators.compose([Validators.required, Validators.min(0.01)])),
       'Date': new FormControl('', Validators.required),
-      'IncomeCategory': new FormControl('')
+      'IncomeCategory': new FormControl('', Validators.required)
     });
   }
 

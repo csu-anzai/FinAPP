@@ -39,6 +39,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
 import { AddAccountComponent } from './components/user-main-page/page-content-wrapper/sections/account/add-account/add-account.component';
+import { AddExpenseComponent } from './components/add-expense/add-expense.component';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -90,6 +91,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     ChartsComponent,
     LoaderComponent,
     AddIncomeComponent,
+    AddExpenseComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

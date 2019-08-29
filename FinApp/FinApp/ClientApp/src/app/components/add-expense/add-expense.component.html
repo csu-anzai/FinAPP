@@ -1,11 +1,11 @@
 <ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">Add Income</h4>
+    <h4 class="modal-title">Add Expense</h4>
     <button type="button" class="close" aria-label="Close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form method="post" (ngSubmit)="addIncome()" [formGroup]="incomeAddForm">
+  <form method="post" (ngSubmit)="addExpense()" [formGroup]="expenseAddForm">
     <div class="modal-body">
       <div class="form-group">
         <label class="floatLabel">Description:</label>
@@ -14,8 +14,8 @@
                formControlName="Description"
                #name>
         <div class="validation-message">
-          <ng-container *ngIf="incomeAddForm.controls['Description'].touched">
-            <small class="text-danger" *ngIf="incomeAddForm.controls['Description'].hasError('required')">Please enter description of income</small>
+          <ng-container *ngIf="expenseAddForm.controls['Description'].touched">
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Description'].hasError('required')">Please enter description of expense</small>
           </ng-container>
         </div>
       </div>
@@ -26,9 +26,9 @@
                formControlName="Sum"
                #name>
         <div class="validation-message">
-          <ng-container *ngIf="incomeAddForm.controls['Sum'].touched">
-            <small class="text-danger" *ngIf="incomeAddForm.controls['Sum'].hasError('required')">Please enter your balance</small>
-            <small class="text-danger" *ngIf="incomeAddForm.controls['Sum'].hasError('min')">Sum should be greater than 0</small>
+          <ng-container *ngIf="expenseAddForm.controls['Sum'].touched">
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Sum'].hasError('required')">Please enter your balance</small>
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Sum'].hasError('min')">Sum should be greater than 0</small>
           </ng-container>
         </div>
       </div>
@@ -49,11 +49,11 @@
         </div>
       </div>
       <div class="validation-message">
-        <ng-container *ngIf="incomeAddForm.controls['Date'].touched">
-          <small class="text-danger" *ngIf="incomeAddForm.controls['Date'].hasError('required')">Please choose date</small>
-          <ng-container *ngIf="incomeAddForm.controls['Date']?.hasError('ngbDate') && !incomeAddForm.controls['Date'].hasError('required')">
-            <small class="text-danger" *ngIf="incomeAddForm.controls['Date']?.getError('ngbDate')['requiredBefore'] != undefined">Date should be later than 1900 year</small>
-            <small class="text-danger" *ngIf="incomeAddForm.controls['Date']?.getError('ngbDate')['invalid'] != undefined">Date format should be yyyy-mm-dd</small>
+        <ng-container *ngIf="expenseAddForm.controls['Date'].touched">
+          <small class="text-danger" *ngIf="expenseAddForm.controls['Date'].hasError('required')">Please choose date</small>
+          <ng-container *ngIf="expenseAddForm.controls['Date']?.hasError('ngbDate') && !expenseAddForm.controls['Date'].hasError('required')">
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Date']?.getError('ngbDate')['requiredBefore'] != undefined">Date should be later than 1900 year</small>
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Date']?.getError('ngbDate')['invalid'] != undefined">Date format should be yyyy-mm-dd</small>
           </ng-container>
         </ng-container>
       </div>
@@ -63,17 +63,17 @@
           <div class="input-group-prepend">
             <label class="input-group-text select-label" for="inputGroupSelect01">Category</label>
           </div>
-          <select class="custom-select" id="inputGroupSelect01" formControlName="IncomeCategory">
+          <select class="custom-select" id="inputGroupSelect01" formControlName="ExpenseCategory">
             <option *ngFor="let c of categories" [value]="c.id">{{c.name}}</option>
           </select>
         </div>
         <div class="validation-message">
-          <ng-container *ngIf="incomeAddForm.controls['IncomeCategory'].touched">
-            <small class="text-danger" *ngIf="incomeAddForm.controls['IncomeCategory'].hasError('required')">Please choose category</small>
+          <ng-container *ngIf="expenseAddForm.controls['ExpenseCategory'].touched">
+            <small class="text-danger" *ngIf="expenseAddForm.controls['ExpenseCategory'].hasError('required')">Please choose category</small>
           </ng-container>
         </div>
       </div>
-      
+
     </div>
     <div class="modal-footer">
       <button class="btn btn-outline-primary save-btn" type="submit" [disabled]="loading">Add</button>
@@ -81,4 +81,4 @@
   </form>
 </ng-template>
 
-<button class="btn btn-outline-primary mb-2 mr-2 save-btn" (click)="openVerticallyCentered(content)">Add income</button>
+<button class="btn btn-outline-primary mb-2 mr-2 save-btn" (click)="openVerticallyCentered(content)">Add expense</button>
