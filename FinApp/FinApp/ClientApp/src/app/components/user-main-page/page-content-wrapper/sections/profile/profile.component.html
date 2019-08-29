@@ -3,72 +3,50 @@
   <div class="form">
     <form method="post" (ngSubmit)="updateProfile()" [formGroup]="profileForm">
       <div class="form-group">
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" formControlName="Name">
+        <label for="firstName" translate>FirstNameLabel</label>
+        <input type="text"  id="firstName" formControlName="Name"  >
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['Name'].touched">
-            <small class="text-danger" *ngIf="profileForm.controls['Name'].hasError('required')">
-              Please enter your
-              name
-            </small>
-            <small class="text-danger" *ngIf="profileForm.controls['Name'].hasError('pattern')">
-              Name should contain only
-              letters and '-'
-            </small>
+            <small class="text-danger" *ngIf="profileForm.controls['Name'].hasError('required')" translate>EnterYourNameValidation1</small>
+            <small class="text-danger" *ngIf="profileForm.controls['Name'].hasError('pattern')" translate>EnterYourNameValidation2</small>
           </ng-container>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="surname">Surname: </label>
-        <input type="text" id="surname" formControlName="Surname">
+        <label for="surname" translate>SurnameLabel</label>
+        <input type="text" id="surname"  formControlName="Surname" >
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['Surname'].touched">
-            <small class="text-danger" *ngIf="profileForm.controls['Surname'].hasError('required')">
-              Please enter your
-              surname
-            </small>
-            <small class="text-danger" *ngIf="profileForm.controls['Surname'].hasError('pattern')">
-              Surname should
-              contain only letters and '-'
-            </small>
+            <small class="text-danger" *ngIf="profileForm.controls['Surname'].hasError('required')" translate>EnterYourSurnameValidation1</small>
+            <small class="text-danger" *ngIf="profileForm.controls['Surname'].hasError('pattern')" translate>EnterYourSurnameValidation2</small>
           </ng-container>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="BirthDate">BirthDate: </label>
-        <input type="text" id="BirthDate" formControlName="BirthDate" [value]="user.birthDate | date:'dd-MM-yyyy'"
-               placeholder="dd-mm-yyyy" />
+        <label for="BirthDate" translate>BirthDateLabel</label>
+        <input type="text" id="BirthDate"  formControlName="BirthDate"  [value]="user.birthDate | date:'dd-MM-yyyy'" placeholder="dd-mm-yyyy">
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['BirthDate'].touched">
-            <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].hasError('required')">
-              Please enter your
-              birthdate
-            </small>
-
+            <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].hasError('required')" translate>EnterYourBirthdateValidation1</small>
           </ng-container>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="formGroupExampleInput2">Email: </label>
-        <input type="text" id="formGroupExampleInput2" formControlName="Email">
+        <label for="formGroupExampleInput2" translate>EmailLabel</label>
+        <input type="text" id="formGroupExampleInput2" formControlName="Email" >
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['Email'].touched">
-            <small class="text-danger" *ngIf="profileForm.controls['Email'].hasError('required')">
-              Please enter your
-              email
-            </small>
-            <small class="text-danger" *ngIf="profileForm.controls['Email'].hasError('pattern')">
-              E-mail example
-              finApp@gmail.com
-            </small>
+            <small class="text-danger" *ngIf="profileForm.controls['Email'].hasError('required')" translate>EnterYourEmailValidation1</small>
+            <small class="text-danger" *ngIf="profileForm.controls['Email'].hasError('pattern')" translate>EnterYourEmailValidation2</small>
           </ng-container>
         </div>
       </div>
 
-      <button class="save-btn" type="submit">Save</button>
+      <button class="save-btn" type="submit" translate>SaveButton</button>
+
     </form>
   </div>
 </div>
@@ -76,7 +54,7 @@
 <!-- Modal window -->
 <ng-template #updateModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">Update an avatar</h4>
+        <h4 class="modal-title" translate>UpdateAvatarTitle</h4>
         <button type="button" class="close" aria-label="Close" (click)="closeModal()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -85,13 +63,13 @@
     <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
       <ngx-dropzone-label>
         <div>
-          <h2>Drag and drop or click here</h2>
+          <h2 translate>DragAndDropTitle</h2>
         </div>
       </ngx-dropzone-label>
       <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f"
         [removable]="true" (removed)="onRemove(f)">
       </ngx-dropzone-image-preview>
     </div>
-    <button class="save-btn" (click)="onSendImage()" [ngClass]="{disabled: !files.length}">Send</button>
+    <button class="save-btn" (click)="onSendImage()" [ngClass]="{disabled: !files.length}" translate>SendBtn</button>
   </div>
   </ng-template>

@@ -39,22 +39,17 @@ export class SettingComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
-
-
-
   }
+
   updatePassword() {
     if (this.changePasswordForm.valid) {
-      this.changePassword.oldPassword = this.changePasswordForm.controls["OldPassword"].value,
-        this.changePassword.password = this.changePasswordForm.controls["Password"].value,
-        this.changePassword.confirmPassword = this.changePasswordForm.controls["ConfirmPassword"].value,
+      this.changePassword.oldPassword = this.changePasswordForm.controls['OldPassword'].value,
+        this.changePassword.password = this.changePasswordForm.controls['Password'].value,
+        this.changePassword.confirmPassword = this.changePasswordForm.controls['ConfirmPassword'].value,
         this.changePassword.userId = this._authService.DecodedToken.sub;
       this._userService.updatePassword(this.changePassword).subscribe(
-        data => this._alertService.successMsg("Your Pass was updated"),
-       error => this._alertService.errorMsg(error.error.error));         
+        data => this._alertService.successMsg('Your Pass was updated'),
+        error => this._alertService.errorMsg(error.error.error));
     }
   }
-
 }

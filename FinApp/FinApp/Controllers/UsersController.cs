@@ -6,6 +6,7 @@ using BLL.Services.IServices;
 using FinApp.Attributes;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -20,14 +21,15 @@ namespace FinApp.Controllers
         private IUploadService _uploadService;
         private readonly IUserService _userService;
         private readonly IEmailConfirmationService _emailConfirmationService;
+        private readonly IStringLocalizer<UsersController> _localizer;
 
 
-        public UsersController(IUserService userService, IUploadService uploadService, IHostingEnvironment hostingEnvironment, IEmailConfirmationService emailConfirmationService)
+        public UsersController(IUserService userService, IUploadService uploadService, IHostingEnvironment hostingEnvironment, IEmailConfirmationService emailConfirmationService, IStringLocalizer<UsersController> localizer)
         {
             _userService = userService;
             _uploadService = uploadService;
             _hostingEnvironment = hostingEnvironment;
-            _emailConfirmationService = emailConfirmationService;
+            _localizer = localizer;
         }
 
         [HttpPost]
@@ -45,7 +47,7 @@ namespace FinApp.Controllers
             var newUser = await _userService.CreateUserAsync(registrationModel);
 
             if (newUser == null)
-                throw new ValidationException(HttpStatusCode.Forbidden, "User already exists");
+                throw new ValidationException(HttpStatusCode.Forbidden, _localizer["UserAlreadyExists"].Value);
 
             var confirmEmailDto = new ConfirmEmailDTO { UserEmail = newUser.Email, CallbackUrl = registrationModel.CallbackUrlForEmailConfirm };
             await _emailConfirmationService.SendConfirmEmailLinkAsync(confirmEmailDto);
@@ -87,7 +89,7 @@ namespace FinApp.Controllers
             var user = await _userService.UpdateAsync(profileDTO);
 
             if (user == null)
-                return BadRequest(new { message = "User Id is incorrect" });
+                return BadRequest(new { message = _localizer["UserIdIncorrect"].Value });
 
             return Ok();
         }

@@ -6,10 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { first, finalize, catchError, takeLast } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
-import { last } from '@angular/router/src/utils/collection';
 import { EmailConfirmationService } from 'src/app/services/email-confirmation.service';
 
 @Component({
@@ -67,7 +64,7 @@ export class ProfileComponent implements OnInit {
       this.profileForm.get('Surname').setValue(this.user.surname);
       //  this.profileForm.get('BirthDate').setValue(this.user.birthDate);
       this.date = this.user.birthDate.toString().split('-').reverse().join('-');
-      this.profileForm.get('BirthDate').setValue(this.date);
+      //this.profileForm.get('BirthDate').setValue(this.date);
       this.profileForm.get('Email').setValue(this.user.email);
     });
   }
@@ -123,7 +120,8 @@ export class ProfileComponent implements OnInit {
   // sent file into the service
   onSendImage() {
 
-    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).toPromise().then(
+    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).toPromise()
+    .then(
       (res: any) => {
         // validation error
         if (res.body) {
@@ -137,5 +135,20 @@ export class ProfileComponent implements OnInit {
         this.alertService.successMsg('Image updated');
       }
     );
+    // this._uploadService.uploadCategoryImage({ name: 'sdfsd', path: 'dfgdfg' }, this.files[0]).toPromise()
+    // .then(
+    //   (res: any) => {
+    //     // validation error
+    //     if (res.body) {
+    //       if (res.body.error && res.body.code === 304) {
+    //         this.alertService.waringMsg(res.body.error);
+    //         return;
+    //       }
+    //     }
+    //     this.ngOnInit();
+    //     this.closeModal();
+    //     this.alertService.successMsg('Image updated');
+    //   }
+    // );
   }
 }

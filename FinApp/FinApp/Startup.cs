@@ -4,14 +4,19 @@ using DAL.Context;
 using FinApp.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Serilog;
+using System.Globalization;
+using System.Linq;
 
 namespace FinApp
 {
@@ -31,9 +36,56 @@ namespace FinApp
         {
             services.AddDbContext<FinAppContext>(options =>
                 options.UseSqlServer(Configuration["Data:DefaultConnection"]));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options =>
+
+            services.AddLocalization(o => o.ResourcesPath = "Resources");
+
+            //var supportedCultures = new[]
+            //{
+            //    new CultureInfo("en"),
+            //    new CultureInfo("de"),
+            //    new CultureInfo("fr"),
+            //};
+
+
+            //services.Configure<RequestLocalizationOptions>(options =>
+            //{
+            //    options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
+            //    options.SupportedCultures = supportedCultures;
+            //    options.SupportedUICultures = supportedCultures;
+            //    options.RequestCultureProviders = new[] { new CookieRequestCultureProvider { CookieName = "language" } };
+            //});
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization()
+                .AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+
+            services.Configure<RequestLocalizationOptions>(options =>
             {
-                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                var supportedCultures = new[]
+               {
+                new CultureInfo("en"),
+                new CultureInfo("de"),
+                new CultureInfo("fr"),
+                };
+                options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+
+                var defaultCookieRequestProvider =
+                    options.RequestCultureProviders.FirstOrDefault(rcp =>
+                        rcp.GetType() == typeof(CookieRequestCultureProvider));
+
+                if (defaultCookieRequestProvider != null)
+                    options.RequestCultureProviders.Remove(defaultCookieRequestProvider);
+
+                options.RequestCultureProviders.Insert(0,
+                    new CookieRequestCultureProvider()
+                    {
+                        CookieName = "language_for_checking",
+                        Options = options
+                    });
             });
 
             services.AddAutoMapper();
@@ -79,9 +131,13 @@ namespace FinApp
                 app.UseHsts();
             }
             app.UseGlobalExcepionMiddleware();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            var localizationOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(localizationOptions.Value);
 
             app.UseMvc(routes =>
             {

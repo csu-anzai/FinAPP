@@ -6,13 +6,16 @@ import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { NotificationService } from '../../services/notification.service';
 
+import { FileUploader, FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 import * as FusionCharts from 'fusioncharts';
+import { ImageService } from '../../services/image.service';
+import { Image } from '../../models/image';
 
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
   styleUrls: ['./admin-panel.component.css'],
-  providers: [UserService, CategoryService]
+  providers: [UserService, CategoryService, ImageService]
 })
 export class AdminPanelComponent implements OnInit {
 
@@ -22,13 +25,15 @@ export class AdminPanelComponent implements OnInit {
   expenseCategories: Category[];
   incomeCategories: Category[];
   users: User[];
+  images: Image[];
 
   ready: boolean;
 
   dataSource: Object;
   chartConfig: Object;
 
-  constructor(private categoryService: CategoryService, public userService: UserService, fb: FormBuilder, private alertService: NotificationService) {
+  constructor(private categoryService: CategoryService, public userService: UserService,
+    private imageService: ImageService, fb: FormBuilder, private alertService: NotificationService) {
     this.chartConfig = {
       width: '700',
       height: '400',
@@ -84,8 +89,9 @@ export class AdminPanelComponent implements OnInit {
 
   async doWork() {
     // this._categoryService = await this.getJsonResult("user", "getUsers").toPromise();
-    this.loadUsers();
-    this.loadCategories();
+    await this.loadUsers();
+    await this.loadCategories();
+    await this.loadImages();
 
     this.ready = true;
   }
@@ -97,6 +103,10 @@ export class AdminPanelComponent implements OnInit {
   async loadCategories() {
     this.expenseCategories = await this.categoryService.getCategories(false).toPromise();
     this.incomeCategories = await this.categoryService.getCategories(true).toPromise();
+  }
+
+  async loadImages() {
+    this.images = await this.imageService.getAll().toPromise();
   }
 
   addExpenseCategory() {
@@ -138,5 +148,22 @@ export class AdminPanelComponent implements OnInit {
       this.loadCategories();
       this.alertService.successMsg('Categories deleted');
     });
+  }
+
+  deleteImage(image: Image) {
+
+    this.imageService.deleteImage(image.id).subscribe(() => {
+      this.alertService.successMsg('Image deleted');
+    });
+  }
+
+  public uploader: FileUploader = new FileUploader({url: '/api/images/ uploadImage', itemAlias: 'photo' });
+
+  uploadImage() {
+    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
+    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
+      console.log('ImageUpload:uploaded:', item, status, response);
+      alert('File uploaded successfully')
+    }
   }
 }

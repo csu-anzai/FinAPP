@@ -10,12 +10,11 @@ import { bypassSanitizationTrustResourceUrl } from '@angular/core/src/sanitizati
 })
 export class UploadService {
   baseUrl = 'https://localhost:44397/api/';
-  fileContent: string | ArrayBuffer;
 
   constructor(private http: HttpClient) { }
 
   uploadUserAvatar(id: number, avatar: File) {
-    const attachedInfo  = new FormData();
+    const attachedInfo = new FormData();
     attachedInfo.append('avatar', avatar);
     attachedInfo.append('userId', id.toString());
 
@@ -30,7 +29,7 @@ export class UploadService {
 
   uploadCategoryImage(imageInfo: Image, imageFile: File) {
     // setting up a request
-    const attachedInfo  = new FormData();
+    const attachedInfo = new FormData();
     attachedInfo.append('image', imageFile);
     attachedInfo.append('name', imageInfo.name);
     attachedInfo.append('path', imageInfo.path);
@@ -41,6 +40,20 @@ export class UploadService {
 
     return this.http.request(uploadReq).pipe(
       catchError(err => throwError(err))
+    );
+  }
+
+  updateImage(imageInfo: Image) {
+    return this.http.put(`${this.baseUrl}/images/${imageInfo.id}`, imageInfo).pipe(
+      map(
+        (image) => console.log(image)
+      )
+    );
+  }
+
+  deleteImage(imageId: number) {
+    return this.http.delete(`${this.baseUrl}/images/${imageId}`).pipe(
+      catchError(err => {throw new Error(err); })
     );
   }
 }
