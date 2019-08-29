@@ -58,6 +58,7 @@ import { FusionChartsModule } from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import { FileSelectDirective } from 'ng2-file-upload';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
@@ -88,6 +89,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     DaterangepickerComponent,
     ChartsComponent,
     LoaderComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

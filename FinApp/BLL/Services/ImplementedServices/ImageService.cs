@@ -21,10 +21,10 @@ namespace BLL.Services.ImplementedServices
             _mapper = mapper;
         }
 
-        public async Task<ImageDTO> GetAsync(int id)
+        public async Task<Image> GetAsync(int id)
         {
             var image = await _unitOfWork.ImageRepository.GetAsync(id);
-            return _mapper.Map<ImageDTO>(image);
+            return _mapper.Map<Image>(image);
         }
 
         public async Task<IEnumerable<ImageDTO>> GetAllAsync()
@@ -43,6 +43,20 @@ namespace BLL.Services.ImplementedServices
 
             await _unitOfWork.ImageRepository.AddAsync(image);
             await _unitOfWork.Complete();
+        }
+
+        public async Task DeleteImage(Image image)
+        {
+            _unitOfWork.ImageRepository.Remove(image);
+            await _unitOfWork.Complete();
+        }
+
+        public async Task<Image> ChangeImage(ImageDTO imageDTO)
+        {
+            var upToDateImage = await _unitOfWork.ImageRepository.SingleOrDefaultAsync(u => u.Id == imageDTO.Id);
+            _mapper.Map(imageDTO, upToDateImage);
+            await _unitOfWork.Complete();
+            return upToDateImage;
         }
     }
 }

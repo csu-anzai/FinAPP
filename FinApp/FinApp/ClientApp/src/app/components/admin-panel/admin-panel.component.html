@@ -7,10 +7,10 @@
       <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">User Inspection</a>
     </li>
     <li class="nav-item" style="width:25%">
-      <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Add standart category</a>
+      <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Images</a>
     </li>
     <li class="nav-item" style="width:25%">
-      <a class="nav-link" id="pills-fourth-tab" data-toggle="pill" href="#pills-fourth" role="tab" aria-controls="pills-fourth" aria-selected="false"> Change standart category</a>
+      <a class="nav-link" id="pills-fourth-tab" data-toggle="pill" href="#pills-fourth" role="tab" aria-controls="pills-fourth" aria-selected="false"> Categories</a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
@@ -19,6 +19,19 @@
       <fusioncharts [chartConfig]="chartConfig"
                     [dataSource]="dataSource">
       </fusioncharts>
+
+      <div class="container">
+        <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
+        <button type="button" class="btn btn-success btn-s"
+                (click)="uploader.uploadAll()"
+                [disabled]="!uploader.getNotUploadedItems().length">
+          Upload an Image
+        </button>
+      </div>
+
+      <ul>
+        <li *ngFor="let img of images" (click)="deleteImage(img)">{{img.name}}</li>
+      </ul>
     </div>
     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" style="margin-top:2.5%">
       <table class="table">
@@ -54,15 +67,33 @@
     </div>
     <div class="tab-pane fade" id="pills-fourth" role="tabpanel" aria-labelledby="pills-fourth-tab">
       <ul class="nav nav-pills mb-3" id="pills-tab2" role="tablist" style="margin-left:20%; margin-right:20%; margin-top:5%">
-        <li class="nav-item" style="width:50%">
-          <a class="nav-link active" id="pills-home-tab2" data-toggle="pill" href="#pills-home2" role="tab" aria-controls="pills-home2" aria-selected="true">Expense</a>
+        <li class="nav-item" style="width:33.33%">
+          <a class="nav-link active" id="pills-home-tab2" data-toggle="pill" href="#pills-home2" role="tab" aria-controls="pills-home2" aria-selected="true">Create</a>
         </li>
-        <li class="nav-item" style="width:50%">
+        <li class="nav-item" style="width:33.33%">
+          <a class="nav-link" id="pills-home-tab3" data-toggle="pill" href="#pills-home3" role="tab" aria-controls="pills-home3" aria-selected="false">Expense</a>
+        </li>
+        <li class="nav-item" style="width:33.34%">
           <a class="nav-link" id="pills-profile-tab2" data-toggle="pill" href="#pills-profile2" role="tab" aria-controls="pills-profile2" aria-selected="false">Income</a>
         </li>
       </ul>
+
       <div class="tab-content" id="pills-tabContent2">
-        <div class="tab-pane fade show active" id="pills-home2" role="tabpanel" aria-labelledby="pills-home-tab2" style="margin-top:2.5%">
+
+        <div class="tab-pane fade show active" id="pills-home2" role="tabpanel" aria-labelledby="pills-home-tab2" style="text-align: center; margin-top:2.5%">
+          <h1 style="margin-top:5%">Creation category</h1>
+          <div style="margin-top: 5%; margin-bottom:1%">
+            <input placeholder="Name category" [(ngModel)]="category.name" />
+          </div>
+          <div style="display:inline-block; text-align: start">
+            <p>Expenses category</p>
+            <button class="btn btn-block btn-info" (click)="addExpenseCategory()">Add</button>
+            <p>Income category</p>
+            <button class="btn btn-block btn-info" (click)="addIncomeCategory()">Add</button>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="pills-home3" role="tabpanel" aria-labelledby="pills-home-tab2" style="margin-top:2.5%">
           <table class="table">
             <thead>
               <tr>
@@ -83,6 +114,7 @@
             </tbody>
           </table>
         </div>
+
         <div class="tab-pane fade" id="pills-profile2" role="tabpanel" aria-labelledby="pills-profile-tab2" style="margin-top:2.5%">
           <table class="table">
             <thead>
@@ -94,7 +126,7 @@
             <tbody>
               <tr *ngFor="let inc of incomeCategories">
                 <td style="width:50%">
-                  <input [(ngModel)]="inc.name" class="form-control my-input"/>
+                  <input [(ngModel)]="inc.name" class="form-control my-input" />
                 </td>
                 <td>
                   <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)">Delete</button>
@@ -104,7 +136,9 @@
             </tbody>
           </table>
         </div>
+
       </div>
+
     </div>
   </div>
 </div>
