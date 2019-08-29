@@ -44,9 +44,6 @@ export class UploadService {
   }
 
   updateImage(imageInfo: Image) {
-    imageInfo.name = 'AAAAAA';
-    imageInfo.path = '/atata';
-
     return this.http.put(`${this.baseUrl}/images/${imageInfo.id}`, imageInfo).pipe(
       map(
         (image) => console.log(image)
