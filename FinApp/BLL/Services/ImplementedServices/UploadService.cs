@@ -4,6 +4,7 @@ using BLL.Models.Exceptions;
 using BLL.Services.IServices;
 using DAL.Entities;
 using DAL.UnitOfWork;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 
@@ -25,12 +26,12 @@ namespace BLL.Services.ImplementedServices
             var upToDateUser = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == userId);
 
             if (upToDateUser == null)
-                throw new ValidationException(System.Net.HttpStatusCode.NotFound, "User doesn't exist");
+                throw new ValidationException(System.Net.HttpStatusCode.NotFound, "UserDoesntExist");
 
             var convertedImg = ImageConvertor.GetByte64FromImage(avatarDTO.Avatar);
 
             if (CheckIsTheSameImages(upToDateUser.Avatar, convertedImg))
-                throw new ValidationException(System.Net.HttpStatusCode.NotModified, "These are the same images");
+                throw new ValidationException(System.Net.HttpStatusCode.NotModified, "SameImage");
 
             upToDateUser.Avatar = convertedImg;
 

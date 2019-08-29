@@ -10,7 +10,6 @@ import { bypassSanitizationTrustResourceUrl } from '@angular/core/src/sanitizati
 })
 export class UploadService {
   baseUrl = 'https://localhost:44397/api/';
-  fileContent: string | ArrayBuffer;
 
   constructor(private http: HttpClient) { }
 

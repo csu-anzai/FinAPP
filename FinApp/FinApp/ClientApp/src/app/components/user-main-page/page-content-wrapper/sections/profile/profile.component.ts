@@ -6,10 +6,7 @@ import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { first, finalize, catchError, takeLast } from 'rxjs/operators';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
-import { last } from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-profile',
@@ -121,7 +118,8 @@ export class ProfileComponent implements OnInit {
   // sent file into the service
   onSendImage() {
 
-    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).toPromise().then(
+    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).toPromise()
+    .then(
       (res: any) => {
         // validation error
         if (res.body) {
@@ -135,5 +133,21 @@ export class ProfileComponent implements OnInit {
         this.alertService.successMsg('Image updated');
       }
     );
+
+    // this._uploadService.uploadCategoryImage({ name: 'sdfsd', path: 'dfgdfg' }, this.files[0]).toPromise()
+    // .then(
+    //   (res: any) => {
+    //     // validation error
+    //     if (res.body) {
+    //       if (res.body.error && res.body.code === 304) {
+    //         this.alertService.waringMsg(res.body.error);
+    //         return;
+    //       }
+    //     }
+    //     this.ngOnInit();
+    //     this.closeModal();
+    //     this.alertService.successMsg('Image updated');
+    //   }
+    // );
   }
 }

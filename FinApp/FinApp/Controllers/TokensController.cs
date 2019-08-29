@@ -21,13 +21,11 @@ namespace FinApp.Controllers
         public IActionResult GetNewAccessToken(TokenViewModel tokenModel)
         {
             _jwtManager.IsExpired(tokenModel.IdToken);
+            _jwtManager.IsValid(tokenModel.IdToken);
+
             var claims = _jwtManager.GetClaims(tokenModel.IdToken);
 
-            int userId = Convert.ToInt32(claims[2]);
-            string email = claims[0];
-            string role = claims[1];
-
-            return Ok(new { token = _jwtManager.GenerateAccessToken(userId, email, role) });
+            return Ok(new { token = _jwtManager.GenerateAccessToken(claims.Id, claims.Email, claims.Role) });
         }
     }
 }
