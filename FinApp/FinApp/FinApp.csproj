@@ -30,11 +30,15 @@
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Compile Remove="ClientApp\src\app\landing-page\**" />
+    <Compile Remove="ClientApp\src\app\welcome-components\**" />
     <Content Remove="$(SpaRoot)**" />
     <Content Remove="ClientApp\src\app\landing-page\**" />
+    <Content Remove="ClientApp\src\app\welcome-components\**" />
     <EmbeddedResource Remove="ClientApp\src\app\landing-page\**" />
+    <EmbeddedResource Remove="ClientApp\src\app\welcome-components\**" />
     <None Remove="$(SpaRoot)**" />
     <None Remove="ClientApp\src\app\landing-page\**" />
+    <None Remove="ClientApp\src\app\welcome-components\**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
@@ -50,11 +54,6 @@
     <None Remove="ClientApp\src\app\models\forgotPassword.ts" />
     <None Remove="ClientApp\src\app\models\passwordConfirmationCode.ts" />
     <None Remove="ClientApp\src\app\models\recoverPassword.ts" />
-    <None Remove="ClientApp\src\app\welcome-components\welcome-list\welcome-list.component.ts" />
-    <None Remove="ClientApp\src\app\welcome-components\welcome-header\welcome-header.component.ts" />
-    <None Remove="ClientApp\src\app\welcome-components\welcome-benefits\welcome-benefits.component.ts" />
-    <None Remove="ClientApp\src\app\welcome-components\welcome-carousel\welcome-carousel.component.ts" />
-    <None Remove="ClientApp\src\app\welcome-components\welcome-page\welcome-page.component.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,11 +70,6 @@
     <TypeScriptCompile Include="ClientApp\src\app\models\forgotPassword.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\passwordConfirmationCode.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\recoverPassword.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-list\welcome-list.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-header\welcome-header.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-benefits\welcome-benefits.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-carousel\welcome-carousel.component.ts" />
-    <TypeScriptCompile Include="ClientApp\src\app\welcome-components\welcome-page\welcome-page.component.ts" />
   </ItemGroup>
 
   <ItemGroup>

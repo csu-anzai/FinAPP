@@ -1,14 +1,12 @@
-﻿using DAL.Context;
-using DAL.Entities;
+﻿using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace DAL.Repositories.ImplementedRepositories
 {
-    public class ExpenseRepository : BaseRepository<ExpenseCategory>, IExpenseCategoryRepository
+    public class ExpenseRepository : BaseRepository<Expense>, IExpenseRepository
     {
-        public ExpenseRepository(FinAppContext context) : base(context)
+        public ExpenseRepository(DbContext context) : base(context)
         {
         }
     }

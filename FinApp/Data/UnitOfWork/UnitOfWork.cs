@@ -23,13 +23,18 @@ namespace DAL.UnitOfWork
         public IRoleRepository RoleRepository { get; }
         public ITokenRepository TokenRepository { get; }
         public IUserRepository UserRepository { get; }
+        public IIncomeRepository IncomeRepository { get; }
+        public IExpenseRepository ExpenseRepository { get; }
+        public ITransactionRepository TransactionRepository { get; }
         #endregion properties
 
         #region constructor
         public UnitOfWork(FinAppContext context, IAccountRepository accountRepository, IAuthRepository authRepository, ICurrencyRepository currencyRepository,
             IExpenseCategoryRepository expenseCategoryRepository, IImageRepository imageRepository, IIncomeCategoryRepository incomeCategoryRepository,
              IPasswordConfirmationCodeRepository passwordConfirmationCodeRepository, IRoleRepository roleRepository,
-                ITokenRepository tokenRepository, IUserRepository userRepository)
+                ITokenRepository tokenRepository, IUserRepository userRepository,
+            IIncomeRepository incomeRepository, IExpenseRepository expenseRepository,
+                    ITransactionRepository transactionRepository)
 
         {
             _context = context;
@@ -43,6 +48,9 @@ namespace DAL.UnitOfWork
             RoleRepository = roleRepository;
             TokenRepository = tokenRepository;
             UserRepository = userRepository;
+            IncomeRepository = incomeRepository;
+            ExpenseRepository = expenseRepository;
+            TransactionRepository = transactionRepository;
         }
         #endregion constructor
 

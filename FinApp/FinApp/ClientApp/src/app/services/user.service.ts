@@ -10,6 +10,7 @@ import { RecoverPassword } from '../models/recoverPassword';
 })
 export class UserService {
   constructor(private http: HttpClient) { }
+  public user:User;
 
   baseUrl = 'https://localhost:44397/api/users';
 
@@ -28,6 +29,7 @@ export class UserService {
   getUser(id: number): Observable<User> {
     return this.http.get<User>(`${this.baseUrl}/${id}`).pipe(
       tap((receivedData: User) => {
+        this.user = receivedData;
         return receivedData;
       }),
       catchError(this.handleError)

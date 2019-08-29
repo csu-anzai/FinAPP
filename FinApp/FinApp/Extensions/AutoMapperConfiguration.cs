@@ -52,6 +52,10 @@ namespace FinApp.Extensions
 
                 c.CreateMap<ProfileDTO, User>().ReverseMap();
 
+                c.CreateMap<TransactionViewModel, Transaction>();
+
+                c.CreateMap<IncomeAddViewModel, Income>();
+
             }).CreateMapper());
         }
     }

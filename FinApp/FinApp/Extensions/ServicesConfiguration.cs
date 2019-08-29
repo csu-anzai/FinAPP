@@ -22,12 +22,16 @@ namespace FinApp.Extensions
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
-            services.AddScoped<IExpenseCategoryRepository, ExpenseRepository>();
-            services.AddScoped<IIncomeCategoryRepository, IncomeRepository>();
+            services.AddScoped<IExpenseCategoryRepository, ExpenseCategoryRepository>();
+            services.AddScoped<IIncomeCategoryRepository, IncomeCategoryRepository>();
             services.AddScoped<IPasswordConfirmationCodeRepository, PasswordConfirmationCodeRepository>();
             services.AddScoped<ICurrencyRepository, CurrencyRepository>();
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IIncomeRepository, IncomeRepository>();
+            services.AddScoped<IExpenseRepository, ExpenseRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+
 
             // BLL
             services.AddScoped<IUserService, UserService>();
@@ -38,6 +42,9 @@ namespace FinApp.Extensions
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IUploadService, UploadService>();
+            services.AddScoped<IIncomeService, IncomeService>();
+            services.AddScoped<IExpenseService, ExpenseService>();
+
 
             services.AddScoped<AuthorizeAttribute>();
             services.AddScoped<AuthorizeAttribute>();

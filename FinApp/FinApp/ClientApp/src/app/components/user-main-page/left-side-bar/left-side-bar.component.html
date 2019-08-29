@@ -6,17 +6,14 @@
         Profile
       </a>
     </li>
-    <li>
+    <li >
       <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fa fa-briefcase"></i>
         Acounts
       </a>
-      <ul class="collapse list-unstyled" id="pageSubmenu">
+      <ul class="collapse list-unstyled" id="pageSubmenu" *ngFor="let account of accounts">
         <li>
-          <a [routerLink]="['/user/accounts', 1003]">Acount 1</a>
-        </li>
-        <li>
-          <a [routerLink]="['/user/accounts', 1005]">Acount 2</a>
+          <a [routerLink]="['/user/accounts', account.id]">{{account.name}}</a>
         </li>
       </ul>
     </li>

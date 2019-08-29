@@ -16,6 +16,10 @@ namespace DAL.UnitOfWork
         IRoleRepository RoleRepository { get; }
         ITokenRepository TokenRepository { get; }
         IUserRepository UserRepository { get; }
+        IIncomeRepository IncomeRepository { get; }
+        IExpenseRepository ExpenseRepository { get; }
+        ITransactionRepository TransactionRepository { get; }
+
         Task<int> Complete();
     }
 }
