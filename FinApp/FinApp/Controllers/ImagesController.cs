@@ -53,5 +53,19 @@ namespace FinApp.Controllers
 
             return Ok();
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateImage(int id, ImageDTO imageDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
+            var user = await _imageService.UpdateAsync(imageDTO);
+
+            if (user == null)
+                return BadRequest(new { message = "Can't update image" });
+
+            return Ok();
+        }
     }
 }

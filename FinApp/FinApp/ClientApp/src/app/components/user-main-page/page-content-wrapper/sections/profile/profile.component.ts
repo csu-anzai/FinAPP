@@ -118,21 +118,22 @@ export class ProfileComponent implements OnInit {
   // sent file into the service
   onSendImage() {
 
-    this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).toPromise()
-    .then(
-      (res: any) => {
-        // validation error
-        if (res.body) {
-          if (res.body.error && res.body.code === 304) {
-            this.alertService.waringMsg(res.body.error);
-            return;
-          }
-        }
-        this.ngOnInit();
-        this.closeModal();
-        this.alertService.successMsg('Image updated');
-      }
-    );
+    // this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).toPromise()
+    // .then(
+    //   (res: any) => {
+    //     // validation error
+    //     if (res.body) {
+    //       if (res.body.error && res.body.code === 304) {
+    //         this.alertService.waringMsg(res.body.error);
+    //         return;
+    //       }
+    //     }
+    //     this.ngOnInit();
+    //     this.closeModal();
+    //     this.alertService.successMsg('Image updated');
+    //   }
+    // );
+
 
     // this._uploadService.uploadCategoryImage({ name: 'sdfsd', path: 'dfgdfg' }, this.files[0]).toPromise()
     // .then(
@@ -149,5 +150,9 @@ export class ProfileComponent implements OnInit {
     //     this.alertService.successMsg('Image updated');
     //   }
     // );
+
+    // tried to update
+
+    this._uploadService.updateImage( { id: 2, name: 'aaa', path: 'sss' }).subscribe(() => console.log('success'));
   }
 }
