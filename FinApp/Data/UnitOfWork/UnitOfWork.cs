@@ -138,19 +138,8 @@ namespace DAL.UnitOfWork
 
         #region constructor
         public UnitOfWork(FinAppContext context)
-
         {
             _context = context;
-            //AccountRepository = accountRepository;
-            //AuthRepository = authRepository;
-            //CurrencyRepository = currencyRepository;
-            //ExpenseCategoryRepository = expenseCategoryRepository;
-            ////ImageRepository = imageRepository;
-            //IncomeCategoryRepository = incomeCategoryRepository;
-            //PasswordConfirmationCodeRepository = passwordConfirmationCodeRepository;
-            //RoleRepository = roleRepository;
-            //TokenRepository = tokenRepository;
-            //UserRepository = userRepository;
         }
         #endregion constructor
 
