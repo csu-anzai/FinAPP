@@ -1,8 +1,8 @@
 ﻿using BLL.DTOs;
 using BLL.Models.ViewModels;
+using DAL.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DAL.Entities;
 
 
 namespace BLL.Services.IServices
@@ -13,6 +13,6 @@ namespace BLL.Services.IServices
         Task<IEnumerable<ImageDTO>> GetAllAsync();
         Task AddImage(ImageViewModel imageVm);
         Task DeleteImage(Image image);
-        Task<Image> ChangeImage(ImageDTO imageDTO);
+        Task<Image> UpdateAsync(ImageDTO imageDto);
     }
 }

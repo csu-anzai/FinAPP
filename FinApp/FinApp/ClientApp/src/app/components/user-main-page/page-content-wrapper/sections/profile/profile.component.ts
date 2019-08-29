@@ -62,7 +62,7 @@ export class ProfileComponent implements OnInit {
       this.profileForm.get('Surname').setValue(this.user.surname);
       //  this.profileForm.get('BirthDate').setValue(this.user.birthDate);
       this.date = this.user.birthDate.toString().split('-').reverse().join('-');
-      this.profileForm.get('BirthDate').setValue(this.date);
+      //this.profileForm.get('BirthDate').setValue(this.date);
       this.profileForm.get('Email').setValue(this.user.email);
     });
   }
@@ -133,7 +133,6 @@ export class ProfileComponent implements OnInit {
         this.alertService.successMsg('Image updated');
       }
     );
-
     // this._uploadService.uploadCategoryImage({ name: 'sdfsd', path: 'dfgdfg' }, this.files[0]).toPromise()
     // .then(
     //   (res: any) => {

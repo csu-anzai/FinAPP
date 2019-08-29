@@ -38,6 +38,19 @@ namespace FinApp.Controllers
             return images.Any() ? Ok(images) : (IActionResult)NotFound();
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetImage(int id)
+        {
+            var image = await _imageService.GetAsync(id);
+
+            if (image == null)
+                return NotFound();
+
+            var imageDTO = _mapper.Map<Image, ImageDTO>(image);
+
+            return Ok(imageDTO);
+        }
+
         /// <summary>
         ///  FromForm attribute for FormData request
         /// </summary>
@@ -58,40 +71,29 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetImage(int id)
-        {
-            var image = await _imageService.GetAsync(id);
-            if (image == null)
-                return NotFound();
-            var imageDTO = _mapper.Map<Image, ImageDTO>(image);
-            return Ok(imageDTO);
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteImage(int id)
         {
             var imageInDb = await _imageService.GetAsync(id);
+
             if (imageInDb == null)
                 return NotFound();
+
             await _imageService.DeleteImage(imageInDb);
             return Ok();
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> ChangeImage(int id, ImageDTO imageDTO)
+        public async Task<IActionResult> UpdateImage(int id, ImageDTO imageDTO)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
-            var image = _imageService.ChangeImage(imageDTO);
+
+            var image = await _imageService.UpdateAsync(imageDTO);
+
             if (image == null)
                 return BadRequest(new { message = "image id is incorrect!" });
-            return Ok();
-        }
 
-        [HttpPost("/uploadImage")]
-        public async Task<IActionResult> UploadImage([FromBody]byte[] photo)
-        {
             return Ok();
         }
     }
