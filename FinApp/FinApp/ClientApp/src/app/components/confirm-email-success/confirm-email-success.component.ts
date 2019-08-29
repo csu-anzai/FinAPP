@@ -13,14 +13,15 @@ import { NotificationService } from '../../services/notification.service';
 export class ConfirmEmailSuccessComponent implements OnInit {
 
   accessToken: string;
-  messageToUser: string;
   private jwtHelper: JwtHelperService;
 
-  constructor(private activatedRoute: ActivatedRoute, private emailConfirmationService: EmailConfirmationService, private router: Router, private alertService: NotificationService)
+  constructor(private activatedRoute: ActivatedRoute,
+    private emailConfirmationService: EmailConfirmationService,
+    private router: Router)
   {
     this.jwtHelper = new JwtHelperService();
     this.activatedRoute.queryParams.subscribe(params => {
-      this.accessToken = params['token'];
+    this.accessToken = params['token'];
     });
   }
 
@@ -31,12 +32,11 @@ export class ConfirmEmailSuccessComponent implements OnInit {
 
     this.emailConfirmationService.validateConfirmEmailLink(model).subscribe(
       next => { },
-
       error => {
-        if (error.status == 403) //this.router.navigate(['sign-up']);
+          this.router.navigate(['confirm-email-failed']);
       },
-      () => { }
-    );
+      () => this.router.navigate(['confirm-email-success'])
+  );
   }
 
   signIn() {

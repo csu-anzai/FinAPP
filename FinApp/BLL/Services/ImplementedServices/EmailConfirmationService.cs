@@ -21,7 +21,7 @@ namespace BLL.Services.ImplementedServices
             _unitOfWork = unitOfWork;
             _emailSenderService = emailService;
             _jwtManager = jwtManager;
-            _message = "The link to confirm your email.\n" +
+            _message = "Please, confirm your email by clicking the link.\n" +
                        $"The link is valid for {_jwtManager.JwtOptions.AccessExpirationMins} minutes.\n";
         }
 
@@ -39,7 +39,7 @@ namespace BLL.Services.ImplementedServices
             var callbackUrl = confirmEmailDto.CallbackUrl + accessToken;
             var message = _message + callbackUrl;
 
-            await _emailSenderService.SendEmailAsync(user.Email, "Fin App: confirm email", message); ;
+            await _emailSenderService.SendEmailAsync(user.Email, "Fin App: confirm email", message);
         }
 
         public async Task ValidateEmailLinkAsync(ValidateConfirmEmailDTO confirmEmailDto)
@@ -50,21 +50,19 @@ namespace BLL.Services.ImplementedServices
                 throw new ApiException(HttpStatusCode.NotFound, "User was not found.");
             }
 
-            if (user.IsEmailConfirmed == true)
+            if (user.IsEmailConfirmed == false)
             {
-                throw new ApiException(HttpStatusCode.Forbidden, "Email is already confirmed.");
-            }
+                var token = confirmEmailDto.AccessToken;
 
-            var token = confirmEmailDto.AccessToken;
-
-            if (_jwtManager.IsValid(token) && !_jwtManager.IsExpired(token))
-            {
-                user.IsEmailConfirmed = true;
-                await _unitOfWork.Complete();
-            }
-            else
-            {
-                throw new ApiException(HttpStatusCode.Forbidden, "Validation failed.");
+                if (_jwtManager.IsValid(token) && !_jwtManager.IsExpired(token))
+                {
+                    user.IsEmailConfirmed = true;
+                    await _unitOfWork.Complete();
+                }
+                else
+                {
+                    throw new ApiException(HttpStatusCode.Forbidden, "Validation failed.");
+                }
             }
         }
     }
