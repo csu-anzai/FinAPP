@@ -7,6 +7,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
+import { EmailConfirmationService } from 'src/app/services/email-confirmation.service';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,7 @@ export class ProfileComponent implements OnInit {
     private _authService: AuthService,
     private _userService: UserService,
     private _uploadService: UploadService,
+    private _emailConfirmationService: EmailConfirmationService,
     private _modalService: NgbModal,
     private _errorHandler: ErrorHandlingService,
     fb: FormBuilder,

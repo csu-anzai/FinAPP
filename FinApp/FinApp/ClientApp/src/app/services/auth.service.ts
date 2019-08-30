@@ -9,6 +9,7 @@ import { MessagingCenterService } from './messaging-center.service';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { ErrorHandlingService } from './error-handling.service';
+import { EmailConfirmationService } from './email-confirmation.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,7 +1,7 @@
 ﻿
 namespace BLL.DTOs
 {
-    public class EmailSettingsDTO
+    public class EmailOptionsDTO
     {
         public string MailServer { get; set; }
         public int MailPort { get; set; }

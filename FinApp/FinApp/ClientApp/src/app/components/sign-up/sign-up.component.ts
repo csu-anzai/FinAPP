@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MessagingCenterService } from '../../services/messaging-center.service';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { NotificationService } from 'src/app/services/notification.service';
+import { EmailConfirmationService } from '../../services/email-confirmation.service';
 @Component({
   selector: 'sign-up-component',
   templateUrl: './sign-up.component.html',
@@ -21,6 +22,7 @@ export class SignUpComponent implements OnInit {
     private message: MessagingCenterService,
     private alertService: NotificationService,
     private parserFormatter: NgbDateParserFormatter,
+    private emailConfirmationService: EmailConfirmationService,
     fb: FormBuilder) {
     this.signUpForm = fb.group({
       'Name': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
@@ -52,18 +54,19 @@ export class SignUpComponent implements OnInit {
 
   onSignUp() {
     if (this.signUpForm.valid) {
-      this.user = {
+      var registrationModel = {
         Name: this.signUpForm.controls['Name'].value,
         Surname: this.signUpForm.controls['Surname'].value,
         BirthDate: this.parserFormatter.format( this.signUpForm.controls['BirthDate'].value),
         Email: this.signUpForm.controls['Email'].value,
         Password: this.signUpForm.controls['Password'].value,
-        Avatar: this.imageUrl
+        Avatar: this.imageUrl,
+        CallbackUrlForEmailConfirm: this.emailConfirmationService.callbackUrl
       };
-      this.authService.register(this.user).subscribe(
-        next => {},
+      this.authService.register(registrationModel).subscribe(
+        next => { },
         error => this.alertService.errorMsg(error),
-        () => this.router.navigate(['login-page'])
+        () => this.router.navigate(['send-confirm-email'])
       );
     } else {
       for (let i in this.signUpForm.controls)
