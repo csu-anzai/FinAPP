@@ -93,7 +93,7 @@ namespace FinApp
             services.ConfigureAutoMapper();
             services.ConfigureDataAccessServices();
 
-            services.Configure<EmailSettingsDTO>(Configuration.GetSection("EmailSettings"));
+            services.Configure<EmailOptionsDTO>(Configuration.GetSection("EmailSettings"));
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>

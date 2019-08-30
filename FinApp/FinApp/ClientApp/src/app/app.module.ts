@@ -58,6 +58,10 @@ import { FusionChartsModule } from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import { ConfirmEmailSuccessComponent } from './components/confirm-email-success/confirm-email-success.component';
+import { EmailConfirmationService } from './services/email-confirmation.service';
+import { SendConfirmEmailComponent } from './components/send-confirm-email/send-confirm-email.component';
+import { ConfirmEmailFailedComponent } from './components/confirm-email-failed/confirm-email-failed.component';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { AddIncomeComponent } from './components/add-income/add-income.component';
@@ -94,6 +98,9 @@ export function createTranslateLoader(http: HttpClient) {
     DaterangepickerComponent,
     ChartsComponent,
     LoaderComponent,
+    ConfirmEmailSuccessComponent,
+    SendConfirmEmailComponent,
+    ConfirmEmailFailedComponent,
     AddIncomeComponent,
     AddExpenseComponent,
     FileSelectDirective
@@ -124,6 +131,10 @@ export function createTranslateLoader(http: HttpClient) {
       { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
       { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-email-success', component: ConfirmEmailSuccessComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-email-success/:token', component: ConfirmEmailSuccessComponent, canActivate: [GuestGuard] },
+      { path: 'send-confirm-email', component: SendConfirmEmailComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-email-failed', component: ConfirmEmailFailedComponent, canActivate: [GuestGuard] },
       {
         path: 'user',
         component: FetchDataComponent,
@@ -162,7 +173,7 @@ export function createTranslateLoader(http: HttpClient) {
     UserService,
     ForgotPasswordService,
     ChartsService,
-
+    EmailConfirmationService,
   ],
   bootstrap: [AppComponent]
 })
