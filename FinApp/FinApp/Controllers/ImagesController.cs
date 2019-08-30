@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DAL.Entities;
-
+using Microsoft.Extensions.Configuration;
 
 namespace FinApp.Controllers
 {
@@ -18,15 +18,13 @@ namespace FinApp.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
-        private const string _defaultFolderForCustomImages = "DefaultImages";
-        private const string _defaultFolderForUploadImages = "Uploads";
         private readonly IImageService _imageService;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IMapper _mapper;
 
         public string WebRootPath { get => _hostingEnvironment.WebRootPath; }
 
-        public ImagesController(IHostingEnvironment hostingEnvironment, IImageService imageService)
+        public ImagesController(IHostingEnvironment hostingEnvironment, IImageService imageService, IConfiguration configuration)
         {
             _hostingEnvironment = hostingEnvironment;
             _imageService = imageService;
@@ -61,7 +59,7 @@ namespace FinApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm]ImageViewModel imageVm)
         {
-            var result = await DirectoryManager.SaveFileInFolder(WebRootPath, _defaultFolderForUploadImages, imageVm);
+            var result = await DirectoryManager.SaveFileInFolder(WebRootPath, imageVm);
 
             if (result == null)
                 throw new ApiException(System.Net.HttpStatusCode.InternalServerError);
@@ -79,7 +77,7 @@ namespace FinApp.Controllers
             if (imageInDb == null)
                 return NotFound();
 
-            var root = $@"{WebRootPath}\{_defaultFolderForUploadImages}\{imageInDb.Path}\{imageInDb.Name}";
+            var root = $@"{WebRootPath}\{imageInDb.Path}\{imageInDb.Name}";
             DirectoryManager.RemoveFileFromFolder(root);
 
             await _imageService.DeleteImage(imageInDb);

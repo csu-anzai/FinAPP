@@ -6,11 +6,10 @@ namespace BLL.Helpers
 {
     public static class DirectoryManager
     {
-        public static async Task<string> SaveFileInFolder(string rootPath, string folderName, ImageViewModel imageVm)
+        public static async Task<string> SaveFileInFolder(string rootPath, ImageViewModel imageVm)
         {
-            // in helper create class for file saving
             var file = imageVm.Image;
-            var newPath = Path.Combine(rootPath, $@"{folderName}\{imageVm.Path}");
+            var newPath = Path.Combine(rootPath, imageVm.Path);
 
             if (!Directory.Exists(newPath))
                 Directory.CreateDirectory(newPath);
@@ -33,6 +32,14 @@ namespace BLL.Helpers
 
             if (file.Exists)
                 file.Delete();
+        }
+
+        public static void RemoveFolder(string path)
+        {
+            var directory = new DirectoryInfo(path);
+
+            if (directory.Exists)
+                directory.Delete(true);
         }
     }
 }
