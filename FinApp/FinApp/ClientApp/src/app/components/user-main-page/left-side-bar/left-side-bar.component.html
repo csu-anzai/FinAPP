@@ -6,19 +6,24 @@
         <span translate>ProfileLabel</span>
       </a>
     </li>
-    <li>
+    <li >
       <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fa fa-briefcase"></i>
         <span translate>AccountsLabel</span>
       </a>
-      <ul class="collapse list-unstyled" id="pageSubmenu">
+      <div class="accounts-list">
+      <ul class="collapse list-unstyled " id="pageSubmenu" *ngFor="let account of accounts">
         <li>
-          <a [routerLink]="['/user/accounts', 1003]">Acount 1</a>
-        </li>
-        <li>
-          <a [routerLink]="['/user/accounts', 1005]">Acount 2</a>
+          <a [routerLink]="['/user/accounts', account.id]">{{account.name}}</a>
         </li>
       </ul>
+        </div>
+    </li>
+    <li>
+      <a routerLink="/user/add-account">
+        <i class="fa fa-plus-circle"></i>
+        Add account
+      </a>
     </li>
     <li>
       <a routerLink="/user/charts">

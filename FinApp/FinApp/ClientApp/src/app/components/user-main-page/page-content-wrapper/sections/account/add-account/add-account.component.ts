@@ -5,7 +5,6 @@ import { AccountAdd } from '../../../../../../models/accountAdd';
 import { CurrencyService } from '../../../../../../services/currency.service';
 import { ImageService } from '../../../../../../services/image.service';
 import { AccountService } from '../../../../../../services/account.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 @Component({
@@ -22,13 +21,11 @@ export class AddAccountComponent implements OnInit {
   accountAdd: AccountAdd = new AccountAdd();
 
   accountAddForm: FormGroup;
-
-  modal;
+  
 
   constructor(private currencyService: CurrencyService,
     private imageService: ImageService,
     private accountService: AccountService,
-    private modalService: NgbModal,
     fb: FormBuilder) {
     this.accountAddForm = fb.group({
       'Name': new FormControl(this.accountAdd.name, Validators.required),
@@ -50,14 +47,7 @@ export class AddAccountComponent implements OnInit {
         this.images = data;
       });
   }
-
-  openVerticallyCentered(content) {
-    console.log(this.images);
-
-    console.log(this.currencies);
-
-    this.modal = this.modalService.open(content, { centered: true });
-  }
+  
 
   addAccount() {
     if (this.accountAddForm.valid) {
@@ -67,7 +57,6 @@ export class AddAccountComponent implements OnInit {
       this.accountAdd.name = this.accountAddForm.controls['Name'].value;
 
       this.accountService.addAccount(this.accountAdd).subscribe(data => {
-        this.modal.close();
       });
     }
     else {
@@ -75,11 +64,5 @@ export class AddAccountComponent implements OnInit {
         this.accountAddForm.controls[i].markAsTouched();
     }
   }
-
-  closeModal() {
-    this.modal.close();
-    for (let i in this.accountAddForm.controls)
-      this.accountAddForm.controls[i].markAsUntouched();
-  }
-
+  
 }
