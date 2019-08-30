@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-around">
+  <div class="col-md-4">
+    <div class="input-group">
+      <input type="text"
+             class="form-control" placeholder="{{ 'FromPlaceholder' | translate }}"
+             name="dp" ngbDatepicker #d="ngbDatepicker"
+             [minDate]="{year: 2000, month: 1, day: 1}"
+             [maxDate]="{year: 2020, month: 12, day: 30}"
+             [autoClose]="true">
+      <div class="input-group-append mr-2">
+        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="	fa fa-calendar"></i></button>
+      </div>
+
+      <input type="text"
+             class="form-control" placeholder="{{ 'ToPlaceholder' | translate }}"
+             name="dp2" ngbDatepicker #d2="ngbDatepicker"
+             [minDate]="{year: 2000, month: 1, day: 1}"
+             [maxDate]="{year: 2020, month: 12, day: 30}"
+             [autoClose]="true">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" (click)="d2.toggle()" type="button"><i class="	fa fa-calendar"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center col-md-4">
+    <div class="mr-2" translate>FilterLabel</div>
+    <input class="form-control" #filterInput (keyup)="0"/>
+  </div>
+</div>
+<div class="d-flex align-items-center justify-content-start mt-4">
+  <p><span class="Income">↓</span><span translate>IncomesLabel</span> 2000</p>
+  <p class="ml-2" translate><span class="Expense">↑</span><span translate>ExpensesLabel</span> 2000</p>
+</div>
+<table class="table table-sm table-hover table-bordered">
+  <thead class="">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col" (click)="sort()" translate>CategoryColumn</th>
+      <th scope="col" (click)="sort()" translate>DescriptionColumn</th>
+      <th scope="col" (click)="sort()" translate>SumColumn</th>
+      <th scope="col" (click)="sort()" translate>DateColumn</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let trans of  (transactions | filterPipe:filterInput.value); index as i">
+      <th scope="row">{{i+1}}</th>
+      <td>{{trans.NameCategory}}</td>
+      <td>{{trans.Description}}</td>
+      <td class="{{trans.IncomeOrExpense}}">
+        <span *ngIf="trans.IncomeOrExpense == 'Income'; else expenseBlock">+</span><ng-template #expenseBlock> - </ng-template>
+        {{trans.Sum}}
+      </td>
+      <td>{{trans.Date}}</td>
+    </tr>
+  </tbody>
+</table>

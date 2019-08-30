@@ -1,0 +1,22 @@
+<div class="justify-content-center">
+ 
+  <div class="center">
+      <canvas baseChart 
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [options]="pieChartOptions"
+            (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)"></canvas>
+            
+  </div>
+  <div class="sel-center">
+    <select id="soflow-color" (change) = "accountsChange($event.target.selectedIndex)">
+        <option *ngFor = "let account of accounts">{{account.name}} </option>
+    </select>
+    <select id="soflow-color">
+        <option translate>IncomesLabel&nbsp;&#8195;</option>
+        <option translate>ExpensesLabel </option>
+    </select>
+  </div>
+</div>

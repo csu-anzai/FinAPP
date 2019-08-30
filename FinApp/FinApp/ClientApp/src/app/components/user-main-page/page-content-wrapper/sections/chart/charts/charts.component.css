@@ -1,0 +1,28 @@
+select#soflow-color {
+    color: #fff;
+    background-color: #2834d8;
+    -webkit-border-radius: 20px;
+    background-repeat: no-repeat;
+    background-position: 97% center;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    padding-left: 15px;
+    width: 13%;
+    overflow: hidden;
+    margin:0 auto;
+}
+ .chart-content {
+    display: flow-root;
+    min-height: 100vh;
+    width: 100%;
+}
+.center{
+    width: 50%;
+    padding: 2em 4em 2em;
+    margin:0 auto;
+    padding: 30px 25px;
+ }
+.sel-center {
+    text-align: center;
+ }
+ 
