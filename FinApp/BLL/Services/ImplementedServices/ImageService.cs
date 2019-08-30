@@ -43,7 +43,7 @@ namespace BLL.Services.ImplementedServices
             //var image = new Image() { Name = imageVm.Name, Path = imageVm.Path };
 
             await _unitOfWork.ImageRepository.AddAsync(image);
-            //await _unitOfWork.Complete();
+            await _unitOfWork.Complete();
         }
 
         public async Task<Image> UpdateAsync(ImageDTO imageDto)

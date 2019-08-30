@@ -10,7 +10,7 @@ namespace BLL.Helpers
         {
             // in helper create class for file saving
             var file = imageVm.Image;
-            var newPath = Path.Combine(rootPath, folderName);
+            var newPath = Path.Combine(rootPath, $@"{folderName}\{imageVm.Path}");
 
             if (!Directory.Exists(newPath))
                 Directory.CreateDirectory(newPath);
