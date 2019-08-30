@@ -29,6 +29,7 @@ namespace FinApp.Controllers
             _userService = userService;
             _uploadService = uploadService;
             _hostingEnvironment = hostingEnvironment;
+            _emailConfirmationService = emailConfirmationService;
             _localizer = localizer;
         }
 
