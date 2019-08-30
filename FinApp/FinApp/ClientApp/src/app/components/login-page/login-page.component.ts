@@ -22,7 +22,6 @@ export class LoginPageComponent implements OnInit {
   constructor(private authService: AuthService,
     private router: Router,
     private oauthService: OAuthService,
-    private alertService: NotificationService,
     private emailConfirmationService: EmailConfirmationService,
     fb: FormBuilder,
     private translate: TranslateService,

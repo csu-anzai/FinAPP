@@ -49,7 +49,11 @@ namespace FinApp.Controllers
             if (newUser == null)
                 throw new ValidationException(HttpStatusCode.Forbidden, _localizer["UserAlreadyExists"].Value);
 
-            var confirmEmailDto = new ConfirmEmailDTO { UserEmail = newUser.Email, CallbackUrl = registrationModel.CallbackUrlForEmailConfirm };
+            var confirmEmailDto = new ConfirmEmailDTO
+            {
+                UserEmail = newUser.Email,
+                CallbackUrl = registrationModel.CallbackUrlForEmailConfirm
+            };
             await _emailConfirmationService.SendConfirmEmailLinkAsync(confirmEmailDto);
 
             return Ok();
