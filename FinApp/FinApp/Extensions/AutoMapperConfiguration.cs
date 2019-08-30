@@ -42,6 +42,7 @@ namespace FinApp.Extensions
 
                 c.CreateMap<IncomeCategoryDTO, IncomeCategory>().ReverseMap();
                 c.CreateMap<ExpenseCategoryDTO, ExpenseCategory>().ReverseMap();
+
                 c.CreateMap<IncomeCategoryWithImageDTO, IncomeCategory>().ReverseMap()
                     .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image));
                 c.CreateMap<ExpenseCategoryWithImageDTO, ExpenseCategory>().ReverseMap()
@@ -61,6 +62,8 @@ namespace FinApp.Extensions
                 c.CreateMap<TransactionViewModel, Transaction>();
 
                 c.CreateMap<IncomeAddViewModel, Income>();
+
+                c.CreateMap<Income, IncomeOptions>();
 
             }).CreateMapper());
         }

@@ -18,7 +18,7 @@ export class LeftSideBarComponent implements OnInit {
   ngOnInit() {
     this.userService.getUser(this.authService.DecodedToken.sub).subscribe(data => {
       this.accounts = data.accounts;
-      this.accounts.length();
+      //this.accounts.length();
     });
   }
 

@@ -1,6 +1,8 @@
-﻿using BLL.Models.ViewModels;
+﻿using BLL.Models.Exceptions;
+using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace FinApp.Controllers
@@ -9,18 +11,33 @@ namespace FinApp.Controllers
     [ApiController]
     public class IncomesController : Controller
     {
-        private readonly IIncomeService incomeService;
+        private readonly IIncomeService _incomeService;
 
         public IncomesController(IIncomeService incomeService)
         {
-            this.incomeService = incomeService;
+            this._incomeService = incomeService;
         }
 
         [HttpPost("add")]
         public async Task<IActionResult> AddIncomeAsync(IncomeAddViewModel incomeModel)
         {
-            var result = await incomeService.AddIncomeAsync(incomeModel);
+            var result = await _incomeService.AddIncomeAsync(incomeModel);
             return Ok(new { message = "Adding income was successful" });
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> GetIncomesByCondition([FromQuery]IncomeOptions income)
+        {
+            try
+            {
+                var result = await _incomeService.GetIncomesWithDetailsAndConditionAsync(income);
+
+                return Ok(result);
+            }
+            catch (ApiException ex)
+            {
+                return BadRequest(ex.Message);
+            }    
         }
     }
 }
