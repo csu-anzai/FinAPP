@@ -26,5 +26,13 @@ namespace BLL.Helpers
 
             return fullPath;
         }
+
+        public static void RemoveFileFromFolder(string path)
+        {
+            var file = new FileInfo(path);
+
+            if (file.Exists)
+                file.Delete();
+        }
     }
 }

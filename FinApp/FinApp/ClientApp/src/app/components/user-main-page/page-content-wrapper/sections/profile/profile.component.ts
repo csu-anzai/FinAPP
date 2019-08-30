@@ -133,7 +133,7 @@ export class ProfileComponent implements OnInit {
         this.alertService.successMsg('Image updated');
       }
     );
-    // this._uploadService.uploadCategoryImage({ name: 'bbb', path: 'ccccdfgdf' }, this.files[0]).toPromise()
+    // this._uploadService.uploadCategoryImage({ name: 'bbb.txt', path: 'ccccdfgdf' }, this.files[0]).toPromise()
     // .then(
     //   (res: any) => {
     //     // validation error

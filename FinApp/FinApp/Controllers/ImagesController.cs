@@ -24,6 +24,8 @@ namespace FinApp.Controllers
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IMapper _mapper;
 
+        public string WebRootPath { get => _hostingEnvironment.WebRootPath; }
+
         public ImagesController(IHostingEnvironment hostingEnvironment, IImageService imageService)
         {
             _hostingEnvironment = hostingEnvironment;
@@ -59,9 +61,7 @@ namespace FinApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm]ImageViewModel imageVm)
         {
-            var webRootPath = _hostingEnvironment.WebRootPath;
-
-            var result = await DirectoryManager.SaveFileInFolder(webRootPath, _defaultFolderForUploadImages, imageVm);
+            var result = await DirectoryManager.SaveFileInFolder(WebRootPath, _defaultFolderForUploadImages, imageVm);
 
             if (result == null)
                 throw new ApiException(System.Net.HttpStatusCode.InternalServerError);
@@ -79,7 +79,11 @@ namespace FinApp.Controllers
             if (imageInDb == null)
                 return NotFound();
 
+            var root = $@"{WebRootPath}\{_defaultFolderForUploadImages}\{imageInDb.Path}\{imageInDb.Name}";
+            DirectoryManager.RemoveFileFromFolder(root);
+
             await _imageService.DeleteImage(imageInDb);
+
             return Ok();
         }
 
