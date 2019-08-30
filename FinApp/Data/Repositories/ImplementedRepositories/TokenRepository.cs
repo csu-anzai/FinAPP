@@ -14,7 +14,8 @@ namespace DAL.Repositories.ImplementedRepositories
 
         public Task<Token> GetTokenByUserId(int id)
         {
-            return _entities.Include(u => u.User).SingleOrDefaultAsync(u=>u.User.Id == id);
+            // TODO: Rewrite
+            return _entities.Include(u => u.User).SingleOrDefaultAsync(u => u.User.Id == id);
         }
     }
 }

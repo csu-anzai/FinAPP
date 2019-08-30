@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
-using BLL.Helpers;
 using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Security;
 using BLL.Services.IServices;
 using DAL.Entities;
+using DAL.Repositories.Filters;
 using DAL.UnitOfWork;
 using System.Collections.Generic;
 using System.Linq;
@@ -99,15 +99,17 @@ namespace BLL.Services.ImplementedServices
         {
             var user = await _unitOfWork.UserRepository.GetAsync(model.UserId);
 
-            if (user == null) {
-                throw new ApiException(HttpStatusCode.NotFound, "User was not found"); }
+            if (user == null)
+            {
+                throw new ApiException(HttpStatusCode.NotFound, "User was not found");
+            }
 
             if (!_hasher.CheckPassWithHash(model.OldPassword, user.Password))
                 throw new ApiException(HttpStatusCode.BadRequest, "Old password incorrect");
 
             user.Password = _hasher.HashPassword(model.Password);
 
-            await _unitOfWork.Complete();       
+            await _unitOfWork.Complete();
         }
 
         public async Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto)
@@ -123,6 +125,15 @@ namespace BLL.Services.ImplementedServices
             await _unitOfWork.Complete();
         }
 
-        
+        public async Task<User> GetUserWithAccounts(int id)
+        {
+            var userFilter = new UserFilter { UserName = "vfbvbvb" };
+            var conditions = userFilter.PropertiesFilter();
+
+            var user = await _unitOfWork.UserRepository.WhereFindForAsync(conditions,
+                a => a.Accounts.Select(i => i.Image),
+                a => a.Accounts.Select(i => i.Currency));
+            return user;
+        }
     }
 }

@@ -15,5 +15,6 @@ namespace BLL.Services.IServices
         Task DeleteAsync(UserDTO user);
         Task ChangePasswordAsync(NewPasswordViewModel model);
         Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto);
+        Task<User> GetUserWithAccounts(int id);
     }
 }

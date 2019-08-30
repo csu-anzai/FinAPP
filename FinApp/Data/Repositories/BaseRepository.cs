@@ -1,4 +1,5 @@
 ﻿using DAL.IRepositories;
+using DAL.Repositories.Filters;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,11 @@ namespace DAL.Repositories
         public async Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
         {
             return await _entities.SingleOrDefaultAsync(expression);
+        }
+
+        public async Task<TEntity> WhereFindForAsync(Expression<Func<TEntity, bool>> expression, params Expression<Func<TEntity, object>>[] includes)
+        {
+            return await _entities.IncludeMultiple(expression, includes);
         }
     }
 }

@@ -51,14 +51,18 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-        [ServiceFilter(typeof(AuthorizeAttribute))]
+        // [ServiceFilter(typeof(AuthorizeAttribute))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _userService.GetAsync(id);
+            //var user = await _userService.GetAsync(id);
 
-            if (user == null)
-                return NotFound();
+            //if (user == null)
+            //    return NotFound();
+
+            //return Ok(user);
+
+            var user = await _userService.GetUserWithAccounts(id);
 
             return Ok(user);
         }
