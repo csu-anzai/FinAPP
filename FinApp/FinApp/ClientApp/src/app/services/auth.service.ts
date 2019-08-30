@@ -143,7 +143,7 @@ export class AuthService implements OnInit {
   // in token service
   refreshToken() {
 
-    return this.http.post(this.baseUrl + 'tokens', { accessToken: this.cookieService.get('token') })
+    return this.http.post(this.baseUrl + 'tokens', { idToken: this.cookieService.get('token') })
       .pipe(
         tap((data: any) => {
           // Update token

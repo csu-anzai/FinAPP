@@ -9,6 +9,10 @@ namespace BLL.Models.Exceptions
 
         public ValidationException() : base(HttpStatusCode.OK) { }
 
+        public ValidationException(string message)
+            : base(HttpStatusCode.OK, message)
+        { }
+
         public ValidationException(HttpStatusCode code, string message)
             : base(HttpStatusCode.OK, message)
         {

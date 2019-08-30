@@ -1,31 +1,31 @@
 <div class="profile-content">
   <form class="form" method="post" (ngSubmit)="addAccount()" [formGroup]="accountAddForm">
-    <div class="text-center p-2">
-      <h4 class="modal-titl">Add account</h4>
-   </div>
+      <div class="text-center p-2">
+          <h4 class="modal-title" translate>AddAccountLabel</h4>
+      </div>
       <div class="form-group">
-        <label class="floatLabel">Name:</label>
+        <label class="floatLabel" translate>NameLabel</label>
         <input class="form-control"
                type="text"
                formControlName="Name"
                #name>
         <div class="validation-message">
           <ng-container *ngIf="accountAddForm.controls['Name'].touched">
-            <small class="text-danger" *ngIf="accountAddForm.controls['Name'].hasError('required')">Please enter name of account</small>
+            <small class="text-danger" *ngIf="accountAddForm.controls['Name'].hasError('required')" translate>EnterYourAccountNameValidation</small>
           </ng-container>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="floatLabel">Balance:</label>
+        <label class="floatLabel" translate>BalanceLabel</label>
         <input class="form-control"
                formControlName="Balance"
                #name>
         <div class="validation-message">
           <ng-container *ngIf="accountAddForm.controls['Balance'].touched">
-            <small class="text-danger" *ngIf="accountAddForm.controls['Balance'].hasError('required')">Please enter your balance</small>
-            <small class="text-danger" *ngIf="accountAddForm.controls['Balance'].hasError('min')">Balance can`t be less then 0</small>
-            <small class="text-danger" *ngIf="accountAddForm.controls['Balance'].hasError('pattern')">Balance must be a number</small>
+            <small class="text-danger" *ngIf="accountAddForm.controls['Balance'].hasError('required')" translate>EnterYourAccountNameValidation</small>
+            <small class="text-danger" *ngIf="accountAddForm.controls['Balance'].hasError('min')" translate>BalanceValidationMsg1</small>
+            <small class="text-danger" *ngIf="accountAddForm.controls['Balance'].hasError('pattern')" translate>BalanceValidationMsg2</small>
           </ng-container>
         </div>
       </div>
@@ -33,7 +33,7 @@
       <div class="form-group">
         <div class="input-group">
           <div class="input-group-prepend">
-            <label class="input-group-text  select-label" for="inputGroupSelect01">Currency</label>
+            <label class="input-group-text  select-label" for="inputGroupSelect01" translate>CurrencyColumn</label>
           </div>
           <select class="custom-select" id="inputGroupSelect01" formControlName="Currency">
             <option *ngFor="let c of currencies" [value]="c.id">{{c.name}}</option>
@@ -41,7 +41,7 @@
         </div>
         <div class="validation-message">
           <ng-container *ngIf="accountAddForm.controls['Currency'].touched">
-            <small class="text-danger" *ngIf="accountAddForm.controls['Currency'].hasError('required')">Please choose currency</small>
+            <small class="text-danger" *ngIf="accountAddForm.controls['Currency'].hasError('required')" translate>Please choose currency</small>
           </ng-container>
         </div>
       </div>
@@ -49,7 +49,7 @@
       <div class="form-group">
         <div class="input-group">
           <div class="input-group-prepend">
-            <label class="input-group-text select-label" for="inputGroupSelect01">Image</label>
+            <label class="input-group-text select-label" for="inputGroupSelect01" translate>ImageColumn</label>
           </div>
           <select class="custom-select" id="inputGroupSelect01" formControlName="Image">
             <option *ngFor="let i of images" [value]="i.id">{{i.name}}</option>
@@ -57,7 +57,7 @@
         </div>
         <div class="validation-message">
           <ng-container *ngIf="accountAddForm.controls['Image'].touched">
-            <small class="text-danger" *ngIf="accountAddForm.controls['Image'].hasError('required')">Please choose image</small>
+            <small class="text-danger" *ngIf="accountAddForm.controls['Image'].hasError('required')" translate>ImageValidationMsg1</small>
           </ng-container>
         </div>
       </div>

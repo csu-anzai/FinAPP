@@ -4,14 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
     abstract public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
     {
-        protected readonly DbContext _context;
+        private readonly DbContext _context;
         protected readonly DbSet<TEntity> _entities;
 
         public BaseRepository(DbContext context)

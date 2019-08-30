@@ -8,18 +8,18 @@ import { AuthGuard } from './auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
 // Components
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
-import { CounterComponent } from './components/counter/counter.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LeftSideBarComponent } from './components/user-main-page/left-side-bar/left-side-bar.component';
@@ -51,7 +51,6 @@ import { UserService } from './services/user.service';
 import { ForgotPasswordService } from './services/forgot.password.service';
 import { ConfirmCodeComponent } from './components/confirm-code/confirm-code.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
-
 import { JwtInterceptor } from './interceptors/jwt-interceptor';
 import { ChartsService} from './services/charts.service';
 
@@ -59,16 +58,21 @@ import { FusionChartsModule } from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { FileSelectDirective } from 'ng2-file-upload';
 import { AddIncomeComponent } from './components/add-income/add-income.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
     FetchDataComponent,
     LoginPageComponent,
     SignUpComponent,
@@ -92,6 +96,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     LoaderComponent,
     AddIncomeComponent,
     AddExpenseComponent,
+    FileSelectDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -105,10 +110,16 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     OAuthModule.forRoot(),
     BsDatepickerModule.forRoot(),
     NgbModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
     RouterModule.forRoot([
       { path: '', component: MainPageComponent, pathMatch: 'full' },
       { path: 'login-page', component: LoginPageComponent, canActivate: [GuestGuard] },
-      { path: 'counter', component: CounterComponent },
       { path: 'sign-up', component: SignUpComponent, canActivate: [GuestGuard] },
       { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
       { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },
@@ -149,8 +160,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     MessagingCenterService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     UserService,
-      ForgotPasswordService,
-      ChartsService,
+    ForgotPasswordService,
+    ChartsService,
 
   ],
   bootstrap: [AppComponent]

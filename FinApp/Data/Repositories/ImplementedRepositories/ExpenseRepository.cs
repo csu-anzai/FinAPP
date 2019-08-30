@@ -8,7 +8,7 @@ namespace DAL.Repositories.ImplementedRepositories
 {
     public class ExpenseRepository : BaseRepository<ExpenseCategory>, IExpenseCategoryRepository
     {
-        public ExpenseRepository(FinAppContext context) : base(context)
+        public ExpenseRepository(DbContext context) : base(context)
         {
         }
     }
