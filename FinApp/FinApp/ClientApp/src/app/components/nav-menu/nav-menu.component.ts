@@ -34,7 +34,10 @@ export class NavMenuComponent implements OnInit {
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
           this.translate.get('notifications.logOutMsg').subscribe(
-        (text: string) => this.logOutMsg = text
+        (text: string) => {
+          this.logOutMsg = text;
+          console.log(this.logOutMsg);
+        }
       );
     });
 

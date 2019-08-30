@@ -32,13 +32,13 @@
             [routerLinkActive]='["link-active"]'>
           <a class="nav-link text-dark"
              [routerLink]='["/login-page"]'
-             translate>LogInLink</a>
+             translate>navbar.logInLink</a>
         </li>
         <li class="nav-item"
             [routerLinkActive]='["link-active"]'>
           <a class="nav-link text-dark"
              [routerLink]='["/sign-up"]'
-             translate>RegisterLink</a>
+             translate>navbar.registerLink</a>
         </li>
       </ul>
     </ng-template>
@@ -47,7 +47,7 @@
           <li class="nav-item">
             <a class="nav-link text-dark"
                [routerLink]='["/user/profile"]'>
-              <span translate>WelcomeMessage</span>
+              <span translate>navbar.welcomeMessage</span>
               <b>
                 {{ authService.DecodedToken?.login}}
               </b>
@@ -57,7 +57,7 @@
               [routerLinkActive]='["link-active"]'>
             <a class="nav-link text-dark"
                (click)="onLogout()"
-               translate>LogoutLink</a>
+               translate>navbar.logoutLink</a>
           </li>
         </ul>
     </ng-template>

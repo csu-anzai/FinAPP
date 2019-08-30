@@ -9,8 +9,8 @@ import { lang } from 'moment';
 export class LanguageService implements OnInit {
   static LANGUAGES: any = [
     { name: 'English', abbreviation: 'en' },
-    { name: 'Deutschland', abbreviation: 'de' },
-    { name: 'Franch', abbreviation: 'fr' }
+    { name: 'German', abbreviation: 'de' },
+    { name: 'French', abbreviation: 'fr' }
   ];
 
   public get SelectedLanguage(): string {
