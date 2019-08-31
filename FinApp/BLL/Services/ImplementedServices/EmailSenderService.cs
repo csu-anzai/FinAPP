@@ -9,17 +9,17 @@ namespace BLL.Services.ImplementedServices
 {
     public class EmailSenderService : IEmailSenderService
     {
-        private readonly EmailSettingsDTO _emailSettings;
+        private readonly EmailOptionsDTO _emailOptions;
 
-        public EmailSenderService(IOptions<EmailSettingsDTO> emailSettings)
+        public EmailSenderService(IOptions<EmailOptionsDTO> emailOptions)
         {
-            _emailSettings = emailSettings.Value;
+            _emailOptions = emailOptions.Value;
         }
 
         public async Task SendEmailAsync(string email, string subject, string message)
         {
             var mimeMessage = new MimeMessage();
-            mimeMessage.From.Add(new MailboxAddress(_emailSettings.SenderName, _emailSettings.Sender));
+            mimeMessage.From.Add(new MailboxAddress(_emailOptions.SenderName, _emailOptions.Sender));
             mimeMessage.To.Add(new MailboxAddress(email));
             mimeMessage.Subject = subject;
             mimeMessage.Body = new TextPart("plain")
@@ -29,9 +29,9 @@ namespace BLL.Services.ImplementedServices
 
             using (var client = new SmtpClient())
             {
-                client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                await client.ConnectAsync(_emailSettings.MailServer, _emailSettings.MailPort, true);
-                await client.AuthenticateAsync(_emailSettings.Sender, _emailSettings.Password);
+                client.ServerCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+                await client.ConnectAsync(_emailOptions.MailServer, _emailOptions.MailPort, true);
+                await client.AuthenticateAsync(_emailOptions.Sender, _emailOptions.Password);
                 await client.SendAsync(mimeMessage);
                 await client.DisconnectAsync(true);
             }

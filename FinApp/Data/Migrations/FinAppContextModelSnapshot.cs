@@ -240,6 +240,8 @@ namespace DAL.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<bool>("IsEmailConfirmed");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Password");

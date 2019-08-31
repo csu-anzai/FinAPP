@@ -3,7 +3,6 @@ using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using DAL.Entities;
-using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
 using System;
 using System.Net;
@@ -15,6 +14,7 @@ namespace BLL.Services.ImplementedServices
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IEmailSenderService _emailSenderService;
+
         public static TimeSpan PasswordCodeTimeout { get; } = new TimeSpan(0, 15, 0);
 
         private readonly string _message = " is the code to reset your password.\n" +

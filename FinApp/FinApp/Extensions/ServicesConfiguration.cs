@@ -38,6 +38,7 @@ namespace FinApp.Extensions
             services.AddScoped<IExpenseCategoryService, ExpenseCategoryService>();
             services.AddScoped<IIncomeCategoryService, IncomeCategoryService>();
             services.AddScoped<IPasswordConfirmationCodeService, PasswordConfirmationCodeService>();
+            services.AddScoped<IEmailConfirmationService, EmailConfirmationService>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ICurrencyService, CurrencyService>();
             services.AddScoped<IImageService, ImageService>();

@@ -7,6 +7,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { UploadService } from 'src/app/services/upload.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
+import { EmailConfirmationService } from 'src/app/services/email-confirmation.service';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,7 @@ export class ProfileComponent implements OnInit {
     private _authService: AuthService,
     private _userService: UserService,
     private _uploadService: UploadService,
+    private _emailConfirmationService: EmailConfirmationService,
     private _modalService: NgbModal,
     private _errorHandler: ErrorHandlingService,
     fb: FormBuilder,
@@ -62,7 +64,7 @@ export class ProfileComponent implements OnInit {
       this.profileForm.get('Surname').setValue(this.user.surname);
       //  this.profileForm.get('BirthDate').setValue(this.user.birthDate);
       this.date = this.user.birthDate.toString().split('-').reverse().join('-');
-      this.profileForm.get('BirthDate').setValue(this.date);
+      //this.profileForm.get('BirthDate').setValue(this.date);
       this.profileForm.get('Email').setValue(this.user.email);
     });
   }
@@ -133,7 +135,6 @@ export class ProfileComponent implements OnInit {
         this.alertService.successMsg('Image updated');
       }
     );
-
     // this._uploadService.uploadCategoryImage({ name: 'sdfsd', path: 'dfgdfg' }, this.files[0]).toPromise()
     // .then(
     //   (res: any) => {

@@ -11,11 +11,19 @@
         <i class="fa fa-briefcase"></i>
         <span translate>AccountsLabel</span>
       </a>
-      <ul class="collapse list-unstyled" id="pageSubmenu" *ngFor="let account of accounts">
+      <div class="accounts-list">
+      <ul class="collapse list-unstyled " id="pageSubmenu" *ngFor="let account of accounts">
         <li>
           <a [routerLink]="['/user/accounts', account.id]">{{account.name}}</a>
         </li>
       </ul>
+        </div>
+    </li>
+    <li>
+      <a routerLink="/user/add-account">
+        <i class="fa fa-plus-circle"></i>
+        Add account
+      </a>
     </li>
     <li>
       <a routerLink="/user/charts">
@@ -29,7 +37,7 @@
         <span translate>SettingsLabel</span>
       </a>
     </li>
-    <li *ngIf="authService.DecodedToken.role == 'admin'">
+    <li *ngIf="authService.DecodedToken.role == 'Admin'">
       <a routerLink="/user/adminPanel">
         <i class="fa fa-user-circle"></i>
         <span translate>AdminPanelLabel</span>
