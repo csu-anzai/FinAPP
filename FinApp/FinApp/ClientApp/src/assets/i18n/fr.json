@@ -132,11 +132,8 @@
 
   "confirm-email-success": {
     "successMsg": "Votre email a été confirmé avec succès.",
+    "failMsg": "Impossible de confirmer votre email. Essayez de suivre le lien reçu à nouveau.",
     "logInLink": "S'identifier"
-  },
-
-  "confirm-email-failed": {
-    "failMsg": "La confirmation de l'e-mail a échoué."
   },
 
   "send-confirm-email": {

@@ -127,11 +127,8 @@
 
   "confirm-email-success": {
     "successMsg": "Your email was confirmed successfully.",
+    "failMsg": "Failed to confirm your email. Try to follow received link again.",
     "logInLink": "Log in"
-  },
-
-  "confirm-email-failed": {
-    "failMsg": "Email confirmation failed."
   },
 
   "send-confirm-email": {

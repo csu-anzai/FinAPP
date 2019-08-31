@@ -14,6 +14,7 @@ export class ConfirmEmailSuccessComponent implements OnInit {
 
   accessToken: string;
   private jwtHelper: JwtHelperService;
+  confirmedSuccessfully: boolean;
 
   constructor(private activatedRoute: ActivatedRoute,
     private emailConfirmationService: EmailConfirmationService,
@@ -33,9 +34,11 @@ export class ConfirmEmailSuccessComponent implements OnInit {
     this.emailConfirmationService.validateConfirmEmailLink(model).subscribe(
       next => { },
       error => {
-          this.router.navigate(['confirm-email-failed']);
+        this.confirmedSuccessfully = false;
       },
-      () => this.router.navigate(['confirm-email-success'])
+      () => {
+        this.confirmedSuccessfully = true;
+      }
   );
   }
 

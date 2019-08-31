@@ -127,11 +127,8 @@
 
   "confirm-email-success": {
     "successMsg": "Ihre E-Mail wurde erfolgreich bestätigt.",
+    "failMsg": "Fehler beim Bestätigen Ihrer E-Mail. Versuchen Sie erneut, dem erhaltenen Link zu folgen.",
     "logInLink": "Einloggen"
-  },
-
-  "confirm-email-failed": {
-    "failMsg": "E-Mail-Bestätigung fehlgeschlagen."
   },
 
   "send-confirm-email": {
