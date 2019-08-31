@@ -33,7 +33,7 @@ export class NavMenuComponent implements OnInit {
     this.isloggedIn();
 
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-          this.translate.get('notifications.logOutMsg').subscribe(
+      this.translate.get('notifications.logOutMsg').subscribe(
         (text: string) => this.logOutMsg = text
       );
     });
@@ -58,6 +58,11 @@ export class NavMenuComponent implements OnInit {
     this.authService.setLoggedIn(false);
     // this.oauthService.logOut(true);
     this.cookieService.delete('token', '/');
+
+    if (gapi.auth2) {
+      const auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut();
+    }
     this.router.navigate(['']);
     this.alertService.infoMsg(this.logOutMsg);
   }

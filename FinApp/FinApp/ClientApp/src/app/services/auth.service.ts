@@ -10,6 +10,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { ErrorHandlingService } from './error-handling.service';
 import { EmailConfirmationService } from './email-confirmation.service';
+import { GoogleSignInSuccess } from 'angular-google-signin';
 
 @Injectable({
   providedIn: 'root'
@@ -88,22 +89,22 @@ export class AuthService implements OnInit {
           }
         ));
   }
-
+  
   // in token service
-  organizeGoogleAuthFlow() {
-    if (this.cookieService.check('idToken')) {
-      const token = this.cookieService.get('idToken');
-      if (this.jwtHelper.isTokenExpired(token)) {
-        this.cookieService.delete('idToken');
-      } else {
-        this.getDataFromTokenId(token);
-      }
-    } else {
-      this.oauthService.initLoginFlow();
-    }
-  }
+  // organizeGoogleAuthFlow() {
+  //   if (this.cookieService.check('idToken')) {
+  //     const token = this.cookieService.get('idToken');
+  //     if (this.jwtHelper.isTokenExpired(token)) {
+  //       this.cookieService.delete('idToken');
+  //     } else {
+  //       this.getDataFromTokenId(token);
+  //     }
+  //   } else {
+  //     this.oauthService.initLoginFlow();
+  //   }
+  // }
 
-  // in token service
+  // // in token service
   getDataFromTokenId(tokenId: string): any {
     return this.http.post(this.baseUrl + this.signInParameter + this.withGoogle, { 'idToken': tokenId })
       .toPromise()
@@ -112,7 +113,6 @@ export class AuthService implements OnInit {
           // User already exists
           if (response.token) {
             this.cookieService.set('token', response.token, null, '/', null, true);
-
             this.cookieService.set('idToken', tokenId, null, '/', null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
             this.alertService.successMsg('Logged in successfuly');

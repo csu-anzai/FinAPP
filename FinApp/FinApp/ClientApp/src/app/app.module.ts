@@ -30,6 +30,7 @@ import { SettingComponent } from './components/user-main-page/page-content-wrapp
 import { DaterangepickerComponent } from './components/user-main-page/page-content-wrapper/sections/chart/daterangepicker/daterangepicker.component';
 import { ChartsComponent } from './components/user-main-page/page-content-wrapper/sections/chart/charts/charts.component';
 import { ChartComponent } from './components/user-main-page/page-content-wrapper/sections/chart/chart.component';
+import {GoogleSignInComponent} from 'angular-google-signin';
 
 import { FilterPipe } from './components/user-main-page/page-content-wrapper/sections/account/account-history/filter.pipe';
 
@@ -101,6 +102,7 @@ export function createTranslateLoader(http: HttpClient) {
     SendConfirmEmailComponent,
     AddIncomeComponent,
     AddExpenseComponent,
+    GoogleSignInComponent,
     FileSelectDirective
   ],
   imports: [

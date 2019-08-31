@@ -6,6 +6,9 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { OAuthService } from 'angular-oauth2-oidc';
 import { EmailConfirmationService } from '../../services/email-confirmation.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
+import { GoogleSignInSuccess } from 'angular-google-signin';
+import { CookieService } from 'ngx-cookie-service';
+import { HttpRequest } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-page',
@@ -13,6 +16,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent implements OnInit {
+  private myClientId = '112578784048-unbg6n7pt2345q5m7i53u20pu7rj80dt.apps.googleusercontent.com';
   private loginMsg: string;
 
   signInForm: FormGroup;
@@ -21,7 +25,6 @@ export class LoginPageComponent implements OnInit {
 
   constructor(private authService: AuthService,
     private router: Router,
-    private oauthService: OAuthService,
     private emailConfirmationService: EmailConfirmationService,
     fb: FormBuilder,
     private translate: TranslateService,
@@ -34,11 +37,11 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit() {
 
-      this.translate.get('notifications.loggedInSuccessfullyMsg').subscribe
-        (
-          (text: string) => { this.loginMsg = text; console.log(this.loginMsg); }
+    this.translate.get('notifications.loggedInSuccessfullyMsg').subscribe
+      (
+        (text: string) => { this.loginMsg = text; console.log(this.loginMsg); }
 
-        );
+      );
   }
 
   onLogin() {
@@ -61,22 +64,10 @@ export class LoginPageComponent implements OnInit {
       });
   }
 
-  googleSignIn() {
-    this.authService.organizeGoogleAuthFlow();
-  }
-
   get f() { return this.signInForm.controls; }
 
   loggedIn() {
     return this.authService.isLoggedIn;
-  }
-
-  public getClaims() {
-    const claims = this.oauthService.getIdentityClaims();
-    if (!claims) {
-      return null;
-    }
-    console.log(claims);
   }
 
   sendConfirmEmailLink() {
@@ -88,5 +79,13 @@ export class LoginPageComponent implements OnInit {
 
       () => this.router.navigate(['send-confirm-email'])
     );
+  }
+
+  // ffffffffffffffffffffffffffffffffffffffffff
+  onGoogleSignInSuccess(event: GoogleSignInSuccess) {
+    const googleUser: gapi.auth2.GoogleUser = event.googleUser;
+    const idToken = googleUser.getAuthResponse().id_token;
+    console.log(idToken);
+    this.authService.getDataFromTokenId(idToken);
   }
 }
