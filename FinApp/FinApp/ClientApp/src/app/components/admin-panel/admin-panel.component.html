@@ -1,21 +1,21 @@
 <div *ngIf="ready">
   <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-left:10%; margin-right:10%; margin-top:5%">
     <li class="nav-item" style="width:25%">
-      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" translate>Statistics</a>
+      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" translate>adminPanel.statistics</a>
     </li>
     <li class="nav-item" style="width:25%">
-      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" translate>UserInspectionTab</a>
+      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" translate>adminPanel.userInspectionTab</a>
     </li>
     <li class="nav-item" style="width:25%">
-      <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Images</a>
+      <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false" translate>adminPanel.imagesLabel</a>
     </li>
     <li class="nav-item" style="width:25%">
-      <a class="nav-link" id="pills-fourth-tab" data-toggle="pill" href="#pills-fourth" role="tab" aria-controls="pills-fourth" aria-selected="false"> Categories</a>
+      <a class="nav-link" id="pills-fourth-tab" data-toggle="pill" href="#pills-fourth" role="tab" aria-controls="pills-fourth" aria-selected="false" translate>adminPanel.categoriesLabel</a>
     </li>
   </ul>
   <div class="tab-content" id="pills-tabContent">
     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab" style="margin-top:2.5%" translate>
-      StatisticsTab
+      adminPanel.statisticsTab
       <fusioncharts [chartConfig]="chartConfig"
                     [dataSource]="dataSource">
       </fusioncharts>
@@ -25,10 +25,10 @@
       <table class="table">
         <thead>
           <tr>
-            <th translate>UserNameLabel</th>
-            <th translate>EmailLabel</th>
-            <th translate>BirthDateLabel</th>
-            <th translate>DeleteUserLabel</th>
+            <th translate>formLabels.name</th>
+            <th translate>formLabels.email</th>
+            <th translate>formLabels.birthdate</th>
+            <th translate>adminPanel.deleteUserLabel</th>
           </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@
             <td>{{user.name}}</td>
             <td>{{user.email}}</td>
             <td>{{user.birthDate | date:'longDate' }}</td>
-            <td><button *ngIf="user.roleId != 2" class="btn btn-danger" (click)="deleteUser(user.id)" translate>DeleteLabel</button></td>
+            <td><button *ngIf="user.roleId != 2" class="btn btn-danger" (click)="deleteUser(user.id)" translate>buttons.delete</button></td>
           </tr>
         </tbody>
       </table>
@@ -47,8 +47,8 @@
         <input type="file" name="photo" ng2FileSelect [uploader]="uploader" />
         <button type="button" class="btn btn-success btn-s"
                 (click)="uploader.uploadAll()"
-                [disabled]="!uploader.getNotUploadedItems().length">
-          Upload an Image
+                [disabled]="!uploader.getNotUploadedItems().length" translate>
+          adminPanel.uploadImageLabel
         </button>
       </div>
 
@@ -60,28 +60,28 @@
     <div class="tab-pane fade" id="pills-fourth" role="tabpanel" aria-labelledby="pills-fourth-tab">
       <ul class="nav nav-pills mb-3" id="pills-tab2" role="tablist" style="margin-left:20%; margin-right:20%; margin-top:5%">
         <li class="nav-item" style="width:33.33%">
-          <a class="nav-link active" id="pills-home-tab2" data-toggle="pill" href="#pills-home2" role="tab" aria-controls="pills-home2" aria-selected="true">Create</a>
+          <a class="nav-link active" id="pills-home-tab2" data-toggle="pill" href="#pills-home2" role="tab" aria-controls="pills-home2" aria-selected="true" translate>Create</a>
         </li>
         <li class="nav-item" style="width:33.33%">
-          <a class="nav-link" id="pills-home-tab3" data-toggle="pill" href="#pills-home3" role="tab" aria-controls="pills-home3" aria-selected="false">Expense</a>
+          <a class="nav-link" id="pills-home-tab3" data-toggle="pill" href="#pills-home3" role="tab" aria-controls="pills-home3" aria-selected="false" translate>adminPanel.expenseLable</a>
         </li>
         <li class="nav-item" style="width:33.34%">
-          <a class="nav-link" id="pills-profile-tab2" data-toggle="pill" href="#pills-profile2" role="tab" aria-controls="pills-profile2" aria-selected="false">Income</a>
+          <a class="nav-link" id="pills-profile-tab2" data-toggle="pill" href="#pills-profile2" role="tab" aria-controls="pills-profile2" aria-selected="false" translate>adminPanel.incomeLable</a>
         </li>
       </ul>
 
       <div class="tab-content" id="pills-tabContent2">
 
         <div class="tab-pane fade show active" id="pills-home2" role="tabpanel" aria-labelledby="pills-home-tab2" style="text-align: center; margin-top:2.5%">
-          <h1 style="margin-top:5%">Creation category</h1>
+          <h1 style="margin-top:5%" translate>adminPanel.creationCategory</h1>
           <div style="margin-top: 5%; margin-bottom:1%">
             <input placeholder="Name category" [(ngModel)]="category.name" />
           </div>
           <div style="display:inline-block; text-align: start">
-            <p>Expenses category</p>
-            <button class="btn btn-block btn-info" (click)="addExpenseCategory()">Add</button>
-            <p>Income category</p>
-            <button class="btn btn-block btn-info" (click)="addIncomeCategory()">Add</button>
+            <p translate>adminPanel.expensesCategory</p>
+            <button class="btn btn-block btn-info" (click)="addExpenseCategory()" translate>buttons.add</button>
+            <p translate>adminPanel.incomeCategory</p>
+            <button class="btn btn-block btn-info" (click)="addIncomeCategory()"translate>buttons.add</button>
           </div>
         </div>
 
@@ -89,8 +89,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th style="width:50%" translate>UserNameLabel</th>
-                <th translate> {{ 'DeleteLabel' + '/' + 'UpdateCategoryLable' | translate }}</th>
+                <th style="width:50%" translate>formLabels.name</th>
+                <th translate> {{ 'adminPanel.deleteLabel' + '/' + 'adminPanel.updateCategoryLable' | translate }}</th>
               </tr>
             </thead>
             <tbody>
@@ -99,8 +99,8 @@
                   <input [(ngModel)]="exp.name" class="form-control my-input" />
                 </td>
                 <td>
-                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(exp.id, false)" translate>DeleteLabel</button>
-                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(exp)" translate>UpdateLabel</button>
+                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(exp.id, false)" translate>buttons.delete</button>
+                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(exp)" translate>buttons.update</button>
                 </td>
               </tr>
             </tbody>
@@ -111,8 +111,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th style="width:50%" translate>UserNameLabel</th>
-                <th translate>DeleteLabel / UpdateCategoryLable</th>
+                <th style="width:50%" translate>formLabels.name</th>
+                <th translate>adminPanel.deleteLabel / adminPanel.updateCategoryLable</th>
               </tr>
             </thead>
             <tbody>
@@ -121,8 +121,8 @@
                   <input [(ngModel)]="inc.name" class="form-control my-input" />
                 </td>
                 <td>
-                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)" translate>DeleteLabel</button>
-                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(inc, true)" translate>UpdateLabel</button>
+                  <button class="btn btn-danger ml-5 mr-5" (click)="deleteCategory(inc.id, true)" translate>buttons.delete</button>
+                  <button class="btn btn-warning ml-5 mr-5" (click)="editCategory(inc, true)" translate>buttons.update</button>
                 </td>
               </tr>
             </tbody>
