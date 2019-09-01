@@ -64,6 +64,7 @@ import { SendConfirmEmailComponent } from './components/send-confirm-email/send-
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { AddIncomeComponent } from './components/add-income/add-income.component';
+import { ContactUsComponent } from './components/user-main-page/page-content-wrapper/sections/contact-us/contact-us.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
@@ -86,6 +87,7 @@ export function createTranslateLoader(http: HttpClient) {
     ChartComponent,
     AccountComponent,
     SettingComponent,
+    ContactUsComponent,
     AccountHistoryComponent,
     AccountInfoComponent,
     AdminPanelComponent,
@@ -142,7 +144,7 @@ export function createTranslateLoader(http: HttpClient) {
           { path: 'accounts', component: AccountComponent,canActivate: [AuthGuard] },
           { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
           { path: 'accounts/:id', component: AccountComponent,canActivate: [AuthGuard] },
-          { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
+          { path: 'contact-us', component: ContactUsComponent,canActivate: [AuthGuard] },
           { path: 'adminPanel', component: AdminPanelComponent, canActivate: [AuthGuard] },
           { path: 'add-account', component: AddAccountComponent, canActivate: [AuthGuard] }
         ]

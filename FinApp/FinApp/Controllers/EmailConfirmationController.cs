@@ -1,7 +1,8 @@
-﻿using System.Threading.Tasks;
-using BLL.DTOs;
+﻿using BLL.DTOs;
+using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,10 +13,12 @@ namespace FinApp.Controllers
     public class EmailConfirmationController : Controller
     {
         private readonly IEmailConfirmationService _emailConfirmationService;
+        private readonly IEmailSenderService _emailService;
 
-        public EmailConfirmationController(IEmailConfirmationService emailConfirmationService)
+        public EmailConfirmationController(IEmailConfirmationService emailConfirmationService, IEmailSenderService emailService)
         {
             _emailConfirmationService = emailConfirmationService;
+            _emailService = emailService;
         }
 
         [HttpPost("sendConfirmEmailLink")]
@@ -29,6 +32,13 @@ namespace FinApp.Controllers
         public async Task<IActionResult> ValidateEmailLinkAsync(ValidateConfirmEmailDTO confirmEmailDto)
         {
             await _emailConfirmationService.ValidateEmailLinkAsync(confirmEmailDto);
+            return Ok();
+        }
+
+        [HttpPost("sendEmailToAdmin")]
+        public async Task<IActionResult> SendMessagetoAdmin(EmailViewModel emailVm)
+        {
+            await _emailService.SendEmailAsync(emailVm.Email, emailVm.Subject, emailVm.Message);
             return Ok();
         }
     }
