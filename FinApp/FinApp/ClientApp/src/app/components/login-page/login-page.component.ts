@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
@@ -28,6 +28,8 @@ export class LoginPageComponent implements OnInit {
     private emailConfirmationService: EmailConfirmationService,
     fb: FormBuilder,
     private translate: TranslateService,
+    private oauthService: OAuthService,
+    private ngZone: NgZone,
     private alertService: NotificationService) {
     this.signInForm = fb.group({
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
@@ -70,6 +72,14 @@ export class LoginPageComponent implements OnInit {
     return this.authService.isLoggedIn;
   }
 
+  public getClaims() {
+    const claims = this.oauthService.getIdentityClaims();
+    if (!claims) {
+      return null;
+    }
+    console.log(claims);
+  }
+
   sendConfirmEmailLink() {
     let email = this.signInForm.controls['Email'].value;
     this.emailConfirmationService.sendConfirmEmailLink(email).subscribe(
@@ -81,10 +91,9 @@ export class LoginPageComponent implements OnInit {
     );
   }
 
-  // ffffffffffffffffffffffffffffffffffffffffff
   onGoogleSignInSuccess(event: GoogleSignInSuccess) {
     const googleUser: gapi.auth2.GoogleUser = event.googleUser;
-    const idToken = googleUser.getAuthResponse().id_token;
+    const idToken = this.ngZone.run(() => googleUser.getAuthResponse().id_token);
     console.log(idToken);
     this.authService.getDataFromTokenId(idToken);
   }
