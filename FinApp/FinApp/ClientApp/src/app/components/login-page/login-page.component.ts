@@ -29,11 +29,15 @@ export class LoginPageComponent implements OnInit {
     fb: FormBuilder,
     private translate: TranslateService,
     private oauthService: OAuthService,
-    private ngZone: NgZone,
+    private zone: NgZone,
     private alertService: NotificationService) {
     this.signInForm = fb.group({
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
       'Password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
+    });
+
+    this.zone.run(() => {
+      $.proxy(this.onGoogleLoginSuccess, this);
     });
   }
 
@@ -92,9 +96,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   onGoogleSignInSuccess(event: GoogleSignInSuccess) {
+    this.zone.run(() => {
     const googleUser: gapi.auth2.GoogleUser = event.googleUser;
-    const idToken = this.ngZone.run(() => googleUser.getAuthResponse().id_token);
+    const idToken = googleUser.getAuthResponse().id_token;
     console.log(idToken);
     this.authService.getDataFromTokenId(idToken);
+    });
   }
 }
