@@ -7,25 +7,22 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { MessagingCenterService } from './messaging-center.service';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { throwError, BehaviorSubject, Observable } from 'rxjs';
 import { ErrorHandlingService } from './error-handling.service';
-import { EmailConfirmationService } from './email-confirmation.service';
-import { GoogleSignInSuccess } from 'angular-google-signin';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService implements OnInit {
 
-  private isLogging: boolean;
   private loggedInStatus: boolean;
   private jwtHelper: JwtHelperService;
-  private loggedInSubject: BehaviorSubject<any>;
 
   baseUrl = 'https://localhost:44397/api/';
   signInParameter = 'auth/';
   signUpParameter = 'users/';
   withGoogle = 'signingoogle/';
+
   decodedToken: any;
 
   setLoggedIn(value: boolean) {
@@ -48,11 +45,9 @@ export class AuthService implements OnInit {
     private alertService: NotificationService,
     private errorHandler: ErrorHandlingService) {
     this.jwtHelper = new JwtHelperService();
-    this.loggedInSubject = new BehaviorSubject<any>(null);
   }
 
   ngOnInit(): void {
-    this.isLogging = false;
     this.loggedInStatus = this.loggedIn();
   }
 
@@ -85,11 +80,10 @@ export class AuthService implements OnInit {
           },
           error => {
             this.errorHandler.handleError(error);
-            return error;
           }
         ));
   }
-  
+
   // in token service
   // organizeGoogleAuthFlow() {
   //   if (this.cookieService.check('idToken')) {
@@ -105,7 +99,7 @@ export class AuthService implements OnInit {
   // }
 
   // // in token service
-  getDataFromTokenId(tokenId: string): any {
+  getDataFromTokenId(tokenId: string): Promise<any> {
     return this.http.post(this.baseUrl + this.signInParameter + this.withGoogle, { 'idToken': tokenId })
       .toPromise()
       .then(
@@ -115,14 +109,8 @@ export class AuthService implements OnInit {
             this.cookieService.set('token', response.token, null, '/', null, true);
             this.cookieService.set('idToken', tokenId, null, '/', null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
-            this.alertService.successMsg('Logged in successfuly');
             this.setLoggedIn(true);
-            // if (gapi.auth2) {
-            //   const auth2 = gapi.auth2.getAuthInstance();
-            //   auth2.signOut();
-            // }
-            this.router.navigate(['user/profile']);
-            return true;
+            return this.decodedToken;
           } // Passes data to the sign up page
           else if (response.googleProfile) {
             const user = response.googleProfile;
@@ -133,15 +121,14 @@ export class AuthService implements OnInit {
               avatar: user.avatar
             };
             this.message.passParameters(queryParams);
-            this.router.navigate(['sign-up']);
-            return true;
+            return queryParams;
           } else if (response.code) {
-            return this.alertService.errorMsg(response.message);
+            throwError(response.code);
           }
           return false;
         }
       ).catch(error => {
-        this.alertService.errorMsg(error.message);
+        throwError(error);
       });
   }
 
@@ -179,6 +166,9 @@ export class AuthService implements OnInit {
 
   // Don't touch it - so important !!!!
   // Check if access token expires
+  // private loggedInSubject: BehaviorSubject<any>;
+  // private isLogging: boolean;
+  // ctor     this.loggedInSubject = new BehaviorSubject<any>(null);
   // loggedIn() {
   //   const isAvailable = this.cookieService.check('token');
   //   if (isAvailable) {

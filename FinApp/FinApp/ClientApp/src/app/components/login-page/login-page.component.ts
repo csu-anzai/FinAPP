@@ -15,7 +15,7 @@ import { HttpRequest } from '@angular/common/http';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
-export class LoginPageComponent implements OnInit, AfterViewInit {
+export class LoginPageComponent implements OnInit {
   private myClientId = '112578784048-unbg6n7pt2345q5m7i53u20pu7rj80dt.apps.googleusercontent.com';
   private loginMsg: string;
 
@@ -31,6 +31,7 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
     private translate: TranslateService,
     private oauthService: OAuthService,
     private element: ElementRef,
+    private cookieService: CookieService,
     private zone: NgZone,
     private alertService: NotificationService) {
     this.signInForm = fb.group({
@@ -46,14 +47,16 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
         (text: string) => { this.loginMsg = text; console.log(this.loginMsg); }
 
       );
-  }
 
-  ngAfterViewInit() {
-    this.googleInit();
+      if (this.cookieService.check('idToken')) {
+        this.element.nativeElement.querySelector('#googleBtn')
+          .addEventListener('click', this.onGoogleSignIn.bind(this));
+      } else {
+        this.googleInit();
+      }
   }
 
   onLogin() {
-    console.log('opachki');
     this.loading = true;
     this.authService.login(this.signInForm.value).subscribe(
       next => { },
@@ -88,7 +91,7 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
   }
 
   sendConfirmEmailLink() {
-    let email = this.signInForm.controls['Email'].value;
+    const email = this.signInForm.controls['Email'].value;
     this.emailConfirmationService.sendConfirmEmailLink(email).subscribe(
       next => { },
 
@@ -101,26 +104,41 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
   public googleInit() {
     gapi.load('auth2', () => {
       this.zone.run(() => {
-      this.auth2 = gapi.auth2.init({
-        client_id: this.myClientId,
-        cookie_policy: 'single_host_origin',
-        scope: 'profile email'
+        this.auth2 = gapi.auth2.init({
+          client_id: this.myClientId,
+          cookie_policy: 'single_host_origin',
+          scope: 'profile email'
+        });
+        this.attachSignin(document.getElementById('googleBtn'));
       });
-      this.attachSignin(document.getElementById('googleBtn'));
     });
-  });
   }
 
   public attachSignin(element) {
-    this.auth2.attachClickHandler(element, {},
-      (googleUser) => {
-        this.zone.run(() => {
+  this.auth2.attachClickHandler(element, {},
+    (googleUser) => {
+      this.zone.run(() => {
         const idToken = googleUser.getAuthResponse().id_token;
-        this.authService.getDataFromTokenId(idToken);
+        this.authService.getDataFromTokenId(idToken).then(
+          (response) => {
+            this.alertService.successMsg(this.loginMsg);
+            this.router.navigate(['user/profile']);
+          }
+        );
       }, function (error) {
         console.log(JSON.stringify(error, undefined, 2));
       });
     });
+}
+
+onGoogleSignIn() {
+  this.authService.getDataFromTokenId(this.cookieService.get('idToken')).then(
+    (response) => {
+      this.alertService.successMsg(this.loginMsg);
+      this.router.navigate(['user/profile']);
+    }
+  );
+}
   }
 
   // onGoogleSignInSuccess(event: GoogleSignInSuccess) {
@@ -131,4 +149,3 @@ export class LoginPageComponent implements OnInit, AfterViewInit {
   //   this.authService.getDataFromTokenId(idToken);
   //   });
   // }
-}

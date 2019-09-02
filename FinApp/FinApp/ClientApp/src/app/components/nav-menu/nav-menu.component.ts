@@ -60,8 +60,11 @@ export class NavMenuComponent implements OnInit {
     this.cookieService.delete('token', '/');
 
     if (gapi.auth2) {
+      console.log('vushel chort');
       const auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut();
+      auth2.signOut().then(function () {
+        auth2.disconnect();
+    });
     }
     this.router.navigate(['']);
     this.alertService.infoMsg(this.logOutMsg);
