@@ -48,12 +48,12 @@ export class LoginPageComponent implements OnInit {
 
       );
 
-      if (this.cookieService.check('idToken')) {
-        this.element.nativeElement.querySelector('#googleBtn')
-          .addEventListener('click', this.onGoogleSignIn.bind(this));
-      } else {
-        this.googleInit();
-      }
+    if (this.cookieService.check('idToken')) {
+      this.element.nativeElement.querySelector('#googleBtn')
+        .addEventListener('click', this.onGoogleSignIn.bind(this));
+    } else {
+      this.googleInit();
+    }
   }
 
   onLogin() {
@@ -115,41 +115,42 @@ export class LoginPageComponent implements OnInit {
   }
 
   public attachSignin(element) {
-  this.auth2.attachClickHandler(element, {},
-    (googleUser) => {
-      this.zone.run(() => {
-        const idToken = googleUser.getAuthResponse().id_token;
-        this.authService.getDataFromTokenId(idToken).then(
-          (response) => {
-            if (response.token) {
-              this.alertService.successMsg(this.loginMsg);
-              this.router.navigate(['user/profile']);
-            } else if (response.googleProfile) {
-              console.log(response);
-              this.router.navigate(['sign-up']);
+    this.auth2.attachClickHandler(element, {},
+      (googleUser) => {
+        this.zone.run(() => {
+          const idToken = googleUser.getAuthResponse().id_token;
+          this.cookieService.set('idToken', idToken, null, '/', null, true);
+          this.authService.getDataFromTokenId(idToken).then(
+            (response) => {
+              if (response.token) {
+                this.alertService.successMsg(this.loginMsg);
+                this.router.navigate(['user/profile']);
+              } else if (response.googleProfile) {
+                console.log(response);
+                this.router.navigate(['sign-up']);
+              }
             }
-          }
-        );
-      }, function (error) {
-        console.log(JSON.stringify(error, undefined, 2));
+          );
+        }, function (error) {
+          console.log(JSON.stringify(error, undefined, 2));
+        });
       });
-    });
-}
-
-onGoogleSignIn() {
-  this.authService.getDataFromTokenId(this.cookieService.get('idToken')).then(
-    (response) => {
-      if (response.token) {
-        this.alertService.successMsg(this.loginMsg);
-        this.router.navigate(['user/profile']);
-      } else if (response.googleProfile) {
-        console.log(response);
-        this.router.navigate(['sign-up']);
-      }
-    }
-  );
-}
   }
+
+  onGoogleSignIn() {
+    this.authService.getDataFromTokenId(this.cookieService.get('idToken')).then(
+      (response) => {
+        if (response.token) {
+          this.alertService.successMsg(this.loginMsg);
+          this.router.navigate(['user/profile']);
+        } else if (response.googleProfile) {
+          console.log(response);
+          this.router.navigate(['sign-up']);
+        }
+      }
+    );
+  }
+}
 
   // onGoogleSignInSuccess(event: GoogleSignInSuccess) {
   //   this.zone.run(() => {

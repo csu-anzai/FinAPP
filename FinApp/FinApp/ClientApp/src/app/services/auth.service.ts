@@ -139,7 +139,6 @@ export class AuthService implements OnInit {
         tap((data: any) => {
           // Update token
           this.cookieService.delete('token', '/');
-          this.cookieService.delete('token', '/user');
           this.cookieService.set('token', data.token, null, '/', null, true);
           return data.token;
         }),

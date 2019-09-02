@@ -15,7 +15,6 @@ namespace FinApp.Attributes
         private JwtManager _jwtManager;
         private readonly ITokenRepository _tokenRepository;
         public AuthorizeAttribute(JwtManager jwtManager, ITokenRepository tokenRepository)
-
         {
             _jwtManager = jwtManager;
             _tokenRepository = tokenRepository;
