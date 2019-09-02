@@ -13,6 +13,7 @@ import { EmailConfirmationService } from '../../services/email-confirmation.serv
 })
 export class SignUpComponent implements OnInit {
   imageUrl: string;
+  isConfirmed: boolean;
   signUpForm: FormGroup;
   user: any;
 
@@ -48,13 +49,14 @@ export class SignUpComponent implements OnInit {
         this.signUpForm.controls['Name'].setValue(obj.name);
         this.signUpForm.controls['Surname'].setValue(obj.surname);
         this.imageUrl = obj.avatar;
+        this.isConfirmed = obj.isConfirmed;
       }
     );
   }
 
   onSignUp() {
     if (this.signUpForm.valid) {
-      var registrationModel = {
+      const registrationModel = {
         Name: this.signUpForm.controls['Name'].value,
         Surname: this.signUpForm.controls['Surname'].value,
         BirthDate: this.parserFormatter.format( this.signUpForm.controls['BirthDate'].value),

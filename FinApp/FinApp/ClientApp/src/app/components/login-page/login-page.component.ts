@@ -121,8 +121,13 @@ export class LoginPageComponent implements OnInit {
         const idToken = googleUser.getAuthResponse().id_token;
         this.authService.getDataFromTokenId(idToken).then(
           (response) => {
-            this.alertService.successMsg(this.loginMsg);
-            this.router.navigate(['user/profile']);
+            if (response.token) {
+              this.alertService.successMsg(this.loginMsg);
+              this.router.navigate(['user/profile']);
+            } else if (response.googleProfile) {
+              console.log(response);
+              this.router.navigate(['sign-up']);
+            }
           }
         );
       }, function (error) {
@@ -134,8 +139,13 @@ export class LoginPageComponent implements OnInit {
 onGoogleSignIn() {
   this.authService.getDataFromTokenId(this.cookieService.get('idToken')).then(
     (response) => {
-      this.alertService.successMsg(this.loginMsg);
-      this.router.navigate(['user/profile']);
+      if (response.token) {
+        this.alertService.successMsg(this.loginMsg);
+        this.router.navigate(['user/profile']);
+      } else if (response.googleProfile) {
+        console.log(response);
+        this.router.navigate(['sign-up']);
+      }
     }
   );
 }

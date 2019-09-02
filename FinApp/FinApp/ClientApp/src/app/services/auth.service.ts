@@ -110,7 +110,6 @@ export class AuthService implements OnInit {
             this.cookieService.set('idToken', tokenId, null, '/', null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
             this.setLoggedIn(true);
-            return this.decodedToken;
           } // Passes data to the sign up page
           else if (response.googleProfile) {
             const user = response.googleProfile;
@@ -118,14 +117,14 @@ export class AuthService implements OnInit {
               email: user.email,
               name: user.name,
               surname: user.surname,
-              avatar: user.avatar
+              avatar: user.avatar,
+              isConfirmed: user.IsEmailConfirmed
             };
             this.message.passParameters(queryParams);
-            return queryParams;
           } else if (response.code) {
             throwError(response.code);
           }
-          return false;
+          return response;
         }
       ).catch(error => {
         throwError(error);
