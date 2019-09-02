@@ -35,10 +35,6 @@ export class LoginPageComponent implements OnInit {
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.email])),
       'Password': new FormControl('', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(16)])),
     });
-
-    this.zone.run(() => {
-      $.proxy(this.onGoogleLoginSuccess, this);
-    });
   }
 
   ngOnInit() {
