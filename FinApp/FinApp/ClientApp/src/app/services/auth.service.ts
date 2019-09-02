@@ -112,8 +112,6 @@ export class AuthService implements OnInit {
         (response: any) => {
           // User already exists
           if (response.token) {
-            this.cookieService.deleteAll('/', 'accounts.google.com');
-            this.cookieService.deleteAll('/', '.google.com');
             this.cookieService.set('token', response.token, null, '/', null, true);
             this.cookieService.set('idToken', tokenId, null, '/', null, true);
             this.decodedToken = this.jwtHelper.decodeToken(response.token);
