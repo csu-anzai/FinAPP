@@ -9,11 +9,11 @@ namespace FinApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EmailConfirmationController : Controller
+    public class EmailInteractionController : Controller
     {
         private readonly IEmailConfirmationService _emailConfirmationService;
 
-        public EmailConfirmationController(IEmailConfirmationService emailConfirmationService)
+        public EmailInteractionController(IEmailConfirmationService emailConfirmationService)
         {
             _emailConfirmationService = emailConfirmationService;
         }
