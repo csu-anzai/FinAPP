@@ -53,24 +53,25 @@ namespace BLL.Services.ImplementedServices
             return user;
         }
 
-        public async Task<User> UpdateAsync(ProfileDTO profileDTO)
+        public async Task<UserDTO> UpdateAsync(ProfileDTO profileDTO)
         {
             var upToDateUser = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == profileDTO.Id);
 
             if (upToDateUser == null)
+            {
                 return null;
+            }
 
-            _mapper.Map(profileDTO, upToDateUser);
+            var user = _mapper.Map(profileDTO, upToDateUser);
 
             await _unitOfWork.Complete();
 
-            return upToDateUser;
+            return _mapper.Map<User,UserDTO>(user);
         }
 
         public async Task<UserDTO> GetAsync(int id)
         {
             var user = await _unitOfWork.UserRepository.GetAsync(id);
-
             var userDTO = _mapper.Map<User, UserDTO>(user);
 
             return userDTO;
@@ -104,7 +105,9 @@ namespace BLL.Services.ImplementedServices
             }
 
             if (!_hasher.CheckPassWithHash(model.OldPassword, user.Password))
+            {
                 throw new ApiException(HttpStatusCode.BadRequest, "Old password incorrect");
+            }
 
             user.Password = _hasher.HashPassword(model.Password);
 
@@ -114,6 +117,7 @@ namespace BLL.Services.ImplementedServices
         public async Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto)
         {
             var user = await _unitOfWork.UserRepository.SingleOrDefaultAsync(u => u.Id == recoverPasswordDto.Id);
+
             if (user == null)
             {
                 throw new ApiException(HttpStatusCode.NotFound, "User was not found.");

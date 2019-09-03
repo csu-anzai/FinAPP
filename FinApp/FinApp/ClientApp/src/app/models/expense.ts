@@ -1,16 +1,16 @@
 import { Transaction } from './transaction'
-import { IncomeCategory } from './incomeCategory'
+import { ExpenseCategory } from './expenseCategory'
 import { Account } from './account'
 
 
-export class Incomes {
+export class Expense {
   id: number;
-  incomeCategory: IncomeCategory;
+  expenseCategory: ExpenseCategory;
   account: Account;
   transaction: Transaction;
 
   constructor() {
-    this.incomeCategory = new IncomeCategory();
+    this.expenseCategory = new ExpenseCategory();
     this.transaction = new Transaction();
     this.account = new Account();
   }

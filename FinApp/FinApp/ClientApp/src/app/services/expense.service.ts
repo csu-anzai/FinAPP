@@ -22,4 +22,11 @@ export class ExpenseService {
       catchError(error => this.errorHandler.handleError(error))
     );
   }
+
+  updateExpense(model) {
+    return this.http.post(`${this.baseUrl}/update`, model).pipe(
+      tap(data => this.alertService.successMsg("Expense updated successful")),
+      catchError(error => this.errorHandler.handleError(error))
+    );
+  }
 }

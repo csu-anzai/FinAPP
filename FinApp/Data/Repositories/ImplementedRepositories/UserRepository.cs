@@ -18,8 +18,7 @@ namespace DAL.Repositories.ImplementedRepositories
         public override Task<User> GetAsync(int id)
         {
             return  _entities
-                 .Include(u => u.Accounts).ThenInclude(a => a.Image)
-                 .Include(u => u.Accounts).ThenInclude(a => a.Currency)
+                 .Include(u => u.Accounts)
                  .Include(u => u.Accounts).ThenInclude(a => a.Incomes).ThenInclude(i => i.Transaction)
                  .Include(u => u.Accounts).ThenInclude(a => a.Expenses).ThenInclude(i => i.Transaction)
                  .Include(u => u.Accounts).ThenInclude(a => a.Expenses).ThenInclude(e => e.ExpenseCategory)

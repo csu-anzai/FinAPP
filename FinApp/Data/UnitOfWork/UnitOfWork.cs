@@ -15,13 +15,16 @@ namespace DAL.UnitOfWork
         private  IAccountRepository _accountRepository;
         private  IAuthRepository _authRepository;
         private  ICurrencyRepository _currencyRepository;
-        private  IExpenseCategoryRepository _expenseRepository;
+        private  IExpenseCategoryRepository _expenseCategoryRepository;
         private  IImageRepository _imageRepository;
-        private  IIncomeCategoryRepository _incomeRepository;
+        private  IIncomeCategoryRepository _incomeCategoryRepository;
         private  IPasswordConfirmationCodeRepository _passwordConfirmRepository;
         private  IRoleRepository _roleRepository;
         private  ITokenRepository _tokenRepository;
         private  IUserRepository _userRepository;
+        private  ITransactionRepository _transactionRepository;
+        private  IIncomeRepository _incomeRepository;
+        private  IExpenseRepository _expenseRepository;
 
         #region properties
 
@@ -62,10 +65,10 @@ namespace DAL.UnitOfWork
         {
             get
             {
-                if (_expenseRepository == null)
-                    _expenseRepository = new ExpenseRepository(_context);
+                if (_expenseCategoryRepository == null)
+                    _expenseCategoryRepository = new ExpenseCategoryRepository(_context);
 
-                return _expenseRepository;
+                return _expenseCategoryRepository;
             }
         }
 
@@ -84,10 +87,10 @@ namespace DAL.UnitOfWork
         {
             get
             {
-                if (_incomeRepository == null)
-                    _incomeRepository = new IncomeRepository(_context);
+                if (_incomeCategoryRepository == null)
+                    _incomeCategoryRepository = new IncomeCategoryRepository(_context);
 
-                return _incomeRepository;
+                return _incomeCategoryRepository;
             }
         }
 
@@ -132,6 +135,39 @@ namespace DAL.UnitOfWork
                     _userRepository = new UserRepository(_context);
 
                 return _userRepository;
+            }
+        }
+
+        public IIncomeRepository IncomeRepository
+        {
+            get
+            {
+                if (_incomeRepository == null)
+                    _incomeRepository = new IncomeRepository(_context);
+
+                return _incomeRepository;
+            }
+        }
+
+        public IExpenseRepository ExpenseRepository
+        {
+            get
+            {
+                if (_expenseRepository == null)
+                    _expenseRepository = new ExpenseRepository(_context);
+
+                return _expenseRepository;
+            }
+        }
+
+        public ITransactionRepository TransactionRepository
+        {
+            get
+            {
+                if (_transactionRepository == null)
+                    _transactionRepository = new TransactionRepository(_context);
+
+                return _transactionRepository;
             }
         }
         #endregion properties

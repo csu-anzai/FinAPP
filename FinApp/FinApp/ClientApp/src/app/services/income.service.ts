@@ -18,7 +18,14 @@ export class IncomeService {
 
   addIncome(model) {
     return this.http.post(`${this.baseUrl}/add`, model).pipe(
-      tap(data => this.alertService.successMsg("Account added successful")),
+      tap(data => this.alertService.successMsg("Income added successful")),
+      catchError(error => this.errorHandler.handleError(error))
+    );
+  }
+
+  updateIncome(model) {
+    return this.http.post(`${this.baseUrl}/update`, model).pipe(
+      tap(data => this.alertService.successMsg("Income updated successful")),
       catchError(error => this.errorHandler.handleError(error))
     );
   }

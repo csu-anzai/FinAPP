@@ -9,6 +9,7 @@ namespace DAL.Entities
         public int AccountId { get; set; }
         public Account Account { get; set; }
 
+        public int ExpenseCategoryId { get; set; }
         public ExpenseCategory ExpenseCategory { get; set; }
 
         public int TransactionId { get; set; }

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { IncomeService } from '../../services/income.service';
+import { CategoryService } from '../../services/category.service';
+import { IncomeCategory } from '../../models/incomeCategory';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-income',
@@ -12,10 +15,12 @@ export class AddIncomeComponent implements OnInit {
 
   modal;
   incomeAddForm: FormGroup;
+  categories: Observable<IncomeCategory[]>;
 
   constructor(private modalService: NgbModal,
     private incomeService: IncomeService,
-    fb: FormBuilder) {
+    fb: FormBuilder,
+    private categoryService: CategoryService) {
     this.incomeAddForm = fb.group({
       'Description': new FormControl(''),
       'Sum': new FormControl('', Validators.compose([Validators.required, Validators.min(0.01)])),
@@ -25,6 +30,7 @@ export class AddIncomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.categories = this.categoryService.getCategories(true);
   }
 
   openVerticallyCentered(content) {
