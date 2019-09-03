@@ -26,11 +26,11 @@ namespace FinApp.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> GetIncomesByCondition([FromQuery]IncomeOptions income)
+        public async Task<IActionResult> GetIncomesByCondition([FromQuery]TransactionOptions options)
         {
             try
             {
-                var result = await _incomeService.GetIncomesWithDetailsAndConditionAsync(income);
+                var result = await _incomeService.GetIncomesWithDetailsAndConditionAsync(options);
 
                 return Ok(result);
             }

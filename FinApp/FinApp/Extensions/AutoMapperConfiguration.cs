@@ -63,7 +63,7 @@ namespace FinApp.Extensions
 
                 c.CreateMap<IncomeAddViewModel, Income>();
 
-                c.CreateMap<Income, IncomeOptions>();
+                //c.CreateMap<Income, IncomeOptions>();
 
             }).CreateMapper());
         }

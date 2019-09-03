@@ -9,6 +9,6 @@ namespace BLL.Services.IServices
     public interface IIncomeService
     {
         Task<IncomeAddViewModel> AddIncomeAsync(IncomeAddViewModel account);
-        Task<IEnumerable<IncomeDTO>> GetIncomesWithDetailsAndConditionAsync(IncomeOptions options);
+        Task<IEnumerable<IncomeDTO>> GetIncomesWithDetailsAndConditionAsync(TransactionOptions options);
     }
 }
