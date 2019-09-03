@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmailConfirmationService } from '../../services/email-confirmation.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-confirm-email-success',
