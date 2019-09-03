@@ -147,6 +147,8 @@
     "requiredFullName": "Nom complet requis",
     "writeAllowedSymbols": "Écrire les symboles autorisés",
     "writeSmth": "Écris qch",
-    "validCharacters": "S'il vous plaît entrer des caractères valides"
+    "validCharacters": "S'il vous plaît entrer des caractères valides",
+    "successfullyMsg": "Votre message a été envoyé",
+    "errorMsg": "Votre message n'a pas été envoyé"
   }
 }

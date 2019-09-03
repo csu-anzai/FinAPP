@@ -142,6 +142,8 @@
     "requiredFullName": "Required full name",
     "writeAllowedSymbols": "Write allowed symbols",
     "writeSmth": "Write smth",
-    "validCharacters": "Please enter valid characters"
+    "validCharacters": "Please enter valid characters",
+    "successfullyMsg": "Your message was sent",
+    "errorMsg": "Your message wasn't sent"
   }
 }

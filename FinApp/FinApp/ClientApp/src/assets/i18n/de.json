@@ -142,7 +142,9 @@
     "requiredFullName": "Erforderlicher vollständiger Name",
     "writeAllowedSymbols": "Schreibe erlaubte Symbole",
     "writeSmth": "Etw schreiben",
-    "validCharacters": "Bitte geben Sie gültige Zeichen ein"
+    "validCharacters": "Bitte geben Sie gültige Zeichen ein",
+    "successfullyMsg": "Ihre Nachricht wurde verschickt",
+    "errorMsg": "Ihre Nachricht wurde nicht gesendet"
   }
 
 }
