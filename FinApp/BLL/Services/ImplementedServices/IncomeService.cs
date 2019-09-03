@@ -26,18 +26,69 @@ namespace BLL.Services.ImplementedServices
 
         public async Task<IncomeAddViewModel> AddIncomeAsync(IncomeAddViewModel income)
         {
-            var incomeMapped = _mapper.Map<Income>(income);
-            Transaction tra = incomeMapped.Transaction;
-            _unitOfWork.TransactionRepository.Add(tra);
+            var account = await _unitOfWork.AccountRepository.GetAsync(income.AccountId);
 
-            await _unitOfWork.Complete();
+            if (account == null)
+            {
+                throw new ApiException(HttpStatusCode.NotFound, "Account was not found");
+            }
+
+            var incomeMapped = _mapper.Map<Income>(income);
+
+            Transaction tra = incomeMapped.Transaction;
+            await _unitOfWork.TransactionRepository.AddAsync(tra);
+
             incomeMapped.TransactionId = tra.Id;
-            await  _unitOfWork.IncomeRepository.AddAsync(incomeMapped);
-           // await unitOfWork.IncomeRepository.AddAsync(income);
+
+            await _unitOfWork.IncomeRepository.AddAsync(incomeMapped);
+
+            account.Balance += tra.Sum;
 
             await _unitOfWork.Complete();
 
             return income;
+        }
+
+        public async Task<IncomeDTO> UpdateIncome(IncomeUpdateViewModel income)
+        {
+            var incomeToUpdate = await _unitOfWork.IncomeRepository
+                .GetOneWithTransactionAsync(e => e.Id == income.Id);
+
+            if (incomeToUpdate == null)
+            {
+                throw new ApiException(HttpStatusCode.NotFound, "Income was not found");
+            }
+
+            var account = await _unitOfWork.AccountRepository.GetAsync(incomeToUpdate.AccountId);
+
+            account.Balance += income.Transaction.Sum - incomeToUpdate.Transaction.Sum;
+
+            _mapper.Map(income, incomeToUpdate);
+
+            await _unitOfWork.Complete();
+
+            return _mapper.Map<IncomeDTO>(incomeToUpdate);
+        }
+
+        public async Task<Account> Remove(int id)
+        {
+            var income = await _unitOfWork.IncomeRepository
+                .GetOneWithTransactionAsync(e => e.Id == id);
+
+            if (income == null)
+            {
+                throw new ApiException(HttpStatusCode.NotFound, "Income was not found");
+            }
+
+            _unitOfWork.IncomeRepository.Remove(income);
+            _unitOfWork.TransactionRepository.Remove(income.Transaction);
+
+            var account = await _unitOfWork.AccountRepository.GetAsync(income.AccountId);
+            account.Balance -= income.Transaction.Sum;
+            
+            await _unitOfWork.Complete();
+
+            return account;
         }
 
         public async Task<IEnumerable<IncomeDTO>> GetIncomesWithDetailsAndConditionAsync(TransactionOptions options)

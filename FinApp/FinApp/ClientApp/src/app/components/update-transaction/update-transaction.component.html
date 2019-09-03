@@ -1,0 +1,89 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 *ngIf="isIncome; else expenselabel" class="modal-title">Update Income</h4>
+    <ng-template #expenselabel>
+      <h4 class="modal-title">Update Expense</h4>
+    </ng-template>
+
+    <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form method="post" (ngSubmit)="submit()" [formGroup]="expenseAddForm">
+
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="floatLabel">Description:</label>
+        <input class="form-control"
+               type="text"
+               formControlName="Description"
+               #name>
+        <div class="validation-message">
+          <ng-container *ngIf="expenseAddForm.controls['Description'].touched">
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Description'].hasError('required')">Please enter description of expense</small>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="floatLabel">Sum:</label>
+        <input class="form-control"
+               formControlName="Sum"
+               #name>
+        <div class="validation-message">
+          <ng-container *ngIf="expenseAddForm.controls['Sum'].touched">
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Sum'].hasError('required')">Please enter your balance</small>
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Sum'].hasError('min')">Sum should be greater than 0</small>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="floatLabel">Date:</label>
+        <div class="input-group">
+          <input type="text"
+                 class="form-control input-with-date"
+                 formControlName="Date"
+                 #brthdate placeholder="yyyy-mm-dd"
+                 name="dp" ngbDatepicker #d="ngbDatepicker"
+                 [minDate]="{year: 1900, month: 1, day: 1}"
+                 [autoClose]="true">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary select-label" (click)="d.toggle()" type="button"><i class="	fa fa-calendar"></i></button>
+          </div>
+        </div>
+      </div>
+      <div class="validation-message">
+        <ng-container *ngIf="expenseAddForm.controls['Date'].touched">
+          <small class="text-danger" *ngIf="expenseAddForm.controls['Date'].hasError('required')">Please choose date</small>
+          <ng-container *ngIf="expenseAddForm.controls['Date']?.hasError('ngbDate') && !expenseAddForm.controls['Date'].hasError('required')">
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Date']?.getError('ngbDate')['requiredBefore'] != undefined">Date should be later than 1900 year</small>
+            <small class="text-danger" *ngIf="expenseAddForm.controls['Date']?.getError('ngbDate')['invalid'] != undefined">Date format should be yyyy-mm-dd</small>
+          </ng-container>
+        </ng-container>
+      </div>
+
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text select-label" for="inputGroupSelect01">Category</label>
+          </div>
+          <select class="custom-select" id="inputGroupSelect01" formControlName="ExpenseCategory">
+            <option *ngFor="let c of categories" [value]="c.id">{{c.name}}</option>
+          </select>
+        </div>
+        <div class="validation-message">
+          <ng-container *ngIf="expenseAddForm.controls['ExpenseCategory'].touched">
+            <small class="text-danger" *ngIf="expenseAddForm.controls['ExpenseCategory'].hasError('required')">Please choose category</small>
+          </ng-container>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline-primary save-btn" type="submit" [disabled]="loading">Add</button>
+    </div>
+  </form>
+</ng-template>
+
+<button class="btn btn-outline-primary mb-2 mr-2 save-btn" (click)="openVerticallyCentered(content)">Add expense</button>

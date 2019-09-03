@@ -16,14 +16,14 @@ namespace BLL.Security.Jwt
 {
     public class JwtManager
     {
-        private readonly JwtOptions _jwtOptions;
+        public JwtOptions JwtOptions { get; }
         private readonly ITokenRepository _tokenRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
 
         public JwtManager(IOptions<JwtOptions> jwtOptions, ITokenRepository tokenRepository, IUnitOfWork unitOfWork, IConfiguration configuration)
         {
-            _jwtOptions = jwtOptions.Value;
+            JwtOptions = jwtOptions.Value;
             _tokenRepository = tokenRepository;
             _unitOfWork = unitOfWork;
             _configuration = configuration;
@@ -63,11 +63,11 @@ namespace BLL.Security.Jwt
                 var validationParameters = new TokenValidationParameters()
                 {
                     ValidateAudience = true,
-                    ValidAudience = _jwtOptions.Audience,
+                    ValidAudience = JwtOptions.Audience,
                     ValidateIssuer = true,
-                    ValidIssuer = _jwtOptions.Issuer,
+                    ValidIssuer = JwtOptions.Issuer,
                     ValidateIssuerSigningKey = true,                    
-                    IssuerSigningKey = _jwtOptions.SigningCredentials.Key,
+                    IssuerSigningKey = JwtOptions.SigningCredentials.Key,
                     ValidateLifetime = false,
                 };
 
@@ -89,12 +89,12 @@ namespace BLL.Security.Jwt
         {
             var token = new JwtSecurityTokenHandler()
                   .WriteToken(new JwtSecurityToken(
-                      issuer: _jwtOptions.Issuer,
-                      audience: _jwtOptions.Audience,
+                      issuer: JwtOptions.Issuer,
+                      audience: JwtOptions.Audience,
                       notBefore: DateTime.UtcNow,
                       claims: GenerateClaims(userId, login, role),
-                      expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_jwtOptions.AccessExpirationMins)),
-                      signingCredentials: _jwtOptions.SigningCredentials
+                      expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(JwtOptions.AccessExpirationMins)),
+                      signingCredentials: JwtOptions.SigningCredentials
                   ));
             return token;
         }
@@ -102,12 +102,12 @@ namespace BLL.Security.Jwt
         {
             var token = new JwtSecurityTokenHandler()
                    .WriteToken(new JwtSecurityToken(
-                       issuer: _jwtOptions.Issuer,
-                       audience: _jwtOptions.Audience,
+                       issuer: JwtOptions.Issuer,
+                       audience: JwtOptions.Audience,
                        notBefore: DateTime.UtcNow,
                        claims: GenerateClaims(userId, login, role),
-                       expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(_jwtOptions.RefreshExpirationMins)),
-                       signingCredentials: _jwtOptions.SigningCredentials
+                       expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(JwtOptions.RefreshExpirationMins)),
+                       signingCredentials: JwtOptions.SigningCredentials
                ));
             return token;
         }
@@ -124,9 +124,9 @@ namespace BLL.Security.Jwt
                 new Claim(nameof(login), login),
                 new Claim(nameof(role), role),
                 new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, _jwtOptions.JtiGenerator),
+                new Claim(JwtRegisteredClaimNames.Jti, JwtOptions.JtiGenerator),
                 new Claim(JwtRegisteredClaimNames.Iat,
-                    ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
+                    ToUnixEpochDate(JwtOptions.IssuedAt).ToString(),
                     ClaimValueTypes.Integer64)
             };
 
@@ -151,11 +151,11 @@ namespace BLL.Security.Jwt
             if (options == null)
                 throw new ArgumentNullException(nameof(options));
             if (options.ValidFor <= TimeSpan.Zero)
-                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtOptions.ValidFor));
+                throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(Jwt.JwtOptions.ValidFor));
             if (options.SigningCredentials == null)
-                throw new ArgumentNullException(nameof(JwtOptions.SigningCredentials));
+                throw new ArgumentNullException(nameof(Jwt.JwtOptions.SigningCredentials));
             if (options.JtiGenerator == null)
-                throw new ArgumentNullException(nameof(JwtOptions.JtiGenerator));
+                throw new ArgumentNullException(nameof(Jwt.JwtOptions.JtiGenerator));
         }
         
 

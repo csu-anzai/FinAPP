@@ -39,6 +39,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { AccountHistoryComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-history/account-history.component';
 import { AccountInfoComponent } from './components/user-main-page/page-content-wrapper/sections/account/account-info/account-info.component';
 import { AddAccountComponent } from './components/user-main-page/page-content-wrapper/sections/account/add-account/add-account.component';
+import { AddExpenseComponent } from './components/add-expense/add-expense.component';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -57,8 +58,13 @@ import { FusionChartsModule } from 'angular-fusioncharts';
 import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+import { ConfirmEmailSuccessComponent } from './components/confirm-email-success/confirm-email-success.component';
+import { EmailConfirmationService } from './services/email-confirmation.service';
+import { SendConfirmEmailComponent } from './components/send-confirm-email/send-confirm-email.component';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { FileSelectDirective } from 'ng2-file-upload';
 import { AddIncomeComponent } from './components/add-income/add-income.component';
+import { UpdateTransactionComponent } from './components/update-transaction/update-transaction.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
@@ -92,7 +98,12 @@ export function createTranslateLoader(http: HttpClient) {
     DaterangepickerComponent,
     ChartsComponent,
     LoaderComponent,
+    ConfirmEmailSuccessComponent,
+    SendConfirmEmailComponent,
     AddIncomeComponent,
+    AddExpenseComponent,
+    FileSelectDirective,
+    UpdateTransactionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -120,6 +131,9 @@ export function createTranslateLoader(http: HttpClient) {
       { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [GuestGuard] },
       { path: 'confirm-code', component: ConfirmCodeComponent, canActivate: [GuestGuard] },
       { path: 'change-password', component: ChangePasswordComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-email-success', component: ConfirmEmailSuccessComponent, canActivate: [GuestGuard] },
+      { path: 'confirm-email-success/:token', component: ConfirmEmailSuccessComponent, canActivate: [GuestGuard] },
+      { path: 'send-confirm-email', component: SendConfirmEmailComponent, canActivate: [GuestGuard] },
       {
         path: 'user',
         component: FetchDataComponent,
@@ -131,7 +145,8 @@ export function createTranslateLoader(http: HttpClient) {
           { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
           { path: 'accounts/:id', component: AccountComponent,canActivate: [AuthGuard] },
           { path: 'settings', component: SettingComponent,canActivate: [AuthGuard] },
-          { path: 'adminPanel', component: AdminPanelComponent,canActivate: [AuthGuard] }
+          { path: 'adminPanel', component: AdminPanelComponent, canActivate: [AuthGuard] },
+          { path: 'add-account', component: AddAccountComponent, canActivate: [AuthGuard] }
         ]
       }
     ]),
@@ -157,7 +172,7 @@ export function createTranslateLoader(http: HttpClient) {
     UserService,
     ForgotPasswordService,
     ChartsService,
-
+    EmailConfirmationService,
   ],
   bootstrap: [AppComponent]
 })

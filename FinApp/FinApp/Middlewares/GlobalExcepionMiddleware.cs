@@ -1,6 +1,5 @@
 ﻿using BLL.Models.Exceptions;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;

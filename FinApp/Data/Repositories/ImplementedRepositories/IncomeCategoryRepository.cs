@@ -8,7 +8,7 @@ namespace DAL.Repositories.ImplementedRepositories
 {
     public class IncomeCategoryRepository : BaseRepository<IncomeCategory>, IIncomeCategoryRepository
     {
-        public IncomeCategoryRepository(FinAppContext context) : base(context)
+        public IncomeCategoryRepository(DbContext context) : base(context)
         {
         }
     }

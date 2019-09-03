@@ -1,4 +1,5 @@
-﻿using BLL.Models.Exceptions;
+﻿using BLL.DTOs;
+using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,20 @@ namespace FinApp.Controllers
             return Ok(new { message = "Adding income was successful" });
         }
 
+        [HttpDelete("remove")]
+        public async Task<IActionResult> RemoveIncome(int id)
+        {
+            var updatedAccount = await _incomeService.Remove(id);
+            return Ok(new { message = "Removing income was successful", account = updatedAccount });
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> UpdateIncomeAsync(IncomeUpdateViewModel incomeModel)
+        {
+            var result = await _incomeService.UpdateIncome(incomeModel);
+            return Ok(new { message = "Adding income was successful" });
+        }
+
         [HttpGet()]
         public async Task<IActionResult> GetIncomesByCondition([FromQuery]TransactionOptions options)
         {
@@ -37,7 +52,7 @@ namespace FinApp.Controllers
             catch (ApiException ex)
             {
                 return BadRequest(ex.Message);
-            }    
+            }
         }
     }
 }
