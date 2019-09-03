@@ -148,7 +148,8 @@ export function createTranslateLoader(http: HttpClient) {
           { path: 'adminPanel', component: AdminPanelComponent, canActivate: [AuthGuard] },
           { path: 'add-account', component: AddAccountComponent, canActivate: [AuthGuard] }
         ]
-      }
+      },
+      { path: '**', redirectTo: '' }
     ]),
     BrowserAnimationsModule,
     ToastrModule.forRoot(

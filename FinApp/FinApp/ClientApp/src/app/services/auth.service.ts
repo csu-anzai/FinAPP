@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { MessagingCenterService } from './messaging-center.service';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { throwError, BehaviorSubject, Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 import { ErrorHandlingService } from './error-handling.service';
 
 @Injectable({
@@ -83,20 +83,6 @@ export class AuthService implements OnInit {
           }
         ));
   }
-
-  // in token service
-  // organizeGoogleAuthFlow() {
-  //   if (this.cookieService.check('idToken')) {
-  //     const token = this.cookieService.get('idToken');
-  //     if (this.jwtHelper.isTokenExpired(token)) {
-  //       this.cookieService.delete('idToken');
-  //     } else {
-  //       this.getDataFromTokenId(token);
-  //     }
-  //   } else {
-  //     this.oauthService.initLoginFlow();
-  //   }
-  // }
 
   // // in token service
   getDataFromTokenId(tokenId: string): Promise<any> {
@@ -199,7 +185,6 @@ export class AuthService implements OnInit {
     this.setLoggedIn(false);
     this.oauthService.logOut(true);
     this.cookieService.delete('token', '/');
-    // this.cookieService.delete('idToken', '/');
     this.router.navigate(['']);
     this.alertService.infoMsg('Logged Out');
   }

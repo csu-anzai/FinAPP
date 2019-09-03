@@ -35,7 +35,7 @@ namespace BLL.Services.ImplementedServices
             if (!_hasher.CheckPassWithHash(loginModel.Password, existedUser.Password))
                 return null;
 
-            if (existedUser.IsEmailConfirmed == false)
+            if (!existedUser.IsEmailConfirmed)
                 throw new ApiException(HttpStatusCode.Forbidden, "Email must be confirmed before signing in.");
 
             var token = await GenerateNewTokensAsync(existedUser);

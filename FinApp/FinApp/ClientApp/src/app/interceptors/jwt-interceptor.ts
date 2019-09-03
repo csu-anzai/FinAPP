@@ -54,8 +54,6 @@ export class JwtInterceptor implements HttpInterceptor {
                         }
                         return event.body;
                     }));
-            } else {
-                this.router.navigate(['login-page']);
             }
         }
 
