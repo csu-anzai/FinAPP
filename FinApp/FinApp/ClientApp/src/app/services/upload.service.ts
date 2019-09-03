@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpRequest } from '@angular/common/http';
-import { map, switchMap, catchError } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { Image } from '../models/image';
-import { bypassSanitizationTrustResourceUrl } from '@angular/core/src/sanitization/bypass';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
   baseUrl = 'https://localhost:44397/api/';
+  maxSize = 2500000;
 
   constructor(private http: HttpClient) { }
 
   uploadUserAvatar(id: number, avatar: File) {
+    if (!this.isAcceptableImageSize(avatar)) {
+       return throwError('Select an image with less size');
+    }
     const attachedInfo = new FormData();
     attachedInfo.append('avatar', avatar);
     attachedInfo.append('userId', id.toString());
@@ -28,6 +31,9 @@ export class UploadService {
   }
 
   uploadCategoryImage(imageInfo: Image, imageFile: File) {
+    if (this.isAcceptableImageSize(imageFile)) {
+      throwError('Select an image with less size');
+    }
     // setting up a request
     const attachedInfo = new FormData();
     attachedInfo.append('image', imageFile);
@@ -55,5 +61,12 @@ export class UploadService {
     return this.http.delete(`${this.baseUrl}/images/${imageId}`).pipe(
       catchError(err => {throw new Error(err); })
     );
+  }
+
+  isAcceptableImageSize(imageFile: File) {
+    if (imageFile.size > this.maxSize) {
+      return false;
+    }
+    return true;
   }
 }
