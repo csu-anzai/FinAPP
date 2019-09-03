@@ -64,6 +64,7 @@ import { SendConfirmEmailComponent } from './components/send-confirm-email/send-
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { FileSelectDirective } from 'ng2-file-upload';
 import { AddIncomeComponent } from './components/add-income/add-income.component';
+import { UpdateTransactionComponent } from './components/update-transaction/update-transaction.component';
 
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
@@ -101,7 +102,8 @@ export function createTranslateLoader(http: HttpClient) {
     SendConfirmEmailComponent,
     AddIncomeComponent,
     AddExpenseComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    UpdateTransactionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

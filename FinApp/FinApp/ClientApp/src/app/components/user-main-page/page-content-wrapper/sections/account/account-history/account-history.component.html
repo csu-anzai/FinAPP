@@ -24,7 +24,7 @@
   </div>
   <div class="d-flex justify-content-center align-items-center col-md-4">
     <div class="mr-2" translate>FilterLabel</div>
-    <input class="form-control" #filterInput (keyup)="0"/>
+    <input class="form-control" #filterInput (keyup)="0" />
   </div>
 </div>
 <div class="d-flex align-items-center justify-content-start mt-4">
@@ -39,6 +39,8 @@
       <th scope="col" (click)="sort()" translate>DescriptionColumn</th>
       <th scope="col" (click)="sort()" translate>SumColumn</th>
       <th scope="col" (click)="sort()" translate>DateColumn</th>
+      <th scope="col" translate>Update</th>
+
     </tr>
   </thead>
   <tbody>
@@ -51,6 +53,8 @@
         {{trans.Sum}}
       </td>
       <td>{{trans.Date}}</td>
+      <td><app-update-transaction></app-update-transaction></td>
     </tr>
   </tbody>
 </table>
+
