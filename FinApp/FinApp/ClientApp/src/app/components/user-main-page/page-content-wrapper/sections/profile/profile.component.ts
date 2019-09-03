@@ -108,13 +108,11 @@ export class ProfileComponent implements OnInit {
 
   // remove from drap&drop
   onRemove(event) {
-
     this.files.splice(this.files.indexOf(event), 1);
   }
 
   // sent file into the service
   onSendImage() {
-
     this._uploadService.uploadUserAvatar(this.user.id, this.files[0]).toPromise()
     .then(
       (res: any) => {
@@ -129,7 +127,9 @@ export class ProfileComponent implements OnInit {
         this.closeModal();
         this.alertService.successMsg('Image updated');
       }
-    );
+    ).catch(
+      err => this.alertService.errorMsg(err)
+      );
   }
 
    dateValidator(): ValidatorFn {
