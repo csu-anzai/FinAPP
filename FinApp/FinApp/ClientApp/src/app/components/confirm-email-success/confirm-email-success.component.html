@@ -1,0 +1,7 @@
+<div class="form">
+  <h2 translate>{{confirmedSuccessfully == true ? 'confirm-email-success.successMsg' : 'confirm-email-success.failMsg'}}</h2>
+
+  <div class="row justify-content-center text-center">
+    <button *ngIf="confirmedSuccessfully" (click)="signIn()"><span translate>confirm-email-success.logInLink</span></button>
+  </div>
+</div>

@@ -56,7 +56,7 @@
         "password": "Mot de passe:",
         "repeatPassword": "Répéter le mot de passe:"
     },
-    "buttons" : {
+    "buttons": {
         "save": "Sauvegarder",
         "send": "Envoyer",
         "add": "Ajouter",
@@ -101,7 +101,7 @@
         "updateCategoryLable": "Mettre à jour la catégorie",
         "uploadImageLabel": "Télécharger une image"
     },
-    "signinSignup" : {
+    "signinSignup": {
         "loginTitle": "S'identifier",
         "passwordTitle": "Mot de passe",
         "pwdWithColonLabel": "Mot de passe:",
@@ -111,7 +111,6 @@
         "googleSignInTitle": "Se connecter Google",
         "forgotPasswordTitle": "Mot de passe oublié?",
         "registrationTitle": "Enregistrement",
-        
         "signUpTitle": "S'inscrire",
         "haveAlreadyAccountLabel": "Vous avez déjà un compte?",
         "changePwdTitle": "Changer le mot de passe",
@@ -142,16 +141,24 @@
         "description1": "Toutes les actions sont très simples. Vous pouvez rapidement et facilement ajouter la transaction dont vous avez besoin, ce qui vous prendra quelques secondes pour vous ajuster immédiatement après avoir modifié votre solde!",
         "financesControlTitle": "Contrôle des finances!",
         "description2": "Prenez le contrôle de tous vos comptes! Peu importe si vous avez une ou plusieurs cartes bancaires, vous pouvez tout gérer en un seul endroit!",
-        "globalizationTitle" : "Mondialisation monétaire!",
+        "globalizationTitle": "Mondialisation monétaire!",
         "description3": "Notre ressource prend en charge de nombreuses devises étrangères, ce qui est particulièrement avantageux pour les voyageurs et les hommes d'affaires! Vous pouvez maintenant modifier le solde de votre compte dans la devise de votre choix. De plus, dans chaque compte, vous pouvez tout conserver dans différentes devises!",
         "copyrightLabel": "Droits d'auteur"
+    },
+    "confirm-email-success": {
+        "successMsg": "Votre email a été confirmé avec succès.",
+        "failMsg": "Impossible de confirmer votre email. Essayez de suivre le lien reçu à nouveau.",
+        "logInLink": "S'identifier"
+    },
+    "send-confirm-email": {
+        "infoMsg": "Email pour confirmer que votre compte a été envoyé. S'il vous plaît, vérifiez la boîte de réception."
     },
     "changePassword": {
         "title": "Changer le mot de passe",
         "newPassword": "Nouveau mot de passe:",
         "confirmNewPassword": "Confirmer le nouveau mot de passe:"
     },
-    "familyOptions":{
+    "familyOptions": {
         "title": "Options familiales"
     }
 }

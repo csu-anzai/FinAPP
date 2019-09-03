@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { EmailConfirmationService } from '../../services/email-confirmation.service';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
@@ -21,6 +22,7 @@ export class LoginPageComponent implements OnInit {
   constructor(private authService: AuthService,
     private router: Router,
     private oauthService: OAuthService,
+    private emailConfirmationService: EmailConfirmationService,
     fb: FormBuilder,
     private translate: TranslateService,
     private alertService: NotificationService) {
@@ -46,6 +48,10 @@ export class LoginPageComponent implements OnInit {
       error => {
         this.loading = false;
         this.alertService.errorMsg(error.message);
+
+        if (error.status == 403) {
+          this.sendConfirmEmailLink();
+        }
       },
       () => {
         this.loading = false;
@@ -71,5 +77,16 @@ export class LoginPageComponent implements OnInit {
       return null;
     }
     console.log(claims);
+  }
+
+  sendConfirmEmailLink() {
+    let email = this.signInForm.controls['Email'].value;
+    this.emailConfirmationService.sendConfirmEmailLink(email).subscribe(
+      next => { },
+
+      error => this.alertService.errorMsg(error.message),
+
+      () => this.router.navigate(['send-confirm-email'])
+    );
   }
 }

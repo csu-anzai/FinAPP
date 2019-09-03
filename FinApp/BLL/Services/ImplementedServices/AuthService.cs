@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Security;
 using BLL.Security.Jwt;
@@ -6,6 +7,7 @@ using BLL.Services.IServices;
 using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using DAL.UnitOfWork;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace BLL.Services.ImplementedServices
@@ -32,6 +34,9 @@ namespace BLL.Services.ImplementedServices
 
             if (!_hasher.CheckPassWithHash(loginModel.Password, existedUser.Password))
                 return null;
+
+            if (existedUser.IsEmailConfirmed == false)
+                throw new ApiException(HttpStatusCode.Forbidden, "Email must be confirmed before signing in.");
 
             var token = await GenerateNewTokensAsync(existedUser);
 

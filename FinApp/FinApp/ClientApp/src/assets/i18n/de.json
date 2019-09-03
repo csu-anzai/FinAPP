@@ -56,7 +56,7 @@
         "password": "Passwort:",
         "repeatPassword": "Wiederhole das Passwort:"
     },
-    "buttons" : {
+    "buttons": {
         "save": "Sparen",
         "send": "Senden",
         "add": "Hinzufügen",
@@ -100,7 +100,7 @@
         "updateCategoryLable": "Kategorie aktualisieren",
         "uploadImageLabel": "Bild hochladen"
     },
-    "signinSignup" : {
+    "signinSignup": {
         "loginTitle": "Anmeldung",
         "passwordTitle": "Passwort",
         "signInTitle": "Einloggen",
@@ -108,7 +108,6 @@
         "googleSignInTitle": "Anmeldung Google",
         "forgotPasswordTitle": "Passwort vergessen?",
         "registrationTitle": "Anmeldung",
-        
         "signUpTitle": "Anmelden",
         "haveAlreadyAccountLabel": "Hast du schon ein Konto?",
         "changePwdTitle": "Ändere das Passwort",
@@ -143,12 +142,20 @@
         "description3": "Unsere Ressource unterstützt viele Fremdwährungen, was besonders für Reisende und Geschäftsleute von Vorteil ist! Sie können jetzt Änderungen an Ihrem Guthaben in der für Sie passenden Währung vornehmen. Außerdem können Sie in jedem Konto alles in verschiedenen Währungen aufbewahren!",
         "copyrightLabel": "Urheberrechte"
     },
+    "confirm-email-success": {
+        "successMsg": "Ihre E-Mail wurde erfolgreich bestätigt.",
+        "failMsg": "Fehler beim Bestätigen Ihrer E-Mail. Versuchen Sie erneut, dem erhaltenen Link zu folgen.",
+        "logInLink": "Einloggen"
+    },
+    "send-confirm-email": {
+        "infoMsg": "E-Mail zur Bestätigung, dass Ihr Konto gesendet wurde. Bitte überprüfen Sie den Posteingang."
+    },
     "changePassword": {
         "title": "Ändere das Passwort",
         "newPassword": "Neues Kennwort:",
         "confirmNewPassword": "Bestätige neues Passwort:"
     },
-    "familyOptions":{
+    "familyOptions": {
         "title": "Familienoptionen"
     }
 }

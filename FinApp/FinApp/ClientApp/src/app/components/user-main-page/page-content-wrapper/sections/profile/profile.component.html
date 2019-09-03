@@ -26,10 +26,12 @@
 
       <div class="form-group">
         <label for="BirthDate" translate>formLabelsWithColon.birthdate</label>
-        <input type="text" id="BirthDate"  formControlName="BirthDate"  [value]="user.birthDate | date:'dd-MM-yyyy'" placeholder="dd-mm-yyyy">
+        <input type="text" id="BirthDate"  formControlName="BirthDate" placeholder="dd-mm-yyyy">
         <div class="validation-message">
           <ng-container *ngIf="profileForm.controls['BirthDate'].touched">
-            <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].hasError('required')" translate>validations.enterYourBirthdateValidation1</small>
+            <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].hasError('required')" translate>EnterYourBirthdateValidation1</small>
+            <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].hasError('pattern')" translate>dd/mm/yyyy</small>
+            <small class="text-danger" *ngIf="profileForm.controls['BirthDate'].hasError('dateValidator')" translate>dd/mm/yyyy</small>
           </ng-container>
         </div>
       </div>

@@ -39,6 +39,7 @@
       <th scope="col" (click)="sort()" translate>accounts.descriptionColumn</th>
       <th scope="col" (click)="sort()" translate>accounts.sumColumn</th>
       <th scope="col" (click)="sort()" translate>accounts.dateColumn</th>
+      <th scope="col" translate>buttons.update</th>
     </tr>
   </thead>
   <tbody>
@@ -51,6 +52,8 @@
         {{trans.Sum}}
       </td>
       <td>{{trans.Date}}</td>
+      <td><app-update-transaction></app-update-transaction></td>
     </tr>
   </tbody>
 </table>
+

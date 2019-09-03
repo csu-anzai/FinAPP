@@ -17,12 +17,19 @@ namespace DAL.Repositories.ImplementedRepositories
 
         public async Task<Account> GetAccountById(int id)
         {
-            return await _entities.Include(i => i.Image).Include(c => c.Currency).FirstOrDefaultAsync(a => a.Id == id);
+            return await _entities
+                .Include(i => i.Image)
+                .Include(c => c.Currency)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<Account> FindAsyncAccountWithImgCurrency(Expression<Func<Account, bool>> expression)
         {
-            return await _entities.Include(i => i.Image).Include(c => c.Currency).FirstOrDefaultAsync(expression);
+            return await _entities
+                .Include(i => i.Image)
+                .Include(c => c.Currency)
+                .FirstOrDefaultAsync(expression);
         }
+        
     }
 }

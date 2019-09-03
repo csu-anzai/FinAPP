@@ -146,6 +146,15 @@
         "description3": "Our resource supports many foreign currencies, which is especially beneficial for travelers and businessmen! You can now make changes to your balance in the currency that is convenient for you. In addition, in each account you can keep everything in different currencies!",
         "copyrightLabel": "Copyright"
     },
+    "confirm-email-success": {
+        "successMsg": "Your email was confirmed successfully.",
+        "failMsg": "Failed to confirm your email. Try to follow received link again.",
+        "logInLink": "Log in"
+      },
+    
+      "send-confirm-email": {
+        "infoMsg": "Email to confirm your account was sent. Please, check the inbox."
+      },
     "changePassword": {
         "title": "Change Password",
         "newPassword": "New Password:",
