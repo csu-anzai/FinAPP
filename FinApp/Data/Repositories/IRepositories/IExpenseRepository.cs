@@ -10,5 +10,6 @@ namespace DAL.Repositories.IRepositories
     public interface IExpenseRepository : IBaseRepository<Expense>
     {
         Task<Expense> GetOneWithTransactionAsync(Expression<Func<Expense, bool>> expression);
+        Task<IEnumerable<Expense>> GetAllWithDetailsAsync(int accountId, DateTime startDate, DateTime endDate);
     }
 }

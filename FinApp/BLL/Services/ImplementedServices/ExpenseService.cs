@@ -93,5 +93,43 @@ namespace BLL.Services.ImplementedServices
 
             return _mapper.Map<ExpenseDTO>(expenseToUpdate);
         }
+
+        public async Task<IEnumerable<ExpenseDTO>> GetExpensesWithDetailsAndConditionAsync(TransactionOptions options)
+        {
+
+            if (!(await IsBelongAccountToUser(options.UserId, options.AccountId)))
+            {
+                throw new ApiException(HttpStatusCode.BadRequest, "Invalid data in model (userId or accountId)");
+            }
+
+            var incomes = await _unitOfWork.ExpenseRepository.GetAllWithDetailsAsync(options.AccountId, options.FirstDate, options.SecondDate);
+
+            var expensesDTOs = incomes.Select(_mapper.Map<Expense, ExpenseDTO>);
+
+            if (!expensesDTOs.Any())
+            {
+                throw new ApiException(HttpStatusCode.NoContent, $"There is no incomes in this range {options.FirstDate} || {options.SecondDate}");
+            }
+
+            return expensesDTOs;
+        }
+
+        private async Task<bool> IsBelongAccountToUser(int userId, int accountId)
+        {
+            var user = await _unitOfWork.UserRepository.GetAsync(userId);
+            var account = await _unitOfWork.AccountRepository.GetAsync(accountId);
+
+            if (user == null || account == null)
+            {
+                return false;
+            }
+
+            if (account.UserId != user.Id)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

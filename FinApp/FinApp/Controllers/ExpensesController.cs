@@ -38,5 +38,20 @@ namespace FinApp.Controllers
             var result = await _expenseService.UpdateExpense(expenseModel);
             return Ok(new { message = "Updating expense was successful"});
         }
+
+        [HttpGet()]
+        public async Task<IActionResult> GetExpensesByCondition([FromQuery]TransactionOptions options)
+        {
+            try
+            {
+                var result = await _expenseService.GetExpensesWithDetailsAndConditionAsync(options);
+
+                return Ok(result);
+            }
+            catch (ApiException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
