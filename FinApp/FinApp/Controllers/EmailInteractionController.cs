@@ -10,12 +10,11 @@ namespace FinApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class EmailConfirmationController : Controller
+    public class EmailInteractionController : Controller
     {
         private readonly IEmailConfirmationService _emailConfirmationService;
         private readonly IEmailSenderService _emailService;
-
-        public EmailConfirmationController(IEmailConfirmationService emailConfirmationService, IEmailSenderService emailService)
+        public EmailInteractionController(IEmailConfirmationService emailConfirmationService, IEmailSenderService emailService)
         {
             _emailConfirmationService = emailConfirmationService;
             _emailService = emailService;
@@ -35,7 +34,7 @@ namespace FinApp.Controllers
             return Ok();
         }
 
-        [HttpPost("sendEmailToAdmin")]
+        [HttpPost("admin")]
         public async Task<IActionResult> SendMessagetoAdmin(EmailViewModel emailVm)
         {
             await _emailService.SendEmailAsync(emailVm.Email, emailVm.Subject, emailVm.Message);

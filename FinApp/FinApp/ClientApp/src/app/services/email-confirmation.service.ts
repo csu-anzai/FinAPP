@@ -10,12 +10,11 @@ export class EmailConfirmationService {
 
   constructor(private http: HttpClient) { }
 
-  baseUrl = 'https://localhost:44397/api/emailConfirmation';
+  baseUrl = 'https://localhost:44397/api/emailInteraction';
   callbackUrl = window.location.origin + '/confirm-email-success?token=';
-  isValidLink: boolean;
 
   sendConfirmEmailLink(email: string) {
-    let model = {
+    const model = {
       userEmail: email,
       callbackUrl: this.callbackUrl
     };
@@ -23,20 +22,11 @@ export class EmailConfirmationService {
     return this.http.post(this.baseUrl + '/sendConfirmEmailLink', model);
   }
 
-  validateConfirmEmailLink(model:any) {
-
-    return this.http.post(this.baseUrl + '/validateEmailLink', model).pipe(
-      map((response: any) => {
-        this.isValidLink = response;
-        })
-      );
+  validateConfirmEmailLink(model: any) {
+    return this.http.post(this.baseUrl + '/validateEmailLink', model);
   }
 
   sendMailToAdmin(emailInfo: Email) {
-    return this.http.post(this.baseUrl + '/sendEmailToAdmin', emailInfo).pipe(
-      map((response: any) => {
-        console.log(response);
-        })
-      );
+    return this.http.post(`${this.baseUrl}/admin`, emailInfo);
   }
 }
