@@ -1,11 +1,11 @@
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-left:10%; margin-right:10%; margin-top:5%">
   <li class="nav-item" style="width:25%">
     <a class="nav-link active" id="pills-changePass-tab" data-toggle="pill" href="#pills-changePass" role="tab"
-      aria-controls="pills-changePass" aria-selected="true">Change Password</a>
+      aria-controls="pills-changePass" aria-selected="true" translate>changePassword.title</a>
   </li>
   <li class="nav-item" style="width:25%">
     <a class="nav-link" id="pills-familyOptions-tab" data-toggle="pill" href="#pills-familyOptions" role="tab"
-      aria-controls="pills-familyOptions" aria-selected="false">Family Options</a>
+      aria-controls="pills-familyOptions" aria-selected="false" translate>familyOptions.title</a>
   </li>
 </ul>
 
@@ -16,37 +16,37 @@
     <div class="form">
       <form method="post" (ngSubmit)="updatePassword()" [formGroup]="changePasswordForm">
         <div class="form-group">
-          <label for="OldPassword">Password:</label>
+          <label for="OldPassword" translate>formLabelsWithColon.password</label>
           <input type="password" id="OldPassword" formControlName="OldPassword">
           <div class="validation-message">
             <ng-container *ngIf="changePasswordForm.controls['OldPassword'].touched">
-              <small class="text-danger" *ngIf="changePasswordForm.controls['OldPassword'].hasError('required')">Required password</small>
+              <small class="text-danger" *ngIf="changePasswordForm.controls['OldPassword'].hasError('required')" translate>validations.pwdValidation1</small>
             </ng-container>
           </div>
         </div>
         <div class="form-group">
-          <label for="Password">New Password:</label>
+          <label for="Password" translate>changePassword.newPassword</label>
           <input type="password" id="Password" formControlName="Password">
           <div class="validation-message">
               <ng-container *ngIf="changePasswordForm.controls['Password'].touched">
-                <small class="text-danger" *ngIf="changePasswordForm.controls['Password'].hasError('required')">Required password</small>
-                <small class="text-danger" *ngIf="changePasswordForm.controls['Password'].hasError('minlength')">Password should contain at least 6 symbols</small>
-                <small class="text-danger" *ngIf="changePasswordForm.controls['Password'].hasError('maxlength')">Password should contain a maximum of 16 symbols</small>
-                <small class="text-danger" *ngIf="changePasswordForm.controls['Password'].hasError('pattern')">Password  </small>
+                <small class="text-danger" *ngIf="changePasswordForm.controls['Password'].hasError('required')" translate>validations.pwdValidation1</small>
+                <small class="text-danger" *ngIf="changePasswordForm.controls['Password'].hasError('minlength')" translate>validations.pwdSignUpValidation2</small>
+                <small class="text-danger" *ngIf="changePasswordForm.controls['Password'].hasError('maxlength')" translate>validations.pwdSignUpValidation3</small>
+                <small class="text-danger" *ngIf="changePasswordForm.controls['Password'].hasError('pattern')" translate>Password </small>
               </ng-container>
           </div>
         </div>
         <div class="form-group">
-          <label for="ConfirmPassword">Confirm New Password:</label>
+          <label for="ConfirmPassword" translate>changePassword.confirmNewPassword</label>
           <input type="password" id="ConfirmPassword" formControlName="ConfirmPassword">
           <div class="validation-message">
               <ng-container *ngIf="changePasswordForm.controls['ConfirmPassword'].touched">
-                <small class="text-danger" *ngIf="changePasswordForm.controls['ConfirmPassword'].hasError('required')">Required confirm password</small>
-                <small class="text-danger" *ngIf="changePasswordForm.controls['ConfirmPassword'].hasError('mismatch')">Passwords don`t match</small>
+                <small class="text-danger" *ngIf="changePasswordForm.controls['ConfirmPassword'].hasError('required')" translate>validations.repeatPwdSignUpValidation1</small>
+                <small class="text-danger" *ngIf="changePasswordForm.controls['ConfirmPassword'].hasError('mismatch')" translate>validations.repeatPwdSignUpValidation2</small>
               </ng-container>
           </div>
         </div>
-        <button type="submit">Save</button>
+        <button type="submit" translate>buttons.save</button>
       </form>
     </div>
 

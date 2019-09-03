@@ -78,14 +78,14 @@
       </div>
     </div>
     <div class="p">
-      <label class="floatLabel" for="lastname" translate>RepeatPwdLabel</label>
+      <label class="floatLabel" for="lastname" translate>signinSignup.repeatPwdLabel</label>
       <input type="password"
              formControlName="RepeatedPassword"
              #repeated>
       <div class="validation-message">
         <ng-container *ngIf="signUpForm.controls['RepeatedPassword'].touched">
-          <small class="text-danger" *ngIf="signUpForm.controls['RepeatedPassword'].hasError('required')" translate>RepeatPwdSignUpValidation1</small>
-          <small class="text-danger" *ngIf="signUpForm.controls['RepeatedPassword'].hasError('mismatch')" translate>RepeatPwdSignUpValidation2</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['RepeatedPassword'].hasError('required')" translate>validations.repeatPwdSignUpValidation1</small>
+          <small class="text-danger" *ngIf="signUpForm.controls['RepeatedPassword'].hasError('mismatch')" translate>validations.repeatPwdSignUpValidation2</small>
         </ng-container>
       </div>
     </div>
@@ -93,5 +93,5 @@
       <button type="submit" [disabled]=" loading" value="Create My Account" id="submit" class="button col-3" style="vertical-align:middle"><span translate>signinSignup.signUpTitle</span></button>
     </div>
   </form>
-  <h5 class="text-center mt-20" translate>signinSignup.haveAlreadyAccountLabel<a [routerLink]='["/login-page"]' translate>LogInLabel</a> </h5>
+  <h5 class="text-center mt-20" translate>signinSignup.haveAlreadyAccountLabel<a [routerLink]='["/login-page"]' translate>signinSignup.logInLabel</a> </h5>
 </div>

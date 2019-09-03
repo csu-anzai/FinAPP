@@ -53,7 +53,8 @@
         "name": "Name:",
         "email": "Email:",
         "birthdate": "Birthdate:",
-        "password": "Password:"
+        "password": "Password:",
+        "repeatPassword": "Repeat password:"
     },
     "buttons" : {
         "save": "Save",
@@ -104,13 +105,13 @@
         "loginTitle": "Login",
         "passwordTitle": "Password",
         "pwdWithColonLabel": "Password:",
+        "repeatPwdLabel": "Repeat password:",
         "signInTitle": "Sign In",
         "logInLabel": "Log In",
         "googleSignInTitle": "Sign in with Google",
         "forgotPasswordTitle": "Forgot password?",
         "registrationTitle": "Registration",
-        "birthDateWithColonLabel": "Birthdate:",
-        "repeatPwdLabel": "Repeat password:",
+        
         "signUpTitle": "Sign Up",
         "haveAlreadyAccountLabel": "Have already account? ",
         "changePwdTitle": "Change password",
@@ -144,5 +145,13 @@
         "globalizationTitle": "Monetary globalization!",
         "description3": "Our resource supports many foreign currencies, which is especially beneficial for travelers and businessmen! You can now make changes to your balance in the currency that is convenient for you. In addition, in each account you can keep everything in different currencies!",
         "copyrightLabel": "Copyright"
+    },
+    "changePassword": {
+        "title": "Change Password",
+        "newPassword": "New Password:",
+        "confirmNewPassword": "Confirm New Password:"
+    },
+    "familyOptions":{
+        "title": "Family Options"
     }
 }
