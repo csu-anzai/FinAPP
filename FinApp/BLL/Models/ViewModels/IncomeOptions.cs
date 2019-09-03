@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BLL.Models.ViewModels
 {
-    public class IncomeOptions
+    public class TransactionOptions
     {
         public int UserId { get; set; }
         public int AccountId { get; set; }

@@ -9,7 +9,7 @@ namespace DAL.Repositories.IRepositories
 {
     public interface IIncomeRepository : IBaseRepository<Income>
     {
-        Task<IEnumerable<Income>> GetAllWithDetailsAsync(int accountId);
         Task<Income> GetOneWithTransactionAsync(Expression<Func<Income, bool>> expression);
+        Task<IEnumerable<Income>> GetAllWithDetailsAsync(int accountId, DateTime startDate, DateTime endDate);
     }
 }

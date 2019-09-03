@@ -91,20 +91,22 @@ namespace BLL.Services.ImplementedServices
             return account;
         }
 
-        public async Task<IEnumerable<IncomeDTO>> GetIncomesWithDetailsAndConditionAsync(IncomeOptions options)
+        public async Task<IEnumerable<IncomeDTO>> GetIncomesWithDetailsAndConditionAsync(TransactionOptions options)
         {
 
             if (!(await IsBelongAccountToUser(options.UserId, options.AccountId)))
+            {
                 throw new ApiException(HttpStatusCode.BadRequest, "Invalid data in model (userId or accountId)");
+            }
 
-            var incomes = (await _unitOfWork.IncomeRepository.GetAllWithDetailsAsync(options.AccountId))
-                .Where(i => i.Transaction.Date <= options.SecondDate && i.Transaction.Date >= options.FirstDate)
-                .OrderByDescending(i => i.Transaction.Date);
+            var incomes = await _unitOfWork.IncomeRepository.GetAllWithDetailsAsync(options.AccountId, options.FirstDate, options.SecondDate);
 
             var incomesDTOs = incomes.Select(_mapper.Map<Income, IncomeDTO>);
 
             if (!incomesDTOs.Any())
+            {
                 throw new ApiException(HttpStatusCode.NoContent, $"There is no incomes in this range {options.FirstDate} || {options.SecondDate}");
+            }
 
             return incomesDTOs;
         }
@@ -115,15 +117,16 @@ namespace BLL.Services.ImplementedServices
             var account = await _unitOfWork.AccountRepository.GetAsync(accountId);
 
             if (user == null || account == null)
-                return false;
-
-            foreach (var userAccount in user.Accounts)
             {
-                if (userAccount.Id == account.Id)
-                    return true;
+                return false;
             }
 
-            return false;
+            if (account.UserId != user.Id)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
