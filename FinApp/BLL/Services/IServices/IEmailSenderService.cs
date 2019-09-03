@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BLL.Models.ViewModels;
 using System.Threading.Tasks;
 
 namespace BLL.Services.IServices
@@ -8,5 +6,6 @@ namespace BLL.Services.IServices
     public interface IEmailSenderService
     {
         Task SendEmailAsync(string email, string subject, string message);
+        Task SendContactEmailAsync(EmailViewModel emailVm);
     }
 }

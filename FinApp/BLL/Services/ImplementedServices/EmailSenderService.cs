@@ -1,4 +1,5 @@
 ﻿using BLL.DTOs;
+using BLL.Models.ViewModels;
 using BLL.Services.IServices;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Options;
@@ -35,6 +36,13 @@ namespace BLL.Services.ImplementedServices
                 await client.SendAsync(mimeMessage);
                 await client.DisconnectAsync(true);
             }
+        }
+        public async Task SendContactEmailAsync(EmailViewModel emailVm)
+        {
+            var subject = $"From {emailVm.FullName}";
+            var message = $"{emailVm.Message}\nUser's email:{emailVm.Email}";
+
+            await SendEmailAsync(_emailOptions.ContactEmail, subject, message);
         }
     }
 }

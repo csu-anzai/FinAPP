@@ -37,7 +37,7 @@ namespace FinApp.Controllers
         [HttpPost("admin")]
         public async Task<IActionResult> SendMessagetoAdmin(EmailViewModel emailVm)
         {
-            await _emailService.SendEmailAsync(emailVm.Email, emailVm.Subject, emailVm.Message);
+            await _emailService.SendContactEmailAsync(emailVm);
             return Ok();
         }
     }

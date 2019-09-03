@@ -46,10 +46,10 @@ export class ContactUsComponent implements OnInit {
 
   onSendMessage() {
     if (this.contactForm.valid) {
+      this.emailInfo.fullName = this.contactForm.controls['FullName'].value;
       this.emailInfo.email = this.contactForm.controls['Email'].value;
       this.emailInfo.message = this.contactForm.controls['Message'].value;
-      this.emailInfo.subject = 'Contact form';
-      
+
       this.emailSender.sendMailToAdmin(this.emailInfo).subscribe(
         () => this._alertService.infoMsg('Your message was sent')
       );

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using BLL.DTOs;
-using BLL.Helpers;
 using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Security;
@@ -99,15 +98,17 @@ namespace BLL.Services.ImplementedServices
         {
             var user = await _unitOfWork.UserRepository.GetAsync(model.UserId);
 
-            if (user == null) {
-                throw new ApiException(HttpStatusCode.NotFound, "User was not found"); }
+            if (user == null)
+            {
+                throw new ApiException(HttpStatusCode.NotFound, "User was not found");
+            }
 
             if (!_hasher.CheckPassWithHash(model.OldPassword, user.Password))
                 throw new ApiException(HttpStatusCode.BadRequest, "Old password incorrect");
 
             user.Password = _hasher.HashPassword(model.Password);
 
-            await _unitOfWork.Complete();       
+            await _unitOfWork.Complete();
         }
 
         public async Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto)
@@ -122,7 +123,5 @@ namespace BLL.Services.ImplementedServices
 
             await _unitOfWork.Complete();
         }
-
-        
     }
 }
