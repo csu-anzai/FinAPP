@@ -1,36 +1,37 @@
 <div class="container">
-    <div class="form contact-us">
-      <form method="post" (ngSubmit)="onSendMessage()" [formGroup]="contactForm">
+      <form class="form" method="post" (ngSubmit)="onSendMessage()" [formGroup]="contactForm">
+        <div class="text-center p-2">
+            <h4 class="modal-title" translate>contactUs.title</h4>
+        </div>
         <div class="form-group">
-          <label for="FullName">Full name:</label>
+          <label for="FullName" translate>contactUs.fullName</label>
           <input type="text" id="FullName" formControlName="FullName">
           <div class="validation-message">
             <ng-container *ngIf="contactForm.controls['FullName'].touched">
-              <small class="text-danger" *ngIf="contactForm.controls['FullName'].hasError('required')">Required full name</small>
-              <small class="text-danger" *ngIf="contactForm.controls['FullName'].hasError('pattern')">Write allowed symbols</small>
+              <small class="text-danger" *ngIf="contactForm.controls['FullName'].hasError('required')" translate>contactUs.requiredFullName</small>
+              <small class="text-danger" *ngIf="contactForm.controls['FullName'].hasError('pattern')" translate>contactUs.writeAllowedSymbols</small>
             </ng-container>
           </div>
         </div>
         <div class="form-group">
-          <label for="Email">Email:</label>
+          <label for="Email" translate>EmailWithColonLabel</label>
           <input type="text" id="Email" formControlName="Email">
           <div class="validation-message">
               <ng-container *ngIf="contactForm.controls['Email'].touched">
-                <small class="text-danger" *ngIf="contactForm.controls['Email'].hasError('required')">Required email</small>
-                <small class="text-danger" *ngIf="contactForm.controls['Email'].hasError('pattern')">Uncorrect email</small>
+                <small class="text-danger" *ngIf="contactForm.controls['Email'].hasError('required')" translate>EmailValidation1</small>
+                <small class="text-danger" *ngIf="contactForm.controls['Email'].hasError('pattern')" translate>EnterYourEmailValidation2</small>
               </ng-container>
           </div>
         </div>
         <div class="form-group">
-            <label for="Email">Message:</label>
+            <label for="Email" translate>contactUs.message</label>
             <textarea type="text" id="Message" formControlName="Message" rows="10"></textarea>
             <div class="validation-message">
                 <ng-container *ngIf="contactForm.controls['Message'].touched">
-                  <small class="text-danger" *ngIf="contactForm.controls['Message'].hasError('required')">Write smth</small>  
+                  <small class="text-danger" *ngIf="contactForm.controls['Message'].hasError('required')" translate>contactUs.writeSmth</small>  
                 </ng-container>
             </div>
           </div>        
-        <button type="submit">Send</button>
-      </form>
-    </div>
+        <button type="submit" translate>SendBtn</button>
+    </form>
 </div>

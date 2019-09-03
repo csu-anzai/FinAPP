@@ -37,7 +37,13 @@ namespace FinApp.Controllers
         [HttpPost("admin")]
         public async Task<IActionResult> SendMessagetoAdmin(EmailViewModel emailVm)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             await _emailService.SendContactEmailAsync(emailVm);
+
             return Ok();
         }
     }

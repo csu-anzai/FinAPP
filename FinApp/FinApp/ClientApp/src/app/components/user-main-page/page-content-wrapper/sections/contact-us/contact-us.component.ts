@@ -23,7 +23,6 @@ export class ContactUsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private _alertService: NotificationService) {
 
-
     this.contactForm = formBuilder.group({
       'FullName': new FormControl('', Validators.compose(
         [Validators.required, Validators.pattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")])),
@@ -32,7 +31,6 @@ export class ContactUsComponent implements OnInit {
         [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')])),
 
       'Message': new FormControl('', Validators.required)
-
     });
   }
 
@@ -51,6 +49,8 @@ export class ContactUsComponent implements OnInit {
       this.emailInfo.message = this.contactForm.controls['Message'].value;
 
       this.emailSender.sendMailToAdmin(this.emailInfo).subscribe(
+        next => {},
+        err => this._alertService.errorMsg('Your message wasn\'t sent'),
         () => this._alertService.infoMsg('Your message was sent')
       );
     }

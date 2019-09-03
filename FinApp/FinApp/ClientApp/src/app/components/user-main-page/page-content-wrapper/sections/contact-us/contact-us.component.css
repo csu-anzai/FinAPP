@@ -1,59 +1,64 @@
-input, textarea {
-    outline: none ;
-    background-color: none;
-    border: 1px solid rgb(17, 74, 138);
-    font-size: 17px;
-    width: 100%;
-    padding: 10px 15px;
-    border-radius: 60px;
-    color:rgb(17, 74, 138);
+input,
+textarea {
+  outline: none;
+  background-color: none;
+  border: 1px solid rgb(17, 74, 138);
+  font-size: 17px;
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 60px;
+  color: rgb(17, 74, 138);
 }
 
-input{
+input {
   line-height: 0;
 }
 
 textarea {
-    border-radius: 20px !important;
+  border-radius: 20px !important;
 }
 
-input:focus, input:active, 
-textarea:focus, textarea:active{
-    background: rgb(17, 74, 138);
-    border: 1px solid white;
-    color:#fff ;
-    
-  }
+input:focus,
+input:active,
+textarea:focus,
+textarea:active {
+  background: rgb(17, 74, 138);
+  border: 1px solid white;
+  color: #fff;
 
-  .form {
-    width: 70%;
-    padding: 2em 4em 2em;
-    margin:0 auto;
-    padding: 30px 25px;
-    background-color: white;
-    border-radius: 40px;
-  }
-  button {
-    margin-top: 15px;
-    background-color: white;
-    border: 1px solid rgb(17, 74, 138);
-    line-height: 0;
-    font-size: 17px;
-    padding: 20px 15px ;
-    border-radius: 80px;
-    color: rgb(17, 74, 138);
-    cursor: pointer;
 }
 
-button:hover, button:focus {
-    color: white;
-    background-color:rgb(17, 74, 138);
+.form {
+  width: 70%;
+  padding: 2em 4em 2em;
+  margin: 0 auto;
+  padding: 30px 25px;
+  background-color: white;
+  border-radius: 40px;
 }
 
-.contact-us{
-  margin-top: 150px;
+button {
+  margin-top: 15px;
+  background-color: white;
+  border: 1px solid rgb(17, 74, 138);
+  line-height: 0;
+  font-size: 17px;
+  padding: 20px 15px;
+  border-radius: 80px;
+  color: rgb(17, 74, 138);
+  cursor: pointer;
 }
 
-.nav-item .active{ background-color:rgb(17, 74, 138);}
+button:hover,
+button:focus {
+  color: white;
+  background-color: rgb(17, 74, 138);
+}
 
-.nav-link {color:rgb(17, 74, 138); }
+.nav-item .active {
+  background-color: rgb(17, 74, 138);
+}
+
+.nav-link {
+  color: rgb(17, 74, 138);
+}

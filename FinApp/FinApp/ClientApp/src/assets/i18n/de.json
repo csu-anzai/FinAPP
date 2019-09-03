@@ -9,7 +9,7 @@
   "ChartsLabel": "Diagramme",
   "SettingsLabel": "Einstellungen",
   "AdminPanelLabel": "Administrationsmenü",
-  "FAQLabel": "FAQ",
+  "ContactUs": "Kontaktiere uns",
   "FirstNameLabel": "Vorname:",
   "SurnameLabel": "Nachname:",
   "SaveButton": "Sparen",
@@ -120,7 +120,7 @@
     "description1": "Alle Aktionen sind sehr einfach. Sie können schnell und einfach die gewünschte Transaktion hinzufügen. Die Anpassung dauert Sekunden, sobald Sie Ihren Kontostand geändert haben.",
     "financesControlTitle": "Kontrolle über Finanzen!",
     "description2": "Behalten Sie die Kontrolle über alle Ihre Konten! Egal ob Sie eine oder mehrere Bankkarten haben, Sie können alles an einem Ort verwalten!",
-    "globalizationTitle": "Währungsglobalisierung!",
+    "globalizationTitle": "Währungs Globalisierung!",
     "description3": "Unsere Ressource unterstützt viele Fremdwährungen, was besonders für Reisende und Geschäftsleute von Vorteil ist! Sie können jetzt Änderungen an Ihrem Guthaben in der für Sie passenden Währung vornehmen. Außerdem können Sie in jedem Konto alles in verschiedenen Währungen aufbewahren!",
     "copyrightLabel": "Urheberrechte"
   },
@@ -133,6 +133,16 @@
 
   "send-confirm-email": {
     "infoMsg": "E-Mail zur Bestätigung, dass Ihr Konto gesendet wurde. Bitte überprüfen Sie den Posteingang."
+  },
+
+  "contactUs": {
+    "title": "Nehmen Sie Kontakt mit uns auf",
+    "fullName": "Vollständiger Name:",
+    "message": "Botschaft:",
+    "requiredFullName": "Erforderlicher vollständiger Name",
+    "writeAllowedSymbols": "Schreibe erlaubte Symbole",
+    "writeSmth": "Etw schreiben",
+    "validCharacters": "Bitte geben Sie gültige Zeichen ein"
   }
 
 }

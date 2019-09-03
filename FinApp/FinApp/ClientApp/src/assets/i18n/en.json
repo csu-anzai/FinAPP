@@ -9,7 +9,7 @@
   "ChartsLabel": "Charts",
   "SettingsLabel": "Settings",
   "AdminPanelLabel": "Admin Panel",
-  "FAQLabel": "FAQ",
+  "ContactUs": "Contact Us",
   "FirstNameLabel": "First name:",
   "SurnameLabel": "Surname:",
   "SaveButton": "Save",
@@ -17,7 +17,7 @@
   "EnterYourNameValidation2": "Name should contain only letters and '-'",
   "EnterYourSurnameValidation1": "Please enter your surname",
   "EnterYourSurnameValidation2": "Surname should contain only letters and '-'",
-  "EnterYourBirthdateValidation1": "Please choose your birthdateDate format should be DD.MM.YYYY",
+  "EnterYourBirthdateValidation1": "Please choose your birthdate format should be DD.MM.YYYY",
   "EnterYourBirthdateValidation2": "Date format should be DD.MM.YYYY",
   "EnterYourEmailValidation1": "Please enter your email",
   "EnterYourEmailValidation2": "E-mail example finApp@gmail.com",
@@ -133,5 +133,15 @@
 
   "send-confirm-email": {
     "infoMsg": "Email to confirm your account was sent. Please, check the inbox."
+  },
+
+  "contactUs": {
+    "title": "Get in touch with us",
+    "fullName": "Full name:",
+    "message": "Message:",
+    "requiredFullName": "Required full name",
+    "writeAllowedSymbols": "Write allowed symbols",
+    "writeSmth": "Write smth",
+    "validCharacters": "Please enter valid characters"
   }
 }

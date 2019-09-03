@@ -9,7 +9,7 @@
   "ChartsLabel": "Graphiques",
   "SettingsLabel": "Réglages",
   "AdminPanelLabel": "Panneau d'administration",
-  "FAQLabel": "FAQ",
+  "ContactUs": "Contactez nous",
   "FirstNameLabel": "Prénom:",
   "SurnameLabel": "Nom de famille:",
   "SaveButton": "Sauvegarder",
@@ -138,5 +138,15 @@
 
   "send-confirm-email": {
     "infoMsg": "Email pour confirmer que votre compte a été envoyé. S'il vous plaît, vérifiez la boîte de réception."
+  },
+
+  "contactUs": {
+    "title": "Prenez contact avec nous",
+    "fullName": "Nom complet:",
+    "message": "Message:",
+    "requiredFullName": "Nom complet requis",
+    "writeAllowedSymbols": "Écrire les symboles autorisés",
+    "writeSmth": "Écris qch",
+    "validCharacters": "S'il vous plaît entrer des caractères valides"
   }
 }
