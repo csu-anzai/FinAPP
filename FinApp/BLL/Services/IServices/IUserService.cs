@@ -11,7 +11,7 @@ namespace BLL.Services.IServices
         Task<User> CreateUserAsync(RegistrationViewModel userDTO);
         Task<UserDTO> GetAsync(int id);
         Task<IEnumerable<UserDTO>> GetAllAsync();
-        Task<User> UpdateAsync(ProfileDTO profileDTO);
+        Task<UserDTO> UpdateAsync(ProfileDTO profileDTO);
         Task DeleteAsync(UserDTO user);
         Task ChangePasswordAsync(NewPasswordViewModel model);
         Task RecoverPasswordAsync(RecoverPasswordDTO recoverPasswordDto);
