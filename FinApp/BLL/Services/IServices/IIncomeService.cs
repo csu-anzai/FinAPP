@@ -10,5 +10,7 @@ namespace BLL.Services.IServices
     {
         Task<IncomeAddViewModel> AddIncomeAsync(IncomeAddViewModel account);
         Task<IEnumerable<IncomeDTO>> GetIncomesWithDetailsAndConditionAsync(IncomeOptions options);
+        Task<Account> Remove(int id);
+        Task<IncomeDTO> UpdateIncome(IncomeUpdateViewModel income);
     }
 }

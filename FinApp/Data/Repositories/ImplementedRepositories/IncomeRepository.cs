@@ -1,8 +1,10 @@
 ﻿using DAL.Entities;
 using DAL.Repositories.IRepositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace DAL.Repositories.ImplementedRepositories
@@ -21,5 +23,13 @@ namespace DAL.Repositories.ImplementedRepositories
                  .Where(i => i.AccountId == accountId)
                  .ToListAsync();
         }
+
+        public async Task<Income> GetOneWithTransactionAsync(Expression<Func<Income, bool>> expression)
+        {
+            return await _entities
+                .Include(t => t.Transaction)
+                .FirstOrDefaultAsync(expression);
+        }
+
     }
 }
