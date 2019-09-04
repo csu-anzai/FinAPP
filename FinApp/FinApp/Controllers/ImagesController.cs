@@ -1,16 +1,16 @@
-﻿using BLL.DTOs;
+﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.Helpers;
 using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Services.IServices;
+using DAL.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using DAL.Entities;
-using Microsoft.Extensions.Configuration;
 
 namespace FinApp.Controllers
 {
@@ -75,9 +75,12 @@ namespace FinApp.Controllers
             var imageInDb = await _imageService.GetAsync(id);
 
             if (imageInDb == null)
+            {
                 return NotFound();
+            }
 
             var root = $@"{WebRootPath}\{imageInDb.Path}\{imageInDb.Name}";
+
             DirectoryManager.RemoveFileFromFolder(root);
 
             await _imageService.DeleteImage(imageInDb);
@@ -89,12 +92,16 @@ namespace FinApp.Controllers
         public async Task<IActionResult> UpdateImage(int id, ImageDTO imageDTO)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest();
+            }
 
             var image = await _imageService.UpdateAsync(imageDTO);
 
             if (image == null)
-                return BadRequest(new { message = "image id is incorrect!" });
+            {
+                return BadRequest(new { message = "Image Id is incorrect!" });
+            }
 
             return Ok();
         }

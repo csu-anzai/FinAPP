@@ -12,16 +12,22 @@ namespace BLL.Helpers
             var newPath = Path.Combine(rootPath, imageVm.Path);
 
             if (!Directory.Exists(newPath))
+            {
                 Directory.CreateDirectory(newPath);
+            }
 
             if (file.Length <= 0)
+            {
                 return null;
+            }
 
             // var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
             var fullPath = Path.Combine(newPath, imageVm.Name);
 
             using (var stream = new FileStream(fullPath, FileMode.Create))
+            {
                 await file.CopyToAsync(stream);
+            }
 
             return fullPath;
         }
@@ -31,7 +37,9 @@ namespace BLL.Helpers
             var file = new FileInfo(path);
 
             if (file.Exists)
+            {
                 file.Delete();
+            }
         }
 
         public static void RemoveFolder(string path)
@@ -39,7 +47,9 @@ namespace BLL.Helpers
             var directory = new DirectoryInfo(path);
 
             if (directory.Exists)
+            {
                 directory.Delete(true);
+            }
         }
     }
 }
