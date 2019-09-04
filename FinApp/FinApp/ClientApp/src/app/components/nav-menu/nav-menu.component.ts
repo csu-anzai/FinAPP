@@ -27,18 +27,15 @@ export class NavMenuComponent implements OnInit {
     private router: Router,
     private alertService: NotificationService,
     private languageService: LanguageService,
-    private translate: TranslateService) { }
+    private translate: TranslateService) {
+      this.getCurrentTranslation();
+      this.translateSubscription();
+    }
 
   ngOnInit() {
-    this.isloggedIn();
-
-    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-          this.translate.get('notifications.logOutMsg').subscribe(
-        (text: string) => this.logOutMsg = text
-      );
-    });
-
     this.languages = LanguageService.LANGUAGES;
+
+    this.isloggedIn();
   }
 
   collapse() {
@@ -65,5 +62,18 @@ export class NavMenuComponent implements OnInit {
   onLanguageChange(event: any) {
     const languageAbbr = event.target.value;
     this.languageService.switchLanguage(languageAbbr);
+  }
+
+  getCurrentTranslation() {
+    this.translate.get('notifications.logOutMsg')
+    .subscribe(
+      (text: string) => this.logOutMsg = text
+    );
+  }
+
+  translateSubscription() {
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.getCurrentTranslation();
+    });
   }
 }

@@ -19,19 +19,19 @@ export class ContactUsComponent implements OnInit {
   failedSent: string;
 
   constructor(
-    private _authService: AuthService,
-    private _userService: UserService,
+    private authService: AuthService,
+    private userService: UserService,
     private emailSender: EmailConfirmationService,
     private formBuilder: FormBuilder,
     private translate: TranslateService,
-    private _alertService: NotificationService) {
+    private alertService: NotificationService) {
     this.setUpContactForm();
+    this.getTranslation();
+    this.translateSubscription();
   }
 
   ngOnInit() {
     this.getUserInfo();
-    this.getTranslations();
-    this.translateSubscription();
   }
 
   onSendMessage() {
@@ -42,8 +42,8 @@ export class ContactUsComponent implements OnInit {
 
       this.emailSender.sendMailToAdmin(this.emailInfo).subscribe(
         next => { },
-        err => this._alertService.errorMsg(this.failedSent),
-        () => this._alertService.infoMsg(this.successfullySent)
+        err => this.alertService.errorMsg(this.failedSent),
+        () => this.alertService.infoMsg(this.successfullySent)
       );
     }
   }
@@ -51,7 +51,7 @@ export class ContactUsComponent implements OnInit {
   setUpContactForm() {
     this.contactForm = this.formBuilder.group({
       'FullName': new FormControl('', Validators.compose(
-        [Validators.required, Validators.pattern("^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")])),
+        [Validators.required, Validators.pattern('^[a-zA-Z]+(([\',. -][a-zA-Z ])?[a-zA-Z]*)*$')])),
 
       'Email': new FormControl('', Validators.compose(
         [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')])),
@@ -62,13 +62,14 @@ export class ContactUsComponent implements OnInit {
 
   getUserInfo() {
     this.emailInfo = new Email();
-    this._userService.getUser(this._authService.DecodedToken.sub).subscribe(user => {
+
+    this.userService.getUser(this.authService.DecodedToken.sub).subscribe(user => {
       this.contactForm.get('FullName').setValue(`${user.name} ${user.surname}`);
       this.contactForm.get('Email').setValue(user.email);
     });
   }
 
-  getTranslations() {
+  getTranslation() {
     const successKey = 'contactUs.successfullyMsg';
     const failureKey = 'contactUs.errorMsg';
 
@@ -81,7 +82,7 @@ export class ContactUsComponent implements OnInit {
 
   translateSubscription() {
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.getTranslations();
+      this.getTranslation();
     });
   }
 }

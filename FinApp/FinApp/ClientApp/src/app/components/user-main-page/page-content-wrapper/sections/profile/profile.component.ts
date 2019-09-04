@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
 import * as moment from 'moment';
 import { format } from 'url';
+import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
@@ -16,7 +17,9 @@ import { format } from 'url';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  private _userAvatar: string;
+  private userAvatar: string;
+  private profileUpdatedMsg: string;
+  private imageUpdatedMsg: string;
 
   profileForm: FormGroup;
   user: User = new User();
@@ -27,15 +30,15 @@ export class ProfileComponent implements OnInit {
 
   public get Avatar(): string {
     if (this.user.avatar) {
-      this._userAvatar = this.user.avatar;
-      return this._userAvatar.includes('base64') ? this._userAvatar : `data:image/png;base64,${this._userAvatar}`;
+      this.userAvatar = this.user.avatar;
+      return this.userAvatar.includes('base64') ? this.userAvatar : `data:image/png;base64,${this.userAvatar}`;
     }
 
     return null;
   }
 
   public set Avatar(imgBase64: string) {
-    this._userAvatar = imgBase64;
+    this.userAvatar = imgBase64;
   }
 
   constructor(
@@ -45,6 +48,7 @@ export class ProfileComponent implements OnInit {
     private _modalService: NgbModal,
     private _errorHandler: ErrorHandlingService,
     fb: FormBuilder,
+    private translate: TranslateService,
     private alertService: NotificationService) {
 
     this.profileForm = fb.group({
@@ -53,6 +57,9 @@ export class ProfileComponent implements OnInit {
       'Surname': new FormControl('', Validators.compose([Validators.required, Validators.pattern('[a-zA-z-]*')])),
       'Email': new FormControl('', Validators.compose([Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]))
     });
+
+    this.getTranslation();
+    this.translateSubscription();
   }
 
   ngOnInit() {
@@ -76,7 +83,7 @@ export class ProfileComponent implements OnInit {
       
       this._userService.update(this.user).subscribe(() => {
         this.Avatar = this.user.avatar;
-        this.alertService.successMsg('Profile updated');
+        this.alertService.successMsg(this.profileUpdatedMsg);
       });
     }
     else {
@@ -125,7 +132,7 @@ export class ProfileComponent implements OnInit {
         }
         this.ngOnInit();
         this.closeModal();
-        this.alertService.successMsg('Image updated');
+        this.alertService.successMsg(this.imageUpdatedMsg);
       }
     ).catch(
       err => this.alertService.errorMsg(err)
@@ -167,6 +174,23 @@ export class ProfileComponent implements OnInit {
         return invalidObj;
       }
       return null;
-    }
+    };
+  }
+
+  getTranslation() {
+    const profileUpdatedKey = 'ProfileUpdatedMsg';
+    const imageUpdatedKey = 'ImageUpdatedMsg';
+
+    this.translate.get([profileUpdatedKey, imageUpdatedKey])
+      .subscribe(translations => {
+        this.profileUpdatedMsg = translations[profileUpdatedKey];
+        this.imageUpdatedMsg = translations[imageUpdatedKey];
+      });
+  }
+
+  translateSubscription() {
+    this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+      this.getTranslation();
+    });
   }
 }

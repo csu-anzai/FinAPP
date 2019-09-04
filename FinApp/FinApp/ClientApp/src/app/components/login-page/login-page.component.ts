@@ -33,12 +33,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.translate.get('notifications.loggedInSuccessfullyMsg').subscribe
+      (
+        (text: string) => { this.loginMsg = text; console.log(this.loginMsg); }
 
-      this.translate.get('notifications.loggedInSuccessfullyMsg').subscribe
-        (
-          (text: string) => { this.loginMsg = text; console.log(this.loginMsg); }
-
-        );
+      );
   }
 
   onLogin() {

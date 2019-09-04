@@ -24,6 +24,8 @@
   "UpdateAvatarTitle": "Update an avatar",
   "DragAndDropTitle": "Drag and drop or click here",
   "SendBtn": "Send",
+  "ProfileUpdatedMsg" : "Profile updated",
+  "ImageUpdated" : "Image updated",
 
   "FromPlaceholder": "From",
   "ToPlaceholder": "To",
