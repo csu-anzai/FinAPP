@@ -1,19 +1,19 @@
 <div class="form">
   <form method="post" (ngSubmit)="onCodeSubmit()" [formGroup]="confirmCodeForm">
-    <h2 translate>ConfirmationCodeTitle</h2>
+    <h2 translate>signinSignup.confirmationCodeTitle</h2>
     <div class="p">
-      <label class="floatLabel" for="code" translate>CodeLabel</label>
+      <label class="floatLabel" for="code" translate>signinSignup.codeLabel</label>
       <input type="text"
              formControlName="Code"
              #code>
       <div class="validation-message">
         <ng-container *ngIf="confirmCodeForm.controls['Code'].touched">
-          <small class="text-danger" *ngIf="confirmCodeForm.controls['Code'].hasError('required')" translate>CodeValidationLabel</small>
+          <small class="text-danger" *ngIf="confirmCodeForm.controls['Code'].hasError('required')" translate>validations.codeValidationLabel</small>
         </ng-container>
       </div>
     </div>
     <div class="row justify-content-center text-center">
-      <button type="submit" [disabled]=" loading" id="submit" class="button col-3" style="vertical-align:middle"><span translate>NextStepLabel</span></button>
+      <button type="submit" [disabled]=" loading" id="submit" class="button col-3" style="vertical-align:middle"><span translate>signinSignup.nextStepLabel</span></button>
     </div>
   </form>
 </div>

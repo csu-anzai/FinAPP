@@ -1,138 +1,161 @@
 {
-  "WelcomeMessage": "Herzlich willkommen",
-  "LogoutLink": "Ausloggen",
-  "LogInLink": "Einloggen",
-  "RegisterLink": "Registrieren",
-
-  "ProfileLabel": "Profil",
-  "AccountsLabel": "Konten",
-  "ChartsLabel": "Diagramme",
-  "SettingsLabel": "Einstellungen",
-  "AdminPanelLabel": "Administrationsmenü",
-  "FAQLabel": "FAQ",
-  "FirstNameLabel": "Vorname:",
-  "SurnameLabel": "Nachname:",
-  "SaveButton": "Sparen",
-  "EnterYourNameValidation1": "Bitte geben Sie Ihren Namen ein",
-  "EnterYourNameValidation2": "Name sollte nur Buchstaben und '-' enthalten",
-  "EnterYourSurnameValidation1": "Bitte geben Sie Ihren Nachnamen ein",
-  "EnterYourSurnameValidation2": "Nachname sollte nur Buchstaben und '-' enthalten",
-  "EnterYourBirthdateValidation1": "Bitte wählen Sie Ihr Geburtsdatum. Das Datumsformat sollte TT.MM.JJJJ sein",
-  "EnterYourBirthdateValidation2": "Das Datumsformat sollte TT.MM.JJJJ sein",
-  "EnterYourEmailValidation1": "Bitte geben Sie ihre E-Mail-Adresse ein",
-  "EnterYourEmailValidation2": "E-Mail-Beispiel finApp@gmail.com",
-  "UpdateAvatarTitle": "Aktualisiere einen Avatar",
-  "DragAndDropTitle": "Hier ziehen und ablegen oder klicken",
-  "SendBtn": "Senden",
-
-  "FromPlaceholder": "Von",
-  "ToPlaceholder": "Zu",
-  "FilterLabel": "Filter: ",
-  "IncomesWithcolonLabel": "Einkommen: ",
-  "ExpensesWithColonLabel": "Kosten: ",
-  "CategoryColumn": "Kategorie",
-  "DescriptionColumn": "Beschreibung",
-  "SumColumn": "Summe",
-  "DateColumn": "Datum",
-  "BalanceLabel": "Balance: ",
-  "AddAccountLabel": "Konto hinzufügen",
-  "NameLabel": "Name:",
-  "EnterYourAccountNameValidation": "Bitte geben Sie Ihren Kontostand ein",
-  "BalanceValidationMsg1": "Bitte geben Sie Ihren Namen ein",
-  "BalanceValidationMsg2": "Balance muss eine Zahl sein",
-  "CurrencyColumn": "Währung",
-  "ImageColumn": "Bild",
-  "ImageValidationMsg1": "Bitte wählen Sie ein Bild aus",
-  "AddBtn": "Hinzufügen",
-
-  "UserNameLabel": "Name",
-  "EmailLabel": "Email",
-  "BirthDateLabel": "Geburtstag",
-  "DeleteUserLabel": "Benutzer löschen",
-  "DeleteLabel": "Löschen",
-  "UpdateLabel": "Aktualisieren",
-  "StatisticsTab": "Statistiken",
-  "UserInspectionTab": "Benutzerinspektion",
-  "AddStandartCategoryTab": "Standardkategorie hinzufügen",
-  "ChangeStandartCategoryTab": "Standardkategorie ändern",
-  "CreationCategory": "Erstellungskategorie",
-  "ExpensesCategory": "Ausgabenkategorie",
-  "IncomeCategory": "Einkommenskategorie",
-  "ExpenseLable": "Aufwand",
-  "IncomeLable": "Einkommen",
-  "UpdateCategoryLable": "Kategorie aktualisieren",
-
-  "LoginTitle": "Anmeldung",
-  "PasswordTitle": "Passwort",
-  "PwdWithColonLabel": "Password:",
-  "EmailWithColonLabel": "Email:",
-  "EmailValidation1": "E-Mail ist erforderlich",
-  "PwdValidation1": "Passwort wird benötigt",
-  "SignInTitle": "Einloggen",
-  "LogInLabel": "Einloggen",
-  "GoogleSignInTitle": "Google durchgehen",
-  "ForgotPasswordTitle": "Passwort vergessen?",
-
-  "RegistrationTitle": "Anmeldung",
-  "BirthDateWithColonLabel": "Geburtstag:",
-  "BirthdateSignUpValidation1": "Bitte wählen Sie Ihr Geburtsdatum",
-  "BirthdateSignUpValidation2": "Das Geburtsdatum sollte vor dem Jahr 2013 liegen",
-  "BirthdateSignUpValidation3": "Das Geburtsdatum sollte nach 1900 liegen",
-  "BirthdateSignUpValidation4": "Das Datumsformat sollte JJJJ-MM-TT sein",
-  "PwdSignUpValidation1": "Bitte erstellen Sie ein Passwort",
-  "PwdSignUpValidation2": "Das Passwort sollte mindestens 6 Zeichen enthalten",
-  "PwdSignUpValidation3": "Das Passwort sollte maximal 16 Zeichen enthalten",
-  "RepeatPwdLabel": "Wiederhole das Passwort:",
-  "RepeatPwdSignUpValidation1": "Bitte wiederholen Sie ein Passwort",
-  "RepeatPwdSignUpValidation2": "Passwörter stimmen nicht überein",
-  "SignUpTitle": "Anmelden",
-  "HaveAlreadyAccountLabel": "Hast du schon ein Konto?",
-
-  "ChangePwdTitle": "Ändere das Passwort",
-  "NextStepLabel": "Nächster",
-  "ConfirmationCodeTitle": "Bestätigungscode wurde an Ihre E-Mail gesendet",
-  "CodeLabel": "Code:",
-  "CodeValidationLabel": "Bitte geben Sie den Code ein",
-  "PasswordRecoveryTitle": "Passwort-Wiederherstellung",
-
-  "ChartsTitle": "Diagramme",
-  "IncomesLabel": "Einkommen",
-  "ExpensesLabel": "Kosten",
-  "ChooseDataRangePlaceholder": "Wählen Sie einen Datumsbereich:",
-
-  "EnglishLabel": "Englisch",
-  "GermanLabel": "Deutsche",
-  "FrenchLabel": "Französisch",
-
-  "notifications": {
-    "successMsg": "Erfolg",
-    "errorMsg": "Error",
-    "infoMsg": "Info",
-    "warningMsg": "Warnung",
-    "loggedInSuccessfullyMsg": "Erfolgreich eingeloggt",
-    "logOutMsg": "Abgemeldet"
-  },
-
-  "mainPage": {
-    "subtitleLabel": "Alles auf einem Bildschirm!",
-    "learnMoreLinkTitle": "Lern mehr",
-    "extraordinaryTitle": "Außergewöhnlicher Komfort!",
-    "description1": "Alle Aktionen sind sehr einfach. Sie können schnell und einfach die gewünschte Transaktion hinzufügen. Die Anpassung dauert Sekunden, sobald Sie Ihren Kontostand geändert haben.",
-    "financesControlTitle": "Kontrolle über Finanzen!",
-    "description2": "Behalten Sie die Kontrolle über alle Ihre Konten! Egal ob Sie eine oder mehrere Bankkarten haben, Sie können alles an einem Ort verwalten!",
-    "globalizationTitle": "Währungsglobalisierung!",
-    "description3": "Unsere Ressource unterstützt viele Fremdwährungen, was besonders für Reisende und Geschäftsleute von Vorteil ist! Sie können jetzt Änderungen an Ihrem Guthaben in der für Sie passenden Währung vornehmen. Außerdem können Sie in jedem Konto alles in verschiedenen Währungen aufbewahren!",
-    "copyrightLabel": "Urheberrechte"
-  },
-
-  "confirm-email-success": {
-    "successMsg": "Ihre E-Mail wurde erfolgreich bestätigt.",
-    "failMsg": "Fehler beim Bestätigen Ihrer E-Mail. Versuchen Sie erneut, dem erhaltenen Link zu folgen.",
-    "logInLink": "Einloggen"
-  },
-
-  "send-confirm-email": {
-    "infoMsg": "E-Mail zur Bestätigung, dass Ihr Konto gesendet wurde. Bitte überprüfen Sie den Posteingang."
-  }
-
+    "navbar": {
+        "welcomeMessage": "Herzlich willkommen",
+        "logoutLink": "Ausloggen",
+        "logInLink": "Einloggen",
+        "registerLink": "Registrieren"
+    },
+    "leftSideBar": {
+        "profileLabel": "Profil",
+        "accountsLabel": "Accounts",
+        "chartsLabel": "Konten",
+        "settingsLabel": "Settings",
+        "adminPanelLabel": "Die Einstellungen",
+        "FAQLabel": "FAQ"
+    },
+    "validations": {
+        "enterYourNameValidation1": "Bitte geben Sie Ihren Namen ein",
+        "enterYourNameValidation2": "Name sollte nur Buchstaben und '-' enthalten",
+        "enterYourSurnameValidation1": "Bitte geben Sie Ihren Nachnamen ein",
+        "enterYourSurnameValidation2": "Nachname sollte nur Buchstaben und '-' enthalten",
+        "enterYourBirthdateValidation1": "Bitte wählen Sie als Geburtsdatum das Format TT.MM.JJJJ",
+        "enterYourBirthdateValidation2": "Das Datumsformat sollte TT.MM.JJJJ sein",
+        "enterYourEmailValidation1": "Bitte geben Sie ihre E-Mail-Adresse ein",
+        "enterYourEmailValidation2": "EMail Beispiel finApp@gmail.com",
+        "updateAvatarTitle": "Aktualisiere einen Avatar",
+        "chooseCurrency": "Bitte wählen Sie eine Währung aus",
+        "imageValidationMsg1": "Bitte wählen Sie ein Bild aus",
+        "enterAccountName": "Bitte geben Sie Ihren Kontonamen ein",
+        "balanceValidationMsg1": "Bitte geben Sie Ihren Kontostand ein",
+        "balanceValidationMsg2": "Balance muss eine Zahl sein",
+        "birthdateSignUpValidation1": "Bitte wählen Sie Ihr Geburtsdatum",
+        "birthdateSignUpValidation2": "Das Geburtsdatum sollte vor dem Jahr 2013 liegen",
+        "birthdateSignUpValidation3": "Das Geburtsdatum sollte nach 1900 liegen",
+        "birthdateSignUpValidation4": "Das Datumsformat sollte JJJJ-MM-TT sein",
+        "pwdSignUpValidation1": "Bitte erstellen Sie ein Passwort",
+        "pwdSignUpValidation2": "Das Passwort sollte mindestens 6 Zeichen enthalten",
+        "pwdSignUpValidation3": "Das Passwort sollte maximal 16 Zeichen enthalten",
+        "repeatPwdSignUpValidation1": "Bitte wiederholen Sie ein Passwort",
+        "repeatPwdSignUpValidation2": "Passwörter stimmen nicht überein",
+        "codeValidationLabel": "Bitte geben Sie den Code ein",
+        "emailValidation1": "E-Mail ist erforderlich",
+        "pwdValidation1": "Passwort wird benötigt"
+    },
+    "formLabels": {
+        "name": "Name",
+        "email": "Email",
+        "birthdate": "Geburtstag",
+        "surname": "Nachname"
+    },
+    "formLabelsWithColon": {
+        "firstname": "Vorname:",
+        "surname": "Nachname:",
+        "name": "Name:",
+        "email": "Email:",
+        "birthdate": "Geburtstag:",
+        "password": "Passwort:",
+        "repeatPassword": "Wiederhole das Passwort:"
+    },
+    "buttons": {
+        "save": "Sparen",
+        "send": "Senden",
+        "add": "Hinzufügen",
+        "delete": "Löschen",
+        "update": "Aktualisieren"
+    },
+    "dragAndDrop": {
+        "updateAvatarTitle": "Aktualisiere einen Avatar",
+        "placeholder": "Hier ziehen und ablegen oder klicken"
+    },
+    "accounts": {
+        "fromPlaceholder": "Von",
+        "toPlaceholder": "Zu",
+        "filterLabel": "Filter: ",
+        "incomesWithcolonLabel": "Einkommen: ",
+        "expensesWithColonLabel": "Kosten: ",
+        "categoryColumn": "Kategorie",
+        "descriptionColumn": "Beschreibung",
+        "sumColumn": "Summe",
+        "dateColumn": "Datum",
+        "balanceLabel": "Balance: ",
+        "addAccountLabel": "Konto hinzufügen",
+        "currencyColumn": "Währung",
+        "imageColumn": "Bild"
+    },
+    "adminPanel": {
+        "deleteUserLabel": "Benutzer löschen",
+        "deleteLabel": "Löschen",
+        "updateLabel": "Aktualisieren",
+        "statisticsTab": "Statistiken",
+        "userInspectionTab": "Benutzerinspektion",
+        "addStandartCategoryTab": "Standardkategorie hinzufügen",
+        "changeStandartCategoryTab": "Standardkategorie ändern",
+        "creationCategory": "Erstellungskategorie",
+        "expensesCategory": "Ausgabenkategorie",
+        "incomeCategory": "Einkommenskategorie",
+        "expenseLable": "Aufwand",
+        "incomeLable": "Einkommen",
+        "imagesLabel": "Bilder",
+        "categoriesLabel": "Kategorien",
+        "updateCategoryLable": "Kategorie aktualisieren",
+        "uploadImageLabel": "Bild hochladen"
+    },
+    "signinSignup": {
+        "loginTitle": "Anmeldung",
+        "passwordTitle": "Passwort",
+        "signInTitle": "Einloggen",
+        "logInLabel": "Einloggen",
+        "googleSignInTitle": "Anmeldung Google",
+        "forgotPasswordTitle": "Passwort vergessen?",
+        "registrationTitle": "Anmeldung",
+        "signUpTitle": "Anmelden",
+        "haveAlreadyAccountLabel": "Hast du schon ein Konto?",
+        "changePwdTitle": "Ändere das Passwort",
+        "nextStepLabel": "Nächster",
+        "confirmationCodeTitle": "Bestätigungscode wurde an Ihre E-Mail gesendet",
+        "codeLabel": "Code:",
+        "passwordRecoveryTitle": "Passwort-Wiederherstellung",
+        "enterYourEmail": "Bitte geben Sie ihre E-Mail-Adresse ein:"
+    },
+    "charts": {
+        "chartsTitle": "Diagramme",
+        "incomesLabel": "Einkommen",
+        "expensesLabel": "Expenses",
+        "chooseDataRangePlaceholder": "Wählen Sie einen Datumsbereich:"
+    },
+    "notifications": {
+        "successMsg": "Erfolg",
+        "errorMsg": "Error",
+        "infoMsg": "Info",
+        "warningMsg": "Warnung",
+        "loggedInSuccessfullyMsg": "Erfolgreich eingeloggt",
+        "logOutMsg": "Abgemeldet"
+    },
+    "mainPage": {
+        "subtitleLabel": "Alles auf einem Bildschirm!",
+        "learnMoreLinkTitle": "Lern mehr",
+        "extraordinaryTitle": "Außergewöhnlicher Komfort!",
+        "description1": "Alle Aktionen sind sehr einfach. Sie können schnell und einfach die gewünschte Transaktion hinzufügen. Die Anpassung dauert Sekunden, sobald Sie Ihren Kontostand geändert haben.",
+        "financesControlTitle": "Kontrolle über Finanzen!",
+        "description2": "Behalten Sie die Kontrolle über alle Ihre Konten! Egal ob Sie eine oder mehrere Bankkarten haben, Sie können alles an einem Ort verwalten!",
+        "globalizationTitle": "Viel Globalisierung!",
+        "description3": "Unsere Ressource unterstützt viele Fremdwährungen, was besonders für Reisende und Geschäftsleute von Vorteil ist! Sie können jetzt Änderungen an Ihrem Guthaben in der für Sie passenden Währung vornehmen. Außerdem können Sie in jedem Konto alles in verschiedenen Währungen aufbewahren!",
+        "copyrightLabel": "Urheberrechte"
+    },
+    "confirm-email-success": {
+        "successMsg": "Ihre E-Mail wurde erfolgreich bestätigt.",
+        "failMsg": "Fehler beim Bestätigen Ihrer E-Mail. Versuchen Sie erneut, dem erhaltenen Link zu folgen.",
+        "logInLink": "Einloggen"
+    },
+    "send-confirm-email": {
+        "infoMsg": "E-Mail zur Bestätigung, dass Ihr Konto gesendet wurde. Bitte überprüfen Sie den Posteingang."
+    },
+    "changePassword": {
+        "title": "Ändere das Passwort",
+        "newPassword": "Neues Kennwort:",
+        "confirmNewPassword": "Bestätige neues Passwort:"
+    },
+    "familyOptions": {
+        "title": "Familienoptionen"
+    }
 }

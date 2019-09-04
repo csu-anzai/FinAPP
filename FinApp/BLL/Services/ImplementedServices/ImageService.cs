@@ -37,13 +37,14 @@ namespace BLL.Services.ImplementedServices
             var existedImg = await _unitOfWork.ImageRepository.SingleOrDefaultAsync(img => img.Path == imageVm.Path && img.Name == imageVm.Name);
 
             if (existedImg != null)
+            {
                 throw new ApiException(System.Net.HttpStatusCode.Conflict, "The image already exist");
+            }
 
             var image = _mapper.Map<Image>(imageVm);
-            //var image = new Image() { Name = imageVm.Name, Path = imageVm.Path };
 
             await _unitOfWork.ImageRepository.AddAsync(image);
-            //await _unitOfWork.Complete();
+            await _unitOfWork.Complete();
         }
 
         public async Task<Image> UpdateAsync(ImageDTO imageDto)
@@ -51,9 +52,12 @@ namespace BLL.Services.ImplementedServices
             var image = await _unitOfWork.ImageRepository.SingleOrDefaultAsync(i => i.Id == imageDto.Id);
 
             if (image == null)
+            {
                 return null;
+            }
 
             _mapper.Map(imageDto, image);
+
             await _unitOfWork.Complete();
 
             return image;

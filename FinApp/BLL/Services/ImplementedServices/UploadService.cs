@@ -4,7 +4,6 @@ using BLL.Models.Exceptions;
 using BLL.Services.IServices;
 using DAL.Entities;
 using DAL.UnitOfWork;
-using Microsoft.Extensions.Localization;
 using System;
 using System.Threading.Tasks;
 
@@ -40,7 +39,9 @@ namespace BLL.Services.ImplementedServices
             return upToDateUser;
         }
 
-        private bool CheckIsTheSameImages(string existedImg, string uploadedImg) =>
-            String.Equals(existedImg, uploadedImg);
+        private bool CheckIsTheSameImages(string existedImg, string uploadedImg)
+        {
+            return String.Equals(existedImg, uploadedImg);
+        }
     }
 }

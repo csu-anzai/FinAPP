@@ -3,13 +3,13 @@
     <li>
       <a routerLink="/user/profile">
         <i class="fa fa-user-circle"></i>
-        <span translate>ProfileLabel</span>
+        <span translate>leftSideBar.profileLabel</span>
       </a>
     </li>
     <li >
       <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fa fa-briefcase"></i>
-        <span translate>AccountsLabel</span>
+        <span translate>leftSideBar.accountsLabel</span>
       </a>
       <div class="accounts-list">
       <ul class="collapse list-unstyled " id="pageSubmenu" *ngFor="let account of accounts">
@@ -28,25 +28,25 @@
     <li>
       <a routerLink="/user/charts">
         <i class="fa fa-area-chart"></i>
-        <span translate>ChartsLabel</span>
+        <span translate>leftSideBar.chartsLabel</span>
       </a>
     </li>
     <li>
       <a routerLink="/user/settings">
         <i class="fa fa-cogs"></i>
-        <span translate>SettingsLabel</span>
+        <span translate>leftSideBar.settingsLabel</span>
       </a>
     </li>
     <li *ngIf="authService.DecodedToken.role == 'Admin'">
       <a routerLink="/user/adminPanel">
         <i class="fa fa-user-circle"></i>
-        <span translate>AdminPanelLabel</span>
+        <span translate>leftSideBar.adminPanelLabel</span>
       </a>
     </li>
     <li>
       <a routerLink="/user/profile">
         <i class="fa fa-question-circle"></i>
-        <span translate>FAQLabel</span>
+        <span translate>leftSideBar.FAQLabel</span>
       </a>
     </li>
   </ul>

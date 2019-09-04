@@ -132,6 +132,22 @@ export class ProfileComponent implements OnInit {
       );
   }
 
+      // this._uploadService.uploadCategoryImage({ name: 'bbb.txt', path: 'ccccdfgdf' }, this.files[0]).toPromise()
+    // .then(
+    //   (res: any) => {
+    //     // validation error
+    //     if (res.body) {
+    //       if (res.body.error && res.body.code === 304) {
+    //         this.alertService.waringMsg(res.body.error);
+    //         return;
+    //       }
+    //     }
+    //     this.ngOnInit();
+    //     this.closeModal();
+    //     this.alertService.successMsg('Image updated');
+    //   }
+    // );
+
    dateValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} => {
       const dateStr = control.value;
@@ -158,7 +174,7 @@ export class ProfileComponent implements OnInit {
       // Validate day
       if (!(day > 0 && day <= monthLengthArr[month - 1])) {
         return invalidObj;
-      };
+      }
       // If date is properly formatted, check the date vs today to ensure future
       // This is done this way to account for new Date() shifting invalid
       // date strings. This way we know the string is a correct date first.
@@ -167,6 +183,6 @@ export class ProfileComponent implements OnInit {
         return invalidObj;
       }
       return null;
-    }
+    };
   }
 }

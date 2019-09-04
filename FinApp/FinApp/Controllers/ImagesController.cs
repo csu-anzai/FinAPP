@@ -1,16 +1,16 @@
-﻿using BLL.DTOs;
+﻿using AutoMapper;
+using BLL.DTOs;
 using BLL.Helpers;
 using BLL.Models.Exceptions;
 using BLL.Models.ViewModels;
 using BLL.Services.IServices;
+using DAL.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using DAL.Entities;
-
 
 namespace FinApp.Controllers
 {
@@ -18,13 +18,13 @@ namespace FinApp.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
-        private const string _defaultFolderForCustomImages = "DefaultImages";
-        private const string _defaultFolderForUploadImages = "Uploads";
         private readonly IImageService _imageService;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IMapper _mapper;
 
-        public ImagesController(IHostingEnvironment hostingEnvironment, IImageService imageService)
+        public string WebRootPath { get => _hostingEnvironment.WebRootPath; }
+
+        public ImagesController(IHostingEnvironment hostingEnvironment, IImageService imageService, IConfiguration configuration)
         {
             _hostingEnvironment = hostingEnvironment;
             _imageService = imageService;
@@ -59,9 +59,7 @@ namespace FinApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromForm]ImageViewModel imageVm)
         {
-            var webRootPath = _hostingEnvironment.WebRootPath;
-
-            var result = await DirectoryManager.SaveFileInFolder(webRootPath, _defaultFolderForUploadImages, imageVm);
+            var result = await DirectoryManager.SaveFileInFolder(WebRootPath, imageVm);
 
             if (result == null)
                 throw new ApiException(System.Net.HttpStatusCode.InternalServerError);
@@ -77,9 +75,16 @@ namespace FinApp.Controllers
             var imageInDb = await _imageService.GetAsync(id);
 
             if (imageInDb == null)
+            {
                 return NotFound();
+            }
+
+            var root = $@"{WebRootPath}\{imageInDb.Path}\{imageInDb.Name}";
+
+            DirectoryManager.RemoveFileFromFolder(root);
 
             await _imageService.DeleteImage(imageInDb);
+
             return Ok();
         }
 
@@ -87,12 +92,16 @@ namespace FinApp.Controllers
         public async Task<IActionResult> UpdateImage(int id, ImageDTO imageDTO)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest();
+            }
 
             var image = await _imageService.UpdateAsync(imageDTO);
 
             if (image == null)
-                return BadRequest(new { message = "image id is incorrect!" });
+            {
+                return BadRequest(new { message = "Image Id is incorrect!" });
+            }
 
             return Ok();
         }

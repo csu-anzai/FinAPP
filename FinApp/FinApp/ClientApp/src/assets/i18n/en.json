@@ -1,137 +1,166 @@
 {
-  "WelcomeMessage": "Welcome ",
-  "LogoutLink": "Logout",
-  "LogInLink": "Log in",
-  "RegisterLink": "Register",
-
-  "ProfileLabel": "Profile",
-  "AccountsLabel": "Accounts",
-  "ChartsLabel": "Charts",
-  "SettingsLabel": "Settings",
-  "AdminPanelLabel": "Admin Panel",
-  "FAQLabel": "FAQ",
-  "FirstNameLabel": "First name:",
-  "SurnameLabel": "Surname:",
-  "SaveButton": "Save",
-  "EnterYourNameValidation1": "Please enter your name",
-  "EnterYourNameValidation2": "Name should contain only letters and '-'",
-  "EnterYourSurnameValidation1": "Please enter your surname",
-  "EnterYourSurnameValidation2": "Surname should contain only letters and '-'",
-  "EnterYourBirthdateValidation1": "Please choose your birthdateDate format should be DD.MM.YYYY",
-  "EnterYourBirthdateValidation2": "Date format should be DD.MM.YYYY",
-  "EnterYourEmailValidation1": "Please enter your email",
-  "EnterYourEmailValidation2": "E-mail example finApp@gmail.com",
-  "UpdateAvatarTitle": "Update an avatar",
-  "DragAndDropTitle": "Drag and drop or click here",
-  "SendBtn": "Send",
-
-  "FromPlaceholder": "From",
-  "ToPlaceholder": "To",
-  "FilterLabel": "Filter: ",
-  "IncomesWithcolonLabel": "Incomes: ",
-  "ExpensesWithColonLabel": "Expenses: ",
-  "CategoryColumn": "Category",
-  "DescriptionColumn": "Description",
-  "SumColumn": "Sum",
-  "DateColumn": "Date",
-  "BalanceLabel": "Balance: ",
-  "AddAccountLabel": "Add account",
-  "NameLabel": "Name:",
-  "EnterYourAccountNameValidation": "Please enter your balance",
-  "BalanceValidationMsg1": "Please enter your balance",
-  "BalanceValidationMsg2": "Balance must be a number",
-  "CurrencyColumn": "Currency",
-  "ImageColumn": "Image",
-  "ImageValidationMsg1": "Please choose image",
-  "AddBtn": "Add",
-
-  "UserNameLabel": "Name",
-  "EmailLabel": "Email",
-  "BirthDateLabel": "Birthdate",
-  "DeleteUserLabel": "Delete user",
-  "DeleteLabel": "Delete",
-  "UpdateLabel": "Update",
-  "StatisticsTab": "Statistics",
-  "UserInspectionTab": "User Inspection",
-  "AddStandartCategoryTab": "Add standart category",
-  "ChangeStandartCategoryTab": "Change standart category",
-  "CreationCategory": "Creation category",
-  "ExpensesCategory": "Expenses category",
-  "IncomeCategory": "Incomes category",
-  "ExpenseLable": "Expense",
-  "IncomeLable": "Income",
-  "UpdateCategoryLable": "Update Category",
-
-  "LoginTitle": "Login",
-  "PasswordTitle": "Password",
-  "PwdWithColonLabel": "Password:",
-  "EmailWithColonLabel": "Email:",
-  "EmailValidation1": "Email is required",
-  "PwdValidation1": "Password is required",
-  "SignInTitle": "Sign In",
-  "LogInLabel": "Log In",
-  "GoogleSignInTitle": "Sign in with Google",
-  "ForgotPasswordTitle": "Forgot password?",
-
-  "RegistrationTitle": "Registration",
-  "BirthDateWithColonLabel": "Birthdate:",
-  "BirthdateSignUpValidation1": "Please choose your birthdate",
-  "BirthdateSignUpValidation2": "Birthdate should be earlier than 2013 year",
-  "BirthdateSignUpValidation3": "Birthdate should be later than 1900 year",
-  "BirthdateSignUpValidation4": "Date format should be yyyy-mm-dd",
-  "PwdSignUpValidation1": "Please create a password",
-  "PwdSignUpValidation2": "Password should contain at least 6 symbols",
-  "PwdSignUpValidation3": "Password should contain a maximum of 16 symbols",
-  "RepeatPwdLabel": "Repeat password:",
-  "RepeatPwdSignUpValidation1": "Please repeate a password",
-  "RepeatPwdSignUpValidation2": "Passwords don`t match",
-  "SignUpTitle": "Sign Up",
-  "HaveAlreadyAccountLabel": "Have already account? ",
-
-  "ChangePwdTitle": "Change password",
-  "NextStepLabel": "Next",
-  "ConfirmationCodeTitle": "Confirmation code has been send to your mail",
-  "CodeLabel": "Code:",
-  "CodeValidationLabel": "Please, enter code",
-  "PasswordRecoveryTitle": "Password recovery",
-
-  "ChartsTitle": "Charts",
-  "IncomesLabel": "Incomes",
-  "ExpensesLabel": "Expenses",
-  "ChooseDataRangePlaceholder": "Choose a date range:",
-
-  "EnglishLabel": "English",
-  "GermanLabel": "German",
-  "FrenchLabel": "French",
-
-  "notifications": {
-    "successMsg": "Success",
-    "errorMsg": "Error",
-    "infoMsg": "Info",
-    "warningMsg": "Warning",
-    "loggedInSuccessfullyMsg": "Logged in successfully",
-    "logOutMsg": "Logged Out"
-  },
-
-  "mainPage": {
-    "subtitleLabel": "All your flow in one screen!",
-    "learnMoreLinkTitle": "Learn More",
-    "extraordinaryTitle": "Extraordinary convenience!",
-    "description1": "All actions are very simple. You can quickly and easily add the transaction you need, which will take you seconds to adjust immediately after changing your balance!",
-    "financesControlTitle": "Control over finances!",
-    "description2": "Get control of all your accounts! It doesn't matter if you have one bank card or many, you can manage everything in one place!",
-    "globalizationTitle": "Monetary globalization!",
-    "description3": "Our resource supports many foreign currencies, which is especially beneficial for travelers and businessmen! You can now make changes to your balance in the currency that is convenient for you. In addition, in each account you can keep everything in different currencies!",
-    "copyrightLabel": "Copyright"
-  },
-
-  "confirm-email-success": {
-    "successMsg": "Your email was confirmed successfully.",
-    "failMsg": "Failed to confirm your email. Try to follow received link again.",
-    "logInLink": "Log in"
-  },
-
-  "send-confirm-email": {
-    "infoMsg": "Email to confirm your account was sent. Please, check the inbox."
-  }
+    "navbar": {
+        "welcomeMessage": "Welcome ",
+        "logoutLink": "Logout",
+        "logInLink": "Log in",
+        "registerLink": "Register"
+    },
+    "leftSideBar": {
+        "profileLabel": "Profile",
+        "accountsLabel": "Accounts",
+        "chartsLabel": "Charts",
+        "settingsLabel": "Settings",
+        "adminPanelLabel": "Admin Panel",
+        "FAQLabel": "FAQ"
+    },
+    "validations": {
+        "enterYourNameValidation1": "Please enter your name",
+        "enterYourNameValidation2": "Name should contain only letters and '-'",
+        "enterYourSurnameValidation1": "Please enter your surname",
+        "enterYourSurnameValidation2": "Surname should contain only letters and '-'",
+        "enterYourBirthdateValidation1": "Please choose your birthdateDate format should be DD.MM.YYYY",
+        "enterYourBirthdateValidation2": "Date format should be DD.MM.YYYY",
+        "enterYourEmailValidation1": "Please enter your email",
+        "enterYourEmailValidation2": "E-mail example finApp@gmail.com",
+        "updateAvatarTitle": "Update an avatar",
+        "chooseCurrency": "Please choose currency",
+        "imageValidationMsg1": "Please choose image",
+        "enterAccountName": "Please enter your account name",
+        "balanceValidationMsg1": "Please enter your balance",
+        "balanceValidationMsg2": "Balance must be a number",
+        "birthdateSignUpValidation1": "Please choose your birthdate",
+        "birthdateSignUpValidation2": "Birthdate should be earlier than 2013 year",
+        "birthdateSignUpValidation3": "Birthdate should be later than 1900 year",
+        "birthdateSignUpValidation4": "Date format should be yyyy-mm-dd",
+        "pwdSignUpValidation1": "Please create a password",
+        "pwdSignUpValidation2": "Password should contain at least 6 symbols",
+        "pwdSignUpValidation3": "Password should contain a maximum of 16 symbols",
+        "repeatPwdSignUpValidation1": "Please repeate a password",
+        "repeatPwdSignUpValidation2": "Passwords don`t match",
+        "codeValidationLabel": "Please, enter code",
+        "emailValidation1": "Email is required",
+        "pwdValidation1": "Password is required"
+    },
+    "formLabels": {
+        "name": "Name",
+        "email": "Email",
+        "birthdate": "Birthdate",
+        "surname": "Surname"
+    },
+    "formLabelsWithColon": {
+        "firstname": "First name:",
+        "surname": "Surname:",
+        "name": "Name:",
+        "email": "Email:",
+        "birthdate": "Birthdate:",
+        "password": "Password:",
+        "repeatPassword": "Repeat password:"
+    },
+    "buttons" : {
+        "save": "Save",
+        "send": "Send",
+        "add": "Add",
+        "delete": "Delete",
+        "update": "Update"
+    },
+    "dragAndDrop": {
+        "updateAvatarTitle": "Update an avatar",
+        "placeholder": "Drag and drop or click here"
+    },
+    "accounts": {
+        "fromPlaceholder": "From",
+        "toPlaceholder": "To",
+        "filterLabel": "Filter: ",
+        "incomesWithcolonLabel": "Incomes: ",
+        "expensesWithColonLabel": "Expenses: ",
+        "categoryColumn": "Category",
+        "descriptionColumn": "Description",
+        "sumColumn": "Sum",
+        "dateColumn": "Date",
+        "balanceLabel": "Balance: ",
+        "addAccountLabel": "Add account",
+        "currencyColumn": "Currency",
+        "imageColumn": "Image",
+        "addAccountBtn": "Add account"
+    },
+    "adminPanel": {
+        "deleteUserLabel": "Delete user",
+        "deleteLabel": "Delete",
+        "updateLabel": "Update",
+        "statisticsTab": "Statistics",
+        "userInspectionTab": "User Inspection",
+        "addStandartCategoryTab": "Add standart category",
+        "changeStandartCategoryTab": "Change standart category",
+        "creationCategory": "Creation category",
+        "expensesCategory": "Expenses category",
+        "incomeCategory": "Incomes category",
+        "expenseLable": "Expense",
+        "incomeLable": "Income",
+        "imagesLabel": "Images",
+        "categoriesLabel": "Categories",
+        "updateCategoryLable": "Update Category",
+        "uploadImageLabel": "Upload image"
+    },
+    "signinSignup" : {
+        "loginTitle": "Login",
+        "passwordTitle": "Password",
+        "pwdWithColonLabel": "Password:",
+        "repeatPwdLabel": "Repeat password:",
+        "signInTitle": "Sign In",
+        "logInLabel": "Log In",
+        "googleSignInTitle": "Sign in with Google",
+        "forgotPasswordTitle": "Forgot password?",
+        "registrationTitle": "Registration",
+        
+        "signUpTitle": "Sign Up",
+        "haveAlreadyAccountLabel": "Have already account? ",
+        "changePwdTitle": "Change password",
+        "nextStepLabel": "Next",
+        "confirmationCodeTitle": "Confirmation code has been send to your mail",
+        "codeLabel": "Code:",
+        "passwordRecoveryTitle": "Password recovery",
+        "enterYourEmail": "Please enter your email:"
+    },
+    "charts": {
+        "chartsTitle": "Charts",
+        "incomesLabel": "Incomes",
+        "expensesLabel": "Expenses",
+        "chooseDataRangePlaceholder": "Choose a date range:"
+    },
+    "notifications": {
+        "successMsg": "Success",
+        "errorMsg": "Error",
+        "infoMsg": "Info",
+        "warningMsg": "Warning",
+        "loggedInSuccessfullyMsg": "Logged in successfully",
+        "logOutMsg": "Logged Out"
+    },
+    "mainPage": {
+        "subtitleLabel": "All your flow in one screen!",
+        "learnMoreLinkTitle": "Learn More",
+        "extraordinaryTitle": "Extraordinary convenience!",
+        "description1": "All actions are very simple. You can quickly and easily add the transaction you need, which will take you seconds to adjust immediately after changing your balance!",
+        "financesControlTitle": "Control over finances!",
+        "description2": "Get control of all your accounts! It doesn't matter if you have one bank card or many, you can manage everything in one place!",
+        "globalizationTitle": "Monetary globalization!",
+        "description3": "Our resource supports many foreign currencies, which is especially beneficial for travelers and businessmen! You can now make changes to your balance in the currency that is convenient for you. In addition, in each account you can keep everything in different currencies!",
+        "copyrightLabel": "Copyright"
+    },
+    "confirm-email-success": {
+        "successMsg": "Your email was confirmed successfully.",
+        "failMsg": "Failed to confirm your email. Try to follow received link again.",
+        "logInLink": "Log in"
+      },
+    
+      "send-confirm-email": {
+        "infoMsg": "Email to confirm your account was sent. Please, check the inbox."
+      },
+    "changePassword": {
+        "title": "Change Password",
+        "newPassword": "New Password:",
+        "confirmNewPassword": "Confirm New Password:"
+    },
+    "familyOptions":{
+        "title": "Family Options"
+    }
 }
