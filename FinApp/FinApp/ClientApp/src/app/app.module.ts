@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 
 // Components
@@ -175,6 +175,7 @@ export function createTranslateLoader(http: HttpClient) {
     ForgotPasswordService,
     ChartsService,
     EmailConfirmationService,
+    TranslateService
   ],
   bootstrap: [AppComponent]
 })

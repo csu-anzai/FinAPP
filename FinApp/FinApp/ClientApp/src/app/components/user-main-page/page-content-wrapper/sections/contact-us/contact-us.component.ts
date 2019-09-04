@@ -26,15 +26,12 @@ export class ContactUsComponent implements OnInit {
     private translate: TranslateService,
     private _alertService: NotificationService) {
     this.setUpContactForm();
-    this.translateSubscription();
   }
 
   ngOnInit() {
-    this.emailInfo = new Email();
-    this._userService.getUser(this._authService.DecodedToken.sub).subscribe(user => {
-      this.contactForm.get('FullName').setValue(`${user.name} ${user.surname}`);
-      this.contactForm.get('Email').setValue(user.email);
-    });
+    this.getUserInfo();
+    this.getTranslations();
+    this.translateSubscription();
   }
 
   onSendMessage() {
@@ -63,10 +60,28 @@ export class ContactUsComponent implements OnInit {
     });
   }
 
+  getUserInfo() {
+    this.emailInfo = new Email();
+    this._userService.getUser(this._authService.DecodedToken.sub).subscribe(user => {
+      this.contactForm.get('FullName').setValue(`${user.name} ${user.surname}`);
+      this.contactForm.get('Email').setValue(user.email);
+    });
+  }
+
+  getTranslations() {
+    const successKey = 'contactUs.successfullyMsg';
+    const failureKey = 'contactUs.errorMsg';
+
+    this.translate.get([successKey, failureKey])
+      .subscribe(translations => {
+        this.successfullySent = translations[successKey];
+        this.failedSent = translations[failureKey];
+      });
+  }
+
   translateSubscription() {
     this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-      this.translate.get('contactUs.successfullyMsg').subscribe((text: string) => this.successfullySent = text);
-      this.translate.get('contactUs.errorMsg').subscribe((text: string) => this.failedSent = text);
+      this.getTranslations();
     });
   }
 }

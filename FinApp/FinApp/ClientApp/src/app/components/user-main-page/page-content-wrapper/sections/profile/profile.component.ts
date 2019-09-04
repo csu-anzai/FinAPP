@@ -146,7 +146,7 @@ export class ProfileComponent implements OnInit {
       const year = parseInt(dateArr[2], 10);
       // Today's date
       const now = new Date();
-  
+
       // Validate year and month
       if (year < now.getFullYear() || year > 3000 || month === 0 || month > 12) {
         return invalidObj;
